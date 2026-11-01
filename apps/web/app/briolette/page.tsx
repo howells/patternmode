@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { BrioletteDemo } from "@/components/briolette-demo";
 
 export const metadata: Metadata = {
@@ -111,10 +112,7 @@ export function AccentColorField() {
 
 export default function BriolettePage() {
   return (
-    <ComponentDocsShell
-      description="A spinnable geodesic color sphere. At rest it shows the whole color universe; each selection repaints the facets with similar but distinct OKLab neighbors of your color."
-      title="Briolette"
-    >
+    <Plate slug="briolette">
       <BrioletteDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/briolette</CodeBlock>
@@ -123,6 +121,6 @@ export default function BriolettePage() {
       <DocsBlock title="Core API">
         <ApiTable sections={brioletteApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

@@ -1,294 +1,47 @@
-import { PageShell } from "@howells/site-ui";
-import { Thumbnail } from "@patternmode/thumbnail";
 import type { Metadata } from "next";
+import Link from "next/link";
+
+import { PlatePreview } from "@/components/plate-preview";
+import { catalogue, plateNumber } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
-  description: "Component catalog for Patternmode interface primitives.",
+  description: "Interface components by Daniel Howells, one React package each.",
   title: "Patternmode",
 };
 
-interface CatalogEntry {
-  description: string;
-  href: string;
-  title: string;
-}
-
-const components: CatalogEntry[] = [
-  {
-    description:
-      "Gradient channels with glass thumbs, single values and ranges, sized to match Swatch.",
-    href: "/channel",
-    title: "Channel",
-  },
-  {
-    description: "Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
-    href: "/stacksheet",
-    title: "Stacksheet",
-  },
-  {
-    description:
-      "Thumbnail-to-expanded media transitions with image, video, and keyboard navigation.",
-    href: "/aperto",
-    title: "Aperto",
-  },
-  {
-    description:
-      "Card Decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
-    href: "/deck",
-    title: "Deck",
-  },
-  {
-    description:
-      "Color, gradient, image, and weighted palette swatches with selection affordances.",
-    href: "/swatch",
-    title: "Swatch",
-  },
-  {
-    description: "Framed images with an inset hairline, optional lift, and flexible sizing.",
-    href: "/thumbnail",
-    title: "Thumbnail",
-  },
-  {
-    description: "Round saturation and lightness picker with a compact hue smile arc.",
-    href: "/halo",
-    title: "Halo",
-  },
-  {
-    description:
-      "Spinnable geodesic color sphere whose facets refine around each selection in OKLab.",
-    href: "/briolette",
-    title: "Briolette",
-  },
-  {
-    description:
-      "Proportional color mosaic that re-tiles and morphs as a palette's weights change.",
-    href: "/parquet",
-    title: "Parquet",
-  },
-  {
-    description: "Animated discrete progress marks with explicit null and fill or border variants.",
-    href: "/status",
-    title: "Status",
-  },
-  {
-    description: "Base UI-backed scroll containers with eased fades and movement controls.",
-    href: "/scrollframe",
-    title: "ScrollFrame",
-  },
-  {
-    description:
-      "Composable tag pills and token inputs with keyboard entry, suggestions, and duplicate prevention.",
-    href: "/tags",
-    title: "Tags",
-  },
-  {
-    description:
-      "Row controls that rest hidden and reveal on hover, on focus, and always on touch, with no layout shift.",
-    href: "/verge",
-    title: "Verge",
-  },
-];
-
-/**
- * The card is itself a verge: the middle row draws its controls, the outer two
- * hold the space for theirs and reveal them when the card is pointed at.
- */
-const VergePreview = () => (
-  <div className="preview-verge" aria-hidden="true">
-    {[0, 1, 2].map((row) => (
-      <div className="preview-verge-row" key={row}>
-        <span className="preview-verge-dot" />
-        <span className="preview-verge-dot" />
-      </div>
-    ))}
-  </div>
-);
-
-const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
-  switch (title) {
-    case "Thumbnail": {
-      return (
-        <Thumbnail aria-hidden="true" className="preview-thumbnail" radius={6} raised size={null}>
-          <svg fill="none" viewBox="0 0 160 112">
-            <rect width="160" height="112" fill="white" />
-            <circle className="preview-thumbnail-detail" cx="112" cy="32" r="10" />
-            <path
-              className="preview-thumbnail-detail"
-              d="M0 112V91L49 43L86 80L110 58L160 108V112Z"
-            />
-          </svg>
-        </Thumbnail>
-      );
-    }
-    case "Stacksheet": {
-      return (
-        <div className="preview-stacksheet" aria-hidden="true">
-          <div className="preview-panel" />
-          <div className="preview-panel" />
-          <div className="preview-panel" />
-        </div>
-      );
-    }
-    case "Deck": {
-      return (
-        <div className="preview-deck" aria-hidden="true">
-          <div className="preview-deck-card" />
-          <div className="preview-deck-card" />
-          <div className="preview-deck-card" />
-        </div>
-      );
-    }
-    case "Swatch": {
-      return (
-        <div className="preview-swatch-set" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Status": {
-      return (
-        <div className="preview-status-set" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Halo": {
-      return (
-        <div className="preview-halo" aria-hidden="true">
-          <svg fill="none" viewBox="0 0 120 120">
-            <circle className="preview-halo-pad" cx="60" cy="54" r="34" />
-            <path className="preview-halo-arc" d="M98.6 60.8A39.2 39.2 0 0 1 21.4 60.8" />
-            <circle className="preview-halo-thumb" cx="92.1" cy="76.5" r="4" />
-          </svg>
-        </div>
-      );
-    }
-    case "Briolette": {
-      return (
-        <div className="preview-briolette" aria-hidden="true">
-          <svg viewBox="0 0 128 128">
-            <polygon points="92,64 78,88.2 112.5,92" />
-            <polygon points="78,88.2 112.5,92 64,120" />
-            <polygon points="78,88.2 50,88.2 64,120" />
-            <polygon points="50,88.2 64,120 15.5,92" />
-            <polygon points="50,88.2 36,64 15.5,92" />
-            <polygon points="36,64 15.5,92 15.5,36" />
-            <polygon points="36,64 50,39.8 15.5,36" />
-            <polygon points="50,39.8 15.5,36 64,8" />
-            <polygon points="50,39.8 78,39.8 64,8" />
-            <polygon points="78,39.8 64,8 112.5,36" />
-            <polygon points="78,39.8 92,64 112.5,36" />
-            <polygon points="92,64 112.5,36 112.5,92" />
-            <polygon points="92,64 78,88.2 50,88.2 36,64 50,39.8 78,39.8" />
-          </svg>
-        </div>
-      );
-    }
-    case "ScrollFrame": {
-      return (
-        <div className="preview-scroll-area" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Tags": {
-      return (
-        <div className="preview-tags" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Verge": {
-      return <VergePreview />;
-    }
-    case "Parquet": {
-      return (
-        <div className="preview-parquet" aria-hidden="true">
-          <svg viewBox="0 0 128 128">
-            <rect x="3" y="3" width="60" height="122" rx="2.5" fill="#ffffff" />
-            <rect x="67" y="3" width="58" height="60" rx="2.5" fill="#ffffff" />
-            <rect x="67" y="67" width="28" height="58" rx="2.5" fill="#ffffff" />
-            <rect x="99" y="67" width="26" height="58" rx="2.5" fill="#ffffff" />
-          </svg>
-        </div>
-      );
-    }
-    default: {
-      return (
-        <div className="preview-aperto" aria-hidden="true">
-          <div className="preview-thumb" />
-          <div className="preview-thumb" />
-          <div className="preview-thumb" />
-          <div className="preview-thumb" />
-        </div>
-      );
-    }
-  }
-};
-
-const CatalogCard = ({ description, href, title }: CatalogEntry) => (
-  <a className="catalog-card" href={href}>
-    <div className="catalog-card-preview" data-component={title.toLowerCase()}>
-      <CatalogPreview title={title} />
-    </div>
-    <div className="catalog-card-body">
-      <h2>{title}</h2>
-      <p>{description}</p>
-    </div>
-  </a>
-);
-
-const PlaceholderCard = () => (
-  <div className="catalog-card catalog-card-placeholder">
-    <div className="catalog-card-preview catalog-card-preview-placeholder">
-      <svg
-        aria-hidden="true"
-        fill="none"
-        height="24"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.2"
-        viewBox="0 0 24 24"
-        width="24"
-      >
-        <path d="M12 5v14M5 12h14" />
-      </svg>
-    </div>
-    <div className="catalog-card-body">
-      <h2>More coming</h2>
-      <p>New components are in progress.</p>
-    </div>
-  </div>
-);
-
 const Home = () => (
-  <PageShell>
-    <header className="catalog-intro">
-      <h1>Patternmode</h1>
-      <p>Focused React interface components. {components.length} shipped, more on the way.</p>
+  <main className="catalogue" id="content">
+    <header className="contents-head">
+      <h1 className="type-title">Patternmode</h1>
+      <p className="contents-lead type-lead">
+        Interface components by Daniel Howells. {catalogue.length} so far, each its own React
+        package, all on one warm theme.
+      </p>
     </header>
 
-    <div className="catalog-grid">
-      {components.map((entry) => (
-        <CatalogCard key={entry.href} {...entry} />
+    <ol className="plates">
+      {catalogue.map((entry, index) => (
+        <li key={entry.slug}>
+          <Link className="plate-row" href={`/${entry.slug}`}>
+            <span className="plate-row-text">
+              <span className="plate-row-number type-ui">{plateNumber(index)}</span>
+              <span className="plate-row-name">{entry.name}</span>
+              <span className="plate-row-description type-body">{entry.description}</span>
+            </span>
+            <span className="plate-row-figure" data-component={entry.slug}>
+              <span className="plate-row-figure-inner">
+                <PlatePreview name={entry.name} />
+              </span>
+            </span>
+          </Link>
+        </li>
       ))}
-      <PlaceholderCard />
-    </div>
-  </PageShell>
+    </ol>
+
+    <footer className="colophon type-ui">
+      Patternmode by Daniel Howells. MIT licence. Set in Inter and Hedvig Letters Serif.
+    </footer>
+  </main>
 );
 
 export default Home;

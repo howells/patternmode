@@ -1,37 +1,68 @@
-@import "@fontsource-variable/inter/opsz.css";
-@import "@fontsource-variable/inter/opsz-italic.css";
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+@import "inter-ui/inter-variable.css";
+@import "@fontsource-variable/hedvig-letters-serif/opsz.css";
+@import "@fontsource-variable/geist-mono/wght.css";
+@import "@patternmode/theme/registry/theme/theme.css";
 
-@reference "tailwindcss";
-
+/*
+ * House theme tokens (packages/theme/registry/theme). The package styles read
+ * the shadcn names directly; the older names below alias them so the demo
+ * styles keep one source of colour.
+ */
 :root {
-  --background: #fbfbf9;
-  --border: #e3e1dc;
-  --border-soft: #eeece7;
-  --code-background: #f2f1ed;
-  --code-border: #e5e2da;
-  --ink: #1d1d1b;
-  --muted-foreground: #727068;
-  --surface: #ffffff;
-  --surface-soft: #f6f5f1;
-  --ring: #315c4b;
-  --accent-soft: #e1ebe5;
-  --radius: 8px;
-  --mono: "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-  color: var(--ink);
+  --font-inter: InterVariable;
+  --font-hedvig-letters-serif: "Hedvig Letters Serif Variable";
+  --font-geist-mono: "Geist Mono Variable";
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-hedvig-letters-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --background: oklch(0.9875 0.0026 106.45);
+  --foreground: oklch(0.23 0.0038 106.69);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.0038 106.69);
+  --muted: oklch(0.9698 0.0054 95.1);
+  --muted-foreground: oklch(0.54447 0.01241 95.29);
+  --accent: oklch(0.9308 0.0133 159.9);
+  --accent-foreground: oklch(0.331 0.0449 165.42);
+  --border: oklch(0.9099 0.0071 88.65);
+  --input: oklch(0.9099 0.0071 88.65);
+  --ring: oklch(0.438 0.0563 166.35);
+  --destructive: oklch(0.5085 0.1327 26.85);
+  --radius: 0.5rem;
+  --shadow-sm: 0 2px 8px 0px oklch(0.23 0.0038 106.69 / 0.06);
+  --shadow-md: 0 4px 16px 0px oklch(0.23 0.0038 106.69 / 0.08);
+  --shadow-xl: 0 18px 60px 0px oklch(0.23 0.0038 106.69 / 0.18);
+
+  --ink: var(--foreground);
+  --surface: var(--card);
+  --surface-soft: var(--muted);
+  --border-soft: color-mix(in oklab, var(--border) 55%, var(--background));
+  --code-background: var(--muted);
+  --code-border: var(--border);
+  --accent-soft: var(--accent);
+  --mono: var(--font-mono);
+
+  /* Width of the thumb index down the right edge on wide screens. */
+  --index-width: 11.5rem;
+  /* Height of the page-turn bar on phones and tablets. */
+  --turn-height: 4rem;
+
+  color: var(--foreground);
   background: var(--background);
-  --font-inter: "Inter Variable";
-  font-family:
-    var(--font-inter),
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-  font-feature-settings: "cpsp", "cv01", "cv02", "cv11";
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
 }
 
 * {
@@ -42,10 +73,14 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
+  font-family: var(--font-sans);
   margin: 0;
   min-width: 320px;
 }
@@ -78,27 +113,13 @@ button {
   @apply sr-only;
 }
 
-.site-shell {
-  @apply mx-auto flex max-w-[860px] flex-col gap-[72px] px-6 pt-20 pb-30;
-}
-
-.intro {
-  @apply flex items-start justify-between gap-6;
-}
-
-.intro h1 {
-  @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
-}
-
 .product-heading h2,
-.docs-header h3,
 .sheet-panel-content h2,
 .sheet-panel-content h3,
 .stacksheet-copy h3 {
   @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
 }
 
-.intro p,
 .product-heading p,
 .api-section-header p,
 .sheet-panel-content p,
@@ -339,22 +360,32 @@ button {
 }
 
 .docs-block {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  @apply flex flex-col gap-5;
 }
 
 .docs-header {
-  @apply border-t border-[color:var(--border-soft)] pt-5;
+  @apply border-t border-border pt-6;
+}
+
+.docs-header h3 {
+  @apply m-0 type-title font-normal;
 }
 
 .code-block {
-  @apply m-0 overflow-x-auto rounded-[var(--radius)] border border-[color:var(--code-border)] bg-[var(--code-background)] px-[18px] py-4 font-[family-name:var(--mono)] text-sm leading-[1.7] text-[color:var(--ink)];
+  @apply m-0 overflow-x-auto rounded-[var(--radius)] border border-[color:var(--code-border)] bg-[var(--code-background)] px-[18px] py-4 type-data leading-[1.7] text-[color:var(--ink)];
   -webkit-overflow-scrolling: touch;
 }
 
 .code-block code {
   font: inherit;
+}
+
+/* On phones the code wraps rather than scrolling sideways: a sideways scroll
+   region would need its own tab stop to be reachable by keyboard. */
+@media (max-width: 40rem) {
+  .code-block {
+    @apply break-words whitespace-pre-wrap;
+  }
 }
 
 .code-block-install {
@@ -403,12 +434,12 @@ button {
 
 .prop-row code,
 .api-section-header code {
-  @apply rounded-[5px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[5px] py-0.5 font-[family-name:var(--mono)] text-sm;
+  @apply rounded-[5px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[5px] py-0.5 type-data;
 }
 
 .prop-type,
 .prop-default {
-  @apply rounded-full bg-[var(--surface-soft)] px-[7px] py-[3px] font-[family-name:var(--mono)] text-sm text-[color:var(--muted-foreground)];
+  @apply rounded-full bg-[var(--surface-soft)] px-[7px] py-[3px] type-data text-[color:var(--muted-foreground)];
 }
 
 .prop-description {
@@ -419,63 +450,11 @@ button {
   @apply -mt-1.5;
 }
 
-/* ── Catalog homepage ──────────────────────── */
-
-.site-shell:has(.catalog-grid) {
-  @apply gap-10;
-}
-
-.catalog-intro {
-  @apply max-w-[420px];
-}
-
-.catalog-intro h1 {
-  @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
-}
-
-.catalog-intro p {
-  @apply mx-0 mt-1.5 mb-0 text-sm text-balance leading-[1.65] text-[color:var(--muted-foreground)];
-}
-
-.catalog-grid {
-  @apply grid grid-cols-2 gap-4;
-}
-
-.catalog-card {
-  @apply flex flex-col overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] no-underline transition-[border-color,box-shadow] duration-[180ms];
-}
-
-.catalog-card-body {
-  @apply px-[18px] pt-4 pb-[18px];
-}
-
-.catalog-card-body h2 {
-  @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
-}
-
-.catalog-card-body p {
-  @apply mx-0 mt-[5px] mb-0 text-sm leading-[1.55] text-[color:var(--muted-foreground)];
-}
-
-.catalog-card-preview {
-  aspect-ratio: 5 / 3;
-  background: linear-gradient(135deg, rgba(49, 92, 75, 0.06), transparent 50%), var(--surface-soft);
-  border-bottom: 1px solid var(--border-soft);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  position: relative;
-}
+/* ── Plate previews on the contents page ─── */
 
 .preview-thumbnail {
-  width: 44%;
+  width: 46%;
   box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
-}
-
-.preview-thumbnail-detail {
-  fill: var(--muted, #f6f5f1);
-  stroke: var(--border, #e3e1dc);
-  stroke-width: 1;
 }
 
 .thumbnail-demo {
@@ -568,10 +547,12 @@ button {
 
 .preview-thumb {
   aspect-ratio: 4 / 3;
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: 5px;
-  box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+  display: block;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
 }
 
 /* Deck preview — fanned card stack (landscape) */
@@ -583,9 +564,10 @@ button {
 
 .preview-deck-card {
   aspect-ratio: 3 / 2;
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
   border-radius: 6px;
+  display: block;
+  height: auto;
+  object-fit: cover;
   box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
   left: 50%;
   position: absolute;
@@ -613,8 +595,7 @@ button {
 
 .preview-swatch-set span {
   aspect-ratio: 1;
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
+  background: #315c4b;
   border-radius: 999px;
   box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
   display: block;
@@ -630,22 +611,16 @@ button {
   width: 116px;
 }
 
-.preview-halo-pad {
-  fill: var(--surface);
-  stroke: var(--border-soft);
-  stroke-width: 1;
-}
-
 .preview-halo-arc {
-  stroke: var(--surface);
+  stroke: url(#preview-halo-hue);
   stroke-linecap: round;
   stroke-width: 5.2;
 }
 
 .preview-halo-thumb {
-  fill: var(--surface);
-  stroke: var(--border-soft);
-  stroke-width: 1.5;
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
 }
 
 /* Briolette preview — faceted color sphere */
@@ -657,14 +632,9 @@ button {
 }
 
 .preview-briolette polygon {
-  fill: var(--surface);
-  stroke: var(--border);
+  stroke: rgba(255, 255, 255, 0.55);
   stroke-linejoin: round;
-  stroke-width: 1.5;
-}
-
-.preview-briolette polygon:last-child {
-  fill: var(--surface);
+  stroke-width: 1;
 }
 
 /* Status preview — discrete circular marks */
@@ -688,7 +658,7 @@ button {
 .preview-status-set span:nth-child(2)::after,
 .preview-status-set span:nth-child(3)::after,
 .preview-status-set span:nth-child(4)::after {
-  background: var(--muted-foreground);
+  background: var(--ring);
   border-radius: 999px;
   content: "";
   inset: 5px;
@@ -705,6 +675,21 @@ button {
 
 .preview-status-set span:nth-child(4)::after {
   inset: 4px;
+}
+
+.preview-swatch-set span:nth-child(2) {
+  background: #d9a441;
+  box-shadow:
+    0 0 0 2px var(--muted),
+    0 0 0 3.5px #d9a441;
+}
+
+.preview-swatch-set span:nth-child(3) {
+  background: #9c3b33;
+}
+
+.preview-swatch-set span:nth-child(4) {
+  background: linear-gradient(135deg, #e8dfcb, #b6a180);
 }
 
 /* ScrollFrame preview — faded list */
@@ -787,7 +772,8 @@ button {
 }
 
 .preview-tags span:nth-child(2) {
-  background: var(--surface-soft);
+  background: var(--accent);
+  border-color: color-mix(in oklab, var(--ring) 30%, var(--accent));
   width: 64px;
 }
 
@@ -800,48 +786,6 @@ button {
   background: var(--surface-soft);
   opacity: 0.72;
   width: 70px;
-}
-
-/* Placeholder card */
-.catalog-card-placeholder {
-  border-style: dashed;
-  cursor: default;
-}
-
-.catalog-card-preview-placeholder {
-  background: var(--surface-soft);
-  border-bottom-style: dashed;
-  color: var(--muted-foreground);
-}
-
-.catalog-card-placeholder .catalog-card-body h2 {
-  color: var(--muted-foreground);
-}
-
-.catalog-card-placeholder .catalog-card-body p {
-  color: var(--muted-foreground);
-}
-
-/* ── Component page header ─────────────────── */
-
-.back-link {
-  @apply inline-flex items-center gap-[5px] text-sm text-[color:var(--muted-foreground)] no-underline transition-colors duration-[140ms];
-}
-
-.back-link:hover {
-  @apply text-[color:var(--ink)];
-}
-
-.component-header {
-  @apply flex flex-col gap-5;
-}
-
-.component-header h1 {
-  @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
-}
-
-.component-header p {
-  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
 }
 
 /* ── Deck demo ─────────────────────────────── */
@@ -894,7 +838,7 @@ button {
 /* ── Swatch demo ───────────────────────────── */
 
 .swatch-demo {
-  @apply relative left-[-120px] grid w-[calc(100%+240px)] gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)] [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:left-0 max-md:w-full max-md:[grid-template-columns:1fr];
+  @apply relative grid w-full min-[1440px]:left-[-120px] min-[1440px]:w-[calc(100%+240px)] gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)] [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:[grid-template-columns:1fr];
 }
 
 .swatch-demo-cell {
@@ -906,7 +850,7 @@ button {
 }
 
 .swatch-demo-label {
-  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted-foreground)] uppercase;
+  @apply type-ui text-muted-foreground;
 }
 
 .swatch-demo-swatches {
@@ -969,7 +913,7 @@ button {
 /* ── Halo demo ─────────────────────────────── */
 
 .halo-demo {
-  @apply relative left-[-120px] grid w-[calc(100%+240px)] gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)] [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:left-0 max-md:w-full max-md:[grid-template-columns:1fr];
+  @apply relative grid w-full min-[1440px]:left-[-120px] min-[1440px]:w-[calc(100%+240px)] gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)] [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:[grid-template-columns:1fr];
 }
 
 .halo-demo-cell {
@@ -985,7 +929,7 @@ button {
 }
 
 .halo-demo-label {
-  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted-foreground)] uppercase;
+  @apply type-ui text-muted-foreground;
 }
 
 .halo-demo dl {
@@ -1001,13 +945,13 @@ button {
 }
 
 .halo-demo dd {
-  @apply m-0 font-[family-name:var(--mono)] text-sm text-[color:var(--muted-foreground)];
+  @apply m-0 type-data text-muted-foreground;
 }
 
 /* ── Briolette demo ────────────────────────────── */
 
 .briolette-demo {
-  @apply relative left-[-120px] flex w-[calc(100%+240px)] flex-col items-center gap-[22px] rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] px-9 pt-12 pb-9 max-md:left-0 max-md:w-full max-md:px-5 max-md:pt-8 max-md:pb-6;
+  @apply relative flex w-full min-[1440px]:left-[-120px] min-[1440px]:w-[calc(100%+240px)] flex-col items-center gap-[22px] rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] px-9 pt-12 pb-9 max-md:px-5 max-md:pt-8 max-md:pb-6;
 }
 
 .briolette-demo-swatch {
@@ -1069,7 +1013,7 @@ button {
 }
 
 .status-demo-state-item span {
-  @apply font-[family-name:var(--mono)] text-sm leading-none text-[color:var(--muted-foreground)] transition-colors duration-[140ms];
+  @apply type-ui leading-none tabular-nums text-[color:var(--muted-foreground)] transition-colors duration-[140ms];
 }
 
 .status-demo-state-item[aria-pressed="true"] span {
@@ -1077,7 +1021,7 @@ button {
 }
 
 .status-demo-null-label::before {
-  content: "\2014";
+  content: "Null";
 }
 
 .status-demo-state-item:focus-visible {
@@ -1115,7 +1059,7 @@ button {
 }
 
 .scrollframe-demo-row span {
-  @apply font-[family-name:var(--mono)] text-sm text-[color:var(--muted-foreground)];
+  @apply type-body tabular-nums text-muted-foreground;
 }
 
 .scrollframe-demo-row p {
@@ -1149,7 +1093,7 @@ button {
 }
 
 .tags-demo-label {
-  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted-foreground)] uppercase;
+  @apply type-ui text-muted-foreground;
 }
 
 .tags-demo-note {
@@ -1161,27 +1105,28 @@ button {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .catalog-card:not(.catalog-card-placeholder):hover {
-    border-color: var(--border);
-    box-shadow: 0 4px 16px rgba(29, 29, 27, 0.06);
-  }
-
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-thumbnail,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-stacksheet,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-aperto,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-deck,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-swatch-set,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-halo,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-status-set,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-scroll-area,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-tags,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-verge {
+  .plate-row:hover
+    :is(
+      .preview-thumbnail,
+      .preview-stacksheet,
+      .preview-aperto,
+      .preview-deck,
+      .preview-swatch-set,
+      .preview-halo,
+      .preview-status-set,
+      .preview-scroll-area,
+      .preview-tags,
+      .preview-verge,
+      .preview-channel,
+      .preview-briolette,
+      .preview-parquet
+    ) {
     transform: translateY(-3px);
   }
 
-  /* The verge card demonstrates verge: pointing at it reveals the controls the
-     resting rows were already holding space for. */
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-verge-dot {
+  /* The verge preview demonstrates verge: pointing at the row reveals the
+     controls the resting rows were already holding space for. */
+  .plate-row:hover .preview-verge-dot {
     opacity: 1;
   }
 }
@@ -1207,19 +1152,6 @@ button {
 }
 
 @media (max-width: 720px) {
-  .site-shell {
-    gap: 56px;
-    padding: 48px 16px 96px;
-  }
-
-  .intro {
-    flex-direction: column;
-  }
-
-  .catalog-grid {
-    grid-template-columns: 1fr;
-  }
-
   .stacksheet-surface {
     grid-template-columns: 1fr;
   }
@@ -1264,9 +1196,8 @@ button {
   @apply block h-24 w-24 drop-shadow-[0_4px_16px_rgba(29,29,27,0.08)];
 }
 
-.preview-parquet rect {
-  stroke: var(--border-soft);
-  stroke-width: 1.2;
+.preview-parquet svg {
+  border-radius: 4px;
 }
 
 /* Parquet art showcase — painting + extracted palette */
@@ -1439,4 +1370,379 @@ button {
 
 .preview-verge-row:nth-child(2) .preview-verge-dot {
   @apply opacity-100;
+}
+
+/* ── Channel preview ───────────────────────── */
+
+.preview-channel {
+  @apply flex w-[52%] flex-col gap-5;
+}
+
+.preview-channel-track {
+  @apply relative block h-3.5 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)];
+  background: linear-gradient(to right, #faf5e9, #b6a180, #191a17);
+}
+
+.preview-channel-track + .preview-channel-track {
+  background: linear-gradient(to right, #a6bdd5, #d9cbb6, #d99460);
+}
+
+.preview-channel-thumb {
+  @apply absolute top-1/2 block size-5 -translate-1/2 rounded-full shadow-[inset_0_0_0_3px_white,0_0_0_1px_rgba(0,0,0,0.08),var(--shadow-sm)];
+  left: 62%;
+}
+
+.preview-channel-track + .preview-channel-track .preview-channel-thumb {
+  left: 24%;
+}
+
+.preview-channel-track + .preview-channel-track .preview-channel-thumb + .preview-channel-thumb {
+  left: 72%;
+}
+
+/* ══ The book ═══════════════════════════════════════════════════════════════
+   No header, no nav bar. Wide screens get a thumb index down the right edge,
+   one tab per component with the current one cut out into the page. Phones
+   and tablets get a page-turn bar at the foot. */
+
+.skip-link {
+  @apply sr-only;
+}
+
+.skip-link:focus-visible {
+  @apply not-sr-only fixed top-3 left-3 z-[60] rounded-lg bg-foreground px-4 py-3 type-ui text-background no-underline outline-2 outline-offset-2 outline-ring;
+}
+
+:where(
+  .edge-tab,
+  .edge-index-home,
+  .page-turn-step,
+  .page-turn-current,
+  .index-sheet-close,
+  .index-sheet-link,
+  .index-sheet-home,
+  .plate-turn-link,
+  .plate-row
+):focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring outline-solid;
+}
+
+/* ── Thumb index (lg and up) ───────────────── */
+
+.edge-index {
+  @apply hidden;
+}
+
+@media (min-width: 64rem) {
+  .page-frame {
+    padding-right: var(--index-width);
+  }
+
+  .edge-index {
+    @apply fixed inset-y-0 right-0 z-40 flex flex-col bg-muted shadow-[inset_1px_0_0_var(--border)];
+    width: var(--index-width);
+  }
+}
+
+.edge-index-list {
+  @apply m-0 grid flex-1 list-none auto-rows-fr p-0;
+}
+
+.edge-index-list li {
+  @apply flex min-h-11 shadow-[inset_0_-1px_0_var(--border)];
+}
+
+.edge-tab {
+  @apply flex flex-1 items-center justify-between gap-3 pr-5 pl-4 type-ui text-foreground no-underline transition-[background-color,color,margin,border-radius] duration-150 ease-out;
+}
+
+.edge-tab-number {
+  @apply tabular-nums text-muted-foreground transition-colors duration-150;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .edge-tab:not([aria-current]):hover {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  .edge-tab:not([aria-current]):hover .edge-tab-number {
+    @apply text-accent-foreground;
+  }
+}
+
+/* The cut tab: pine, standing proud of the column into the page. */
+.edge-tab[aria-current="page"] {
+  @apply relative z-[1] -ml-3 rounded-l-md bg-ring pl-7 text-background shadow-[var(--shadow-sm)];
+}
+
+.edge-tab[aria-current="page"] .edge-tab-number {
+  @apply text-[color-mix(in_oklab,var(--background)_78%,var(--ring))];
+}
+
+.edge-index-home {
+  @apply flex min-h-16 items-center px-4 type-title text-background no-underline transition-[background-color,margin,border-radius] duration-150 ease-out bg-foreground;
+}
+
+.edge-index-home[aria-current="page"] {
+  @apply -ml-3 rounded-l-md pl-7;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .edge-index-home:hover {
+    @apply bg-ring;
+  }
+}
+
+/* ── Page turn (below lg) ──────────────────── */
+
+.page-turn {
+  @apply fixed inset-x-0 bottom-0 z-40 bg-background shadow-[inset_0_1px_0_var(--border)];
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (min-width: 64rem) {
+  .page-turn {
+    @apply hidden;
+  }
+}
+
+@media (max-width: 63.99rem) {
+  body:has(.page-turn) .page-frame {
+    padding-bottom: calc(var(--turn-height) + env(safe-area-inset-bottom));
+  }
+}
+
+/* The thumb index in miniature: thirteen ticks, the current one in pine. */
+.page-turn-ticks {
+  @apply m-0 grid list-none grid-cols-13 gap-0.5 p-0;
+}
+
+.page-turn-ticks li {
+  @apply h-[3px] bg-border;
+}
+
+.page-turn-ticks li[data-current] {
+  @apply bg-ring;
+}
+
+.page-turn-row {
+  @apply mx-auto grid max-w-xl grid-cols-[3rem_minmax(0,1fr)_3rem] items-center px-2;
+  height: calc(var(--turn-height) - 3px);
+}
+
+.page-turn-step {
+  @apply grid size-12 place-items-center rounded-full text-foreground;
+}
+
+.page-turn-current {
+  @apply mx-auto flex min-h-12 min-w-0 cursor-pointer flex-col items-center justify-center rounded-lg border-0 bg-transparent px-4 text-foreground;
+}
+
+.page-turn-name {
+  @apply max-w-full truncate type-label;
+}
+
+.page-turn-count {
+  @apply flex items-center gap-1 type-meta tabular-nums text-muted-foreground;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .page-turn-step:hover,
+  .page-turn-current:hover {
+    @apply bg-muted;
+  }
+}
+
+/* ── Index sheet ───────────────────────────── */
+
+.index-sheet {
+  @apply mx-0 mt-auto mb-0 max-h-[85dvh] w-full max-w-none overflow-y-auto rounded-t-xl border-0 bg-background p-0 text-foreground shadow-[var(--shadow-xl)];
+  padding-bottom: env(safe-area-inset-bottom);
+  transition:
+    translate 220ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 220ms ease-out,
+    overlay 220ms allow-discrete,
+    display 220ms allow-discrete;
+}
+
+.index-sheet:not([open]) {
+  @apply translate-y-4 opacity-0;
+}
+
+@starting-style {
+  .index-sheet[open] {
+    @apply translate-y-4 opacity-0;
+  }
+}
+
+.index-sheet::backdrop {
+  @apply bg-[oklch(0.23_0.0038_106.69/0.34)];
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-sheet {
+    transition: none;
+  }
+}
+
+.index-sheet-head {
+  @apply flex items-center justify-between pt-2 pr-2 pl-5;
+}
+
+.index-sheet-title {
+  @apply m-0 type-heading font-normal;
+}
+
+.index-sheet-close {
+  @apply grid size-11 cursor-pointer place-items-center rounded-full border-0 bg-transparent text-foreground;
+}
+
+.index-sheet-list {
+  @apply m-0 grid list-none grid-flow-col grid-cols-2 grid-rows-7 gap-x-2 px-3 pt-1 pb-2;
+}
+
+.index-sheet-link {
+  @apply flex min-h-12 items-center gap-3 rounded-md px-2 type-heading text-foreground no-underline;
+}
+
+.index-sheet-link[aria-current="page"] {
+  @apply bg-accent text-accent-foreground;
+}
+
+.index-sheet-number {
+  @apply w-5 type-meta tabular-nums text-muted-foreground;
+}
+
+.index-sheet-link[aria-current="page"] .index-sheet-number {
+  @apply text-accent-foreground;
+}
+
+.index-sheet-home {
+  @apply mx-5 mb-4 flex min-h-11 items-center type-ui text-ring;
+}
+
+/* ── Contents (home) ───────────────────────── */
+
+.catalogue {
+  @apply mx-auto max-w-[70rem] px-5 pt-10 pb-16 sm:px-10 sm:pt-18 sm:pb-24;
+}
+
+.contents-head {
+  @apply mb-10 grid gap-2 sm:mb-14 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-6;
+}
+
+.contents-head h1 {
+  @apply m-0 font-normal sm:col-start-2;
+}
+
+.contents-lead {
+  @apply m-0 max-w-[44ch] text-muted-foreground sm:col-start-2;
+}
+
+.plates {
+  @apply m-0 list-none border-t border-border p-0;
+}
+
+.plate-row {
+  @apply grid grid-cols-[minmax(0,1fr)_8.75rem] items-center gap-x-4 border-b border-border py-5 text-foreground no-underline sm:grid-cols-[minmax(0,1fr)_17.5rem] sm:gap-x-6 sm:py-7;
+}
+
+/* The plate number sits on the name's baseline, in its own column. */
+.plate-row-text {
+  @apply grid min-w-0 grid-cols-[minmax(0,1fr)] items-baseline gap-y-2 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-6;
+}
+
+.plate-row-number {
+  @apply hidden tabular-nums text-muted-foreground sm:block;
+}
+
+.plate-row-name {
+  @apply type-title transition-colors duration-150 sm:type-display;
+}
+
+.plate-row-description {
+  @apply max-w-[46ch] text-muted-foreground max-sm:type-ui sm:col-start-2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .plate-row:hover .plate-row-name {
+    @apply text-ring;
+  }
+}
+
+/* The previews are drawn at 280 by 168 and halved on phones. */
+.plate-row-figure {
+  @apply relative block h-[5.25rem] w-[8.75rem] overflow-hidden rounded-lg bg-muted shadow-[inset_0_0_0_1px_var(--border-soft)] sm:h-[10.5rem] sm:w-[17.5rem];
+}
+
+.plate-row-figure-inner {
+  @apply absolute top-0 left-0 grid h-[10.5rem] w-[17.5rem] origin-top-left scale-50 place-items-center sm:scale-100;
+}
+
+.colophon {
+  @apply pt-8 text-muted-foreground sm:pl-[4rem];
+}
+
+/* ── Plate (component page) ────────────────── */
+
+.plate {
+  @apply mx-auto flex max-w-[53.75rem] flex-col gap-12 px-4 pt-10 pb-12 sm:gap-16 sm:px-6 sm:pt-18 sm:pb-16;
+}
+
+.plate-head {
+  @apply flex flex-col gap-4;
+}
+
+.plate-title {
+  @apply m-0;
+}
+
+.plate-lead {
+  @apply m-0 max-w-[52ch] text-muted-foreground;
+}
+
+.plate-turn {
+  @apply grid grid-cols-2 gap-4 border-t border-border pt-4;
+}
+
+.plate-turn-link {
+  @apply flex min-h-11 flex-col gap-1 rounded-md py-3 text-foreground no-underline;
+}
+
+.plate-turn-link--next {
+  @apply items-end text-right;
+}
+
+.plate-turn-label {
+  @apply text-muted-foreground;
+}
+
+.plate-turn-name {
+  @apply transition-colors duration-150;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .plate-turn-link:hover .plate-turn-name {
+    @apply text-ring;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge-tab,
+  .edge-index-home,
+  .plate-row-name,
+  .plate-turn-name {
+    transition: none;
+  }
+}
+
+/* The index sits against the screen edge, so its rings draw inside the tab. */
+.edge-tab:focus-visible,
+.edge-index-home:focus-visible {
+  @apply -outline-offset-4;
+}
+
+.edge-tab[aria-current="page"]:focus-visible,
+.edge-index-home:focus-visible {
+  @apply outline-background;
 }

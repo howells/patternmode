@@ -11,7 +11,8 @@
     "typecheck": "../../node_modules/.bin/tsc --noEmit"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "catalog:",
+    "@fontsource-variable/geist-mono": "catalog:",
+    "@fontsource-variable/hedvig-letters-serif": "catalog:",
     "@howells/site-ui": "workspace:*",
     "@patternmode/aperto": "workspace:*",
     "@patternmode/briolette": "workspace:*",
@@ -27,6 +28,7 @@
     "@patternmode/tags": "workspace:*",
     "@patternmode/thumbnail": "workspace:*",
     "@patternmode/verge": "workspace:*",
+    "inter-ui": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { HaloDemo } from "@/components/halo-demo";
 
 export const metadata: Metadata = {
@@ -78,10 +79,7 @@ export function AccentColorField() {
 
 export default function HaloPage() {
   return (
-    <ComponentDocsShell
-      description="A round saturation/lightness picker with the little hue smile arc from Materia."
-      title="Halo"
-    >
+    <Plate slug="halo">
       <HaloDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/halo</CodeBlock>
@@ -90,6 +88,6 @@ export default function HaloPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={haloApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

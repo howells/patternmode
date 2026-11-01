@@ -1,7 +1,9 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import { Thumbnail } from "@patternmode/thumbnail";
 import type { Metadata } from "next";
+
+import { Plate } from "@/components/plate";
 
 export const metadata: Metadata = {
   description: "Framed images with an inset hairline, optional lift, and flexible sizing.",
@@ -115,10 +117,7 @@ const ThumbnailDemo = () => (
 
 export default function ThumbnailPage() {
   return (
-    <ComponentDocsShell
-      description="A framed image with an inset hairline and an optional touch of lift. Fixed-size stamps for rows, or a frame that follows the original image."
-      title="Thumbnail"
-    >
+    <Plate slug="thumbnail">
       <ThumbnailDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/thumbnail</CodeBlock>
@@ -127,6 +126,6 @@ export default function ThumbnailPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={thumbnailApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

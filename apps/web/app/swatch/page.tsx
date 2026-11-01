@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { SwatchDemo } from "@/components/swatch-demo";
 
 export const metadata: Metadata = {
@@ -236,10 +237,7 @@ function PalettePreview() {
 
 export default function SwatchPage() {
   return (
-    <ComponentDocsShell
-      description="Color, gradient, image, and weighted palette swatches with selection, remove, unavailable, and contrast-aware states."
-      title="Swatch"
-    >
+    <Plate slug="swatch">
       <SwatchDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/swatch</CodeBlock>
@@ -248,6 +246,6 @@ export default function SwatchPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={swatchApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

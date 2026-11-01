@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { VergeDemo } from "@/components/verge-demo";
 
 export const metadata: Metadata = {
@@ -72,10 +73,7 @@ const hitAreaExample = `/* Verge reserves the slot; it does not own your button.
 
 export default function VergePage() {
   return (
-    <ComponentDocsShell
-      description="A reserved slot whose controls rest hidden and reveal on hover, on focus, and always on touch, holding their space throughout, so nothing moves."
-      title="Verge"
-    >
+    <Plate slug="verge">
       <VergeDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/verge</CodeBlock>
@@ -165,6 +163,6 @@ export default function VergePage() {
           ]}
         />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

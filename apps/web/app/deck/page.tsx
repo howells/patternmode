@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { DeckDemo } from "@/components/deck-demo";
 
 export const metadata: Metadata = {
@@ -81,10 +82,7 @@ export function ProjectDeck() {
 
 export default function DeckPage() {
   return (
-    <ComponentDocsShell
-      description="Card decks that merge cyclic stacks, finite advance flows, velocity gestures, keyboard control, and deterministic motion."
-      title="Deck"
-    >
+    <Plate slug="deck">
       <DeckDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/deck</CodeBlock>
@@ -93,6 +91,6 @@ export default function DeckPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={deckApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

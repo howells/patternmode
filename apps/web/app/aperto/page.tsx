@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { ApertoDemo } from "@/components/aperto-demo";
 import { apertoMedia } from "@/lib/aperto-media";
 
@@ -91,10 +92,7 @@ export function MediaGroupExample() {
 
 export default function ApertoPage() {
   return (
-    <ComponentDocsShell
-      description="Thumbnail-to-expanded media transitions with image, video, and keyboard navigation."
-      title="Aperto"
-    >
+    <Plate slug="aperto">
       <ApertoDemo media={apertoMedia} />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/aperto</CodeBlock>
@@ -106,6 +104,6 @@ export default function ApertoPage() {
       <p className="read-more">
         Read the package README for primitive composition, media renderers, and motion presets.
       </p>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

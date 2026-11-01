@@ -16,16 +16,24 @@ import "@patternmode/tags/styles.css";
 import "@patternmode/thumbnail/styles.css";
 import "@patternmode/verge/styles.css";
 
+import { ThumbIndex } from "@/components/thumb-index";
+
 export const metadata: Metadata = {
-  description: "Minimal catalog for Howells UI tools.",
+  description: "Interface components by Daniel Howells, one React package each.",
   icons: [{ rel: "icon", url: "/favicon.svg" }],
   title: "Patternmode",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en-GB">
+      <body>
+        <a className="skip-link" href="#content">
+          Skip to content
+        </a>
+        <ThumbIndex />
+        <div className="page-frame">{children}</div>
+      </body>
     </html>
   );
 }

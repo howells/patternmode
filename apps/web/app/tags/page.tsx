@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { TagsDemo } from "@/components/tags-demo";
 
 export const metadata: Metadata = {
@@ -166,10 +167,7 @@ function Example() {
 
 export default function TagsPage() {
   return (
-    <ComponentDocsShell
-      description="Badge-based tag pills and controlled command selectors for filtering, categorizing, and lightweight metadata workflows."
-      title="Tags"
-    >
+    <Plate slug="tags">
       <TagsDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/tags</CodeBlock>
@@ -178,6 +176,6 @@ export default function TagsPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={tagsApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

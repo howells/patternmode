@@ -1,4 +1,5 @@
-import { CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { CodeBlock, DocsBlock } from "@howells/site-ui";
+import { Plate } from "@/components/plate";
 import { ChannelDemo } from "@/components/channel-demo";
 import "./channel.css";
 
@@ -9,10 +10,7 @@ export const metadata = {
 
 export default function ChannelPage() {
   return (
-    <ComponentDocsShell
-      title="Channel"
-      description="A colour ramp you can hold. Single values and ranges with inset glass thumbs."
-    >
+    <Plate slug="channel">
       <ChannelDemo />
       <DocsBlock title="Usage">
         <CodeBlock>{`import { ChannelSlider } from "@patternmode/channel";
@@ -30,6 +28,6 @@ import "@patternmode/channel/styles.css";
   labelEnd="Darker"
 />`}</CodeBlock>
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
 
 export const metadata: Metadata = {
@@ -87,10 +88,7 @@ function MaterialStrip() {
 
 export default function ScrollFramePage() {
   return (
-    <ComponentDocsShell
-      description="Base UI-backed scroll frames with reliable plumbing, eased edge fades, hidden or visible scrollbars, and overflow-aware movement controls."
-      title="ScrollFrame"
-    >
+    <Plate slug="scrollframe">
       <ScrollFrameDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/scrollframe</CodeBlock>
@@ -99,6 +97,6 @@ export default function ScrollFramePage() {
       <DocsBlock title="Core API">
         <ApiTable sections={scrollFrameApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }

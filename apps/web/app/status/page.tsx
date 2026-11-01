@@ -1,7 +1,8 @@
-import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
+import { Plate } from "@/components/plate";
 import { StatusDemo } from "@/components/status-demo";
 
 export const metadata: Metadata = {
@@ -90,10 +91,7 @@ export function BuildStatus() {
 
 export default function StatusPage() {
   return (
-    <ComponentDocsShell
-      description="Discrete progress marks with fill and border variants, explicit null progress, optional colors, and motion/react transitions."
-      title="Status"
-    >
+    <Plate slug="status">
       <StatusDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/status</CodeBlock>
@@ -102,6 +100,6 @@ export default function StatusPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={statusApi} />
       </DocsBlock>
-    </ComponentDocsShell>
+    </Plate>
   );
 }
