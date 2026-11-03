@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { DeckDemo } from "@/components/deck-demo";
 
 export const metadata: Metadata = {
@@ -82,15 +83,14 @@ export function ProjectDeck() {
 
 export default function DeckPage() {
   return (
-    <Plate slug="deck">
-      <DeckDemo />
+    <ComponentFrame demo={<DeckDemo />} slug="deck">
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/deck</CodeBlock>
+        <CopyCommand command="npm install @patternmode/deck" />
         <CodeBlock>{deckExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={deckApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

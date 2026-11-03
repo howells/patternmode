@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { TagsDemo } from "@/components/tags-demo";
 
 export const metadata: Metadata = {
@@ -167,15 +168,14 @@ function Example() {
 
 export default function TagsPage() {
   return (
-    <Plate slug="tags">
-      <TagsDemo />
+    <ComponentFrame demo={<TagsDemo />} slug="tags">
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/tags</CodeBlock>
+        <CopyCommand command="npm install @patternmode/tags" />
         <CodeBlock>{tagsExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={tagsApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

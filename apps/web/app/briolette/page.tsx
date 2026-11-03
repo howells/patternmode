@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { BrioletteDemo } from "@/components/briolette-demo";
 
 export const metadata: Metadata = {
@@ -112,15 +113,14 @@ export function AccentColorField() {
 
 export default function BriolettePage() {
   return (
-    <Plate slug="briolette">
-      <BrioletteDemo />
+    <ComponentFrame demo={<BrioletteDemo />} slug="briolette">
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/briolette</CodeBlock>
+        <CopyCommand command="npm install @patternmode/briolette" />
         <CodeBlock>{brioletteExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={brioletteApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

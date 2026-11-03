@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { ParquetArtDemo } from "@/components/parquet-art-demo";
 
 export const metadata: Metadata = {
@@ -81,15 +82,14 @@ export function Palette() {
 
 export default function ParquetPage() {
   return (
-    <Plate slug="parquet">
-      <ParquetArtDemo />
+    <ComponentFrame demo={<ParquetArtDemo />} slug="parquet">
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/parquet</CodeBlock>
+        <CopyCommand command="npm install @patternmode/parquet" />
         <CodeBlock>{parquetExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={parquetApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

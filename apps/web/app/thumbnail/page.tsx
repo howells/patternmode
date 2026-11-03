@@ -3,7 +3,9 @@ import type { ApiSection } from "@howells/site-ui";
 import { Thumbnail } from "@patternmode/thumbnail";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
+import { VariantCell, VariantsBlock } from "@/components/variant-cells";
 
 export const metadata: Metadata = {
   description: "Framed images with an inset hairline, optional lift, and flexible sizing.",
@@ -84,6 +86,24 @@ import "@patternmode/thumbnail/styles.css";
   raised
 />;`;
 
+/* The picture's own shape waits in the reference, beside the fixed sizes. */
+const ThumbnailVariants = () => (
+  <VariantsBlock
+    id="thumbnail-variants-title"
+    lead="Square at a fixed size by default, so a list stays even."
+  >
+    <VariantCell code='size={null} fit="contain"' name="Original aspect ratio">
+      <Thumbnail
+        alt={imageDescription}
+        className="thumbnail-demo-image"
+        fit="contain"
+        size={null}
+        src={image}
+      />
+    </VariantCell>
+  </VariantsBlock>
+);
+
 const ThumbnailDemo = () => (
   <div className="thumbnail-demo">
     <div className="thumbnail-demo-pair">
@@ -102,30 +122,20 @@ const ThumbnailDemo = () => (
         </figure>
       ))}
     </fieldset>
-    <figure className="demo-block thumbnail-demo-example">
-      <Thumbnail
-        alt={imageDescription}
-        className="thumbnail-demo-image"
-        fit="contain"
-        size={null}
-        src={image}
-      />
-      <figcaption>Original aspect ratio</figcaption>
-    </figure>
   </div>
 );
 
 export default function ThumbnailPage() {
   return (
-    <Plate slug="thumbnail">
-      <ThumbnailDemo />
+    <ComponentFrame demo={<ThumbnailDemo />} slug="thumbnail">
+      <ThumbnailVariants />
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/thumbnail</CodeBlock>
+        <CopyCommand command="npm install @patternmode/thumbnail" />
         <CodeBlock>{example}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={thumbnailApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

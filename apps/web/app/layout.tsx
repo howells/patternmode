@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import "./globals.css";
@@ -16,7 +16,7 @@ import "@patternmode/tags/styles.css";
 import "@patternmode/thumbnail/styles.css";
 import "@patternmode/verge/styles.css";
 
-import { ThumbIndex } from "@/components/thumb-index";
+import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   description: "Interface components by Daniel Howells, one React package each.",
@@ -24,15 +24,25 @@ export const metadata: Metadata = {
   title: "Patternmode",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#fbfbf9",
+  viewportFit: "cover",
+};
+
+/**
+ * The window never scrolls. One compact header sits above a clipped region,
+ * and each page brings its own scrolling pane: Home's single column, or a
+ * component's reference beside its fixed demo.
+ */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en-GB">
-      <body>
+      <body className="site">
         <a className="skip-link" href="#content">
           Skip to content
         </a>
-        <ThumbIndex />
-        <div className="page-frame">{children}</div>
+        <SiteHeader />
+        <div className="site-main">{children}</div>
       </body>
     </html>
   );

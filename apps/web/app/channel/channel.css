@@ -1,20 +1,19 @@
 .channel-demo {
   display: grid;
-  gap: 3rem;
-  padding-block: 1.5rem;
 }
 .channel-demo h2 {
+  margin: 0 0 4px;
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
 }
 .channel-demo p {
+  margin: 0;
   color: var(--muted-foreground);
   font-size: 0.875rem;
 }
 .channel-demo-studio {
   display: grid;
-  gap: 2rem;
+  gap: 1.5rem;
   border: 1px solid var(--border);
   border-radius: 1.5rem;
   padding: clamp(1rem, 4vw, 2rem);
@@ -51,11 +50,6 @@
   gap: 0.5rem;
   align-items: center;
 }
-.channel-demo-sizes {
-  display: grid;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
 .channel-demo-size-row {
   display: grid;
   grid-template-columns: 2.5rem 6rem minmax(0, 1fr);
@@ -71,5 +65,12 @@
   }
   .channel-demo-size-row > .pm-channel {
     grid-column: 1 / -1;
+  }
+}
+/* Short laptops: the studio keeps every control, a little closer together. */
+@media (min-width: 64rem) and (max-height: 47.5rem) {
+  .channel-demo-studio {
+    gap: 1.25rem;
+    padding: 1.5rem 2rem;
   }
 }

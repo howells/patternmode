@@ -5,6 +5,8 @@ import type { DistributionBarSegment } from "@patternmode/swatch";
 import type { SVGProps } from "react";
 import { useState } from "react";
 
+import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+
 /* Palettes */
 
 const finishes = [
@@ -93,47 +95,7 @@ const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const SwatchDemoStates = () => (
-  <div className="swatch-demo-cell">
-    <div className="swatch-demo-label">States</div>
-    <div className="swatch-demo-specimens">
-      <div className="swatch-demo-specimen">
-        <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
-        <span>Selected</span>
-      </div>
-      <div className="swatch-demo-specimen">
-        <Swatch aria-label="Default" color="#315c4b" size="xl" />
-        <span>Default</span>
-      </div>
-      <div className="swatch-demo-specimen">
-        <Swatch aria-label="Raised" color="#315c4b" raised size="xl" />
-        <span>Raised</span>
-      </div>
-      <div className="swatch-demo-specimen">
-        <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
-        <span>Unavailable</span>
-      </div>
-      {/* The pair is the point: the same 40% alpha color with and without a
-          backdrop. Without one it reads as a pale solid, which is
-          indistinguishable from a lighter opaque color. */}
-      <div className="swatch-demo-specimen">
-        <Swatch aria-label="Translucent, no backdrop" color="rgb(49 92 75 / 40%)" size="xl" />
-        <span>Alpha</span>
-      </div>
-      <div className="swatch-demo-specimen">
-        <Swatch
-          aria-label="Translucent on a backdrop"
-          color="rgb(49 92 75 / 40%)"
-          size="xl"
-          transparencyBackdrop
-        />
-        <span>Backdrop</span>
-      </div>
-    </div>
-  </div>
-);
-
-/* Demo */
+/* Demo: the three things a reader adjusts, composed in one panel. */
 
 export const SwatchDemo = () => {
   const [selected, setSelected] = useState<FinishColor>(finishes[0].color);
@@ -201,37 +163,6 @@ export const SwatchDemo = () => {
         </div>
       </div>
 
-      {/* Gradient squares */}
-      <div className="swatch-demo-cell">
-        <div className="swatch-demo-label">Gradients</div>
-        <div className="swatch-demo-specimens">
-          {gradients.map((gradient) => (
-            <div className="swatch-demo-specimen" key={gradient.name}>
-              <Swatch
-                aria-label={gradient.name}
-                background={gradient.background}
-                variant="square"
-                size="xl"
-              />
-              <span>{gradient.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <SwatchDemoStates />
-
-      {/* Distribution */}
-      <div className="swatch-demo-cell">
-        <div className="swatch-demo-label">Distribution</div>
-        <DistributionDisplay
-          aria-label="Assigned finish distribution: 79% assigned, 21% unassigned"
-          emptyValue={21}
-          legend="summary"
-          segments={assignedDistribution}
-        />
-      </div>
-
       {/* Adjustable distribution */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Adjustable distribution</div>
@@ -244,3 +175,58 @@ export const SwatchDemo = () => {
     </div>
   );
 };
+
+/* Reference: each state and variant on its own, beside the demo. */
+
+export const SwatchVariants = () => (
+  <VariantsBlock
+    id="swatch-variants-title"
+    lead="Four shapes, sizes from 2xs to 7xl. Each state is a prop."
+  >
+    <VariantCell code="raised" name="Default and raised">
+      <Swatch aria-label="Default" color="#315c4b" size="xl" />
+      <Swatch aria-label="Raised" color="#315c4b" raised size="xl" />
+    </VariantCell>
+    <VariantCell code="selected, unavailable" name="Selected and unavailable">
+      <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
+      <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
+    </VariantCell>
+    {/* The pair is the point: the same 40% alpha colour with and without a
+        backdrop. Without one it reads as a pale solid, indistinguishable
+        from a lighter opaque colour. */}
+    <VariantCell code="transparencyBackdrop" name="40% alpha, alone and on a backdrop">
+      <Swatch aria-label="Translucent, no backdrop" color="rgb(49 92 75 / 40%)" size="xl" />
+      <Swatch
+        aria-label="Translucent on a backdrop"
+        color="rgb(49 92 75 / 40%)"
+        size="xl"
+        transparencyBackdrop
+      />
+    </VariantCell>
+    <VariantCell code='background, variant="square"' name="Gradient squares">
+      <div className="swatch-demo-specimens">
+        {gradients.map((gradient) => (
+          <div className="swatch-demo-specimen" key={gradient.name}>
+            <Swatch
+              aria-label={gradient.name}
+              background={gradient.background}
+              size="xl"
+              variant="square"
+            />
+            <span>{gradient.name}</span>
+          </div>
+        ))}
+      </div>
+    </VariantCell>
+    <VariantCell code="DistributionDisplay" name="Read-only display">
+      <div className="swatch-variant-display">
+        <DistributionDisplay
+          aria-label="Assigned finish distribution: 79% assigned, 21% unassigned"
+          emptyValue={21}
+          legend="summary"
+          segments={assignedDistribution}
+        />
+      </div>
+    </VariantCell>
+  </VariantsBlock>
+);

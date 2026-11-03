@@ -1,6 +1,7 @@
 import { CodeBlock, DocsBlock } from "@howells/site-ui";
-import { Plate } from "@/components/plate";
-import { ChannelDemo } from "@/components/channel-demo";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
+import { ChannelDemo, ChannelSizes } from "@/components/channel-demo";
 import "./channel.css";
 
 export const metadata = {
@@ -10,9 +11,10 @@ export const metadata = {
 
 export default function ChannelPage() {
   return (
-    <Plate slug="channel">
-      <ChannelDemo />
-      <DocsBlock title="Usage">
+    <ComponentFrame demo={<ChannelDemo />} slug="channel">
+      <ChannelSizes />
+      <DocsBlock title="Install">
+        <CopyCommand command="npm install @patternmode/channel" />
         <CodeBlock>{`import { ChannelSlider } from "@patternmode/channel";
 import "@patternmode/channel/styles.css";
 
@@ -28,6 +30,6 @@ import "@patternmode/channel/styles.css";
   labelEnd="Darker"
 />`}</CodeBlock>
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

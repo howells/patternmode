@@ -4,6 +4,8 @@ import { ChannelSlider } from "@patternmode/channel";
 import { Swatch, SWATCH_SIZES } from "@patternmode/swatch";
 import { useState } from "react";
 
+import { VariantsBlock } from "@/components/variant-cells";
+
 type Ramp = readonly [string, string, string];
 
 const LIGHTNESS_COLORS: Ramp = ["#faf5e9", "#b6a180", "#191a17"];
@@ -131,25 +133,32 @@ export const ChannelDemo = () => {
           </label>
         </div>
       </section>
-      <section>
-        <h2>The Swatch size scale</h2>
-        <p>Each channel is exactly as tall as its neighbouring Swatch. Width remains flexible.</p>
-        <div className="channel-demo-sizes">
-          {SWATCH_SIZES.map((size) => (
-            <div className="channel-demo-size-row" key={size}>
-              <code>{size}</code>
-              <Swatch size={size} color="#b6a180" />
-              <ChannelSlider
-                label={`${size} size`}
-                size={size}
-                background={LIGHTNESS}
-                defaultValue={45}
-                getThumbColor={contrast}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
   );
 };
+
+/**
+ * The size scale, for the reference column: each channel exactly as tall as
+ * the Swatch beside it, at every step.
+ */
+export const ChannelSizes = () => (
+  <VariantsBlock
+    id="channel-sizes-title"
+    lead="Each channel is exactly as tall as its neighbouring Swatch. Width remains flexible."
+    title="The Swatch size scale"
+  >
+    {SWATCH_SIZES.map((size) => (
+      <li className="channel-demo-size-row" key={size}>
+        <code>{size}</code>
+        <Swatch aria-label={`${size} Swatch`} size={size} color="#b6a180" />
+        <ChannelSlider
+          label={`${size} size`}
+          size={size}
+          background={LIGHTNESS}
+          defaultValue={45}
+          getThumbColor={contrast}
+        />
+      </li>
+    ))}
+  </VariantsBlock>
+);

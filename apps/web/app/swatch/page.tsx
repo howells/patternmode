@@ -2,8 +2,9 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
-import { SwatchDemo } from "@/components/swatch-demo";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
+import { SwatchDemo, SwatchVariants } from "@/components/swatch-demo";
 
 export const metadata: Metadata = {
   description:
@@ -237,15 +238,15 @@ function PalettePreview() {
 
 export default function SwatchPage() {
   return (
-    <Plate slug="swatch">
-      <SwatchDemo />
+    <ComponentFrame demo={<SwatchDemo />} slug="swatch">
+      <SwatchVariants />
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/swatch</CodeBlock>
+        <CopyCommand command="npm install @patternmode/swatch" />
         <CodeBlock>{swatchExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={swatchApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

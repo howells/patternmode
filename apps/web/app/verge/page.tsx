@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { VergeDemo } from "@/components/verge-demo";
 
 export const metadata: Metadata = {
@@ -73,10 +74,9 @@ const hitAreaExample = `/* Verge reserves the slot; it does not own your button.
 
 export default function VergePage() {
   return (
-    <Plate slug="verge">
-      <VergeDemo />
+    <ComponentFrame demo={<VergeDemo />} slug="verge">
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/verge</CodeBlock>
+        <CopyCommand command="npm install @patternmode/verge" />
         <CodeBlock>{vergeExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="What it already handles">
@@ -163,6 +163,6 @@ export default function VergePage() {
           ]}
         />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

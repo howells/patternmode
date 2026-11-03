@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { StatusDemo } from "@/components/status-demo";
 
 export const metadata: Metadata = {
@@ -91,15 +92,14 @@ export function BuildStatus() {
 
 export default function StatusPage() {
   return (
-    <Plate slug="status">
-      <StatusDemo />
+    <ComponentFrame demo={<StatusDemo />} slug="status">
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/status</CodeBlock>
+        <CopyCommand command="npm install @patternmode/status" />
         <CodeBlock>{statusExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={statusApi} />
       </DocsBlock>
-    </Plate>
+    </ComponentFrame>
   );
 }

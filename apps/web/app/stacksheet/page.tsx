@@ -2,7 +2,8 @@ import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { Plate } from "@/components/plate";
+import { ComponentFrame } from "@/components/component-frame";
+import { CopyCommand } from "@/components/copy-command";
 import { StacksheetDemo } from "@/components/stacksheet-demo";
 import { StacksheetExamples } from "@/components/stacksheet-examples";
 
@@ -77,13 +78,12 @@ function OpenSettings() {
 
 export default function StacksheetPage() {
   return (
-    <Plate slug="stacksheet">
-      <StacksheetDemo />
+    <ComponentFrame demo={<StacksheetDemo />} slug="stacksheet">
       <DocsBlock title="Examples">
         <StacksheetExamples />
       </DocsBlock>
       <DocsBlock title="Install">
-        <CodeBlock install>npm install @patternmode/stacksheet</CodeBlock>
+        <CopyCommand command="npm install @patternmode/stacksheet" />
         <CodeBlock>{stacksheetExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
@@ -92,6 +92,6 @@ export default function StacksheetPage() {
       <p className="read-more">
         Read the package README for callbacks, snap points, accessibility, and styling details.
       </p>
-    </Plate>
+    </ComponentFrame>
   );
 }
