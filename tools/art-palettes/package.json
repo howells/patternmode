@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@materialinstruments/colorscope": "10.2.1",
-    "sharp": "0.35.4"
+    "sharp": "0.35.5"
   },
   "engines": {
     "node": ">=24.15.0 <25"
