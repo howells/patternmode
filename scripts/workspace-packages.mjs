@@ -6,10 +6,7 @@ import { z } from "zod";
 /**
  * Which packages a release covers, read from the workspace rather than listed.
  *
- * Both halves of the release need this - `release.mjs` to publish and
- * `verify-release.mjs` to read the result back - and they must agree exactly. A
- * package the publisher ships and the verifier does not know about is precisely
- * the release nobody checks.
+ * `release.mjs` uses this to decide what to publish.
  */
 
 export const REPO_ROOT = path.resolve(import.meta.dirname, "..");
