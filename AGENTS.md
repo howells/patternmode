@@ -1,6 +1,6 @@
 # patternmode
 
-pnpm/turbo monorepo of `@howells/patternmode-*` / `@patternmode/*` packages in `packages/`, plus `apps/web` (docs site), `apps/preview` and `tools/`. Specs and outstanding work live in Linear (howells, PAT): [project documentation](https://linear.app/howells/document/patternmode-project-documentation-decfff4bc8c9).
+pnpm/turbo monorepo of `@howells/patternmode-*` / `@patternmode/*` packages in `packages/`, plus `apps/web` (docs site), `apps/preview` and `tools/`. Issues live in Linear (howells, PAT).
 
 ```sh
 pnpm dev         # apps/web
