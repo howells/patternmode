@@ -44,23 +44,6 @@ export const ChannelDemo = () => {
   return (
     <div className="channel-demo">
       <section className="channel-demo-studio">
-        <div className="channel-demo-heading">
-          <div>
-            <h2>Colour studio</h2>
-            <p>Glass controls, sized to sit beside Swatch.</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              setLightness(45);
-              setWarmth(50);
-              setRange([20, 75]);
-              setCommitted("Reset");
-            }}
-          >
-            Reset
-          </button>
-        </div>
         <div className="channel-demo-row">
           <Swatch
             size="xl"
@@ -119,18 +102,31 @@ export const ChannelDemo = () => {
             disabled={disabled}
           />
         </div>
-        <div className="channel-demo-status">
+        <div className="channel-demo-status type-ui">
           <output aria-live="polite">{committed}</output>
-          <label>
-            <input
-              type="checkbox"
-              checked={disabled}
-              onChange={(event) => {
-                setDisabled(event.target.checked);
+          <div className="channel-demo-actions">
+            <label>
+              <input
+                type="checkbox"
+                checked={disabled}
+                onChange={(event) => {
+                  setDisabled(event.target.checked);
+                }}
+              />
+              Disabled
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                setLightness(45);
+                setWarmth(50);
+                setRange([20, 75]);
+                setCommitted("Reset");
               }}
-            />{" "}
-            Disabled
-          </label>
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </section>
     </div>

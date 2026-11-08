@@ -17,7 +17,6 @@ export const HaloDemo = () => {
         <HaloPicker aria-label="Accent color" onChange={setColor} value={color} />
       </div>
       <div className="halo-demo-cell halo-demo-readout">
-        <div className="halo-demo-label">Current</div>
         <Swatch aria-label={`Current color ${hex}`} color={hex} size="4xl" />
         <dl>
           <div>

@@ -6,13 +6,7 @@ import { useReducer } from "react";
 import { OptionBar } from "./option-bar";
 
 const scaleValues = [0, 25, 50, 75, 100] as const;
-const scaleColors: Record<(typeof scaleValues)[number], string> = {
-  0: "#77756d",
-  100: "#27734d",
-  25: "#7f6a35",
-  50: "#315c4b",
-  75: "#2d6659",
-};
+const EVERGREEN = "#315c4b";
 const NULL_COLOR = "#77756d";
 
 type ScaleStep = (typeof scaleValues)[number] | "null";
@@ -48,7 +42,7 @@ const getColor = (step: ScaleStep) => {
   if (step === "null") {
     return NULL_COLOR;
   }
-  return scaleColors[step];
+  return EVERGREEN;
 };
 
 const getLabel = (step: ScaleStep) => {
@@ -113,7 +107,7 @@ export const StatusDemo = () => {
               type="button"
             >
               <StatusMark
-                color={scaleColors[v]}
+                color={EVERGREEN}
                 label={`${v}%`}
                 size="xl"
                 tone={step === v ? "accent" : "muted"}
@@ -134,8 +128,8 @@ export const StatusDemo = () => {
             dispatch({ type: "set-variant", variant: nextVariant });
           }}
           options={[
-            { label: "fill", value: "fill" as const },
-            { label: "border", value: "border" as const },
+            { label: "Fill", value: "fill" as const },
+            { label: "Border", value: "border" as const },
           ]}
           value={variant}
         />

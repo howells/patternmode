@@ -17,18 +17,20 @@ export const OptionBar = <T extends string | number>({
 }: OptionBarProps<T>) => (
   <fieldset className="option-bar">
     <legend className="option-bar-label">{label}</legend>
-    {options.map((option) => (
-      <button
-        aria-pressed={isPressed ? isPressed(option.value) : value === option.value}
-        className="option-bar-item"
-        key={String(option.value)}
-        onClick={() => {
-          onChange(option.value);
-        }}
-        type="button"
-      >
-        {option.label}
-      </button>
-    ))}
+    <span className="option-bar-items">
+      {options.map((option) => (
+        <button
+          aria-pressed={isPressed ? isPressed(option.value) : value === option.value}
+          className="option-bar-item"
+          key={String(option.value)}
+          onClick={() => {
+            onChange(option.value);
+          }}
+          type="button"
+        >
+          {option.label}
+        </button>
+      ))}
+    </span>
   </fieldset>
 );

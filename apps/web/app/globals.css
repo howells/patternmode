@@ -138,16 +138,18 @@ button {
 }
 
 .product-heading h2,
-.sheet-panel-content h2,
-.sheet-panel-content h3,
-.stacksheet-copy h3 {
+.product-heading h2 {
   @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
+}
+
+.sheet-panel-content h2,
+.sheet-panel-content h3 {
+  @apply m-0 type-title font-normal;
 }
 
 .product-heading p,
 .api-section-header p,
 .sheet-panel-content p,
-.stacksheet-copy p,
 .read-more {
   @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
 }
@@ -176,27 +178,6 @@ button {
   @apply mb-[18px] flex flex-wrap gap-[14px];
 }
 
-.segmented-field {
-  @apply flex items-center gap-2.5;
-}
-
-.segmented-field > span {
-  @apply text-[13px] text-[color:var(--muted-foreground)];
-}
-
-.segmented-control {
-  @apply flex gap-0.5 rounded-full border border-[color:var(--border-soft)] bg-[var(--surface-soft)] p-0.5;
-}
-
-.segmented-control button {
-  @apply min-h-[26px] cursor-pointer rounded-full border-0 bg-transparent px-2.5 text-[13px] leading-[18px] text-[color:var(--muted-foreground)] transition-[background,color] duration-[140ms];
-}
-
-.segmented-control button[aria-pressed="true"] {
-  @apply bg-[var(--ink)] text-white;
-}
-
-.segmented-control button:focus-visible,
 .demo-button-row button:focus-visible,
 .sheet-action-row button:focus-visible {
   @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
@@ -219,52 +200,110 @@ button {
 }
 
 .aperto-controls {
-  @apply flex flex-wrap items-center gap-x-5 gap-y-1.5;
+  @apply flex flex-wrap items-center gap-x-6 gap-y-3;
 }
 
 .option-bar {
-  @apply m-0 flex min-w-0 items-center gap-0.5 border-0 p-0;
+  @apply m-0 flex min-w-0 items-center gap-2.5 border-0 p-0;
 }
 
 .option-bar-label {
-  @apply float-left mr-1 py-1 text-[13px] leading-[18px] text-[color:var(--muted-foreground)];
+  @apply float-left type-ui text-muted-foreground;
+}
+
+.option-bar-items {
+  @apply flex rounded-[8px] p-0.5 shadow-[inset_0_0_0_1px_var(--border)];
 }
 
 .option-bar-item {
-  @apply cursor-pointer rounded border-0 bg-transparent px-1.5 py-1 text-[13px] leading-[18px] text-[color:var(--muted-foreground)] transition-colors duration-[120ms];
+  @apply relative h-7 min-w-8 cursor-pointer rounded-[6px] border-0 bg-transparent px-2.5 type-ui tabular-nums text-muted-foreground transition-[background,color,box-shadow] duration-[120ms];
+}
+
+/* 44px tall to the touch, 28px to the eye. */
+.option-bar-item::before {
+  @apply absolute inset-x-0 -inset-y-2 content-[''];
 }
 
 .option-bar-item[aria-pressed="true"] {
-  @apply font-medium text-[color:var(--ink)];
+  @apply bg-card text-foreground shadow-[0_1px_2px_rgb(29_29_27/0.08),inset_0_0_0_1px_var(--border)];
 }
 
 .option-bar-item:focus-visible {
   @apply outline-2 outline-offset-1 outline-[color:var(--ring)];
 }
 
-.stacksheet-surface {
-  @apply grid min-h-[260px] items-stretch gap-[18px] [grid-template-columns:minmax(180px,0.82fr)_1fr];
+.stacksheet-launcher {
+  @apply flex flex-col;
 }
 
-.stack-preview {
-  @apply relative min-h-[240px] overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)];
-  background: linear-gradient(135deg, rgba(49, 92, 75, 0.08), transparent 56%), var(--surface-soft);
+.palette-rows {
+  @apply m-0 flex list-none flex-col p-0;
 }
 
-.stack-preview div {
-  @apply absolute top-[46px] right-6 h-[58%] w-[58%] rounded-[var(--radius)] border border-[color:var(--border)] bg-[rgba(255,255,255,0.92)] shadow-[0_12px_32px_rgba(29,29,27,0.08)];
+.palette-rows li + li {
+  @apply border-t border-[color:var(--border-soft)];
 }
 
-.stack-preview div:nth-child(2) {
-  @apply top-[64px] right-[42px];
+.palette-row {
+  @apply flex min-h-12 w-full cursor-pointer items-center gap-4 rounded-[calc(var(--radius)-2px)] border-0 bg-transparent px-2 py-3 text-left text-inherit transition-[background] duration-[140ms];
 }
 
-.stack-preview div:nth-child(3) {
-  @apply top-[82px] right-[60px];
+.palette-row:focus-visible {
+  @apply outline-2 outline-offset-[-2px] outline-[color:var(--ring)];
 }
 
-.stacksheet-copy {
-  @apply self-center;
+@media (hover: hover) and (pointer: fine) {
+  .palette-row:hover {
+    @apply bg-[var(--surface-soft)];
+  }
+}
+
+.palette-row .palette-bar {
+  @apply w-24 shrink-0;
+}
+
+.palette-row-name {
+  @apply flex-1 type-ui text-[color:var(--ink)];
+}
+
+.palette-row-value {
+  @apply type-ui tabular-nums text-[color:var(--muted-foreground)];
+}
+
+.palette-bar {
+  @apply flex h-6 gap-0.5 overflow-hidden rounded-[calc(var(--radius)-2px)];
+}
+
+.palette-bar > span {
+  @apply min-w-0;
+}
+
+.sheet-panel-content > .palette-bar {
+  @apply mt-4 mb-2 h-10;
+}
+
+.palette-dot {
+  @apply size-6 shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgb(0_0_0/0.08)];
+}
+
+.colour-sheet-fill {
+  @apply mt-4 block aspect-[2/1] w-full rounded-[var(--radius)] shadow-[inset_0_0_0_1px_rgb(0_0_0/0.08)];
+}
+
+.colour-sheet-facts {
+  @apply m-0 mt-2 flex flex-col;
+}
+
+.colour-sheet-facts > div {
+  @apply flex justify-between gap-4 border-b border-[color:var(--border-soft)] py-2.5 type-ui;
+}
+
+.colour-sheet-facts dt {
+  @apply text-[color:var(--muted-foreground)];
+}
+
+.colour-sheet-facts dd {
+  @apply m-0 tabular-nums;
 }
 
 .demo-button-row,
@@ -300,10 +339,6 @@ button {
 
 .sheet-panel-content {
   @apply p-6;
-}
-
-.sheet-kicker {
-  @apply m-0 mb-2 text-sm text-[color:var(--ring)];
 }
 
 .sheet-list {
@@ -348,14 +383,6 @@ button {
 
 .stacksheet-row-open {
   @apply ml-auto inline-flex shrink-0 grow-0 items-center gap-1 text-sm text-[color:var(--ring)];
-}
-
-.stacksheet-row-open svg {
-  @apply transition-transform duration-[160ms];
-}
-
-.stacksheet-row:hover .stacksheet-row-open svg {
-  @apply translate-x-[3px];
 }
 
 .sheet-link-list {
@@ -475,7 +502,7 @@ button {
 }
 
 .thumbnail-demo {
-  @apply grid gap-4;
+  @apply grid gap-12;
 }
 
 .thumbnail-demo-pair {
@@ -493,7 +520,7 @@ button {
 /* A fieldset, so the named group needs no ARIA role: drop its default margin
    and min-content floor so it behaves like the other demo blocks. */
 .thumbnail-demo-sizes {
-  @apply m-0 flex min-w-0 flex-wrap items-end justify-center gap-6;
+  @apply m-0 flex min-w-0 flex-wrap items-end justify-center gap-6 border-0 p-0;
 }
 
 .thumbnail-demo-image {
@@ -540,17 +567,12 @@ button {
   @apply m-0 text-sm font-medium leading-[1.2] tracking-normal;
 }
 
-.deck-empty-state p,
-.deck-demo-state {
+.deck-empty-state p {
   @apply mx-0 mt-2 mb-0 text-sm leading-[1.6] text-[color:var(--muted-foreground)];
 }
 
 .deck-empty-state {
   @apply absolute inset-0 flex flex-col items-center justify-center rounded-lg border border-dashed border-[color:var(--border)] bg-[var(--surface)] p-6 text-center;
-}
-
-.deck-demo-state {
-  @apply m-0 p-0 text-sm leading-none;
 }
 
 /* ── Swatch demo ───────────────────────────── */
@@ -559,11 +581,7 @@ button {
 .swatch-demo {
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding: 32px 36px;
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  background: var(--surface);
+  gap: 32px;
 }
 
 .swatch-demo-cell {
@@ -571,12 +589,6 @@ button {
   flex-direction: column;
   gap: 16px;
   min-width: 0;
-}
-
-@media (max-width: 47.99rem) {
-  .swatch-demo {
-    padding: 24px;
-  }
 }
 
 /* The read-only bar takes the reference column's width. */
@@ -648,11 +660,11 @@ button {
 /* ── Halo demo ─────────────────────────────── */
 
 .halo-demo {
-  @apply relative grid w-full gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)] [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:[grid-template-columns:1fr];
+  @apply relative grid w-full items-center gap-10 [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:[grid-template-columns:1fr];
 }
 
 .halo-demo-cell {
-  @apply flex min-w-0 flex-col gap-4 bg-[var(--surface)] p-9 max-md:p-6;
+  @apply flex min-w-0 flex-col gap-4;
 }
 
 .halo-demo-picker {
@@ -661,10 +673,6 @@ button {
 
 .halo-demo-readout {
   @apply justify-center;
-}
-
-.halo-demo-label {
-  @apply type-ui text-muted-foreground;
 }
 
 .halo-demo dl {
@@ -680,13 +688,13 @@ button {
 }
 
 .halo-demo dd {
-  @apply m-0 type-data text-muted-foreground;
+  @apply m-0 type-data text-foreground;
 }
 
 /* ── Briolette demo ────────────────────────────── */
 
 .briolette-demo {
-  @apply relative flex w-full flex-col items-center gap-[22px] rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] px-9 pt-12 pb-9 max-md:px-5 max-md:pt-8 max-md:pb-6;
+  @apply relative flex w-full flex-col items-center gap-8;
 }
 
 .briolette-demo-swatch {
@@ -724,11 +732,11 @@ button {
 /* ── Status demo ───────────────────────────── */
 
 .status-demo {
-  @apply grid gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)];
+  @apply grid gap-10;
 }
 
 .status-demo-cell {
-  @apply flex flex-col gap-6 bg-[var(--surface)] p-8 max-md:p-6;
+  @apply flex flex-col gap-6;
 }
 
 .status-demo-cell--full {
@@ -736,11 +744,11 @@ button {
 }
 
 .status-demo-preview {
-  @apply flex items-center justify-center px-8 py-11;
+  @apply flex items-center justify-center;
 }
 
 .status-demo-states {
-  @apply m-0 flex min-w-0 flex-wrap items-center justify-center gap-5 border-0 p-0;
+  @apply m-0 flex min-w-0 flex-wrap items-center justify-center gap-5 border-0 p-0 max-sm:justify-between max-sm:gap-0;
 }
 
 .status-demo-state-item {
@@ -764,7 +772,7 @@ button {
 }
 
 .status-demo-controls {
-  @apply flex-row items-center gap-5 px-8 py-[14px] max-md:px-6;
+  @apply flex-row items-center justify-center;
 }
 
 /* ── ScrollFrame demo ───────────────────────── */
@@ -786,7 +794,7 @@ button {
 }
 
 .scrollframe-demo-row {
-  @apply grid gap-[14px] px-2.5 py-[13px] [grid-template-columns:38px_1fr];
+  @apply flex items-baseline justify-between gap-4 px-2.5 py-[13px];
 }
 
 .scrollframe-demo-row + .scrollframe-demo-row {
@@ -794,11 +802,11 @@ button {
 }
 
 .scrollframe-demo-row span {
-  @apply type-body tabular-nums text-muted-foreground;
+  @apply type-ui text-foreground;
 }
 
-.scrollframe-demo-row p {
-  @apply m-0 text-sm leading-[1.55] text-[color:var(--muted-foreground)];
+.scrollframe-demo-row span + span {
+  @apply tabular-nums text-muted-foreground;
 }
 
 .scrollframe-demo-strip {
@@ -831,16 +839,11 @@ button {
   @apply type-ui text-muted-foreground;
 }
 
-.tags-demo-note {
-  @apply m-0 text-sm leading-[1.55] text-[color:var(--muted-foreground)];
-}
-
 .tags-demo-row {
   @apply flex flex-wrap items-center gap-2;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .segmented-control button:hover,
   .demo-button-row button:hover,
   .sheet-action-row button:hover {
     border-color: var(--ring);
@@ -855,19 +858,11 @@ button {
   }
 
   .option-bar-item:hover {
-    color: var(--ink);
+    color: var(--foreground);
   }
 }
 
 @media (max-width: 720px) {
-  .stacksheet-surface {
-    grid-template-columns: 1fr;
-  }
-
-  .stack-preview {
-    min-height: 190px;
-  }
-
   .deck-stage {
     min-height: 360px;
   }
@@ -1166,11 +1161,6 @@ body.site {
   outline-offset: -2px;
 }
 
-.site-nav-number {
-  color: var(--muted-foreground);
-  font-variant-numeric: tabular-nums;
-}
-
 .site-nav-link[aria-current]::after {
   position: absolute;
   inset: auto 0 0;
@@ -1183,20 +1173,15 @@ body.site {
   .site-nav-link:hover {
     color: var(--ring);
   }
-
-  .site-nav-link:hover .site-nav-number {
-    color: inherit;
-  }
 }
 
-/* Phones: four sections centred in one row, numbers and GitHub dropped. */
+/* Phones: four sections centred in one row, GitHub dropped. */
 @media (max-width: 39.99rem) {
   .site-nav-list {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .site-nav-item[data-item="github"],
-  .site-nav-number {
+  .site-nav-item[data-item="github"] {
     display: none;
   }
 
@@ -2236,9 +2221,13 @@ body.site {
   display: flex;
   flex: 1 1 720px;
   flex-direction: column;
+  align-items: center;
   justify-content: safe center;
   min-width: 0;
   height: 100%;
+  padding: 40px;
+  border-radius: 12px;
+  background: var(--muted);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -2248,6 +2237,8 @@ body.site {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  max-width: 640px;
   min-width: 0;
 }
 
@@ -2477,9 +2468,6 @@ body.site {
 /* The reference column is narrow: code wraps instead of scrolling sideways,
    and API rows stack their name over the detail. */
 .reference .code-block {
-  border-color: #1d1d1b;
-  background: #1d1d1b;
-  color: #e8e6e1;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -2532,6 +2520,10 @@ body.site {
     flex: none;
     height: auto;
     overflow: visible;
+  }
+
+  .frame-stage {
+    padding: 32px 20px;
   }
 
   .frame-reference {

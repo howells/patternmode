@@ -11,22 +11,6 @@ const DEMO_CLASSNAMES = {
 
 // ── Row (the quiet launcher) ────────────────────
 
-const OpenArrow = () => (
-  <svg
-    aria-hidden="true"
-    fill="none"
-    height="12"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth="1.5"
-    viewBox="0 0 24 24"
-    width="12"
-  >
-    <path d="M5 12h14M13 6l6 6-6 6" />
-  </svg>
-);
-
 const Row = ({
   name,
   description,
@@ -39,10 +23,7 @@ const Row = ({
   <button className="stacksheet-row" onClick={onOpen} type="button">
     <span className="stacksheet-row-name">{name}</span>
     <span className="stacksheet-row-desc">{description}</span>
-    <span className="stacksheet-row-open">
-      Open
-      <OpenArrow />
-    </span>
+    <span className="stacksheet-row-open">Open</span>
   </button>
 );
 
@@ -52,7 +33,6 @@ const InfoContent = ({ title, body }: { title: string; body: string }) => {
   const { close } = useSheetPanel();
   return (
     <div className="sheet-panel-content">
-      <p className="sheet-kicker">Example</p>
       <h3>{title}</h3>
       <p>{body}</p>
       <div className="sheet-action-row">
@@ -68,7 +48,6 @@ const FormContent = () => {
   const { close } = useSheetPanel();
   return (
     <div className="sheet-panel-content">
-      <p className="sheet-kicker">repositionInputs</p>
       <h3>Contact</h3>
       <p>On mobile, focus a field and the sheet lifts above the on-screen keyboard.</p>
       <div className="sheet-form">
@@ -150,8 +129,7 @@ const NestedLevel = ({ depth }: { depth: number }) => {
   const { close, back, isNested } = useSheetPanel();
   return (
     <div className="sheet-panel-content">
-      <p className="sheet-kicker">Level {depth}</p>
-      <h3>Stacked sheet</h3>
+      <h3>Level {depth}</h3>
       <p>Push keeps the path back: each layer sits behind the next.</p>
       <div className="sheet-action-row">
         <button
@@ -282,10 +260,7 @@ const RegionSheet = ({ depth, name }: { depth: number; name: string }) => {
               type="button"
             >
               <span className="stacksheet-row-name">{region}</span>
-              <span className="stacksheet-row-open">
-                Open
-                <OpenArrow />
-              </span>
+              <span className="stacksheet-row-open">Open</span>
             </button>
           ))}
         </nav>

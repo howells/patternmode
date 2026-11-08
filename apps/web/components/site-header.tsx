@@ -105,11 +105,6 @@ export const SiteHeader = () => {
                         : undefined
                     }
                   >
-                    {item.number === undefined ? null : (
-                      <span aria-hidden="true" className="site-nav-number">
-                        {item.number}
-                      </span>
-                    )}
                     {item.label}
                   </Link>
                 )}

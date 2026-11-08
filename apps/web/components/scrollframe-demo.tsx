@@ -3,14 +3,16 @@
 import { ScrollFrame } from "@patternmode/scrollframe";
 import { useState } from "react";
 
-const notes = [
-  "Selection state remains visible while the surrounding page stays still.",
-  "Fades disappear at the exact edge instead of being hard-coded decoration.",
-  "Native scrolling keeps trackpad, keyboard, and touch behavior predictable.",
-  "Horizontal strips use the same primitive as vertical panels.",
-  "Consumers can hide scrollbars without losing measured edge state.",
-  "Content can be cards, rows, forms, menus, or any custom layout.",
-];
+const activity = [
+  ["Pushed sheet", "09:41"],
+  ["Palette saved", "09:38"],
+  ["Tag added", "09:12"],
+  ["Image opened", "08:57"],
+  ["Deck finished", "08:40"],
+  ["Swatch renamed", "08:22"],
+  ["Colour picked", "08:05"],
+  ["Thumbnail cropped", "07:51"],
+] as const;
 
 const chips = [
   "Granite",
@@ -39,16 +41,16 @@ export const ScrollFrameDemo = () => {
   return (
     <div className="scrollframe-demo">
       <ScrollFrame
-        aria-label="Implementation notes"
+        aria-label="Activity"
         className="scrollframe-demo-panel"
         fadeColor="var(--surface)"
         viewportClassName="scrollframe-demo-viewport"
       >
         <div className="scrollframe-demo-list">
-          {notes.map((note, index) => (
-            <div className="scrollframe-demo-row" key={note}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <p>{note}</p>
+          {activity.map(([label, time]) => (
+            <div className="scrollframe-demo-row" key={label}>
+              <span>{label}</span>
+              <span>{time}</span>
             </div>
           ))}
         </div>

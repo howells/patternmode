@@ -46,9 +46,6 @@ export const TagsDemo = () => {
           placeholder="Add tags"
           value={tags}
         />
-        <p className="tags-demo-note">
-          Search, create from the menu, create from separators, paste, and toggle selected options.
-        </p>
       </div>
 
       <div className="tags-demo-cell">

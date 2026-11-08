@@ -108,13 +108,13 @@ const ThumbnailDemo = () => (
   <div className="thumbnail-demo">
     <div className="thumbnail-demo-pair">
       {[false, true].map((raised) => (
-        <figure className="demo-block thumbnail-demo-example" key={String(raised)}>
+        <figure className="thumbnail-demo-example" key={String(raised)}>
           <Thumbnail alt={imageDescription} raised={raised} size={128} src={image} />
           <figcaption>{raised ? "Inset edge with lift" : "Inset edge"}</figcaption>
         </figure>
       ))}
     </div>
-    <fieldset aria-label="Thumbnail sizes" className="demo-block thumbnail-demo-sizes">
+    <fieldset aria-label="Thumbnail sizes" className="thumbnail-demo-sizes">
       {[32, 48, 64, 96].map((size) => (
         <figure className="thumbnail-demo-example" key={size}>
           <Thumbnail alt="" size={size} src={image} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { Deck } from "@patternmode/deck";
-import type { AdvanceDirection, DeckMode } from "@patternmode/deck";
+import type { DeckMode } from "@patternmode/deck";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -12,7 +12,6 @@ import { OptionBar } from "./option-bar";
 export const DeckDemo = () => {
   const [mode, setMode] = useState<DeckMode>("cycle");
   const [visibleCount, setVisibleCount] = useState(3);
-  const [lastAdvance, setLastAdvance] = useState<AdvanceDirection | "none">("none");
 
   return (
     <div className="deck-demo">
@@ -22,9 +21,6 @@ export const DeckDemo = () => {
           className="deck-surface"
           key={mode}
           mode={mode}
-          onAdvance={({ direction }) => {
-            setLastAdvance(direction);
-          }}
           rotation={7}
           visibleCount={visibleCount}
         >
@@ -70,7 +66,6 @@ export const DeckDemo = () => {
           ]}
           value={visibleCount}
         />
-        <p className="deck-demo-state">Last advance: {lastAdvance}</p>
       </div>
     </div>
   );

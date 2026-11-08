@@ -1,65 +1,82 @@
 .channel-demo {
   display: grid;
 }
-.channel-demo h2 {
-  margin: 0 0 4px;
-  font-size: 1rem;
-  font-weight: 600;
-}
-.channel-demo p {
-  margin: 0;
-  color: var(--muted-foreground);
-  font-size: 0.875rem;
-}
 .channel-demo-studio {
   display: grid;
-  gap: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 1.5rem;
-  padding: clamp(1rem, 4vw, 2rem);
-}
-.channel-demo-heading {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.channel-demo-heading button {
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 0.35rem 0.8rem;
-  font-size: 0.8rem;
-  cursor: pointer;
+  gap: 24px;
+  padding: 32px;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--border);
 }
 .channel-demo-row {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr);
   align-items: start;
-  gap: 1rem;
+  gap: 16px;
 }
 .channel-demo-status {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.75rem;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
   color: var(--muted-foreground);
 }
-.channel-demo-status label {
+.channel-demo-actions {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  gap: 20px;
+}
+.channel-demo-actions label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+}
+.channel-demo-actions button {
+  font: inherit;
+  position: relative;
+  height: 28px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.channel-demo-actions button::before {
+  position: absolute;
+  inset: -8px 0;
+  content: "";
+}
+.channel-demo-actions button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .channel-demo-actions button:hover {
+    box-shadow: inset 0 0 0 1px var(--foreground);
+  }
 }
 .channel-demo-size-row {
   display: grid;
   grid-template-columns: 2.5rem 6rem minmax(0, 1fr);
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 .channel-demo-size-row code {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
 }
 @media (max-width: 480px) {
+  .channel-demo-studio {
+    padding: 20px;
+  }
   .channel-demo-size-row {
     grid-template-columns: 2rem minmax(0, 1fr);
   }
@@ -70,7 +87,7 @@
 /* Short laptops: the studio keeps every control, a little closer together. */
 @media (min-width: 64rem) and (max-height: 47.5rem) {
   .channel-demo-studio {
-    gap: 1.25rem;
-    padding: 1.5rem 2rem;
+    gap: 20px;
+    padding: 24px;
   }
 }
