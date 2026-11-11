@@ -2,7 +2,7 @@
 
 import { Deck } from "@/components/patternmode/deck";
 import { DistributionDisplay, Swatch } from "@/components/patternmode/swatch";
-import type { DistributionBarSegment } from "@/components/patternmode/swatch";
+import type { DistributionSegment } from "@/components/patternmode/swatch";
 import { createStacksheet } from "@/components/patternmode/stacksheet";
 import { Tag, TagSelector } from "@/components/patternmode/tags";
 import type { TagItem } from "@/components/patternmode/tags";
@@ -21,7 +21,7 @@ const finishes = [
   { color: "#c4b7a3", name: "Dune" },
 ] as const;
 
-const assignedDistribution: DistributionBarSegment[] = [
+const assignedDistribution: DistributionSegment[] = [
   { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 38 },
   { color: "#d9a441", id: "saffron", label: "Saffron", value: 24 },
   { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 17 },

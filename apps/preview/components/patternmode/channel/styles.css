@@ -1,40 +1,46 @@
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Channel only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
 @layer theme, base, components, utilities;
 
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override it with their own utilities. Do not hoist a
+   rule out of this block. */
 @layer components {
   .pm-channel {
     --patternmode-channel-inset: calc(var(--patternmode-channel-size) / 12);
     --patternmode-channel-thumb: calc(var(--patternmode-channel-size) * 5 / 6);
-    width: 100%;
-    min-width: calc(var(--patternmode-channel-size) * 2);
+    @apply w-full min-w-[calc(var(--patternmode-channel-size)*2)];
   }
 
   .pm-channel-control {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: var(--patternmode-channel-size);
-    margin-inline: var(--patternmode-channel-inset);
-    border-radius: 999px;
+    @apply relative isolate mx-(--patternmode-channel-inset) flex h-(--patternmode-channel-size) cursor-grab items-center rounded-[999px] select-none;
+    /* Plain, not `touch-pan-y`: that utility composes through `--tw-pan-*`
+       and would merge with a consumer's own `touch-pan-*` instead of yielding. */
     touch-action: pan-y;
-    user-select: none;
-    cursor: grab;
-    isolation: isolate;
   }
 
   .pm-channel-control:active {
-    cursor: grabbing;
+    @apply cursor-grabbing;
   }
 
   .pm-channel-track {
-    position: absolute;
-    inset: 0 calc(-1 * var(--patternmode-channel-inset));
-    overflow: clip;
-    border-radius: inherit;
+    @apply pointer-events-none absolute inset-[0_calc(-1*var(--patternmode-channel-inset))] overflow-clip rounded-[inherit];
     background: var(--patternmode-channel-background);
     box-shadow:
       inset 0 2px 2px rgb(0 0 0 / 15%),
       inset 0 0 0 1px rgb(255 255 255 / 12%);
-    pointer-events: none;
   }
 
   /* A range dims the track outside its two thumbs. The veil is drawn on the
@@ -51,11 +57,8 @@
      shares as --patternmode-channel-start and --patternmode-channel-end. */
   .pm-channel-track--range::before,
   .pm-channel-track--range::after {
-    content: "";
-    position: absolute;
-    inset-block: 0;
+    @apply pointer-events-none absolute inset-y-0 content-[''];
     background: rgb(255 255 255 / 50%);
-    pointer-events: none;
     --patternmode-channel-cap: radial-gradient(
       circle calc(var(--patternmode-channel-size) / 2) at var(--patternmode-channel-cap-at) 50%,
       transparent calc(100% - 0.5px),
@@ -67,20 +70,12 @@
 
   .pm-channel-track::before {
     --patternmode-channel-cap-at: 100%;
-    inset-inline-start: 0;
-    width: calc(
-      var(--patternmode-channel-size) / 2 + var(--patternmode-channel-start, 0) *
-        (100% - var(--patternmode-channel-size))
-    );
+    @apply start-0 w-[calc(var(--patternmode-channel-size)/2+var(--patternmode-channel-start,0)*(100%-var(--patternmode-channel-size)))];
   }
 
   .pm-channel-track::after {
     --patternmode-channel-cap-at: 0%;
-    inset-inline-end: 0;
-    width: calc(
-      var(--patternmode-channel-size) / 2 + (1 - var(--patternmode-channel-end, 1)) *
-        (100% - var(--patternmode-channel-size))
-    );
+    @apply end-0 w-[calc(var(--patternmode-channel-size)/2+(1-var(--patternmode-channel-end,1))*(100%-var(--patternmode-channel-size)))];
   }
 
   /* Right to left, each veil's thumb is at its other end. */
@@ -93,78 +88,59 @@
   }
 
   .pm-channel-aperture {
-    position: absolute;
-    height: var(--patternmode-channel-size);
-    border-radius: inherit;
-    pointer-events: none;
+    @apply pointer-events-none absolute h-(--patternmode-channel-size) rounded-[inherit];
   }
 
   .pm-channel-thumb {
-    position: absolute;
-    top: 50%;
-    width: var(--patternmode-channel-thumb);
-    height: var(--patternmode-channel-thumb);
-    border-radius: 50%;
+    @apply absolute top-1/2 z-1 size-(--patternmode-channel-thumb) rounded-[50%];
     outline: none;
-    z-index: 1;
   }
 
   .pm-channel-thumb::before {
-    content: "";
-    position: absolute;
-    inset: min(0px, calc((var(--patternmode-channel-thumb) - 44px) / 2));
-    border-radius: inherit;
+    @apply absolute inset-[min(0px,calc((var(--patternmode-channel-thumb)-44px)/2))] rounded-[inherit] content-[''];
   }
 
+  /* The ring alone measured 2.3:1 against a near-black track and 1.2:1
+     against the glass inside it. A band of the page colour inside the ring
+     makes it two-tone, so one of its edges contrasts on any ramp. */
   .pm-channel-thumb:has(:focus-visible) .pm-channel-glass {
-    outline: 2px solid var(--ring, #53736b);
-    outline-offset: -2px;
+    @apply -outline-offset-2 outline-2 outline-solid outline-[color:var(--ring,#53736b)];
+    box-shadow:
+      inset 0 0 0 4px var(--background, #fff),
+      inset -2px -2px 1px -2px rgb(255 255 255 / 70%),
+      inset 2px 2px 1px -2px rgb(255 255 255 / 70%),
+      0 0 0 1px rgb(255 255 255 / 18%);
   }
 
   .pm-channel-glass {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    border-radius: inherit;
+    @apply pointer-events-none absolute inset-0 grid place-items-center rounded-[inherit];
     background: linear-gradient(180deg, rgb(255 255 255 / 48%), rgb(255 255 255 / 14%));
     box-shadow:
       inset -2px -2px 1px -2px rgb(255 255 255 / 70%),
       inset 2px 2px 1px -2px rgb(255 255 255 / 70%),
       0 0 0 1px rgb(255 255 255 / 18%);
     filter: drop-shadow(0 1px 2px rgb(17 24 39 / 20%));
-    pointer-events: none;
   }
 
   .pm-channel-core {
-    width: 30%;
-    height: 30%;
-    border-radius: 50%;
+    @apply size-[30%] rounded-[50%];
     background: var(--foreground, #1d1d1b);
   }
 
   .pm-channel-labels {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 0.5rem;
-    padding-inline: 0.5rem;
-    color: var(--foreground, #1d1d1b);
+    /* `font` resets the size, weight and line height, so it comes first. */
     font: inherit;
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1;
-    min-height: 1rem;
+    @apply mt-2 flex min-h-4 justify-between gap-4 px-2 text-[0.75rem] leading-none font-medium text-[color:var(--foreground,#1d1d1b)];
   }
 
   .pm-channel-labels > :last-child {
-    text-align: end;
+    @apply text-end;
   }
   .pm-channel[data-disabled] {
-    opacity: 0.5;
+    @apply opacity-50;
   }
   .pm-channel[data-disabled] .pm-channel-control {
-    cursor: not-allowed;
+    @apply cursor-not-allowed;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -186,7 +162,7 @@
     }
     .pm-channel-thumb[data-active-thumb] .pm-channel-core {
       scale: 1.25;
-      transition: scale 200ms cubic-bezier(0.34, 1.4, 0.64, 1) 80ms;
+      transition: scale 160ms cubic-bezier(0.165, 0.84, 0.44, 1);
     }
   }
 
