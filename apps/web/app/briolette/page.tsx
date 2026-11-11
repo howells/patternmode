@@ -1,16 +1,10 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
-import { BrioletteDemo } from "@/components/briolette-demo";
+import { BrioletteDemo, BrioletteVariants } from "@/components/briolette-demo";
+import { PackageDocs } from "@/components/package-docs";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description:
-    "Spinnable geodesic color sphere whose facets refine around each selection in OKLab.",
-  title: "Briolette | Patternmode",
-};
+export const metadata = componentMetadata("briolette");
 
 const brioletteApi: ApiSection[] = [
   {
@@ -113,14 +107,13 @@ export function AccentColorField() {
 
 export default function BriolettePage() {
   return (
-    <ComponentFrame demo={<BrioletteDemo />} slug="briolette">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/briolette" />
-        <CodeBlock>{brioletteExample}</CodeBlock>
-      </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={brioletteApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={brioletteApi}
+      demo={<BrioletteDemo />}
+      example={brioletteExample}
+      installLead="The value is a hex string, or null when nothing is chosen."
+      slug="briolette"
+      variants={<BrioletteVariants />}
+    />
   );
 }

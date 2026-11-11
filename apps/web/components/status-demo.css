@@ -1,0 +1,44 @@
+@reference "../app/globals.css";
+
+/* The six steps as a row you can pick from, and a list that uses one. */
+.status-demo {
+  @apply flex flex-col items-center gap-10;
+}
+
+.status-demo-steps {
+  @apply m-0 flex min-w-0 flex-wrap items-start justify-center gap-x-6 gap-y-6 border-0 p-0;
+}
+
+.status-demo-step {
+  @apply flex cursor-pointer flex-col items-center gap-3.5 border-0 bg-transparent p-0;
+}
+
+.status-demo-step span {
+  @apply type-meta tabular-nums text-muted-foreground transition-colors duration-[140ms];
+}
+
+.status-demo-step[aria-pressed="true"] span {
+  @apply font-medium text-foreground;
+}
+
+.status-demo-step:focus-visible {
+  @apply rounded outline-2 outline-offset-4 outline-ring;
+}
+
+.status-demo-list {
+  @apply m-0 flex w-full max-w-[300px] list-none flex-col rounded-xl border border-border bg-card px-4 py-1.5;
+}
+
+.status-demo-list li {
+  @apply type-ui flex h-11 items-center gap-3 border-b border-border last:border-b-0;
+}
+
+/* A variant specimen on a card or dark ground rather than the quiet inset. It
+   fills the whole preview, which pads its children by 24px. */
+.status-ground {
+  @apply -m-6 flex min-h-40 w-[calc(100%+3rem)] items-center justify-center gap-5 bg-card shadow-[inset_0_0_0_1px_var(--border)];
+}
+
+.status-ground--dark {
+  @apply bg-[var(--dark-card)] shadow-none;
+}

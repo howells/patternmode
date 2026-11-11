@@ -10,6 +10,15 @@ import { useActiveSection } from "@/lib/shell-store";
 
 const HOME_PANE = "#content";
 
+/**
+ * A pointer click glides, so the reader sees where the page went. The
+ * keyboard (a click with no pointer has `detail` 0) and reduced motion jump.
+ */
+const scrollBehavior = (event: MouseEvent<HTMLAnchorElement>): ScrollBehavior =>
+  event.detail === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "instant"
+    : "smooth";
+
 /** On Home the pane scrolls, not the window, so going to the top is the pane's job. */
 const scrollHomeToTop = (event: MouseEvent<HTMLAnchorElement>) => {
   const pane = document.querySelector<HTMLElement>(HOME_PANE);
@@ -17,7 +26,7 @@ const scrollHomeToTop = (event: MouseEvent<HTMLAnchorElement>) => {
     return;
   }
   event.preventDefault();
-  pane.scrollTo({ top: 0 });
+  pane.scrollTo({ behavior: scrollBehavior(event), top: 0 });
   // Leaving a section is a step Back can undo, like the contents links.
   if (window.location.hash !== "") {
     history.pushState(history.state, "", "/");
@@ -37,7 +46,7 @@ const scrollHomeToSection = (event: MouseEvent<HTMLAnchorElement>, href: string)
     return;
   }
   event.preventDefault();
-  section.scrollIntoView({ block: "start" });
+  section.scrollIntoView({ behavior: scrollBehavior(event), block: "start" });
   if (window.location.hash !== hash) {
     history.pushState(history.state, "", `/${hash}`);
   }
@@ -105,6 +114,11 @@ export const SiteHeader = () => {
                         : undefined
                     }
                   >
+                    {item.number === undefined ? null : (
+                      <span aria-hidden="true" className="site-nav-number">
+                        {item.number}
+                      </span>
+                    )}
                     {item.label}
                   </Link>
                 )}

@@ -1,0 +1,818 @@
+@reference "./globals.css";
+
+/* ══ Home ═══════════════════════════════════════════════════════════════════
+   One scrolling pane: hero, Theme, Type, Components, Install, footer. Rules
+   between sections hang off the bottom of the section above, so a section
+   scrolled to the top never doubles the header's own bottom rule. */
+
+/* Every pane is positioned, so nothing absolutely placed inside it (a live
+   region, a sheet drawing) can escape to the document and make it scroll. */
+.home-pane {
+  position: relative;
+}
+
+.home-pane {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  outline: none;
+}
+
+.home > .hero,
+.home > .home-section,
+.home > .site-footer {
+  width: var(--inner);
+  margin-inline: auto;
+}
+
+/* Hero */
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 64px;
+  padding-top: 96px;
+  padding-bottom: 112px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-copy {
+  display: flex;
+  /* 600 in the drawing; the command and link need 609, so the column takes
+     the 16px the row has spare rather than wrapping the link. */
+  flex: 0 1 616px;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+.hero-title {
+  @apply type-display;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.hero-lead {
+  @apply type-lead;
+  max-width: 540px;
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding-top: 12px;
+}
+
+@media (min-width: 64rem) {
+  .hero-actions {
+    flex-wrap: nowrap;
+  }
+}
+
+.hero-actions .copy-command {
+  flex-shrink: 0;
+  justify-content: flex-start;
+  box-shadow: 0 1px 2px #1d1d1b0f;
+}
+
+.hero-browse {
+  @apply type-ui;
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--foreground);
+  text-decoration: underline 1px var(--border);
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-browse:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* The hero's sheet stack: a picture of Stacksheet two sheets deep. */
+.hero-sheet {
+  position: relative;
+  flex-shrink: 0;
+  width: 440px;
+  height: 500px;
+}
+
+.hero-sheet-root {
+  @apply type-ui;
+  position: absolute;
+  top: 0;
+  left: 22px;
+  display: flex;
+  justify-content: space-between;
+  width: 396px;
+  height: 480px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.hero-sheet-active {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  height: 480px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 18px 60px #1d1d1b1f;
+}
+
+.hero-sheet-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding-inline: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-sheet-title {
+  @apply type-label;
+  display: flex;
+  align-items: center;
+}
+
+.hero-sheet-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.hero-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.hero-sheet-colour {
+  height: 168px;
+  border-radius: var(--radius);
+  background: #315c4b;
+  box-shadow: inset 0 0 0 1px #00000014;
+}
+
+.hero-sheet-facts {
+  margin: 0;
+}
+
+.hero-sheet-facts div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-sheet-facts dt {
+  @apply type-ui;
+  color: var(--muted-foreground);
+}
+
+.hero-sheet-facts dd {
+  @apply type-data;
+  margin: 0;
+}
+
+.hero-sheet-bar {
+  display: flex;
+  gap: 2px;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.hero-sheet-legend {
+  @apply type-meta;
+  display: flex;
+  gap: 16px;
+  color: var(--muted-foreground);
+}
+
+/* Sections */
+
+.home-section {
+  display: flex;
+  gap: 64px;
+  padding-top: 40px;
+  padding-bottom: 120px;
+}
+
+.home-section--theme,
+#type {
+  border-bottom: 1px solid var(--border);
+}
+
+.section-intro {
+  display: flex;
+  flex: 0 0 280px;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  @apply type-title;
+  margin: 0;
+}
+
+.section-lead {
+  @apply type-body;
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+.section-lead code {
+  @apply type-data;
+  color: var(--foreground);
+}
+
+/* Theme */
+
+.theme-content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 56px;
+  min-width: 0;
+}
+
+.faces {
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.face {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.face-glyph {
+  font-size: 112px;
+  line-height: 112px;
+  color: var(--foreground);
+}
+
+.face-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: normal;
+  letter-spacing: -0.02em;
+}
+
+.face-sans {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv01", "cv02", "cv11";
+  letter-spacing: -0.03em;
+}
+
+.face-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: normal;
+  letter-spacing: -0.04em;
+}
+
+.face-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.face-name {
+  @apply type-label;
+}
+
+.face-note {
+  @apply type-meta;
+  color: var(--muted-foreground);
+}
+
+.token-lists {
+  display: flex;
+  gap: 16px;
+}
+
+.token-list {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 8px 20px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.token-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  border-bottom: 1px solid var(--border);
+}
+
+.token-row:last-child {
+  border-bottom: 0;
+}
+
+.token-swatch {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px #0000001a;
+}
+
+.token-name {
+  @apply type-ui;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.token-value {
+  @apply type-data;
+  color: var(--muted-foreground);
+}
+
+.token-list[data-tone="dark"] {
+  border-color: var(--dark-border);
+  background: var(--dark-background);
+  color: var(--dark-foreground);
+}
+
+.token-list[data-tone="dark"] .token-row {
+  border-bottom-color: var(--dark-border);
+}
+
+.token-list[data-tone="dark"] .token-row:last-child {
+  border-bottom: 0;
+}
+
+.token-list[data-tone="dark"] .token-swatch {
+  box-shadow: inset 0 0 0 1px #ffffff24;
+}
+
+.token-list[data-tone="dark"] .token-value {
+  color: var(--dark-muted-foreground);
+}
+
+/* Type roles */
+
+.type-roles {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+}
+
+.type-role {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.type-role[data-role="type-display"] {
+  padding-top: 20px;
+  padding-bottom: 24px;
+}
+
+.type-role[data-role="type-figure"] {
+  padding-bottom: 20px;
+}
+
+.type-role-name {
+  @apply type-data;
+  flex: 0 0 128px;
+  color: var(--muted-foreground);
+}
+
+.type-role-sample {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  color: var(--foreground);
+}
+
+.type-role-sample.type-lead,
+.type-role-sample.type-meta {
+  color: var(--muted-foreground);
+}
+
+.type-role-spec {
+  @apply type-meta;
+  flex: 0 0 150px;
+  margin: 0;
+  color: var(--muted-foreground);
+  text-align: right;
+}
+
+/* Components */
+
+.home-section--components {
+  flex-direction: column;
+  gap: 48px;
+}
+
+.components-intro {
+  display: flex;
+  gap: 64px;
+}
+
+.components-intro .section-title {
+  flex: 0 0 280px;
+}
+
+.components-intro .section-lead {
+  max-width: 520px;
+}
+
+.catalogue-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalogue-tile[data-wide] {
+  grid-column: span 2;
+}
+
+.catalogue-link {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--foreground);
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+.catalogue-link:focus-visible {
+  outline-offset: 4px;
+}
+
+.catalogue-figure {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.preview-stage {
+  height: 260px;
+  border-radius: 12px;
+  background: var(--muted);
+}
+
+.catalogue-tile[data-slug="stacksheet"] .preview-stage,
+.catalogue-tile[data-slug="swatch"] .preview-stage {
+  height: 300px;
+}
+
+/* Aperto's figure is the open viewer, so its stage is the dark surround. */
+.catalogue-tile[data-slug="aperto"] .preview-stage {
+  background: var(--color-fixture-ink);
+}
+
+.catalogue-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.catalogue-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 12px;
+}
+
+.catalogue-name {
+  @apply type-label;
+  transition: color 150ms ease;
+}
+
+.catalogue-package {
+  @apply type-data;
+  color: var(--muted-foreground);
+}
+
+.catalogue-summary {
+  @apply type-body;
+  color: var(--muted-foreground);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .catalogue-link:hover .catalogue-name {
+    color: var(--ring);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogue-name {
+    transition: none;
+  }
+}
+
+/* Install band: full bleed, on the dark tokens. */
+
+.install-band {
+  display: flex;
+  justify-content: center;
+  padding-top: 96px;
+  padding-bottom: 104px;
+  background: var(--dark-background);
+  color: var(--dark-foreground);
+}
+
+.install-inner {
+  display: flex;
+  gap: 64px;
+  width: var(--inner);
+}
+
+.install-band .section-lead {
+  color: var(--dark-muted-foreground);
+}
+
+.install-steps {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.install-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding-block: 28px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.install-step:first-child {
+  padding-top: 0;
+}
+
+.install-step:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.install-step-copy {
+  display: flex;
+  flex: 0 0 240px;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.install-step-title {
+  @apply type-heading;
+  margin: 0;
+  font-weight: 400;
+}
+
+.install-step-description {
+  @apply type-body;
+  margin: 0;
+  color: var(--dark-muted-foreground);
+}
+
+.install-step-command {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.install-step-note {
+  @apply type-meta;
+  margin: 0;
+  color: var(--dark-muted-foreground);
+}
+
+.home > .site-footer {
+  padding-top: 32px;
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+
+/* Home between laptop and phone: the hero stacks, the grid goes to two. */
+@media (max-width: 63.99rem) {
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+    padding-top: 56px;
+    padding-bottom: 64px;
+  }
+
+  .hero-copy {
+    flex-basis: auto;
+  }
+
+  .hero-sheet {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .home-section {
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 28px;
+    padding-bottom: 56px;
+  }
+
+  .section-intro {
+    flex-basis: auto;
+    gap: 8px;
+  }
+
+  .catalogue-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalogue-tile[data-wide] {
+    grid-column: auto;
+  }
+
+  .install-inner {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .install-band {
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+}
+
+/* Phones: one column at 24px insets, as drawn at 390. */
+@media (max-width: 39.99rem) {
+  .hero {
+    gap: 20px;
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .hero-copy {
+    gap: 20px;
+  }
+
+  .hero-actions {
+    padding-top: 0;
+  }
+
+  .hero-actions .copy-command {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* The sheet arrives as a bottom sheet, cut by the hero's edge. */
+  .hero-sheet {
+    height: 300px;
+    max-width: none;
+    overflow: hidden;
+  }
+
+  .hero-sheet-root,
+  .hero-sheet-active {
+    width: auto;
+  }
+
+  .hero-sheet-root {
+    right: 16px;
+    left: 16px;
+  }
+
+  .hero-sheet-active {
+    right: 0;
+    left: 0;
+  }
+
+  .faces {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .face {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .face-glyph {
+    flex: 0 0 96px;
+    font-size: 64px;
+    line-height: 72px;
+  }
+
+  .face-caption {
+    flex: 1 1 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .theme-content {
+    gap: 32px;
+  }
+
+  .token-lists {
+    flex-direction: column;
+  }
+
+  .type-role {
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+
+  .type-role-name {
+    flex: 1 1 auto;
+  }
+
+  .type-role-spec {
+    flex: 0 0 auto;
+    order: 2;
+  }
+
+  .type-role-sample {
+    flex: 1 0 100%;
+    order: 3;
+  }
+
+  .components-intro {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .components-intro .section-title {
+    flex-basis: auto;
+  }
+
+  .catalogue-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .install-step {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .install-step-copy {
+    flex-basis: auto;
+  }
+
+  .install-step-command {
+    width: 100%;
+  }
+
+  .home > .site-footer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 4px;
+    padding-top: 20px;
+  }
+
+  .site-footer-links a {
+    padding-inline: 0 16px;
+  }
+}

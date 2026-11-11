@@ -1,0 +1,9 @@
+@reference "../app/globals.css";
+
+.tags-demo {
+  @apply flex w-full max-w-[440px] flex-col gap-2;
+}
+
+.tags-demo-label {
+  @apply type-label;
+}

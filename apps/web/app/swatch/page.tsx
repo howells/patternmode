@@ -1,16 +1,12 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
+import { ApiTable, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
+import { InstallBlock } from "@/components/install-block";
 import { SwatchDemo, SwatchVariants } from "@/components/swatch-demo";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description:
-    "Color, gradient, image, and weighted palette swatches with selection, remove, unavailable, and contrast-aware states.",
-  title: "Swatch | Patternmode",
-};
+export const metadata = componentMetadata("swatch");
 
 const swatchApi: ApiSection[] = [
   {
@@ -238,12 +234,17 @@ function PalettePreview() {
 
 export default function SwatchPage() {
   return (
-    <ComponentFrame demo={<SwatchDemo />} slug="swatch">
+    <ComponentFrame
+      caption="Circle, pill with two stops, square, selected, unavailable, block. Below, the distribution bar."
+      demo={<SwatchDemo />}
+      slug="swatch"
+    >
       <SwatchVariants />
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/swatch" />
-        <CodeBlock>{swatchExample}</CodeBlock>
-      </DocsBlock>
+      <InstallBlock
+        command="npm i @patternmode/swatch motion"
+        example={swatchExample}
+        lead="Import the styles once. Swatch and DistributionBar come from the same package."
+      />
       <DocsBlock title="Core API">
         <ApiTable sections={swatchApi} />
       </DocsBlock>

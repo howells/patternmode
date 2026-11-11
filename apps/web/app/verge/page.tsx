@@ -1,15 +1,13 @@
 import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
+import { InstallBlock } from "@/components/install-block";
 import { VergeDemo } from "@/components/verge-demo";
+import { VergeVariants } from "@/components/verge-variants";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description: "A reserved slot whose controls reveal on hover, on focus, and always on touch.",
-  title: "Verge | Patternmode",
-};
+export const metadata = componentMetadata("verge");
 
 const vergeApi: ApiSection[] = [
   {
@@ -56,17 +54,13 @@ const vergeApi: ApiSection[] = [
 const vergeExample = `import { Verge } from "@patternmode/verge";
 import "@patternmode/verge/styles.css";
 
-export function FinishRow({ finish }) {
-  return (
-    <Verge.Root as="li">
-      <span>{finish.name}</span>
-      <Verge.Slot slots={2}>
-        <IconButton label="Rename" />
-        <OverflowMenu />
-      </Verge.Slot>
-    </Verge.Root>
-  );
-}`;
+<Verge.Root as="li">
+  <span>{item.name}</span>
+  <Verge.Slot slots={2}>
+    <IconButton label="Edit" />
+    <OverflowMenu />
+  </Verge.Slot>
+</Verge.Root>`;
 
 const hitAreaExample = `/* Verge reserves the slot; it does not own your button. On touch the
    controls are permanently visible, so each needs a 48x48px hit area. */
@@ -74,10 +68,19 @@ const hitAreaExample = `/* Verge reserves the slot; it does not own your button.
 
 export default function VergePage() {
   return (
-    <ComponentFrame demo={<VergeDemo />} slug="verge">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/verge" />
-        <CodeBlock>{vergeExample}</CodeBlock>
+    <ComponentFrame
+      caption="At rest, pointed at, and reached by Tab. The hex values never move."
+      demo={<VergeDemo />}
+      slug="verge"
+    >
+      <VergeVariants />
+      <InstallBlock
+        command="npm i @patternmode/verge"
+        example={vergeExample}
+        lead="Wrap the whole row in Verge.Root, not just the controls. Needs Tailwind CSS v4."
+      />
+      <DocsBlock title="Core API">
+        <ApiTable sections={vergeApi} />
       </DocsBlock>
       <DocsBlock title="What it already handles">
         <ApiTable
@@ -126,9 +129,6 @@ export default function VergePage() {
             },
           ]}
         />
-      </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={vergeApi} />
       </DocsBlock>
       <DocsBlock title="What you must handle: touch hit areas">
         <CodeBlock>{hitAreaExample}</CodeBlock>

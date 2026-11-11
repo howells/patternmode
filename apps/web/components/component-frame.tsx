@@ -5,17 +5,21 @@ import { ScrollPane } from "@/components/scroll-pane";
 import { SiteFooter } from "@/components/site-footer";
 import { findEntry } from "@/lib/catalogue";
 import { readPackageFacts } from "@/lib/package-facts";
+import "./component-frame.css";
 
 /**
  * Every component page: the name, what it does and its live demo held still
- * on the left, with the reference scrolling on its own beside it. On narrow
- * screens the two become one column under the header.
+ * on a plate on the left, with the reference scrolling on its own beside it.
+ * On narrow screens the two become one column under the header.
  */
 export const ComponentFrame = ({
+  caption,
   children,
   demo,
   slug,
 }: {
+  /** One line under the plate saying what to try. */
+  caption?: string;
   children: ReactNode;
   demo: ReactNode;
   slug: string;
@@ -45,7 +49,8 @@ export const ComponentFrame = ({
 
       <div className="frame-body">
         <section aria-label={`${entry.name} demo`} className="frame-stage">
-          <div className="frame-stage-inner">{demo}</div>
+          <div className="frame-plate">{demo}</div>
+          {caption === undefined ? null : <p className="frame-caption">{caption}</p>}
         </section>
 
         <ScrollPane
@@ -68,13 +73,7 @@ export const ComponentFrame = ({
               <dl className="reference-rows">
                 {entry.access.rows.map((row) => (
                   <div className="reference-row" key={row.name}>
-                    <dt
-                      className={
-                        row.code === true ? "reference-key reference-key--code" : "reference-key"
-                      }
-                    >
-                      {row.name}
-                    </dt>
+                    <dt className="reference-key">{row.name}</dt>
                     <dd className="reference-value">{row.description}</dd>
                   </div>
                 ))}

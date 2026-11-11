@@ -1,21 +1,11 @@
-import { CodeBlock, DocsBlock } from "@howells/site-ui";
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
-import { ChannelDemo, ChannelSizes } from "@/components/channel-demo";
-import "./channel.css";
+import { ChannelDemo, ChannelSizes, ChannelVariants } from "@/components/channel-demo";
+import { InstallBlock } from "@/components/install-block";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata = {
-  description: "Gradient channel sliders with glass thumbs and Swatch sizing.",
-  title: "Channel | Patternmode",
-};
+export const metadata = componentMetadata("channel");
 
-export default function ChannelPage() {
-  return (
-    <ComponentFrame demo={<ChannelDemo />} slug="channel">
-      <ChannelSizes />
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/channel" />
-        <CodeBlock>{`import { ChannelSlider } from "@patternmode/channel";
+const channelExample = `import { ChannelSlider } from "@patternmode/channel";
 import "@patternmode/channel/styles.css";
 
 <ChannelSlider
@@ -28,8 +18,18 @@ import "@patternmode/channel/styles.css";
   getThumbColor={(value) => value < 50 ? "#000" : "#fff"}
   labelStart="Lighter"
   labelEnd="Darker"
-/>`}</CodeBlock>
-      </DocsBlock>
+/>`;
+
+export default function ChannelPage() {
+  return (
+    <ComponentFrame demo={<ChannelDemo />} slug="channel">
+      <ChannelVariants />
+      <ChannelSizes />
+      <InstallBlock
+        command="npm i @patternmode/channel"
+        example={channelExample}
+        lead="Update local state on every move. Run expensive work in onValueCommitted."
+      />
     </ComponentFrame>
   );
 }

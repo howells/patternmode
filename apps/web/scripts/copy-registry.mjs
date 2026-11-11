@@ -20,7 +20,7 @@ const registryFiles = jsonFilesIn(source);
 
 if (registryFiles.length === 0) {
   console.error(
-    `No registry files found at ${path.relative(root, source)}. Run "pnpm turbo run build --filter=@patternmode/theme" first.`,
+    `No registry files found at ${path.relative(root, source)}. Run "REGISTRY_BASE_URL=http://localhost:3000 pnpm turbo run build --filter=@patternmode/theme" first.`,
   );
   process.exit(1);
 }

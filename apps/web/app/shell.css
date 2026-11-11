@@ -1,0 +1,291 @@
+@reference "./globals.css";
+
+/* ══ Site shell ═════════════════════════════════════════════════════════════
+   The window never scrolls. One compact 96px header (8 top, 32 name, 8 gap,
+   46 ruled contents, 2 bottom) sits above a clipped region, and each page
+   brings its own scrolling pane. The header is the same size on every route
+   and at every scroll position. */
+
+.skip-link {
+  @apply sr-only;
+}
+
+.skip-link:focus-visible {
+  @apply not-sr-only fixed top-3 left-3 z-[60] rounded-lg bg-foreground px-4 py-3 type-ui text-background no-underline outline-2 outline-offset-2 outline-ring;
+}
+
+:root {
+  --dark-background: oklch(19.9% 0.004 106.8);
+  --dark-card: oklch(23% 0.004 106.7);
+  --dark-foreground: oklch(92.5% 0.007 88.6);
+  --dark-muted-foreground: oklch(70.8% 0.012 95.2);
+  --dark-border: oklch(32.1% 0.007 95.3);
+  --inner: min(70rem, calc(100% - 3rem));
+  --gutter-left: max(1.5rem, env(safe-area-inset-left));
+  --gutter-right: max(1.5rem, env(safe-area-inset-right));
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body.site {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.site-main {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+  overflow: clip;
+}
+
+.site-main > * {
+  min-height: 0;
+}
+
+:where(.site a, .site button):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ── Header ─────────────────────────────────── */
+
+.site-header {
+  position: relative;
+  z-index: 10;
+  padding-top: env(safe-area-inset-top);
+  padding-inline: var(--gutter-left) var(--gutter-right);
+  background: var(--background);
+}
+
+.site-header-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(70rem, 100%);
+  margin-inline: auto;
+  padding-top: 8px;
+  padding-bottom: 2px;
+}
+
+.site-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+
+.site-name {
+  @apply type-title;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.site-nav-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--foreground);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav-link {
+  @apply type-ui;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 44px;
+  line-height: 20px;
+  color: var(--foreground);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav-number {
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.site-nav-link:focus-visible {
+  outline-offset: -2px;
+}
+
+.site-nav-link[aria-current]::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--ring);
+  content: "";
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-link:hover {
+    color: var(--ring);
+  }
+}
+
+/* Phones: four sections centred in one row, GitHub dropped. */
+@media (max-width: 39.99rem) {
+  .site-nav-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .site-nav-item[data-item="github"] {
+    display: none;
+  }
+
+  .site-nav-link {
+    justify-content: center;
+  }
+
+  .site-nav-number {
+    display: none;
+  }
+}
+
+/* ── Copy command ───────────────────────────── */
+
+.copy-command {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  min-height: 44px;
+  overflow: hidden;
+  padding-left: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.copy-command-text {
+  @apply type-data;
+  min-width: 0;
+  padding-block: 12px;
+  white-space: nowrap;
+}
+
+.copy-command-tool {
+  color: var(--muted-foreground);
+}
+
+.copy-command-button {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 44px;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.copy-command-button:focus-visible {
+  outline-offset: -3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .copy-command-button:hover {
+    background: var(--muted);
+  }
+}
+
+.copy-command[data-tone="dark"] {
+  border-color: var(--dark-border);
+  background: var(--dark-card);
+  color: var(--dark-foreground);
+}
+
+.copy-command[data-tone="dark"] .copy-command-tool {
+  color: var(--dark-muted-foreground);
+}
+
+.copy-command[data-tone="dark"] .copy-command-button {
+  border-left-color: var(--dark-border);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .copy-command[data-tone="dark"] .copy-command-button:hover {
+    background: var(--dark-border);
+  }
+}
+
+/* Phones: the tool drops to its own line and the argument stays whole. */
+@media (max-width: 39.99rem) {
+  .copy-command-text {
+    font-size: 12px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .copy-command-tool {
+    display: block;
+  }
+}
+
+/* ── Footer ─────────────────────────────────── */
+
+.site-footer {
+  @apply type-meta;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  color: var(--muted-foreground);
+}
+
+.site-footer-credit {
+  margin: 0;
+}
+
+.site-footer-links {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 16px of text, 44px to a thumb. */
+.site-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer-links li:last-child a {
+  margin-right: -8px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer-links a:hover {
+    color: var(--foreground);
+  }
+}
+
+.copy-command {
+  position: relative;
+}

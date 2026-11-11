@@ -1,0 +1,105 @@
+@reference "../app/globals.css";
+
+/* The hero: the deck beside a column of arrows and one line on how to move
+   it. 1280 by 720 leaves 308px, so the deck scales down with --deck-scale. */
+.deck-demo {
+  --deck-scale: 1;
+  @apply flex flex-wrap items-center justify-center gap-x-12 gap-y-10;
+}
+
+@media (min-width: 64rem) and (max-height: 47.5rem) {
+  .deck-demo {
+    --deck-scale: 0.78;
+  }
+}
+
+.deck-surface {
+  @apply h-[calc(346px*var(--deck-scale))] w-[calc(300px*var(--deck-scale))] max-w-full shrink-0;
+}
+
+.deck-card {
+  @apply flex flex-col overflow-hidden rounded-[14px] border-0 bg-[var(--card)] p-0 shadow-[0_0_0_1px_rgb(0_0_0/0.06),0_2px_4px_rgb(0_0_0/0.08),0_12px_24px_-8px_rgb(0_0_0/0.18)];
+}
+
+.deck-card-image {
+  @apply relative block min-h-0 flex-1;
+}
+
+.deck-card-image img {
+  @apply pointer-events-none block h-full w-full object-cover select-none;
+}
+
+.deck-card-caption {
+  @apply flex shrink-0 flex-col gap-0.5 px-4 py-3.5;
+}
+
+.deck-card-title {
+  @apply type-label;
+}
+
+.deck-card-count {
+  @apply type-data text-[color:var(--muted-foreground)];
+}
+
+.deck-side {
+  @apply flex w-[280px] max-w-full flex-col gap-4;
+}
+
+.deck-arrows {
+  @apply flex gap-2;
+}
+
+.deck-arrow {
+  @apply type-data inline-flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-md border border-[color:var(--border)] bg-[var(--card)] px-2 text-[color:var(--foreground)];
+}
+
+.deck-arrow:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+.deck-hint {
+  @apply type-body m-0 text-[color:var(--muted-foreground)];
+  line-height: 21px;
+}
+
+.deck-code {
+  @apply type-data text-[color:var(--foreground)];
+}
+
+/* States and variants: small live decks, 84 by 96. They are specimens, so
+   the cards are plain chips and the back cards keep to two flat tones. */
+.deck-chip-deck {
+  @apply h-24 w-[84px] shrink-0;
+}
+
+.deck-chip {
+  @apply rounded-lg border-0 bg-[var(--card)] p-0 shadow-[0_0_0_1px_rgb(0_0_0/0.06),0_2px_6px_rgb(0_0_0/0.1)];
+}
+
+.deck-chip[data-tone="mid"] {
+  background: #c4b59e;
+}
+
+.deck-chip[data-tone="far"] {
+  background: #d8cfc0;
+}
+
+.deck-chip-deck[data-disabled="true"] {
+  @apply opacity-50;
+}
+
+.deck-chip-empty {
+  @apply flex h-24 w-[84px] shrink-0 items-center justify-center rounded-lg border border-dashed border-[color:var(--muted-foreground)] p-2 text-center type-meta text-[color:var(--muted-foreground)];
+}
+
+.deck-chip-keep {
+  @apply absolute inset-0 flex items-center justify-center rounded-[inherit] bg-[#315c4b1f] type-meta font-medium text-[color:var(--accent-foreground)];
+}
+
+.deck-chip-hint {
+  @apply pointer-events-none absolute top-[58px] left-[36px] text-[color:var(--muted-foreground)];
+}
+
+.deck-chevron {
+  @apply shrink-0;
+}

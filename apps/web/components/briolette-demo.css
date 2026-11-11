@@ -1,0 +1,48 @@
+@reference "../app/globals.css";
+
+/* The sphere with its hex chip, beside the three things you can do to it. */
+.briolette-demo {
+  @apply flex flex-wrap items-center justify-center gap-x-12 gap-y-8;
+}
+
+.briolette-demo-picker {
+  @apply flex flex-col items-center gap-5;
+}
+
+.briolette-demo-hex {
+  @apply flex items-center gap-2;
+}
+
+.briolette-demo-hex output {
+  @apply type-data text-foreground;
+}
+
+.briolette-demo-notes {
+  @apply flex w-[300px] max-w-full flex-col gap-4;
+}
+
+.briolette-demo-notes dl {
+  @apply m-0 flex flex-col;
+}
+
+.briolette-demo-notes dl div {
+  @apply flex h-10 items-center gap-3 border-b border-border;
+}
+
+.briolette-demo-notes dt {
+  @apply w-16 shrink-0 type-data text-foreground;
+}
+
+.briolette-demo-notes dd {
+  @apply m-0 type-meta text-muted-foreground;
+}
+
+.briolette-demo-notes p {
+  @apply m-0 type-meta text-muted-foreground;
+}
+
+/* A variant specimen on a dark ground rather than the quiet inset. It fills
+   the whole preview, which pads its children by 24px. */
+.briolette-demo-ground {
+  @apply -m-6 flex min-h-40 w-[calc(100%+3rem)] items-center justify-center bg-[var(--dark-card)];
+}

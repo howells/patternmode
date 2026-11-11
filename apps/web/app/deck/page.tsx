@@ -1,16 +1,13 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
+import { ApiTable, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
 import { DeckDemo } from "@/components/deck-demo";
+import { DeckVariants } from "@/components/deck-variants";
+import { InstallBlock } from "@/components/install-block";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description:
-    "Card decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
-  title: "Deck | Patternmode",
-};
+export const metadata = componentMetadata("deck");
 
 const deckApi: ApiSection[] = [
   {
@@ -70,24 +67,26 @@ const deckApi: ApiSection[] = [
 const deckExample = `import { Deck } from "@patternmode/deck";
 import "@patternmode/deck/styles.css";
 
-export function ProjectDeck() {
-  return (
-    <Deck mode="cycle" visibleCount={3} onAdvance={({ direction }) => console.log(direction)}>
-      <Deck.Card key="one">One</Deck.Card>
-      <Deck.Card key="two">Two</Deck.Card>
-      <Deck.Card key="three">Three</Deck.Card>
-      <Deck.Empty>No cards left</Deck.Empty>
-    </Deck>
-  );
-}`;
+<Deck
+  aria-label="Project cards"
+  mode="cycle"
+  visibleCount={3}
+  onAdvance={({ direction }) => console.log(direction)}
+>
+  <Deck.Card key="one">One</Deck.Card>
+  <Deck.Card key="two">Two</Deck.Card>
+  <Deck.Empty>No cards left</Deck.Empty>
+</Deck>`;
 
 export default function DeckPage() {
   return (
     <ComponentFrame demo={<DeckDemo />} slug="deck">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/deck" />
-        <CodeBlock>{deckExample}</CodeBlock>
-      </DocsBlock>
+      <DeckVariants />
+      <InstallBlock
+        command="npm i @patternmode/deck motion"
+        example={deckExample}
+        lead="Cards render their children unchanged, so use the image component your app already has."
+      />
       <DocsBlock title="Core API">
         <ApiTable sections={deckApi} />
       </DocsBlock>

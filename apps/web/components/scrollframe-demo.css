@@ -1,0 +1,39 @@
+@reference "../app/globals.css";
+
+.scrollframe-demo {
+  @apply flex w-full items-center gap-8 max-md:flex-col;
+}
+
+.scrollframe-demo-list {
+  @apply h-[300px] w-60 shrink-0 overflow-hidden rounded-xl border border-border bg-card;
+}
+
+.scrollframe-demo-row {
+  @apply mx-5 flex h-[52px] items-center justify-between border-b border-border;
+}
+
+/* The controls sit under the strip, outside its clip, so the Root reserves
+   their row below. */
+.scrollframe-demo-strip {
+  @apply mb-[52px] h-[200px] min-w-0 flex-1 max-md:w-full max-md:flex-none;
+}
+
+.scrollframe-demo-strip [data-slot="scrollframe-viewport"] {
+  @apply rounded-xl;
+}
+
+.scrollframe-demo-photos {
+  @apply flex gap-3;
+}
+
+.scrollframe-demo-photo {
+  @apply h-[200px] w-40 shrink-0 rounded-lg object-cover;
+}
+
+.scrollframe-demo-strip [data-slot="scrollframe-control"] {
+  @apply top-[calc(100%+16px)] right-0 left-auto size-9 transform-none bg-card backdrop-blur-none;
+}
+
+.scrollframe-demo-strip [data-slot="scrollframe-control"][data-direction="start"] {
+  @apply right-11;
+}

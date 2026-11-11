@@ -1,16 +1,14 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
+import { ApiTable, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
+import { InstallBlock } from "@/components/install-block";
 import { StacksheetDemo } from "@/components/stacksheet-demo";
+import { StacksheetVariants } from "@/components/stacksheet-variants";
 import { StacksheetExamples } from "@/components/stacksheet-examples";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description: "Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
-  title: "Stacksheet | Patternmode",
-};
+export const metadata = componentMetadata("stacksheet");
 
 const stacksheetApi: ApiSection[] = [
   {
@@ -78,13 +76,19 @@ function OpenSettings() {
 
 export default function StacksheetPage() {
   return (
-    <ComponentFrame demo={<StacksheetDemo />} slug="stacksheet">
+    <ComponentFrame
+      caption="Two sheets deep. The root sheet steps back; Back pops, Escape pops, Close clears the stack."
+      demo={<StacksheetDemo />}
+      slug="stacksheet"
+    >
+      <StacksheetVariants />
+      <InstallBlock
+        command="npm i @patternmode/stacksheet motion"
+        example={stacksheetExample}
+        lead="Create the stack once, wrap the app in its provider, then open sheets from any component."
+      />
       <DocsBlock title="Examples">
         <StacksheetExamples />
-      </DocsBlock>
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/stacksheet" />
-        <CodeBlock>{stacksheetExample}</CodeBlock>
       </DocsBlock>
       <DocsBlock title="Core API">
         <ApiTable sections={stacksheetApi} />

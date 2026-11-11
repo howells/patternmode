@@ -1,95 +1,31 @@
 "use client";
 
-import { Tag, TagSelector } from "@patternmode/tags";
+import { TagSelector } from "@patternmode/tags";
 import type { TagItem } from "@patternmode/tags";
-import { useState } from "react";
-
-const options: TagItem[] = [
-  { id: "accessible", label: "Accessible", variant: "secondary" },
-  { id: "shadcn-compatible", label: "Shadcn compatible", variant: "outline" },
-  { id: "searchable", label: "Searchable", variant: "secondary" },
-  { id: "command-menu", label: "Command menu", variant: "default" },
-  { id: "paste-friendly", label: "Paste friendly", variant: "outline" },
-  { id: "reusable", label: "Reusable", variant: "secondary" },
-  { id: "keyboard-first", label: "Keyboard first", variant: "outline" },
-  { disabled: true, id: "locked", label: "Locked", variant: "ghost" },
-];
-
-const createTag = (label: string): TagItem => ({
-  id: label.toLowerCase().replaceAll(/[^a-z0-9]+/gu, "-"),
-  label,
-  variant: "outline",
-});
-
-const getOption = (index: number): TagItem => {
-  const option = options[index];
-  if (option === undefined) {
-    throw new Error(`Missing tag demo option at index ${index}.`);
-  }
-  return option;
-};
+import { useId, useState } from "react";
+import { createTag, findTagOption, tagOptions } from "./tags-items";
+import "./tags-demo.css";
 
 export const TagsDemo = () => {
-  const [tags, setTags] = useState<TagItem[]>([getOption(0), getOption(5)]);
-  const [restrictedTags, setRestrictedTags] = useState<TagItem[]>([getOption(3)]);
-  const [showLargeTag, setShowLargeTag] = useState(true);
+  const labelId = useId();
+  const [tags, setTags] = useState<TagItem[]>([
+    findTagOption("accessible"),
+    findTagOption("keyboard-first"),
+  ]);
 
   return (
     <div className="tags-demo">
-      <div className="tags-demo-cell">
-        <div className="tags-demo-label">Selector</div>
-        <TagSelector
-          aria-label="Component tags"
-          onChange={setTags}
-          onCreateItem={createTag}
-          options={options}
-          placeholder="Add tags"
-          value={tags}
-        />
-      </div>
-
-      <div className="tags-demo-cell">
-        <div className="tags-demo-label">Known options</div>
-        <TagSelector
-          aria-label="Known tags"
-          onChange={setRestrictedTags}
-          options={options}
-          placeholder="Choose tags"
-          value={restrictedTags}
-        />
-      </div>
-
-      <div className="tags-demo-cell">
-        <div className="tags-demo-label">Badge variants</div>
-        <div className="tags-demo-row">
-          <Tag variant="default">Default</Tag>
-          <Tag variant="secondary">Secondary</Tag>
-          <Tag variant="destructive">Destructive</Tag>
-          <Tag variant="outline">Outline</Tag>
-          <Tag variant="ghost">Ghost</Tag>
-          <Tag variant="link">Link</Tag>
-        </div>
-      </div>
-
-      <div className="tags-demo-cell">
-        <div className="tags-demo-label">Sizes</div>
-        <div className="tags-demo-row">
-          <Tag size="sm">Small</Tag>
-          <Tag size="base" selected variant="outline">
-            Base
-          </Tag>
-          {showLargeTag ? (
-            <Tag
-              size="lg"
-              onRemove={() => {
-                setShowLargeTag(false);
-              }}
-            >
-              Large
-            </Tag>
-          ) : null}
-        </div>
-      </div>
+      <span className="tags-demo-label" id={labelId}>
+        Project tags
+      </span>
+      <TagSelector
+        aria-labelledby={labelId}
+        onChange={setTags}
+        onCreateItem={createTag}
+        options={tagOptions}
+        placeholder="Select tags"
+        value={tags}
+      />
     </div>
   );
 };

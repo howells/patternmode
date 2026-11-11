@@ -1,0 +1,9 @@
+@reference "../app/globals.css";
+
+.tags-variant-selector {
+  @apply w-full;
+}
+
+.tags-variant-restore {
+  @apply type-ui cursor-pointer rounded-md border-0 bg-transparent px-2 py-1 text-muted-foreground underline underline-offset-4 outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring;
+}

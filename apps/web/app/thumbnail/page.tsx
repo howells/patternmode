@@ -1,16 +1,14 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
+import { ApiTable, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import { Thumbnail } from "@patternmode/thumbnail";
-import type { Metadata } from "next";
 
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
+import { InstallBlock } from "@/components/install-block";
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import { componentMetadata } from "@/lib/catalogue";
+import "./thumbnail.css";
 
-export const metadata: Metadata = {
-  description: "Framed images with an inset hairline, optional lift, and flexible sizing.",
-  title: "Thumbnail | Patternmode",
-};
+export const metadata = componentMetadata("thumbnail");
 
 const image = "/media/light-study.jpg";
 const imageDescription = "Sunlight crossing the floor of a room with textured earth walls";
@@ -74,65 +72,104 @@ const thumbnailApi: ApiSection[] = [
 const example = `import { Thumbnail } from "@patternmode/thumbnail";
 import "@patternmode/thumbnail/styles.css";
 
-// Fixed-size image in a row.
-<Thumbnail src="/room.jpg" alt="Sunlit room" size={48} />;
+<Thumbnail src={thumbHref} alt="" size={32} />
 
-// Preserve the photograph's aspect ratio.
-<Thumbnail
-  src="/room.jpg"
-  alt="Sunlit room"
-  size={null}
-  className="w-full"
-  raised
-/>;`;
+<Thumbnail size={null} fit="contain">
+  <Image src={previewHref} alt={caption} width={640} height={640} />
+</Thumbnail>`;
+
+const LIGHT_ROWS = [
+  { image: "/media/light-study.jpg", name: "Light study", raised: false },
+  { image: "/media/concrete-room.jpg", name: "Concrete room", raised: false },
+  { image: "/media/slit-window.jpg", name: "Slit window, raised", raised: true },
+];
+
+const DARK_ROWS = [
+  { image: "/media/earth-corridor.jpg", name: "Earth corridor", raised: false },
+  { image: "/media/warm-chamber.jpg", name: "Warm chamber", raised: false },
+  { image: "/media/rammed-light.jpg", name: "Rammed light", raised: false },
+];
+
+/* Two lists of the same rows, one on a light card and one on a dark card. The
+   alt text is empty: each row's own title already names the picture. */
+const ThumbnailDemo = () => (
+  <div className="thumbnail-demo">
+    {[
+      { dark: false, rows: LIGHT_ROWS },
+      { dark: true, rows: DARK_ROWS },
+    ].map(({ dark, rows }) => (
+      <ul className="thumbnail-demo-card" data-dark={dark ? "" : undefined} key={String(dark)}>
+        {rows.map((row) => (
+          <li className="thumbnail-demo-row" key={row.name}>
+            <Thumbnail alt="" raised={row.raised} src={row.image} />
+            <span className="thumbnail-demo-name">{row.name}</span>
+            <span className="thumbnail-demo-size">1264 × 848</span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+);
 
 /* The picture's own shape waits in the reference, beside the fixed sizes. */
 const ThumbnailVariants = () => (
   <VariantsBlock
     id="thumbnail-variants-title"
-    lead="Square at a fixed size by default, so a list stays even."
+    lead="Square at a fixed size by default, so a list stays even. Every value is a custom property."
   >
-    <VariantCell code='size={null} fit="contain"' name="Original aspect ratio">
-      <Thumbnail
-        alt={imageDescription}
-        className="thumbnail-demo-image"
-        fit="contain"
-        size={null}
-        src={image}
-      />
+    <VariantCell code="default" name="Inset edge">
+      <div className="thumbnail-ground">
+        <Thumbnail alt={imageDescription} size={72} src={image} />
+      </div>
+    </VariantCell>
+    <VariantCell code="raised" name="Inset edge with lift">
+      <div className="thumbnail-ground">
+        <Thumbnail alt={imageDescription} raised size={72} src={image} />
+      </div>
+    </VariantCell>
+    <VariantCell code="radius={12}" name="Larger radius">
+      <div className="thumbnail-ground">
+        <Thumbnail alt={imageDescription} radius={12} size={72} src="/media/concrete-room.jpg" />
+      </div>
+    </VariantCell>
+    <VariantCell code='fit="contain"' name="Whole picture">
+      <div className="thumbnail-ground">
+        <Thumbnail
+          alt={imageDescription}
+          className="thumbnail-contained"
+          fit="contain"
+          size={72}
+          src="/media/slit-window.jpg"
+        />
+      </div>
+    </VariantCell>
+    <VariantCell code="size={null}" name="Sized by the picture">
+      <div className="thumbnail-ground">
+        <Thumbnail
+          alt={imageDescription}
+          className="thumbnail-unsized"
+          size={null}
+          src="/media/earth-corridor.jpg"
+        />
+      </div>
+    </VariantCell>
+    <VariantCell code="edge turns to a highlight" name="Dark mode">
+      <div className="thumbnail-ground thumbnail-ground--dark">
+        <Thumbnail alt={imageDescription} size={72} src="/media/rammed-light.jpg" />
+      </div>
     </VariantCell>
   </VariantsBlock>
-);
-
-const ThumbnailDemo = () => (
-  <div className="thumbnail-demo">
-    <div className="thumbnail-demo-pair">
-      {[false, true].map((raised) => (
-        <figure className="thumbnail-demo-example" key={String(raised)}>
-          <Thumbnail alt={imageDescription} raised={raised} size={128} src={image} />
-          <figcaption>{raised ? "Inset edge with lift" : "Inset edge"}</figcaption>
-        </figure>
-      ))}
-    </div>
-    <fieldset aria-label="Thumbnail sizes" className="thumbnail-demo-sizes">
-      {[32, 48, 64, 96].map((size) => (
-        <figure className="thumbnail-demo-example" key={size}>
-          <Thumbnail alt="" size={size} src={image} />
-          <figcaption>{size}px</figcaption>
-        </figure>
-      ))}
-    </fieldset>
-  </div>
 );
 
 export default function ThumbnailPage() {
   return (
     <ComponentFrame demo={<ThumbnailDemo />} slug="thumbnail">
       <ThumbnailVariants />
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/thumbnail" />
-        <CodeBlock>{example}</CodeBlock>
-      </DocsBlock>
+      <InstallBlock
+        command="npm i @patternmode/thumbnail"
+        example={example}
+        lead="Pass src for a plain img, or children for your own media element. Needs Tailwind CSS v4."
+      />
       <DocsBlock title="Core API">
         <ApiTable sections={thumbnailApi} />
       </DocsBlock>

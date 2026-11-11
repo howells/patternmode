@@ -1,0 +1,55 @@
+@reference "../app/globals.css";
+
+.vv-rows {
+  @apply flex w-full flex-col gap-1;
+}
+
+.vv-row {
+  @apply relative flex h-10 w-full items-center gap-2.5 rounded-lg bg-card pr-1.5 pl-3;
+}
+
+.vv-menu-stage {
+  @apply h-[112px] w-full;
+}
+
+.vv-name {
+  @apply type-ui min-w-0 flex-1 truncate;
+}
+
+/* Hit areas are 48px on touch. Drawn here at that size so the layout is visible
+   on a mouse too. */
+.vv-touch {
+  @apply h-12 pr-1;
+}
+
+.vv-touch .verge-action {
+  @apply size-12 rounded-md border border-dashed border-ring;
+}
+
+.vv-more {
+  @apply grid size-7 cursor-pointer place-items-center rounded-md border-0 bg-transparent p-0 text-foreground outline-none;
+}
+
+.vv-more:focus-visible {
+  @apply outline-2 outline-offset-2 outline-solid outline-ring;
+}
+
+.vv-more[aria-expanded="true"] {
+  @apply bg-muted;
+}
+
+.vv-menu {
+  @apply absolute top-[calc(100%+4px)] right-1.5 z-10 flex w-[140px] flex-col rounded-lg border border-border bg-card p-1 shadow-md;
+}
+
+.vv-menu-item {
+  @apply type-ui cursor-pointer rounded-md border-0 bg-transparent px-2 py-1.5 text-left text-foreground outline-none hover:bg-muted focus-visible:bg-muted;
+}
+
+.vv-menu-danger {
+  @apply text-[color:var(--destructive)];
+}
+
+.vv-spinner {
+  @apply grid size-7 place-items-center text-muted-foreground motion-safe:animate-spin;
+}

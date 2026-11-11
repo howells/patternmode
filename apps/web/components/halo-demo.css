@@ -1,0 +1,43 @@
+@reference "../app/globals.css";
+
+/* The picker and its readout rows side by side on the plate; they stack when
+   the plate is too narrow for both. */
+.halo-demo {
+  @apply flex flex-wrap items-center justify-center gap-x-[72px] gap-y-8;
+}
+
+.halo-demo-picker {
+  @apply flex flex-col items-center gap-5;
+}
+
+.halo-demo-hex {
+  @apply flex items-center gap-2;
+}
+
+.halo-demo-hex output {
+  @apply type-data text-foreground;
+}
+
+.halo-demo-readout {
+  @apply flex w-[280px] max-w-full flex-col gap-4;
+}
+
+.halo-demo-readout dl {
+  @apply m-0 flex flex-col gap-4;
+}
+
+.halo-demo-readout dl div {
+  @apply flex h-9 items-center justify-between border-b border-border;
+}
+
+.halo-demo-readout dt {
+  @apply type-ui text-muted-foreground;
+}
+
+.halo-demo-readout dd {
+  @apply m-0 type-data text-foreground tabular-nums;
+}
+
+.halo-demo-readout p {
+  @apply m-0 type-meta text-muted-foreground;
+}

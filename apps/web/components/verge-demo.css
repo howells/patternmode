@@ -1,0 +1,24 @@
+@reference "../app/globals.css";
+
+.verge-demo-list {
+  @apply m-0 flex w-full max-w-[560px] list-none flex-col rounded-xl border border-border bg-card p-1.5;
+}
+
+/* The row's only change on hover or focus is this tint; verge itself moves
+   nothing but the slot's opacity. */
+.verge-demo-row {
+  @apply flex h-12 items-center gap-3 rounded-lg pr-2 pl-3.5;
+}
+
+.verge-demo-row:hover,
+.verge-demo-row:focus-within {
+  @apply bg-muted;
+}
+
+.verge-demo-name {
+  @apply type-ui min-w-0 flex-1 truncate;
+}
+
+.verge-demo-hex {
+  @apply type-data text-muted-foreground;
+}

@@ -1,139 +1,64 @@
 "use client";
 
 import { StatusMark } from "@patternmode/status";
-import { useReducer } from "react";
+import { useState } from "react";
 
-import { OptionBar } from "./option-bar";
+import "./status-demo.css";
 
-const scaleValues = [0, 25, 50, 75, 100] as const;
-const EVERGREEN = "#315c4b";
-const NULL_COLOR = "#77756d";
+const TRACK = "var(--border)";
 
-type ScaleStep = (typeof scaleValues)[number] | "null";
-type StatusDemoVariant = "border" | "fill";
-interface StatusDemoState {
-  step: ScaleStep;
-  variant: StatusDemoVariant;
-}
-type StatusDemoAction =
-  | { step: ScaleStep; type: "set-step" }
-  | { type: "set-variant"; variant: StatusDemoVariant };
+type Step = 0 | 25 | 50 | 75 | 100 | "null";
 
-const initialState: StatusDemoState = {
-  step: 50,
-  variant: "fill",
-};
+const STEPS: Step[] = ["null", 0, 25, 50, 75, 100];
 
-const statusDemoReducer = (state: StatusDemoState, action: StatusDemoAction): StatusDemoState => {
-  switch (action.type) {
-    case "set-step": {
-      return { ...state, step: action.step };
-    }
-    case "set-variant": {
-      return { ...state, variant: action.variant };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+const markProps = (step: Step) =>
+  step === "null"
+    ? ({ status: "null", tone: "muted" } as const)
+    : ({ tone: "accent", value: step } as const);
 
-const getColor = (step: ScaleStep) => {
-  if (step === "null") {
-    return NULL_COLOR;
-  }
-  return EVERGREEN;
-};
-
-const getLabel = (step: ScaleStep) => {
-  if (step === "null") {
-    return "Null";
-  }
-  return `${step}%`;
-};
-
-const getMarkProps = (step: ScaleStep) => {
-  if (step === "null") {
-    return { status: "null" as const };
-  }
-  return { value: step };
-};
+const stepLabel = (step: Step) => (step === "null" ? "Not measured" : String(step));
 
 export const StatusDemo = () => {
-  const [{ step, variant }, dispatch] = useReducer(statusDemoReducer, initialState);
+  const [step, setStep] = useState<Step>(50);
 
   return (
     <div className="status-demo">
-      <div className="status-demo-cell status-demo-cell--full status-demo-preview">
-        <StatusMark
-          color={getColor(step)}
-          label={getLabel(step)}
-          size="2xl"
-          trackColor="#edeae2"
-          variant={variant}
-          {...getMarkProps(step)}
-        />
-      </div>
-
-      <div className="status-demo-cell status-demo-cell--full">
-        <fieldset className="status-demo-states" aria-label="Status values">
+      <fieldset aria-label="Status values" className="status-demo-steps">
+        {STEPS.map((value) => (
           <button
-            aria-pressed={step === "null"}
-            className="status-demo-state-item"
+            aria-pressed={step === value}
+            className="status-demo-step"
+            key={value}
             onClick={() => {
-              dispatch({ step: "null", type: "set-step" });
+              setStep(value);
             }}
             type="button"
           >
             <StatusMark
-              color={NULL_COLOR}
-              label="Null"
-              size="xl"
-              status="null"
-              tone={step === "null" ? "accent" : "muted"}
-              trackColor="#edeae2"
-              variant={variant}
+              label={stepLabel(value)}
+              size="2xl"
+              trackColor={TRACK}
+              {...markProps(value)}
             />
-            <span aria-hidden="true" className="status-demo-null-label" />
+            <span>{stepLabel(value)}</span>
           </button>
-          {scaleValues.map((v) => (
-            <button
-              aria-pressed={step === v}
-              className="status-demo-state-item"
-              key={v}
-              onClick={() => {
-                dispatch({ step: v, type: "set-step" });
-              }}
-              type="button"
-            >
-              <StatusMark
-                color={EVERGREEN}
-                label={`${v}%`}
-                size="xl"
-                tone={step === v ? "accent" : "muted"}
-                trackColor="#edeae2"
-                variant={variant}
-                value={v}
-              />
-              <span>{v}</span>
-            </button>
-          ))}
-        </fieldset>
-      </div>
+        ))}
+      </fieldset>
 
-      <div className="status-demo-cell status-demo-cell--full status-demo-controls">
-        <OptionBar
-          label="Variant"
-          onChange={(nextVariant) => {
-            dispatch({ type: "set-variant", variant: nextVariant });
-          }}
-          options={[
-            { label: "Fill", value: "fill" as const },
-            { label: "Border", value: "border" as const },
-          ]}
-          value={variant}
-        />
-      </div>
+      <ul className="status-demo-list">
+        <li>
+          <StatusMark size="2xs" tone="accent" trackColor={TRACK} value={100} />
+          Colour audit
+        </li>
+        <li>
+          <StatusMark size="2xs" trackColor={TRACK} {...markProps(step)} />
+          Type roles
+        </li>
+        <li>
+          <StatusMark size="2xs" status="null" tone="muted" />
+          Dark mode review
+        </li>
+      </ul>
     </div>
   );
 };

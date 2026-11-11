@@ -1,15 +1,11 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
+import { PackageDocs } from "@/components/package-docs";
+import { ScrollFrameVariants } from "@/components/scrollframe-variants";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description: "Base UI-backed scroll frames with eased edge fades and movement controls.",
-  title: "ScrollFrame | Patternmode",
-};
+export const metadata = componentMetadata("scrollframe");
 
 const scrollFrameApi: ApiSection[] = [
   {
@@ -71,32 +67,26 @@ const scrollFrameApi: ApiSection[] = [
 const scrollFrameExample = `import { ScrollFrame } from "@patternmode/scrollframe";
 import "@patternmode/scrollframe/styles.css";
 
-function MaterialStrip() {
-  return (
-    <ScrollFrame
-      aria-label="Materials"
-      axes="horizontal"
-      dragScroll
-      fadeColor="var(--surface)"
-      scrollbars="hidden"
-    >
-      {materials.map((material) => (
-        <Tag key={material}>{material}</Tag>
-      ))}
-    </ScrollFrame>
-  );
-}`;
+<ScrollFrame aria-label="Activity" className="h-96">
+  {items.map((item) => (
+    <ActivityRow key={item.id} item={item} />
+  ))}
+</ScrollFrame>
+
+<ScrollFrame axes="horizontal" scrollbars="hidden" controls scrollStep="page">
+  {children}
+</ScrollFrame>`;
 
 export default function ScrollFramePage() {
   return (
-    <ComponentFrame demo={<ScrollFrameDemo />} slug="scrollframe">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/scrollframe" />
-        <CodeBlock>{scrollFrameExample}</CodeBlock>
-      </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={scrollFrameApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={scrollFrameApi}
+      caption="Scrolled partway on both axes, so both edges fade. At either end that fade goes."
+      demo={<ScrollFrameDemo />}
+      example={scrollFrameExample}
+      installLead="Wrap any list. For custom layouts, compose the parts under ScrollFrame.Root."
+      slug="scrollframe"
+      variants={<ScrollFrameVariants />}
+    />
   );
 }

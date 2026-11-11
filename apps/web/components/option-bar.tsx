@@ -1,5 +1,7 @@
 "use client";
 
+import "./option-bar.css";
+
 interface OptionBarProps<T extends string | number> {
   isPressed?: (value: T) => boolean;
   label: string;

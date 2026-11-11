@@ -1,16 +1,11 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
 import { TagsDemo } from "@/components/tags-demo";
+import { PackageDocs } from "@/components/package-docs";
+import { TagsVariants } from "@/components/tags-variants";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description:
-    "Badge-based tag pills and controlled command selectors for filtering, categorizing, and lightweight metadata workflows.",
-  title: "Tags | Patternmode",
-};
+export const metadata = componentMetadata("tags");
 
 const tagsApi: ApiSection[] = [
   {
@@ -134,48 +129,38 @@ const tagsApi: ApiSection[] = [
   },
 ];
 
-const tagsExample = `import { Tag, TagSelector, type TagItem } from "@patternmode/tags";
+const tagsExample = `import { TagSelector } from "@patternmode/tags";
+import type { TagItem } from "@patternmode/tags";
 import "@patternmode/tags/styles.css";
 
-function Example() {
-  const [tags, setTags] = useState<TagItem[]>([
-    { id: "accessible", label: "Accessible" },
-  ]);
-  const options = [
-    { id: "accessible", label: "Accessible" },
-    { id: "command-menu", label: "Command menu" },
-    { id: "reusable", label: "Reusable" },
-  ];
+const options: TagItem[] = [
+  { id: "accessible", label: "Accessible" },
+  { id: "keyboard", label: "Keyboard first" },
+];
 
+export function Example() {
+  const [value, setValue] = useState<TagItem[]>([]);
   return (
-    <>
-      <Tag variant="outline" onRemove={() => null}>
-        Accessible
-      </Tag>
-      <TagSelector
-        aria-label="Component tags"
-        value={tags}
-        onChange={setTags}
-        options={options}
-        onCreateItem={(label) => ({
-          id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-          label,
-        })}
-      />
-    </>
+    <TagSelector
+      aria-label="Project tags"
+      onChange={setValue}
+      options={options}
+      placeholder="Select tags"
+      value={value}
+    />
   );
 }`;
 
 export default function TagsPage() {
   return (
-    <ComponentFrame demo={<TagsDemo />} slug="tags">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/tags" />
-        <CodeBlock>{tagsExample}</CodeBlock>
-      </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={tagsApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={tagsApi}
+      caption="Open the list, type to filter, then press Enter or a comma to add a tag."
+      demo={<TagsDemo />}
+      example={tagsExample}
+      installLead="Controlled. Pass onCreateItem to let people add tags that aren't in the list."
+      slug="tags"
+      variants={<TagsVariants />}
+    />
   );
 }

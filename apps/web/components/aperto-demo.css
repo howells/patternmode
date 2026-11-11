@@ -1,0 +1,26 @@
+@reference "../app/globals.css";
+
+/* The plate holds the thumbnails in its top-left corner, 3 across at 165 by
+   110, as drawn. */
+.aperto-grid {
+  --aperto-radius: 6px;
+  @apply absolute top-12 left-12 grid w-[520px] max-w-[calc(100%-6rem)] grid-cols-3 gap-3;
+}
+
+.aperto-thumb {
+  @apply aspect-[3/2] w-full;
+}
+
+/* States and variants: one live thumbnail per cell. */
+.aperto-chips {
+  --aperto-radius: 6px;
+  @apply flex items-center justify-center gap-2;
+}
+
+.aperto-chip {
+  @apply aspect-[3/2] w-[150px];
+}
+
+.aperto-chips[data-small] .aperto-chip {
+  @apply aspect-square w-16 rounded;
+}

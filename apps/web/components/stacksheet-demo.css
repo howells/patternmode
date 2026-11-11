@@ -1,0 +1,281 @@
+@reference "../app/globals.css";
+
+/* ══ Hero: the Orders page with a live sheet stack on the plate ═════════════
+   The stage fills the plate; SheetStage pins Stacksheet's layer to it. */
+.plate-stage {
+  @apply absolute inset-0;
+}
+
+.plate-orders {
+  @apply absolute top-12 left-12 flex w-[520px] max-w-[calc(100%-6rem)] flex-col;
+}
+
+.plate-orders-title {
+  @apply type-title m-0 pb-4;
+}
+
+.plate-order {
+  @apply type-ui flex h-11 w-full cursor-pointer items-center justify-between border-0 border-b border-[color:var(--border)] bg-transparent p-0 text-left text-[color:var(--foreground)];
+}
+
+.plate-order:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+.plate-value {
+  @apply type-data text-[color:var(--muted-foreground)];
+}
+
+.plate-scrim {
+  @apply pointer-events-none absolute inset-0 bg-[#1d1d1b1a];
+}
+
+/* The panel is placed by inline styles, so the plate's 12px corners need
+   !important; the layer clips everything to the plate. */
+.plate-panel {
+  @apply border border-[color:var(--border)] bg-[var(--card)] shadow-[0_18px_60px_#1d1d1b2e];
+  border-radius: 12px !important;
+}
+
+/* The skirt that covers overscroll at the screen's edge would show past an
+   inset panel. */
+.plate-panel > [aria-hidden="true"]:first-child,
+.cell-panel > [aria-hidden="true"]:first-child {
+  @apply hidden;
+}
+
+.plate-sheet-header {
+  @apply h-[52px] border-b border-[color:var(--border)] px-1;
+}
+
+.plate-sheet-header [data-stacksheet-title] {
+  @apply type-label;
+}
+
+.plate-sheet-header [data-stacksheet-close] {
+  @apply text-[color:var(--muted-foreground)];
+}
+
+.plate-swatches {
+  @apply m-0 flex list-none flex-col p-5;
+}
+
+.plate-swatch {
+  @apply type-ui flex h-11 w-full cursor-pointer items-center gap-3 border-0 border-b border-[color:var(--border)] bg-transparent p-0 text-left text-[color:var(--foreground)];
+}
+
+.plate-swatch .plate-value {
+  @apply ml-auto;
+}
+
+.plate-swatch:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+.plate-dot {
+  @apply size-5 shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgb(0_0_0/0.08)];
+}
+
+.plate-colour {
+  @apply flex flex-col gap-5 p-5;
+}
+
+.plate-field {
+  @apply block h-[180px] shrink-0 rounded-lg shadow-[inset_0_0_0_1px_rgb(0_0_0/0.08)];
+}
+
+.plate-facts {
+  @apply m-0 flex flex-col;
+}
+
+.plate-facts > div {
+  @apply type-ui flex h-10 items-center justify-between border-b border-[color:var(--border)];
+}
+
+.plate-facts dt {
+  @apply text-[color:var(--muted-foreground)];
+}
+
+.plate-facts dd {
+  @apply type-data m-0;
+}
+
+.plate-actions {
+  @apply flex gap-2;
+}
+
+.plate-actions button {
+  @apply type-ui h-9 cursor-pointer rounded-lg border border-[color:var(--border)] bg-transparent px-3.5 text-[color:var(--foreground)];
+}
+
+.plate-actions button:first-child {
+  @apply border-[color:var(--foreground)] bg-[var(--foreground)] text-[color:var(--background)];
+}
+
+.plate-actions button:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+/* Short plates (a phone, or 1280 by 720) shorten the colour field so both
+   buttons stay in view. */
+@media (max-width: 63.99rem), (max-height: 47.5rem) {
+  .plate-field {
+    @apply h-24;
+  }
+}
+
+/* ══ States and variants: a live sheet held open in each 328 by 160 cell ═══ */
+.cell-stage {
+  @apply relative -m-6 h-40 flex-[0_0_calc(100%+3rem)];
+}
+
+/* As on the plate, the corners are set over the panel's inline styles. */
+.cell-panel {
+  @apply border border-[color:var(--border)] bg-[var(--card)];
+  border-radius: 8px !important;
+}
+
+.cell-panel-bottom {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.cell-bars {
+  @apply flex flex-col gap-2 p-4 pt-6;
+}
+
+.cell-bars > span,
+.cell-line {
+  @apply block h-1.5 rounded-[3px] bg-[var(--border)];
+}
+
+.cell-line {
+  @apply absolute left-4;
+}
+
+.cell-guide {
+  @apply pointer-events-none absolute left-0 h-0 w-full border-t border-dashed border-[color:var(--muted-foreground)];
+}
+
+/* ══ Examples ═══════════════════════════════════════════════════════════════
+   Rows that open real sheets. Name and "Open" share a line; the description
+   sits under them. */
+.sheet-panel-content h2,
+.sheet-panel-content h3 {
+  @apply m-0 type-title font-normal;
+}
+
+.sheet-panel-content p {
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
+}
+
+.sheet-action-row button:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+.sheet-action-row {
+  @apply mt-[18px] flex flex-wrap gap-2;
+}
+
+.sheet-action-row button {
+  @apply min-h-[34px] cursor-pointer rounded-[7px] border border-[color:var(--ink)] bg-[var(--ink)] px-3 text-[13px] text-white transition-[background,border-color,color] duration-[140ms];
+}
+
+.sheet-action-row button + button {
+  @apply border-[color:var(--border)] bg-transparent text-[color:var(--ink)];
+}
+
+.stacksheet-backdrop {
+  @apply bg-[rgba(29,29,27,0.34)] backdrop-blur-[5px];
+}
+
+.stacksheet-panel {
+  @apply border border-[color:var(--border-soft)] bg-[var(--surface)] shadow-[0_18px_60px_rgba(29,29,27,0.18)];
+}
+
+.sheet-panel-content {
+  @apply p-6;
+}
+
+.sheet-list {
+  @apply mt-[18px] grid gap-2;
+}
+
+.sheet-list span {
+  @apply rounded-[7px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-3 py-2.5 text-sm text-[color:var(--muted-foreground)];
+}
+
+.stacksheet-examples {
+  @apply flex flex-col gap-[30px];
+}
+
+.stacksheet-group-label {
+  @apply m-0 mb-0.5 text-sm font-medium text-[color:var(--muted-foreground)];
+}
+
+.stacksheet-group-rows {
+  @apply flex flex-col border-b border-[color:var(--border-soft)];
+}
+
+.stacksheet-row {
+  @apply grid w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-0.5 border-0 border-t border-[color:var(--border-soft)] bg-transparent px-2 py-[13px] text-left text-inherit transition-[background] duration-[140ms];
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stacksheet-row:hover {
+    @apply bg-[var(--surface-soft)];
+  }
+}
+
+.stacksheet-row:focus-visible {
+  @apply outline-2 outline-offset-[-2px] outline-[color:var(--ring)];
+}
+
+.stacksheet-row-name {
+  @apply text-sm font-medium text-[color:var(--ink)];
+}
+
+.stacksheet-row-desc {
+  @apply col-span-2 row-start-2 text-sm text-[color:var(--muted-foreground)];
+}
+
+.stacksheet-row-open {
+  @apply col-start-2 row-start-1 text-sm text-[color:var(--ring)];
+}
+
+.sheet-link-list {
+  @apply flex flex-col px-4 pb-6;
+}
+
+.sheet-form {
+  @apply mx-0 mt-4 mb-1 flex flex-col gap-2.5;
+}
+
+.sheet-form label {
+  @apply flex flex-col gap-[5px] text-sm text-[color:var(--muted-foreground)];
+}
+
+.sheet-form input,
+.sheet-form textarea {
+  /* Before the @apply so the utility's 16px wins over the shorthand; under
+     16px, iOS Safari zooms the page when the field takes focus. */
+  font: inherit;
+  @apply w-full rounded-lg border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-[9px] text-base text-[color:var(--ink)];
+}
+
+.sheet-form input:focus-visible,
+.sheet-form textarea:focus-visible {
+  @apply border-[color:var(--ring)] outline-none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sheet-action-row button:hover {
+    border-color: var(--ring);
+    color: var(--ring);
+  }
+
+  .sheet-action-row button:first-child:hover {
+    background: var(--ring);
+    border-color: var(--ring);
+    color: white;
+  }
+}

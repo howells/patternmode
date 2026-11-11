@@ -1,85 +1,83 @@
 "use client";
 
 import { ScrollFrame } from "@patternmode/scrollframe";
-import { useState } from "react";
+import Image from "next/image";
+import "./scrollframe-demo.css";
 
-const activity = [
-  ["Pushed sheet", "09:41"],
-  ["Palette saved", "09:38"],
-  ["Tag added", "09:12"],
-  ["Image opened", "08:57"],
-  ["Deck finished", "08:40"],
-  ["Swatch renamed", "08:22"],
-  ["Colour picked", "08:05"],
-  ["Thumbnail cropped", "07:51"],
+const studies = [
+  ["Light study", "light-study"],
+  ["Warm chamber", "warm-chamber"],
+  ["Concrete room", "concrete-room"],
+  ["Slit window", "slit-window"],
+  ["Earth corridor", "earth-corridor"],
+  ["Rammed light", "rammed-light"],
+  ["Sample row", "sample-row"],
 ] as const;
 
-const chips = [
-  "Granite",
-  "Basalt",
-  "Limestone",
-  "Oak",
-  "Walnut",
-  "Cork",
-  "Linen",
-  "Wool",
-  "Marble",
-  "Slate",
-  "Sandstone",
-  "Travertine",
-  "Cedar",
-  "Birch",
-  "Teak",
-  "Copper",
-  "Brass",
-  "Concrete",
-];
+const photos = studies.slice(0, 5);
 
-export const ScrollFrameDemo = () => {
-  const [selectedChip, setSelectedChip] = useState(chips[0]);
-
-  return (
-    <div className="scrollframe-demo">
-      <ScrollFrame
-        aria-label="Activity"
-        className="scrollframe-demo-panel"
-        fadeColor="var(--surface)"
-        viewportClassName="scrollframe-demo-viewport"
-      >
-        <div className="scrollframe-demo-list">
-          {activity.map(([label, time]) => (
-            <div className="scrollframe-demo-row" key={label}>
-              <span>{label}</span>
-              <span>{time}</span>
-            </div>
-          ))}
-        </div>
-      </ScrollFrame>
-
-      <ScrollFrame
-        aria-label="Material filters"
-        axes="horizontal"
-        className="scrollframe-demo-strip"
-        controls
-        dragScroll
-        fadeColor="var(--surface)"
-        scrollbars="hidden"
-      >
-        <div className="scrollframe-demo-chips">
-          {chips.map((chip) => (
-            <button
-              aria-pressed={selectedChip === chip}
-              key={chip}
-              onClick={() => {
-                setSelectedChip(chip);
-              }}
-              type="button"
-            >
-              {chip}
-            </button>
-          ))}
-        </div>
-      </ScrollFrame>
-    </div>
-  );
+/* Both frames open partway down and along, so each shows a fade at both edges. */
+const openPartwayDown = (node: HTMLDivElement | null) => {
+  if (node !== null) {
+    node.scrollTop = 22;
+  }
 };
+
+const openPartwayAlong = (node: HTMLDivElement | null) => {
+  if (node !== null) {
+    node.scrollLeft = 96;
+  }
+};
+
+export const ScrollFrameDemo = () => (
+  <div className="scrollframe-demo">
+    <ScrollFrame
+      aria-label="Studies"
+      className="scrollframe-demo-list"
+      fadeColor="var(--card)"
+      viewportRef={openPartwayDown}
+    >
+      {studies.map(([name], index) => (
+        <div className="scrollframe-demo-row" key={name}>
+          <span className="type-ui">{name}</span>
+          <span className="type-data text-muted-foreground">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+      ))}
+    </ScrollFrame>
+
+    <ScrollFrame.Root
+      aria-label="Photographs"
+      axes="horizontal"
+      className="scrollframe-demo-strip"
+      controlVisibility="disabled"
+      dragScroll
+      fadeColor="var(--muted)"
+      scrollbars="hidden"
+      scrollStep="page"
+    >
+      <ScrollFrame.Viewport
+        contentClassName="scrollframe-demo-photos"
+        viewportRef={openPartwayAlong}
+      >
+        {photos.map(([name, file]) => (
+          <Image
+            alt={name}
+            className="scrollframe-demo-photo"
+            draggable={false}
+            height={848}
+            key={file}
+            sizes="160px"
+            src={`/media/${file}.jpg`}
+            width={1264}
+          />
+        ))}
+      </ScrollFrame.Viewport>
+      <ScrollFrame.Fade axis="horizontal" edge="start" />
+      <ScrollFrame.Fade axis="horizontal" edge="end" />
+      <ScrollFrame.Previous />
+      <ScrollFrame.Next />
+    </ScrollFrame.Root>
+  </div>
+);

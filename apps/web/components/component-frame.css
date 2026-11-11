@@ -1,0 +1,439 @@
+@reference "../app/globals.css";
+
+/* ══ Component frame ════════════════════════════════════════════════════════
+   Identity and the demo plate stay put on the left; the reference scrolls on
+   its own in a 368px column on the right. Below 1024px the page is one column
+   that scrolls under the header. */
+
+/* Every pane is positioned, so nothing absolutely placed inside it (a live
+   region, a sheet drawing) can escape to the document and make it scroll. */
+.frame,
+.frame-plate,
+.frame-reference {
+  position: relative;
+}
+
+.frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  outline: none;
+}
+
+.frame-identity {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: var(--inner);
+  padding-top: 24px;
+  padding-bottom: 28px;
+}
+
+.frame-name {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  max-width: 720px;
+}
+
+.frame-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-feature-settings: normal;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -0.02em;
+}
+
+.frame-lead {
+  @apply type-body;
+  max-width: 640px;
+  margin: 0;
+  line-height: 20px;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+.frame-package {
+  @apply type-data;
+  flex-shrink: 0;
+  margin: 0;
+  line-height: 20px;
+}
+
+.frame-body {
+  display: flex;
+  flex: 1 1 0;
+  gap: 32px;
+  width: var(--inner);
+  min-height: 0;
+  padding-bottom: 32px;
+}
+
+.frame-stage {
+  display: flex;
+  flex: 0 1 720px;
+  flex-direction: column;
+  justify-content: safe center;
+  gap: 16px;
+  min-width: 0;
+  height: 100%;
+}
+
+/* The demo's ground: a quiet inset as tall as the frame allows, up to 540px.
+   Each demo lays itself out inside; one taller than the plate scrolls rather
+   than spilling over the caption. */
+.frame-plate {
+  display: flex;
+  flex: 0 1 540px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  min-height: 0;
+  padding: 40px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 12px;
+  background: var(--muted);
+}
+
+.frame-caption {
+  @apply type-meta;
+  flex-shrink: 0;
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+.frame-reference {
+  flex: 0 0 368px;
+  height: 100%;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+
+/* 328px of reading column, 15px clear of the scroll track. */
+.reference {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-right: 16px;
+}
+
+.reference > .docs-block,
+.reference > .reference-block {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.reference > h2 + .docs-block,
+.reference > h2 + .reference-block {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.reference .docs-block {
+  gap: 16px;
+}
+
+.reference .docs-header {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.reference .docs-header h3 {
+  letter-spacing: -0.01em;
+}
+
+.reference-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reference-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.reference-title {
+  @apply type-title;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.reference-lead {
+  @apply type-body;
+  margin: 0;
+  line-height: 21px;
+  color: var(--muted-foreground);
+}
+
+.read-more {
+  @apply type-body;
+  max-width: 62ch;
+  margin: -24px 0 0;
+  line-height: 21px;
+  color: var(--muted-foreground);
+}
+
+/* States and variants: a live specimen on a quiet inset, then its name and
+   the prop that makes it. */
+.variant-cells {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.variant-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.variant-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 160px;
+  padding: 24px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--muted);
+}
+
+.variant-preview > * {
+  min-width: 0;
+}
+
+.variant-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.variant-name {
+  @apply type-label;
+  margin: 0;
+}
+
+.variant-code {
+  @apply type-data;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+
+/* Keyboard and accessibility: the key in mono beside what it does. */
+.reference-rows {
+  margin: 0;
+}
+
+.reference-row {
+  display: flex;
+  gap: 16px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.reference-key {
+  @apply type-data;
+  flex: 0 0 104px;
+  line-height: 21px;
+}
+
+.reference-value {
+  @apply type-body;
+  min-width: 0;
+  margin: 0;
+  line-height: 21px;
+  color: var(--muted-foreground);
+}
+
+.package-facts {
+  margin: 0;
+}
+
+.package-facts div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.package-facts dt {
+  @apply type-ui;
+  color: var(--muted-foreground);
+}
+
+.package-facts dd {
+  @apply type-ui;
+  margin: 0;
+  text-align: right;
+}
+
+.package-facts .package-fact-code {
+  @apply type-data;
+}
+
+.related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.related-name {
+  @apply type-label;
+}
+
+.related-line {
+  @apply type-ui;
+  color: var(--muted-foreground);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .related-card:hover {
+    border-color: color-mix(in oklab, var(--foreground) 24%, var(--border));
+  }
+}
+
+.reference .site-footer {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding-top: 0;
+}
+
+.reference .site-footer-links a {
+  padding-inline: 0 16px;
+}
+
+/* The usage sample sits on a dark ground and keeps its lines whole; a long
+   line scrolls sideways inside the block. */
+.reference .code-block {
+  padding: 20px 24px;
+  border-color: var(--dark-border);
+  border-radius: 12px;
+  background: var(--dark-background);
+  color: var(--dark-foreground);
+  line-height: 21px;
+  white-space: pre;
+  scrollbar-color: var(--dark-border) transparent;
+  scrollbar-width: thin;
+}
+
+/* API rows stack their name over the detail in the narrow column. */
+.reference .prop-row {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  padding: 12px 16px;
+}
+
+.reference .api-section-header {
+  padding: 14px 16px;
+}
+
+@media (max-width: 63.99rem) {
+  .frame {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .frame-identity {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-inline: auto;
+    padding-top: 28px;
+    padding-bottom: 24px;
+  }
+
+  .frame-title {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .frame-body {
+    flex-direction: column;
+    gap: 40px;
+    margin-inline: auto;
+    padding-bottom: 0;
+  }
+
+  .frame-stage,
+  .frame-reference {
+    flex: none;
+    height: auto;
+    overflow: visible;
+  }
+
+  .frame-plate {
+    flex: none;
+    min-height: 420px;
+    padding: 32px 20px;
+    overflow: visible;
+  }
+
+  .frame-reference {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .reference {
+    padding-right: 0;
+  }
+
+  .reference > h2 + .docs-block,
+  .reference > h2 + .reference-block {
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* Short laptops (1280 by 720): tighten the frame's own spacing. */
+@media (min-width: 64rem) and (max-height: 47.5rem) {
+  .frame-identity {
+    padding-top: 16px;
+    padding-bottom: 20px;
+  }
+
+  .frame-body {
+    padding-bottom: 24px;
+  }
+}

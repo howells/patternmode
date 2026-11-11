@@ -7,6 +7,9 @@ import { HeroSheet } from "@/components/hero-sheet";
 import { HomePane } from "@/components/home-pane";
 import { SiteFooter } from "@/components/site-footer";
 import { catalogue } from "@/lib/catalogue";
+import { readTokenSwatches } from "@/lib/theme-tokens";
+import type { TokenSwatch } from "@/lib/theme-tokens";
+import "./home.css";
 
 export const metadata: Metadata = {
   description:
@@ -30,24 +33,6 @@ const FACES = [
     note: "Interface text. Full font, with cv01, cv02, cv11.",
   },
   { className: "face-mono", glyph: "01", name: "Geist Mono", note: "Figures and code. Tabular." },
-];
-
-const LIGHT_TOKENS = [
-  { name: "Background", swatch: "#FBFBF9", value: "0.988 0.003 106" },
-  { name: "Muted", swatch: "#F6F5F1", value: "0.970 0.005 95" },
-  { name: "Border", swatch: "#E3E1DC", value: "0.910 0.007 89" },
-  { name: "Muted foreground", swatch: "#727068", value: "0.544 0.012 95" },
-  { name: "Foreground", swatch: "#1D1D1B", value: "0.230 0.004 107" },
-  { name: "Ring", swatch: "#315C4B", value: "0.438 0.056 166" },
-];
-
-const DARK_TOKENS = [
-  { name: "Background", swatch: "#161614", value: "0.199 0.004 107" },
-  { name: "Muted", swatch: "#232321", value: "0.255 0.004 107" },
-  { name: "Border", swatch: "#34332F", value: "0.321 0.007 95" },
-  { name: "Muted foreground", swatch: "#A3A199", value: "0.708 0.012 95" },
-  { name: "Foreground", swatch: "#E8E6E1", value: "0.925 0.007 89" },
-  { name: "Ring", swatch: "#7FA896", value: "0.696 0.052 166" },
 ];
 
 const TYPE_ROLES = [
@@ -107,7 +92,7 @@ const TokenList = ({
   tone,
 }: {
   label: string;
-  tokens: typeof LIGHT_TOKENS;
+  tokens: TokenSwatch[];
   tone: "dark" | "light";
 }) => (
   <ul aria-label={label} className="token-list" data-tone={tone}>
@@ -167,8 +152,16 @@ const ThemeSection = () => (
         ))}
       </ul>
       <div className="token-lists">
-        <TokenList label="Light theme colours, in OKLCH" tokens={LIGHT_TOKENS} tone="light" />
-        <TokenList label="Dark theme colours, in OKLCH" tokens={DARK_TOKENS} tone="dark" />
+        <TokenList
+          label="Light theme colours, in OKLCH"
+          tokens={readTokenSwatches("light")}
+          tone="light"
+        />
+        <TokenList
+          label="Dark theme colours, in OKLCH"
+          tokens={readTokenSwatches("dark")}
+          tone="dark"
+        />
       </div>
     </div>
   </section>

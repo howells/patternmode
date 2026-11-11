@@ -1,16 +1,11 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
-import { ParquetArtDemo } from "@/components/parquet-art-demo";
+import { PackageDocs } from "@/components/package-docs";
+import { ParquetDemo } from "@/components/parquet-demo";
+import { ParquetVariants } from "@/components/parquet-variants";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description:
-    "A proportional color mosaic that re-tiles and morphs as a palette's weights change.",
-  title: "Parquet | Patternmode",
-};
+export const metadata = componentMetadata("parquet");
 
 const parquetApi: ApiSection[] = [
   {
@@ -75,21 +70,18 @@ const palette = [
   { color: "#e8b4b8", value: 0.12, label: "Blush" },
 ];
 
-export function Palette() {
-  // Re-tiles and morphs whenever \`colors\` changes.
-  return <Parquet colors={palette} showLabels />;
-}`;
+<Parquet colors={palette} showLabels />`;
 
 export default function ParquetPage() {
   return (
-    <ComponentFrame demo={<ParquetArtDemo />} slug="parquet">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/parquet" />
-        <CodeBlock>{parquetExample}</CodeBlock>
-      </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={parquetApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={parquetApi}
+      caption="The same array as a distribution bar and a list. Pick a colour to make it the largest tile."
+      demo={<ParquetDemo />}
+      example={parquetExample}
+      installLead="The same array can drive a Swatch DistributionBar and a Parquet."
+      slug="parquet"
+      variants={<ParquetVariants />}
+    />
   );
 }

@@ -1,0 +1,36 @@
+@reference "../app/globals.css";
+
+/* The shapes you can pick over the bar that divides a palette. */
+.swatch-demo {
+  @apply flex w-full max-w-[640px] flex-col gap-10;
+}
+
+.swatch-demo-options {
+  @apply m-0 flex flex-wrap items-center gap-4 border-0 p-0;
+}
+
+.swatch-demo-button {
+  @apply cursor-pointer rounded-[var(--radius)] border-0 bg-transparent p-0 leading-none;
+}
+
+.swatch-demo-button:focus-visible {
+  @apply outline-2 outline-offset-4 outline-[color:var(--ring)];
+}
+
+/* The block swatch fills whatever box it is given. */
+.swatch-demo-block {
+  @apply h-14 w-36;
+}
+
+.swatch-demo-restore {
+  @apply type-ui cursor-pointer rounded-md border-0 bg-transparent px-3 py-1.5 text-foreground shadow-[inset_0_0_0_1px_var(--border)];
+}
+
+.swatch-demo-restore:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+/* The read-only bar takes the reference column's width. */
+.swatch-variant-display {
+  width: 100%;
+}

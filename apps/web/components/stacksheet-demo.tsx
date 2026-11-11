@@ -1,220 +1,198 @@
 "use client";
 
-import { createStacksheet } from "@patternmode/stacksheet";
+import { createStacksheet, Sheet } from "@patternmode/stacksheet";
+import { useEffect } from "react";
 
-interface Colour {
-  hex: string;
-  name: string;
-  share: number;
-}
+import { SheetStage } from "@/components/sheet-stage";
+import "./stacksheet-demo.css";
 
-interface Palette {
-  colours: Colour[];
-  id: string;
-  name: string;
-}
-
-const PALETTES: Palette[] = [
-  {
-    colours: [
-      { hex: "#315C4B", name: "Evergreen", share: 48 },
-      { hex: "#D9A441", name: "Saffron", share: 30 },
-      { hex: "#9B3D32", name: "Oxblood", share: 22 },
-    ],
-    id: "harvest",
-    name: "Harvest",
-  },
-  {
-    colours: [
-      { hex: "#B5A38F", name: "Clay", share: 40 },
-      { hex: "#E8E1D6", name: "Linen", share: 35 },
-      { hex: "#9B3D32", name: "Oxblood", share: 25 },
-    ],
-    id: "terrace",
-    name: "Terrace",
-  },
-  {
-    colours: [
-      { hex: "#1F2A2E", name: "Slate", share: 55 },
-      { hex: "#315C4B", name: "Evergreen", share: 30 },
-      { hex: "#A97C4F", name: "Bronze", share: 15 },
-    ],
-    id: "dusk",
-    name: "Dusk",
-  },
+const SWATCHES = [
+  { hex: "#315C4B", name: "Evergreen" },
+  { hex: "#D9A441", name: "Saffron" },
+  { hex: "#9B3D32", name: "Oxblood" },
+  { hex: "#B5A38F", name: "Clay" },
+  { hex: "#E8E1D6", name: "Linen" },
+  { hex: "#1F2A2E", name: "Slate" },
 ];
 
-const FIT = { height: "fit" } as const;
-
-const findPalette = (id: string): Palette => {
-  const palette = PALETTES.find((item) => item.id === id);
-  if (palette === undefined) {
-    throw new Error(`Unknown palette ${id}`);
-  }
-  return palette;
-};
+const ORDERS = [
+  { id: "0412", total: "18.90" },
+  { id: "0411", total: "12.60" },
+  { id: "0410", total: "31.50" },
+];
 
 interface DemoSheets {
-  Colour: { index: number; paletteId: string };
-  Palette: { paletteId: string };
+  Colour: { index: number };
+  Palette: Record<string, never>;
 }
 
-const { StacksheetProvider, useSheet, useStacksheetState } = createStacksheet<DemoSheets>({
-  side: { desktop: "right", mobile: "bottom" },
+const { StacksheetProvider, store, useSheet, useStacksheetState } = createStacksheet<DemoSheets>({
+  closeOnEscape: true,
+  maxWidth: "100%",
+  modal: false,
+  side: "right",
   spring: "subtle",
-  stacking: {
-    opacityStep: 0.04,
-    radius: 10,
-    scaleStep: 0.035,
-  },
-  width: 430,
+  stacking: { offsetStep: 28, opacityStep: 0.15, radius: 12, scaleStep: 0.047 },
+  width: 420,
+  zIndex: 30,
 });
 
-const PaletteBar = ({ colours }: { colours: Colour[] }) => (
-  <span aria-hidden="true" className="palette-bar">
-    {colours.map((colour) => (
-      <span key={colour.name} style={{ background: colour.hex, flexGrow: colour.share }} />
-    ))}
-  </span>
+// Every sheet takes its own id, so the same colour can sit in the stack twice.
+let sheetCount = 0;
+const nextId = (kind: string) => {
+  sheetCount += 1;
+  return `${kind}-${sheetCount}`;
+};
+
+const Chevron = () => (
+  <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16">
+    <path
+      d="M10 3L5 8l5 5"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+    />
+  </svg>
 );
 
-const PaletteSheet = ({ paletteId }: { paletteId: string }) => {
-  const sheet = useSheet();
-  const palette = findPalette(paletteId);
+const Cross = () => (
+  <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16">
+    <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
+  </svg>
+);
 
+const Header = ({ title }: { title: string }) => (
+  <Sheet.Header className="plate-sheet-header">
+    <Sheet.Back>
+      <Chevron />
+    </Sheet.Back>
+    <Sheet.Title>{title}</Sheet.Title>
+    <Sheet.Close>
+      <Cross />
+    </Sheet.Close>
+  </Sheet.Header>
+);
+
+const PaletteSheet = () => {
+  const { push } = useSheet();
   return (
-    <div className="sheet-panel-content">
-      <h3>{palette.name}</h3>
-      <PaletteBar colours={palette.colours} />
-      <ul className="palette-rows">
-        {palette.colours.map((colour, index) => (
-          <li key={colour.name}>
-            <button
-              className="palette-row"
-              onClick={() => {
-                sheet.push(
-                  "Colour",
-                  `${palette.id}-${colour.name}`,
-                  {
-                    index,
-                    paletteId: palette.id,
-                  },
-                  FIT,
-                );
-              }}
-              type="button"
-            >
-              <span className="palette-dot" style={{ background: colour.hex }} />
-              <span className="palette-row-name">{colour.name}</span>
-              <span className="palette-row-value">{colour.share}%</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <Header title="Palette" />
+      <Sheet.Body>
+        <ul className="plate-swatches">
+          {SWATCHES.map((swatch, index) => (
+            <li key={swatch.name}>
+              <button
+                className="plate-swatch"
+                onClick={() => {
+                  push("Colour", nextId("colour"), { index });
+                }}
+                type="button"
+              >
+                <span className="plate-dot" style={{ background: swatch.hex }} />
+                {swatch.name}
+                <span className="plate-value">{swatch.hex}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </Sheet.Body>
+    </>
   );
 };
 
-const ColourSheet = ({ index, paletteId }: { index: number; paletteId: string }) => {
-  const sheet = useSheet();
-  const palette = findPalette(paletteId);
-  const colour = palette.colours[index];
-  if (colour === undefined) {
-    throw new Error(`No colour ${index} in ${paletteId}`);
+const ColourSheet = ({ index }: { index: number }) => {
+  const { push, replace } = useSheet();
+  const swatch = SWATCHES[index];
+  if (swatch === undefined) {
+    throw new Error(`No swatch ${index}`);
   }
-  const nextIndex = (index + 1) % palette.colours.length;
-  const next = palette.colours[nextIndex];
+  const next = (index + 1) % SWATCHES.length;
 
   return (
-    <div className="sheet-panel-content">
-      <h3>{colour.name}</h3>
-      <span className="colour-sheet-fill" style={{ background: colour.hex }} />
-      <dl className="colour-sheet-facts">
-        <div>
-          <dt>Hex</dt>
-          <dd>{colour.hex}</dd>
+    <>
+      <Header title={swatch.name} />
+      <Sheet.Body>
+        <div className="plate-colour">
+          <span className="plate-field" style={{ background: swatch.hex }} />
+          <dl className="plate-facts">
+            <div>
+              <dt>Hex</dt>
+              <dd>{swatch.hex}</dd>
+            </div>
+            <div>
+              <dt>Swatches in order</dt>
+              <dd>{SWATCHES.length}</dd>
+            </div>
+          </dl>
+          <div className="plate-actions">
+            <button
+              onClick={() => {
+                push("Palette", nextId("palette"), {});
+              }}
+              type="button"
+            >
+              Push palette
+            </button>
+            <button
+              onClick={() => {
+                replace("Colour", nextId("colour"), { index: next });
+              }}
+              type="button"
+            >
+              Replace
+            </button>
+          </div>
         </div>
-        <div>
-          <dt>Share of {palette.name}</dt>
-          <dd>{colour.share}%</dd>
-        </div>
-      </dl>
-      {next === undefined ? null : (
-        <div className="sheet-action-row">
+      </Sheet.Body>
+    </>
+  );
+};
+
+const sheets = { Colour: ColourSheet, Palette: PaletteSheet };
+
+/** The page the sheets open over. Its rows open the stack again once it is cleared. */
+const Orders = () => {
+  const { open } = useSheet();
+  const { isOpen } = useStacksheetState();
+
+  return (
+    <>
+      <div className="plate-orders">
+        <h2 className="plate-orders-title">Orders</h2>
+        {ORDERS.map((order) => (
           <button
+            className="plate-order"
+            key={order.id}
             onClick={() => {
-              sheet.replace(
-                "Colour",
-                `${palette.id}-${next.name}`,
-                {
-                  index: nextIndex,
-                  paletteId: palette.id,
-                },
-                FIT,
-              );
+              open("Palette", nextId("palette"), {});
             }}
             type="button"
           >
-            Next: {next.name}
+            Sample order {order.id}
+            <span className="plate-value">{order.total}</span>
           </button>
-        </div>
-      )}
-    </div>
+        ))}
+      </div>
+      {isOpen ? <div className="plate-scrim" /> : null}
+    </>
   );
 };
 
-const sheets = {
-  Colour: ColourSheet,
-  Palette: PaletteSheet,
-};
-
-const sheetCount = (count: number) => {
-  if (count === 0) {
-    return "No sheets open";
-  }
-  return count === 1 ? "1 sheet open" : `${count} sheets open`;
-};
-
-const Launcher = () => {
-  const sheet = useSheet();
-  const { stack } = useStacksheetState();
+export const StacksheetDemo = () => {
+  // The page opens two sheets deep, as the stack is meant to be seen.
+  useEffect(() => {
+    const { open, push } = store.getState();
+    open("Palette", nextId("palette"), {});
+    push("Colour", nextId("colour"), { index: 0 });
+  }, []);
 
   return (
-    <div className="stacksheet-launcher">
-      <ul className="palette-rows">
-        {PALETTES.map((palette) => (
-          <li key={palette.id}>
-            <button
-              className="palette-row"
-              onClick={() => {
-                sheet.open("Palette", palette.id, { paletteId: palette.id }, FIT);
-              }}
-              type="button"
-            >
-              <PaletteBar colours={palette.colours} />
-              <span className="palette-row-name">{palette.name}</span>
-              <span className="palette-row-value">{palette.colours.length} colours</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <p aria-live="polite" className="demo-state">
-        {sheetCount(stack.length)}
-      </p>
-    </div>
+    <StacksheetProvider classNames={{ panel: "plate-panel" }} layout="composable" sheets={sheets}>
+      <SheetStage className="plate-stage" inset={[16, 16, 16, 16]} radius={12} zIndex={30}>
+        <Orders />
+      </SheetStage>
+    </StacksheetProvider>
   );
 };
-
-export const StacksheetDemo = () => (
-  <StacksheetProvider
-    classNames={{
-      backdrop: "stacksheet-backdrop",
-      panel: "stacksheet-panel",
-    }}
-    sheets={sheets}
-  >
-    <div className="demo-block">
-      <Launcher />
-    </div>
-  </StacksheetProvider>
-);

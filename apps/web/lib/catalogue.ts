@@ -1,6 +1,6 @@
+import type { Metadata } from "next";
+
 export interface ReferenceRow {
-  /** Rendered in mono when it is an identifier or a value rather than a key name. */
-  code?: boolean;
   description: string;
   name: string;
 }
@@ -12,6 +12,8 @@ export interface CatalogueEntry {
     rows: ReferenceRow[];
     title: "Accessibility" | "Keyboard and accessibility";
   };
+  /** The page's meta description. */
+  description: string;
   /** The paragraph under the component name on its own page. */
   lead: string;
   name: string;
@@ -44,7 +46,6 @@ export const catalogue: CatalogueEntry[] = [
           name: "Focus",
         },
         {
-          code: true,
           description: 'Names the dialog. Defaults to "Sheet dialog"; set it per sheet.',
           name: "ariaLabel",
         },
@@ -55,6 +56,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description: "Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
     lead: "Sheets you open, push and pop from anywhere in a React app. Side sheets on desktop, bottom sheets on phones, from one API.",
     name: "Stacksheet",
     packageName: "@patternmode/stacksheet",
@@ -84,6 +86,8 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description:
+      "Color, gradient, image, and weighted palette swatches with selection, remove, unavailable, and contrast-aware states.",
     lead: "Colour, gradient, image and palette swatches. A distribution bar edits how a palette divides; a display shows it read-only.",
     name: "Swatch",
     packageName: "@patternmode/swatch",
@@ -98,7 +102,6 @@ export const catalogue: CatalogueEntry[] = [
       intro: HANDLES,
       rows: [
         {
-          code: true,
           description: "Names the scroll area. Every example in the README passes one.",
           name: "aria-label",
         },
@@ -117,6 +120,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description: "Base UI-backed scroll frames with eased edge fades and movement controls.",
     lead: "A scroll area whose edge fades show only while there is more to see, with quiet scrollbars and optional previous and next buttons.",
     name: "ScrollFrame",
     packageName: "@patternmode/scrollframe",
@@ -131,12 +135,10 @@ export const catalogue: CatalogueEntry[] = [
       intro: "Decide the alt text from the row around the image.",
       rows: [
         {
-          code: true,
           description: "The default. If the row already names the thing, repeating it is noise.",
           name: 'alt=""',
         },
         {
-          code: true,
           description:
             "Your own element keeps its own alt and props. The frame doesn't wrap or clone them.",
           name: "children",
@@ -148,6 +150,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Accessibility",
     },
+    description: "Framed images with an inset hairline, optional lift, and flexible sizing.",
     lead: "A framed image. The edge is drawn inside the picture, so it reads as a window onto the image rather than a field holding one.",
     name: "Thumbnail",
     packageName: "@patternmode/thumbnail",
@@ -171,7 +174,6 @@ export const catalogue: CatalogueEntry[] = [
           name: "Touch",
         },
         {
-          code: true,
           description: "Renders the real element, so a row in a list can be an li and a cell a td.",
           name: "as",
         },
@@ -179,6 +181,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description: "A reserved slot whose controls reveal on hover, on focus, and always on touch.",
     lead: "Row actions that rest hidden and appear on hover, on focus, and always on touch. They hold their space throughout, so nothing moves.",
     name: "Verge",
     packageName: "@patternmode/verge",
@@ -194,7 +197,6 @@ export const catalogue: CatalogueEntry[] = [
         "A mark with a label is an image with a name. Without one it is hidden from assistive technology.",
       rows: [
         {
-          code: true,
           description:
             'Gives the mark role="img" and that name. Without it the mark is aria-hidden.',
           name: "label",
@@ -210,6 +212,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Accessibility",
     },
+    description: "Animated discrete progress marks with fill and border variants.",
     lead: "A small progress mark in quarter steps. Not measured yet looks different from nothing done.",
     name: "Status",
     packageName: "@patternmode/status",
@@ -232,13 +235,14 @@ export const catalogue: CatalogueEntry[] = [
           name: "ArrowLeft",
         },
         {
-          code: true,
           description: "Names the deck. The current card is announced as the slider's value.",
           name: "aria-label",
         },
       ],
       title: "Keyboard and accessibility",
     },
+    description:
+      "Card decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
     lead: "A stack of cards you drag, fling or arrow through. It can cycle forever or run out, and late cards rise in from beneath.",
     name: "Deck",
     packageName: "@patternmode/deck",
@@ -269,6 +273,8 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Accessibility",
     },
+    description:
+      "A proportional color mosaic that re-tiles and morphs as a palette's weights change.",
     lead: "A colour mosaic where each tile's area is its weight. When the palette changes, the tiles re-pack and morph into place.",
     name: "Parquet",
     packageName: "@patternmode/parquet",
@@ -290,7 +296,6 @@ export const catalogue: CatalogueEntry[] = [
           name: "Hue",
         },
         {
-          code: true,
           description:
             'A hidden fieldset legend, used when there is no aria-label. Defaults to "Color".',
           name: "label",
@@ -298,6 +303,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description: "Round saturation and lightness color picker with a compact hue smile arc.",
     lead: "A round colour picker. The pad sets saturation and lightness; a short arc beside it sets hue.",
     name: "Halo",
     packageName: "@patternmode/halo",
@@ -312,18 +318,15 @@ export const catalogue: CatalogueEntry[] = [
       intro: "Built on Base UI, which handles focus, keys, pointer input and forms.",
       rows: [
         {
-          code: true,
           description:
             'Names the slider. In a range the thumbs become "start" and "end"; thumbLabels renames them.',
           name: "label",
         },
         {
-          code: true,
           description: 'Announces values in your own words, such as "warmer" rather than a number.',
           name: "getValueText",
         },
         {
-          code: true,
           description: "How far the arrow keys and the larger keyboard steps move a thumb.",
           name: "step, largeStep",
         },
@@ -334,6 +337,7 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description: "Gradient channel sliders with glass thumbs and Swatch sizing.",
     lead: "A gradient slider for one colour channel, with glass thumbs. One value or a range. Your app supplies the gradient and the colour maths.",
     name: "Channel",
     packageName: "@patternmode/channel",
@@ -362,6 +366,8 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description:
+      "Thumbnail-to-expanded media transitions with image, video, and keyboard navigation.",
     lead: "Thumbnails that open into a full image or video in place, and close back into the thumbnail they came from.",
     name: "Aperto",
     packageName: "@patternmode/aperto",
@@ -378,7 +384,7 @@ export const catalogue: CatalogueEntry[] = [
         { description: "Spin the sphere.", name: "Arrow keys" },
         { description: "Selects the facet facing you.", name: "Enter" },
         { description: "Clears the value.", name: "Escape" },
-        { code: true, description: 'Names the sphere. Defaults to "Color".', name: "label" },
+        { description: 'Names the sphere. Defaults to "Color".', name: "label" },
         {
           description: "No idle drift, inertia or morphs. Only direct moves remain.",
           name: "Reduced motion",
@@ -386,6 +392,8 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description:
+      "Spinnable geodesic color sphere whose facets refine around each selection in OKLab.",
     lead: "A spinnable sphere of colour facets. Pick one and the sphere repaints with close neighbours of it, so each choice narrows the next.",
     name: "Briolette",
     packageName: "@patternmode/briolette",
@@ -417,6 +425,8 @@ export const catalogue: CatalogueEntry[] = [
       ],
       title: "Keyboard and accessibility",
     },
+    description:
+      "Badge-based tag pills and controlled command selectors for filtering, categorizing, and lightweight metadata workflows.",
     lead: "Badges, removable tag chips, and a selector for choosing, creating and removing tags from a list.",
     name: "Tags",
     packageName: "@patternmode/tags",
@@ -434,6 +444,12 @@ export const findEntry = (slug: string): CatalogueEntry => {
     throw new Error(`No catalogue entry for "${slug}"`);
   }
   return entry;
+};
+
+/** A component page's title and meta description. */
+export const componentMetadata = (slug: string): Metadata => {
+  const entry = findEntry(slug);
+  return { description: entry.description, title: `${entry.name} | Patternmode` };
 };
 
 export const isComponentSlug = (slug: string): boolean =>

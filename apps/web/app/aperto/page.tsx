@@ -1,17 +1,14 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
+import { ApiTable, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
 import { ApertoDemo } from "@/components/aperto-demo";
+import { ApertoVariants } from "@/components/aperto-variants";
+import { ComponentFrame } from "@/components/component-frame";
+import { InstallBlock } from "@/components/install-block";
 import { apertoMedia } from "@/lib/aperto-media";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description:
-    "Thumbnail-to-expanded media transitions with image, video, and keyboard navigation.",
-  title: "Aperto | Patternmode",
-};
+export const metadata = componentMetadata("aperto");
 
 const apertoApi: ApiSection[] = [
   {
@@ -83,9 +80,9 @@ const media: ApertoMediaItem[] = [
 
 export function MediaGroupExample() {
   return (
-    <Aperto.Group media={media} navigationMotion="glide">
+    <Aperto.Group media={media} dismissible={{ threshold: 120, velocity: 600 }}>
       {media.map((item, index) => (
-        <Aperto.Thumbnail key={item.id} index={index} />
+        <Aperto.Thumbnail key={item.id ?? item.src} index={index} />
       ))}
     </Aperto.Group>
   );
@@ -94,10 +91,12 @@ export function MediaGroupExample() {
 export default function ApertoPage() {
   return (
     <ComponentFrame demo={<ApertoDemo media={apertoMedia} />} slug="aperto">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/aperto" />
-        <CodeBlock>{apertoExample}</CodeBlock>
-      </DocsBlock>
+      <ApertoVariants />
+      <InstallBlock
+        command="npm i @patternmode/aperto motion lucide-react"
+        example={apertoExample}
+        lead="Pass the media once to the group. Each thumbnail only needs its index."
+      />
       <DocsBlock title="Core API">
         <ApiTable sections={apertoApi} />
       </DocsBlock>

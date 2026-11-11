@@ -1,0 +1,36 @@
+@reference "../app/globals.css";
+
+.option-bar {
+  @apply m-0 flex min-w-0 items-center gap-2.5 border-0 p-0;
+}
+
+.option-bar-label {
+  @apply float-left type-ui text-muted-foreground;
+}
+
+.option-bar-items {
+  @apply flex rounded-[8px] p-0.5 shadow-[inset_0_0_0_1px_var(--border)];
+}
+
+.option-bar-item {
+  @apply relative h-7 min-w-8 cursor-pointer rounded-[6px] border-0 bg-transparent px-2.5 type-ui tabular-nums text-muted-foreground transition-[background,color,box-shadow] duration-[120ms];
+}
+
+/* 44px tall to the touch, 28px to the eye. */
+.option-bar-item::before {
+  @apply absolute inset-x-0 -inset-y-2 content-[''];
+}
+
+.option-bar-item[aria-pressed="true"] {
+  @apply bg-card text-foreground shadow-[0_1px_2px_rgb(29_29_27/0.08),inset_0_0_0_1px_var(--border)];
+}
+
+.option-bar-item:focus-visible {
+  @apply outline-2 outline-offset-1 outline-[color:var(--ring)];
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option-bar-item:hover {
+    color: var(--foreground);
+  }
+}

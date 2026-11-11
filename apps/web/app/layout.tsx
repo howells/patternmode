@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import "./globals.css";
+import "./shell.css";
 import "@patternmode/channel/styles.css";
 import "@patternmode/stacksheet/styles.css";
 import "@patternmode/aperto/styles.css";

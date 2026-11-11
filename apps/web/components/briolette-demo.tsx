@@ -1,80 +1,93 @@
 "use client";
 
-import { hexToHsl } from "@patternmode/system";
 import { BriolettePicker } from "@patternmode/briolette";
-import type { BrioletteDensity } from "@patternmode/briolette";
-import { HaloPicker, hslToHex } from "@patternmode/halo";
-import type { HaloColor } from "@patternmode/halo";
+import type { BriolettePickerProps } from "@patternmode/briolette";
 import { Swatch } from "@patternmode/swatch";
 import { useState } from "react";
 
-import { OptionBar } from "./option-bar";
+import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "./briolette-demo.css";
 
-const DENSITY_OPTIONS: { label: string; value: BrioletteDensity }[] = [
-  { label: "Coarse", value: "coarse" },
-  { label: "Base", value: "base" },
-  { label: "Fine", value: "fine" },
-  { label: "Brilliant", value: "brilliant" },
-];
+const NOTES = [
+  { key: "Drag", note: "Spin the sphere" },
+  { key: "Select", note: "Choose a facet and refine around it" },
+  { key: "Again", note: "Select the pinned facet to clear" },
+] as const;
 
-const SEAM_OPTIONS: { label: string; value: number }[] = [
-  { label: "None", value: 0 },
-  { label: "Subtle", value: 0.35 },
-  { label: "Full", value: 1 },
-];
-
-const HALO_FALLBACK: HaloColor = { h: 16, l: 69, s: 48 };
+/** The facet the design shows picked, so the sphere opens refined around it. */
+const STARTING_COLOR = "#A97C4F";
 
 export const BrioletteDemo = () => {
-  const [color, setColor] = useState<string | null>(null);
-  const [density, setDensity] = useState<BrioletteDensity>("base");
-  const [seamOpacity, setSeamOpacity] = useState(1);
-  const haloValue = (color === null ? null : hexToHsl(color)) ?? HALO_FALLBACK;
+  const [color, setColor] = useState<string | null>(STARTING_COLOR);
 
   return (
     <div className="briolette-demo">
-      <BriolettePicker
-        aria-label="Accent color"
-        density={density}
-        onChange={setColor}
-        seamOpacity={seamOpacity}
-        showValue={false}
-        size={360}
-        value={color}
-      />
-      <div className="briolette-demo-halo" id="briolette-demo-halo" popover="auto">
-        <HaloPicker
-          aria-label="Fine-tune color"
-          onChange={(next) => {
-            setColor(hslToHex(next.h, next.s, next.l));
-          }}
-          value={haloValue}
+      <div className="briolette-demo-picker">
+        <BriolettePicker
+          aria-label="Accent color"
+          onChange={setColor}
+          showValue={false}
+          size={260}
+          value={color}
         />
+        <div className="briolette-demo-hex">
+          <Swatch
+            aria-hidden="true"
+            color={color ?? undefined}
+            flat
+            size="2xs"
+            unavailable={color === null}
+          />
+          <output>{color === null ? "—" : color.toUpperCase()}</output>
+        </div>
       </div>
-      <div className="briolette-demo-controls">
-        <Swatch
-          color={color ?? undefined}
-          render={
-            <button
-              aria-label="Fine-tune the current color"
-              className="briolette-demo-swatch"
-              popoverTarget="briolette-demo-halo"
-              type="button"
-            />
-          }
-          variant="circle"
-          size="sm"
-          unavailable={color === null}
-        />
-        <output className="briolette-demo-hex">{color ?? "—"}</output>
-        <OptionBar label="Cut" onChange={setDensity} options={DENSITY_OPTIONS} value={density} />
-        <OptionBar
-          label="Seams"
-          onChange={setSeamOpacity}
-          options={SEAM_OPTIONS}
-          value={seamOpacity}
-        />
+      <div className="briolette-demo-notes">
+        <dl>
+          {NOTES.map(({ key, note }) => (
+            <div key={key}>
+              <dt>{key}</dt>
+              <dd>{note}</dd>
+            </div>
+          ))}
+        </dl>
+        <p>
+          At rest the 80 facets span every hue around the equator and every lightness from pole to
+          pole.
+        </p>
       </div>
     </div>
   );
 };
+
+const BrioletteVariant = (props: Partial<BriolettePickerProps>) => {
+  const [color, setColor] = useState<string | null>(null);
+
+  return (
+    <BriolettePicker
+      aria-label="Accent color"
+      onChange={setColor}
+      size={112}
+      value={color}
+      {...props}
+    />
+  );
+};
+
+export const BrioletteVariants = () => (
+  <VariantsBlock
+    id="briolette-variants-title"
+    lead="Cut it coarse at 20 facets or fine at 320, and set how much of the seams show."
+  >
+    <VariantCell code='density="base"' name="80 facets">
+      <BrioletteVariant density="base" />
+    </VariantCell>
+    <VariantCell code="showValue={false}" name="Without the hex readout">
+      <BrioletteVariant showValue={false} />
+    </VariantCell>
+    <VariantCell code="seamColor, seamOpacity" name="On a dark surface">
+      <div className="briolette-demo-ground">
+        <BrioletteVariant seamOpacity={0.6} showValue={false} />
+      </div>
+    </VariantCell>
+  </VariantsBlock>
+);

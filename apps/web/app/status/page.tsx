@@ -1,15 +1,13 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
+import { ApiTable, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
 import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
+import { InstallBlock } from "@/components/install-block";
 import { StatusDemo } from "@/components/status-demo";
+import { StatusVariants } from "@/components/status-variants";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description: "Animated discrete progress marks with fill and border variants.",
-  title: "Status | Patternmode",
-};
+export const metadata = componentMetadata("status");
 
 const statusApi: ApiSection[] = [
   {
@@ -76,27 +74,18 @@ const statusApi: ApiSection[] = [
 const statusExample = `import { StatusMark } from "@patternmode/status";
 import "@patternmode/status/styles.css";
 
-export function BuildStatus() {
-  return (
-    <div>
-      <StatusMark
-        value={75}
-        label="Almost complete"
-        color="#315c4b"
-        trackColor="#edeae2"
-      />
-      <StatusMark status="null" label="Not measured yet" />
-    </div>
-  );
-}`;
+<StatusMark value={75} label="Almost complete" color="#315c4b" trackColor="#edeae2" />
+<StatusMark status="null" label="Not measured yet" />`;
 
 export default function StatusPage() {
   return (
     <ComponentFrame demo={<StatusDemo />} slug="status">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/status" />
-        <CodeBlock>{statusExample}</CodeBlock>
-      </DocsBlock>
+      <StatusVariants />
+      <InstallBlock
+        command="npm i @patternmode/status motion"
+        example={statusExample}
+        lead="Pass a value or a named status. Add a label whenever the mark carries meaning on its own."
+      />
       <DocsBlock title="Core API">
         <ApiTable sections={statusApi} />
       </DocsBlock>

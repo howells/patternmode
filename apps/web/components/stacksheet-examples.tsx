@@ -3,6 +3,7 @@
 import { createStacksheet, Sheet, useSheetPanel } from "@patternmode/stacksheet";
 import { Fragment, useState } from "react";
 import type { ReactNode } from "react";
+import "./stacksheet-demo.css";
 
 const DEMO_CLASSNAMES = {
   backdrop: "stacksheet-backdrop",

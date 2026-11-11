@@ -1,0 +1,91 @@
+@reference "../app/globals.css";
+
+/* The mosaic beside the same array as a distribution bar and a list. */
+.parquet-demo {
+  @apply flex w-full flex-wrap items-center justify-center gap-8;
+}
+
+.parquet-demo-mosaic {
+  @apply w-[360px] max-w-full;
+}
+
+.parquet-demo-mosaic .patternmode-parquet__tile {
+  @apply items-end rounded-lg p-3.5;
+}
+
+.parquet-demo-label {
+  @apply type-ui flex min-w-0 flex-col text-white;
+}
+
+.parquet-demo-label[data-light] {
+  @apply text-[#3a1f22];
+}
+
+.parquet-demo-name {
+  @apply truncate font-medium;
+}
+
+.parquet-demo-percent {
+  @apply type-data;
+}
+
+.parquet-demo-legend {
+  @apply flex max-w-[300px] min-w-[220px] flex-[1_1_220px] flex-col gap-4;
+}
+
+.parquet-demo-bar {
+  @apply flex h-3 overflow-hidden rounded-md;
+}
+
+.parquet-demo-bar-segment {
+  @apply basis-0 transition-[flex-grow] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none;
+}
+
+.parquet-demo-rows {
+  @apply m-0 flex list-none flex-col p-0;
+}
+
+.parquet-demo-rows li {
+  @apply border-b border-border last:border-b-0;
+}
+
+.parquet-demo-row {
+  @apply type-ui flex h-9 w-full cursor-pointer items-center gap-2.5 border-0 bg-transparent p-0 text-left text-foreground;
+}
+
+.parquet-demo-row:focus-visible {
+  @apply rounded-sm outline-2 outline-offset-2 outline-ring;
+}
+
+.parquet-demo-dot {
+  @apply size-2.5 shrink-0 rounded-full;
+}
+
+.parquet-demo-row-name {
+  @apply grow;
+}
+
+.parquet-demo-row-percent {
+  @apply type-data text-muted-foreground;
+}
+
+.parquet-demo-row[aria-pressed="true"] .parquet-demo-row-name {
+  @apply font-medium;
+}
+
+/* Variant specimens. */
+.parquet-specimen .patternmode-parquet__tile {
+  @apply rounded;
+}
+
+.parquet-specimen--tight .patternmode-parquet__tile {
+  @apply rounded-xs;
+}
+
+.parquet-specimen-hex {
+  @apply type-data p-1.5 text-[11px] leading-[14px] text-white;
+}
+
+.parquet-specimen-hex[data-light] {
+  @apply text-[#3a1f22];
+}

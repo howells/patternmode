@@ -1,0 +1,56 @@
+@reference "../globals.css";
+
+/* Two lists of rows, one on a light card and one on a dark card. */
+.thumbnail-demo {
+  @apply flex w-full flex-wrap items-center justify-center gap-4;
+}
+
+.thumbnail-demo-card {
+  @apply m-0 flex max-w-[420px] min-w-[260px] flex-[1_1_260px] list-none flex-col rounded-xl border border-border bg-card px-5 py-2;
+}
+
+/* The dark card is dark in either scheme, so the edge is a highlight whatever
+   the page does; the package only flips it by prefers-color-scheme. */
+.thumbnail-demo-card[data-dark] {
+  --patternmode-thumbnail-frame: rgb(255 255 255 / 0.12);
+  @apply border-[var(--dark-border)] bg-[var(--dark-card)] text-[var(--dark-foreground)];
+}
+
+.thumbnail-demo-row {
+  @apply type-ui flex h-14 items-center gap-3.5 border-b border-border last:border-b-0;
+}
+
+.thumbnail-demo-card[data-dark] .thumbnail-demo-row {
+  @apply border-[var(--dark-border)];
+}
+
+.thumbnail-demo-name {
+  @apply min-w-0 grow truncate;
+}
+
+.thumbnail-demo-size {
+  @apply type-data shrink-0 text-muted-foreground;
+}
+
+.thumbnail-demo-card[data-dark] .thumbnail-demo-size {
+  @apply text-[var(--dark-muted-foreground)];
+}
+
+/* A variant specimen on a card or dark ground rather than the quiet inset. It
+   fills the whole preview, which pads its children by 24px. */
+.thumbnail-ground {
+  @apply -m-6 flex min-h-40 w-[calc(100%+3rem)] items-center justify-center bg-card shadow-[inset_0_0_0_1px_var(--border)];
+}
+
+.thumbnail-ground--dark {
+  --patternmode-thumbnail-frame: rgb(255 255 255 / 0.12);
+  @apply bg-[var(--dark-card)] shadow-none;
+}
+
+.thumbnail-contained {
+  @apply bg-muted;
+}
+
+.thumbnail-unsized {
+  @apply w-[180px];
+}

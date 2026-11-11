@@ -1,0 +1,32 @@
+@reference "../app/globals.css";
+
+/* Three labelled channels on the plate, each as wide as the plate allows. */
+.channel-demo {
+  @apply flex w-full max-w-[640px] flex-col gap-9 [@media(max-height:760px)]:gap-7;
+}
+
+.channel-demo-field {
+  @apply flex flex-col gap-2.5;
+}
+
+.channel-demo-header {
+  @apply flex items-center justify-between;
+}
+
+.channel-demo-label {
+  @apply type-label;
+}
+
+.channel-demo-value {
+  @apply flex items-center gap-2 type-data text-muted-foreground;
+}
+
+/* The size scale: swatch and channel side by side at their true heights. The
+   swatch keeps its own width; the channel takes the rest of the column. */
+.channel-demo-size-row {
+  @apply grid items-center gap-3 [grid-template-columns:2.5rem_auto_minmax(0,1fr)];
+}
+
+.channel-demo-size-row code {
+  @apply type-data;
+}

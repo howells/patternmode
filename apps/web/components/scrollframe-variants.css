@@ -1,0 +1,49 @@
+@reference "../app/globals.css";
+
+/* Each frame is sized to sit inside a 328 x 160 preview with room to spare, and
+   holds more than it shows so the fades and scrollbars have something to do. */
+.sfv-card {
+  @apply h-[112px] shrink-0 overflow-hidden rounded-lg border border-border bg-card;
+}
+
+.sfv-card-narrow {
+  @apply w-[140px];
+}
+
+.sfv-card-wide {
+  @apply w-40;
+}
+
+.sfv-lines {
+  @apply flex w-max flex-col gap-2.5 p-3.5;
+}
+
+.sfv-line {
+  @apply block h-1.5 shrink-0 rounded-[3px] bg-border;
+}
+
+.sfv-strip {
+  @apply h-20 w-[200px] shrink-0 overflow-hidden rounded-lg;
+}
+
+.sfv-swatches {
+  @apply flex h-20 gap-2;
+}
+
+.sfv-swatch {
+  @apply block h-20 w-16 shrink-0 rounded-md;
+}
+
+.sfv-backdrop {
+  @apply flex h-[112px] w-full items-center justify-center rounded-lg;
+  background: linear-gradient(135deg, #c9b79c 0%, #6d6152 100%);
+}
+
+.sfv-mask {
+  @apply h-[96px] w-[140px] shrink-0 overflow-hidden rounded-lg;
+}
+
+/* The mask fades the content itself, so the panel's colour lives on the content. */
+.sfv-mask-content {
+  @apply min-h-full bg-white/85;
+}

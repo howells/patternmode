@@ -1,0 +1,30 @@
+@reference "../app/globals.css";
+
+.verge-action {
+  @apply relative grid size-7 shrink-0 cursor-pointer place-items-center rounded-md border-0 bg-transparent p-0 text-foreground outline-none transition-colors duration-[140ms];
+}
+
+/* `outline-solid` is load-bearing: the resting `outline-none` sets
+   --tw-outline-style to none, and `outline-2` alone inherits that, so the
+   ring never drew. */
+.verge-action:focus-visible {
+  @apply outline-2 outline-offset-2 outline-solid outline-ring;
+}
+
+/* 28px visually, 48px to a thumb. Dropped on fine pointers, where the padded
+   area is not needed and would overlap its neighbour. */
+.verge-action-hit {
+  @apply pointer-events-auto absolute top-1/2 left-1/2 size-[max(100%,3rem)] -translate-1/2;
+}
+
+@media (pointer: fine) {
+  .verge-action-hit {
+    @apply hidden;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .verge-action:hover {
+    @apply bg-muted;
+  }
+}

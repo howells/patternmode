@@ -1,178 +1,143 @@
 "use client";
 
 import { DistributionBar, DistributionDisplay, Swatch } from "@patternmode/swatch";
-import type { DistributionBarSegment } from "@patternmode/swatch";
-import type { SVGProps } from "react";
+import type { DistributionSegment, SwatchDefaultProps } from "@patternmode/swatch";
 import { useState } from "react";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "./swatch-demo.css";
 
-/* Palettes */
+const evergreen = "#315c4b";
+const saffron = "#d9a441";
+const oxblood = "#9b3d32";
 
-const finishes = [
-  { color: "#315c4b", name: "Evergreen" },
-  { color: "#e1ebe5", name: "Sage" },
-  { color: "#9b3d32", name: "Oxblood" },
-  { color: "#d9a441", name: "Saffron" },
-  { color: "#1d1d1b", name: "Ink" },
-  { color: "#c4b7a3", name: "Dune" },
-] as const;
-
-const palettes = [
-  {
-    colors: [
-      { color: "#c4b7a3", ratio: 45 },
-      { color: "#9b3d32", ratio: 30 },
-      { color: "#e8dfd3", ratio: 25 },
-    ],
-    name: "Terrace",
-    type: "segmented" as const,
-  },
-  {
-    background: "linear-gradient(135deg, #1d1d1b, #315c4b 52%, #3d6b6e)",
-    name: "Dusk",
-    type: "gradient" as const,
-  },
-  {
-    colors: [
-      { color: "#1d1d1b", ratio: 50 },
-      { color: "#f5f0e8", ratio: 30 },
-      { color: "#6b4c3b", ratio: 20 },
-    ],
-    name: "Archive",
-    type: "segmented" as const,
-  },
-] as const;
-
-const gradients = [
-  {
-    background: "linear-gradient(135deg, #3d6b6e, #c4b7a3)",
-    name: "Patina",
-  },
-  {
-    background: "linear-gradient(135deg, #6b4c3b, #d9a441)",
-    name: "Copper",
-  },
-  {
-    background: "linear-gradient(135deg, #c4b7a3, #e8dfd3)",
-    name: "Stone",
-  },
-  {
-    background: "linear-gradient(135deg, #9b3d32, #d9a441)",
-    name: "Ember",
-  },
-  {
-    background: "linear-gradient(135deg, #1d1d1b, #315c4b)",
-    name: "Moss",
-  },
-  {
-    background: "linear-gradient(135deg, #e1ebe5, #c4b7a3)",
-    name: "Lichen",
-  },
-] as const;
-
-const startingDistribution: DistributionBarSegment[] = [
-  { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 48 },
-  { color: "#d9a441", id: "saffron", label: "Saffron", value: 30 },
-  { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
+const startingDistribution: DistributionSegment[] = [
+  { color: evergreen, id: "evergreen", label: "Evergreen", value: 48 },
+  { color: saffron, id: "saffron", label: "Saffron", value: 30 },
+  { color: oxblood, id: "oxblood", label: "Oxblood", value: 22 },
 ];
 
-const assignedDistribution: DistributionBarSegment[] = [
-  { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 38 },
-  { color: "#d9a441", id: "saffron", label: "Saffron", value: 24 },
-  { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 17 },
+const assignedDistribution: DistributionSegment[] = [
+  { color: evergreen, id: "evergreen", label: "Evergreen", value: 38 },
+  { color: saffron, id: "saffron", label: "Saffron", value: 24 },
+  { color: oxblood, id: "oxblood", label: "Oxblood", value: 17 },
 ];
 
-type FinishColor = (typeof finishes)[number]["color"];
-type PaletteName = (typeof palettes)[number]["name"];
+/* The row of options, picked in turn; the unavailable one cannot be. */
+const options: { id: string; name: string; swatch: SwatchDefaultProps }[] = [
+  { id: "circle", name: "Evergreen circle", swatch: { color: evergreen } },
+  {
+    id: "pill",
+    name: "Evergreen and sage pill",
+    swatch: {
+      colors: [
+        { color: evergreen, ratio: 60 },
+        { color: "#e1ebe5", ratio: 40 },
+      ],
+      variant: "pill",
+    },
+  },
+  { id: "square", name: "Saffron square", swatch: { color: saffron, variant: "square" } },
+  { id: "selected", name: "Oxblood circle", swatch: { color: oxblood } },
+  {
+    id: "unavailable",
+    name: "Unavailable circle",
+    swatch: { color: "#c9c3b6", unavailable: true },
+  },
+  {
+    id: "block",
+    name: "Palette block",
+    swatch: {
+      className: "swatch-demo-block",
+      colors: [
+        { color: evergreen, ratio: 48 },
+        { color: saffron, ratio: 30 },
+        { color: oxblood, ratio: 22 },
+      ],
+      variant: "block",
+    },
+  },
+];
 
-/* Icons */
-
-const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg fill="none" viewBox="0 0 24 24" {...props}>
-    <title>Selected</title>
-    <path d="m5 12 4 4L19 6" />
-  </svg>
+const SwatchButton = ({
+  onSelect,
+  selected,
+  option,
+}: {
+  onSelect: (id: string) => void;
+  selected: boolean;
+  option: (typeof options)[number];
+}) => (
+  <button
+    aria-label={option.name}
+    aria-pressed={selected}
+    className="swatch-demo-button"
+    disabled={option.swatch.unavailable}
+    onClick={() => {
+      onSelect(option.id);
+    }}
+    type="button"
+  >
+    <Swatch
+      aria-hidden="true"
+      selected={selected}
+      showRing={selected}
+      size="2xl"
+      {...option.swatch}
+    />
+  </button>
 );
 
-/* Demo: the three things a reader adjusts, composed in one panel. */
+/* Demo: the options you can pick, and the bar that divides a palette. */
 
 export const SwatchDemo = () => {
-  const [selected, setSelected] = useState<FinishColor>(finishes[0].color);
-  const [selectedPalette, setSelectedPalette] = useState<PaletteName>(palettes[0].name);
-  const [distribution, setDistribution] = useState<DistributionBarSegment[]>(startingDistribution);
+  const [selected, setSelected] = useState<string>("selected");
+  const [distribution, setDistribution] = useState<DistributionSegment[]>(startingDistribution);
 
   return (
     <div className="swatch-demo">
-      {/* Finish selector */}
-      <div className="swatch-demo-cell">
-        <div className="swatch-demo-label">Finishes</div>
-        <fieldset aria-label="Select a finish" className="swatch-demo-swatches">
-          <legend className="sr-only">Select a finish</legend>
-          {finishes.map((finish) => (
-            <button
-              aria-label={`Select ${finish.name}`}
-              aria-pressed={selected === finish.color}
-              className="swatch-demo-button"
-              key={finish.color}
-              onClick={() => {
-                setSelected(finish.color);
-              }}
-              type="button"
-            >
-              <Swatch
-                aria-hidden="true"
-                color={finish.color}
-                icon={CheckIcon}
-                selected={selected === finish.color}
-                size="xl"
-              />
-            </button>
-          ))}
-        </fieldset>
-      </div>
-
-      {/* Curated palettes */}
-      <div className="swatch-demo-cell">
-        <div className="swatch-demo-label">Palettes</div>
-        <div className="swatch-demo-palette-grid">
-          {palettes.map((palette) => (
-            <button
-              aria-label={`Select ${palette.name} palette`}
-              aria-pressed={selectedPalette === palette.name}
-              className="swatch-demo-palette-item"
-              key={palette.name}
-              onClick={() => {
-                setSelectedPalette(palette.name);
-              }}
-              type="button"
-            >
-              <Swatch
-                aria-hidden="true"
-                {...(palette.type === "gradient"
-                  ? { background: palette.background }
-                  : { colors: [...palette.colors] })}
-                selected={selectedPalette === palette.name}
-                variant="pill"
-                showRing={selectedPalette === palette.name}
-                size="xl"
-              />
-              <span>{palette.name}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Adjustable distribution */}
-      <div className="swatch-demo-cell">
-        <div className="swatch-demo-label">Adjustable distribution</div>
-        <DistributionBar
-          aria-label="Adjust finish distribution"
-          onChange={setDistribution}
-          segments={distribution}
-        />
-      </div>
+      <fieldset aria-label="Select a swatch" className="swatch-demo-options">
+        {options.map((option) => (
+          <SwatchButton
+            key={option.id}
+            onSelect={setSelected}
+            selected={selected === option.id}
+            option={option}
+          />
+        ))}
+      </fieldset>
+      <DistributionBar
+        aria-label="Adjust finish distribution"
+        onChange={setDistribution}
+        segments={distribution}
+      />
     </div>
+  );
+};
+
+const RemovableSwatch = () => {
+  const [removed, setRemoved] = useState(false);
+
+  return removed ? (
+    <button
+      className="swatch-demo-restore"
+      onClick={() => {
+        setRemoved(false);
+      }}
+      type="button"
+    >
+      Restore
+    </button>
+  ) : (
+    <Swatch
+      aria-label="Oxblood"
+      color={oxblood}
+      onRemove={() => {
+        setRemoved(true);
+      }}
+      removeLabel="Remove Oxblood"
+      size="3xl"
+    />
   );
 };
 
@@ -181,42 +146,37 @@ export const SwatchDemo = () => {
 export const SwatchVariants = () => (
   <VariantsBlock
     id="swatch-variants-title"
-    lead="Four shapes, sizes from 2xs to 7xl. Each state is a prop."
+    lead="Four options, sizes from 2xs to 7xl. Each state is a prop."
   >
     <VariantCell code="raised" name="Default and raised">
-      <Swatch aria-label="Default" color="#315c4b" size="xl" />
-      <Swatch aria-label="Raised" color="#315c4b" raised size="xl" />
+      <Swatch aria-label="Default" color={evergreen} size="lg" />
+      <Swatch aria-label="Raised" color={evergreen} raised size="lg" />
     </VariantCell>
     <VariantCell code="selected, unavailable" name="Selected and unavailable">
-      <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
-      <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
+      <Swatch aria-label="Selected" color={saffron} selected showRing size="lg" />
+      <Swatch aria-label="Unavailable" color="#c9c3b6" size="lg" unavailable />
+    </VariantCell>
+    <VariantCell code="onRemove, removeLabel" name="Removable">
+      <RemovableSwatch />
+    </VariantCell>
+    <VariantCell code='texture="atmosphere"' name="Atmosphere texture">
+      <Swatch
+        aria-label="Atmosphere texture"
+        colors={[evergreen, "#6f9a86", "#1f3b30"]}
+        size="3xl"
+        texture="atmosphere"
+      />
     </VariantCell>
     {/* The pair is the point: the same 40% alpha colour with and without a
         backdrop. Without one it reads as a pale solid, indistinguishable
         from a lighter opaque colour. */}
-    <VariantCell code="transparencyBackdrop" name="40% alpha, alone and on a backdrop">
-      <Swatch aria-label="Translucent, no backdrop" color="rgb(49 92 75 / 40%)" size="xl" />
+    <VariantCell code="transparencyBackdrop" name="40% on a backdrop">
       <Swatch
         aria-label="Translucent on a backdrop"
         color="rgb(49 92 75 / 40%)"
-        size="xl"
+        size="3xl"
         transparencyBackdrop
       />
-    </VariantCell>
-    <VariantCell code='background, variant="square"' name="Gradient squares">
-      <div className="swatch-demo-specimens">
-        {gradients.map((gradient) => (
-          <div className="swatch-demo-specimen" key={gradient.name}>
-            <Swatch
-              aria-label={gradient.name}
-              background={gradient.background}
-              size="xl"
-              variant="square"
-            />
-            <span>{gradient.name}</span>
-          </div>
-        ))}
-      </div>
     </VariantCell>
     <VariantCell code="DistributionDisplay" name="Read-only display">
       <div className="swatch-variant-display">

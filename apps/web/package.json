@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/copy-registry.mjs && next build",
-    "dev": "node scripts/copy-registry.mjs && next dev",
+    "build": "node scripts/copy-registry.mjs && node scripts/write-theme-tokens.mjs && next build",
+    "dev": "node scripts/copy-registry.mjs && node scripts/write-theme-tokens.mjs && next dev",
     "lint": "howells-check .",
     "lint:fix": "howells-fix .",
     "typecheck": "../../node_modules/.bin/tsc --noEmit"

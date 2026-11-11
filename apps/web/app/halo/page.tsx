@@ -1,15 +1,10 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
-import type { Metadata } from "next";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { CopyCommand } from "@/components/copy-command";
-import { HaloDemo } from "@/components/halo-demo";
+import { HaloDemo, HaloVariants } from "@/components/halo-demo";
+import { PackageDocs } from "@/components/package-docs";
+import { componentMetadata } from "@/lib/catalogue";
 
-export const metadata: Metadata = {
-  description: "Round saturation and lightness color picker with a compact hue smile arc.",
-  title: "Halo | Patternmode",
-};
+export const metadata = componentMetadata("halo");
 
 const haloApi: ApiSection[] = [
   {
@@ -24,7 +19,7 @@ const haloApi: ApiSection[] = [
       {
         description: "Called with the next HSL value after pad or arc pointer input.",
         name: "onChange",
-        type: "(value: HaloColor) => void",
+        type: "(value: HslColor) => void",
       },
       {
         defaultValue: "true",
@@ -45,11 +40,6 @@ const haloApi: ApiSection[] = [
     name: "Utilities",
     props: [
       {
-        description: "Converts HSL values to a clamped hex color.",
-        name: "hslToHex",
-        type: "(h, s, l) => string",
-      },
-      {
         description: "Maps saturation/lightness values to pad handle coordinates.",
         name: "getHaloPadHandlePosition",
         type: "(s, l) => { x, y }",
@@ -63,11 +53,12 @@ const haloApi: ApiSection[] = [
   },
 ];
 
-const haloExample = `import { HaloPicker, type HaloColor } from "@patternmode/halo";
+const haloExample = `import { HaloPicker } from "@patternmode/halo";
 import "@patternmode/halo/styles.css";
+import type { HslColor } from "@patternmode/system";
 
 export function AccentColorField() {
-  const [color, setColor] = useState<HaloColor>({ h: 16, s: 48, l: 69 });
+  const [color, setColor] = useState<HslColor>({ h: 16, s: 48, l: 69 });
 
   return (
     <HaloPicker
@@ -80,14 +71,13 @@ export function AccentColorField() {
 
 export default function HaloPage() {
   return (
-    <ComponentFrame demo={<HaloDemo />} slug="halo">
-      <DocsBlock title="Install">
-        <CopyCommand command="npm install @patternmode/halo" />
-        <CodeBlock>{haloExample}</CodeBlock>
-      </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={haloApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={haloApi}
+      demo={<HaloDemo />}
+      example={haloExample}
+      installLead="Controlled. Hold the HSL value in state and pass it back in."
+      slug="halo"
+      variants={<HaloVariants />}
+    />
   );
 }
