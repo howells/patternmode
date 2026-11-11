@@ -5,8 +5,12 @@
   "tasks": {
     "@patternmode/theme#build": {
       "dependsOn": ["^build"],
-      "env": ["REGISTRY_BASE_URL", "VERCEL"],
+      "env": ["REGISTRY_BASE_URL"],
       "outputs": ["dist/**"]
+    },
+    "@howells/patternmode-preview#build": {
+      "dependsOn": ["^build"],
+      "cache": false
     },
     "build": {
       "dependsOn": ["^build"],

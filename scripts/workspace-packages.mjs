@@ -50,10 +50,13 @@ const readPackage = async (directory) => {
 
   try {
     raw = await readFile(path.join(directory, "package.json"), "utf-8");
-  } catch {
-    // A directory under packages/ with no package.json is not a package.
-    // One that has a malformed manifest still throws, below.
-    return null;
+  } catch (error) {
+    // A directory under packages/ with no package.json is not a package. Any
+    // other read failure (permissions, IO) is a fault and stops the release.
+    if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+      return null;
+    }
+    throw error;
   }
 
   const manifest = manifestSchema.parse(JSON.parse(raw));
@@ -102,8 +105,8 @@ export const readPublishablePackages = async () => {
  *
  * A dependent must not reach the registry before the package it resolves a real
  * version of, or the first person to install it gets an unresolvable dependency.
- * The order is computed rather than written down: this workspace has fourteen
- * publishable packages and three layers of dependency between them, and a
+ * The order is computed rather than written down: this workspace has over a
+ * dozen publishable packages and several layers of dependency between them, and a
  * hand-maintained list is one new package away from being wrong in a way that
  * only shows up mid-release.
  *

@@ -14,7 +14,7 @@ import { REPO_ROOT, inDependencyOrder, readPublishablePackages } from "./workspa
  * unattended local publishing path, and granular tokens lose the ability to
  * publish at all in January 2027.
  *
- * **pnpm packs, npm publishes, and the split is not incidental.** Ten of these
+ * **pnpm packs, npm publishes, and the split is not incidental.** Most of these
  * packages depend on another through the `workspace:*` protocol. Only pnpm
  * rewrites that to a real version number when it packs; `npm pack` ships the
  * literal string and the release is uninstallable. So each package is packed by
@@ -33,15 +33,16 @@ const isDryRun = globalThis.process.argv.includes("--dry-run");
  * @param {string} command The executable.
  * @param {string[]} args Its arguments.
  * @param {{cwd?: string, env?: NodeJS.ProcessEnv, quiet?: boolean}} [options] Working
- *   directory, environment, and whether the command's stderr is expected output
- *   rather than a fault.
+ *   directory, environment, and whether to hold stderr back from the terminal.
+ *   Held-back stderr is still carried in the error when the command fails.
  * @returns {Promise<string>} Everything the command wrote to stdout.
  */
 const run = async (command, args, options = {}) => {
+  const quiet = options.quiet === true;
   const child = spawn(command, args, {
     cwd: options.cwd ?? REPO_ROOT,
     env: options.env ?? globalThis.process.env,
-    stdio: ["ignore", "pipe", options.quiet === true ? "ignore" : "inherit"],
+    stdio: ["ignore", "pipe", quiet ? "pipe" : "inherit"],
   });
 
   let stdout = "";
@@ -49,13 +50,19 @@ const run = async (command, args, options = {}) => {
   child.stdout.on("data", (chunk) => {
     stdout += chunk;
   });
+  let stderr = "";
+  child.stderr?.setEncoding("utf-8");
+  child.stderr?.on("data", (chunk) => {
+    stderr += chunk;
+  });
 
   /** @type {[number | null, NodeJS.Signals | null]} */
   const closeEvent = await once(child, "close");
   const [exitCode] = closeEvent;
 
   if (exitCode !== 0) {
-    throw new Error(`${command} ${args.join(" ")} exited with ${exitCode ?? 1}`);
+    const detail = stderr === "" ? "" : `\n${stderr.trimEnd()}`;
+    throw new Error(`${command} ${args.join(" ")} exited with ${exitCode ?? 1}${detail}`);
   }
 
   return stdout;
@@ -65,7 +72,7 @@ const run = async (command, args, options = {}) => {
  * Whether the registry already has this exact version.
  *
  * Makes a re-run after a partial failure safe, which matters more here than in a
- * two-package repo: a release is fourteen publishes and a network fault halfway
+ * two-package repo: a release is one publish per package and a network fault halfway
  * through must not need unpicking by hand. Unpublishing is unavailable after 72
  * hours, so re-running is the only recovery there is.
  *
@@ -74,14 +81,18 @@ const run = async (command, args, options = {}) => {
  */
 const alreadyPublished = async (entry) => {
   try {
-    // The only place in this script where stderr is dropped, and the exception
-    // that proves the rule: a 404 here is the answer to the question, not a
-    // fault. Printing fourteen of them buries a real failure in noise. Every
-    // other command in this file keeps its stderr.
+    // The only command in this script whose stderr is held back: a 404 here is
+    // the answer to the question, not a fault, and printing one per package
+    // buries a real failure in noise.
     await run("npm", ["view", `${entry.name}@${entry.version}`, "version"], { quiet: true });
     return true;
-  } catch {
-    return false;
+  } catch (error) {
+    // Only the registry saying 404 means "not published". A network, auth or
+    // registry fault must stop the release, not be read as permission to publish.
+    if (error instanceof Error && /^npm error code E404$/mu.test(error.message)) {
+      return false;
+    }
+    throw error;
   }
 };
 
@@ -101,8 +112,8 @@ const pack = async (entry) => {
   const output = await run("pnpm", ["pack", "--pack-destination", destination], {
     cwd: entry.directory,
     // `pnpm build` has already built the workspace through turbo in dependency
-    // order. Without this, fourteen prepack builds race each other over the
-    // same dist/ directories - see scripts/prepack-build.mjs.
+    // order. This tells each package's prepack to reuse that build - see
+    // scripts/prepack-build.mjs.
     env: { ...globalThis.process.env, PATTERNMODE_SKIP_PREPACK_BUILD: "1" },
   });
 
@@ -134,8 +145,8 @@ console.log(`Release order: ${packages.map((entry) => entry.name).join(", ")}\n`
 const release = async (entry, isOnRegistry) => {
   // A dry run packs even a version the registry already has. Packing is where
   // the workspace: protocol guard lives, and skipping it means a rehearsal of a
-  // release with nothing new in it checks nothing at all - it prints fifteen
-  // "already published" lines and exits green having packed no tarball. A real
+  // release with nothing new in it checks nothing at all - it prints an
+  // "already published" line per package and exits green having packed no tarball. A real
   // run still skips, because re-publishing is what would fail.
   if (isOnRegistry && !isDryRun) {
     console.log(`= ${entry.name}@${entry.version} already on the registry, skipping`);

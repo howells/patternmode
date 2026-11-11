@@ -119,9 +119,6 @@ catalogs:
     '@fontsource-variable/hedvig-letters-serif':
       specifier: ^5.3.1
       version: 5.3.1
-    '@howells/envy':
-      specifier: 0.3.7
-      version: 0.3.7
     '@howells/husky':
       specifier: ^0.3.0
       version: 0.3.0
@@ -256,9 +253,6 @@ importers:
       '@changesets/cli':
         specifier: 'catalog:'
         version: 3.0.3
-      '@howells/envy':
-        specifier: 'catalog:'
-        version: 0.3.7(zod@4.6.5)
       '@howells/husky':
         specifier: 'catalog:'
         version: 0.3.0
@@ -301,6 +295,12 @@ importers:
       '@base-ui/react':
         specifier: ^1.8.0
         version: 1.8.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@fontsource-variable/geist-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource-variable/hedvig-letters-serif':
+        specifier: ^5.3.1
+        version: 5.3.1
       '@fontsource-variable/inter':
         specifier: ^5.3.0
         version: 5.3.0
@@ -313,6 +313,9 @@ importers:
       focus-trap-react:
         specifier: ^12.0.3
         version: 12.0.3(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      inter-ui:
+        specifier: ^4.1.1
+        version: 4.1.1
       lucide-react:
         specifier: ^1.47.0
         version: 1.47.0(react@19.3.0)
@@ -344,33 +347,9 @@ importers:
       '@howells/lint':
         specifier: 'catalog:'
         version: 3.5.1
-      '@howells/motion':
-        specifier: workspace:*
-        version: link:../../packages/motion
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.8
-      '@patternmode/deck':
-        specifier: workspace:*
-        version: link:../../packages/deck
-      '@patternmode/scrollframe':
-        specifier: workspace:*
-        version: link:../../packages/scrollframe
-      '@patternmode/stacksheet':
-        specifier: workspace:*
-        version: link:../../packages/stacksheet
-      '@patternmode/swatch':
-        specifier: workspace:*
-        version: link:../../packages/swatch
-      '@patternmode/system':
-        specifier: workspace:*
-        version: link:../../packages/system
-      '@patternmode/tags':
-        specifier: workspace:*
-        version: link:../../packages/tags
-      '@patternmode/theme':
-        specifier: workspace:*
-        version: link:../../packages/theme
       '@tailwindcss/postcss':
         specifier: 'catalog:'
         version: 4.3.3
@@ -614,9 +593,9 @@ importers:
       '@base-ui/react':
         specifier: 'catalog:'
         version: 1.8.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@patternmode/swatch':
+      '@patternmode/system':
         specifier: workspace:*
-        version: link:../swatch
+        version: link:../system
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -812,15 +791,36 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.8
+      '@testing-library/react':
+        specifier: 'catalog:'
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.3.0(@types/react@19.3.0)
       concurrently:
         specifier: 'catalog:'
         version: 10.0.5
+      jsdom:
+        specifier: 'catalog:'
+        version: 30.1.1
+      react:
+        specifier: 'catalog:'
+        version: 19.3.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.3.0(react@19.3.0)
       tsdown:
         specifier: 'catalog:'
         version: 0.23.0(typescript@7.0.2)
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@26.6.2)(@vitest/browser-playwright@5.0.1)(@vitest/ui@5.0.1)(jsdom@30.1.1)(vite@8.3.0(@types/node@26.6.2)(jiti@2.7.0)(yaml@2.9.1))
 
   packages/parquet:
     dependencies:
@@ -1758,12 +1758,6 @@ packages:
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4
-
-  '@howells/envy@0.3.7':
-    resolution: {integrity: sha512-Hj7SBdP4qdl/zFLPPW0o5fBThKGcqv0RL9deHA2guMcc2fCelfi8MrXBqMvwzYMB9f3YnqB6VWjaSMD/fv2Jxg==}
-    hasBin: true
-    peerDependencies:
-      zod: ^4.0.0
 
   '@howells/husky@0.3.0':
     resolution: {integrity: sha512-p8TmJQ6oIRSYbm3HS3xNjN2cnD287jkeuUz62vSwyjtgMeqQAsVuTuFziEgb1Usq992FFiiDKe2rPTfKAM75ow==}
@@ -6928,11 +6922,6 @@ snapshots:
   '@hono/node-server@2.1.1(hono@4.13.8)':
     dependencies:
       hono: 4.13.8
-
-  '@howells/envy@0.3.7(zod@4.6.5)':
-    dependencies:
-      dotenv: 17.4.2
-      zod: 4.6.5
 
   '@howells/husky@0.3.0':
     dependencies:
