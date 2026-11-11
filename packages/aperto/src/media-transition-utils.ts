@@ -1,4 +1,4 @@
-import type { TargetAndTransition, Transition } from "motion/react";
+import type { TargetAndTransition } from "motion/react";
 import type { ApertoMediaItem } from "./types";
 
 export interface ApertoRect {
@@ -8,11 +8,11 @@ export interface ApertoRect {
   width: number;
 }
 
+/** A Media Transition clone's flight between two measured rects. */
 export interface ApertoMediaTransition {
   from: ApertoRect;
   item: ApertoMediaItem;
-  phase: "opening" | "closing";
-  to?: ApertoRect;
+  to: ApertoRect;
 }
 
 export const rectFromElement = (element: Element | null): ApertoRect | null => {
@@ -53,6 +53,3 @@ export const rectTarget = (rect: ApertoRect): TargetAndTransition => ({
   top: rect.top,
   width: rect.width,
 });
-
-export const transitionDurationMs = (transition: Transition): number =>
-  transition.duration === undefined ? 450 : transition.duration * 1000;

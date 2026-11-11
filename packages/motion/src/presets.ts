@@ -14,15 +14,15 @@ import { springs } from "./springs";
  * ```
  */
 export const presets = {
-  dialogClose: { duration: durations.quick, ease: easings.customIn },
+  dialogClose: { duration: durations.quick, ease: easings.customOut },
   dialogOpen: { duration: durations.normal, ease: easings.customOut },
   fadeIn: { duration: durations.quick, ease: easings.customOut },
-  fadeOut: { duration: durations.quick, ease: easings.customIn },
+  fadeOut: { duration: durations.quick, ease: easings.customOut },
   hoverLift: springs.snappy,
   hoverSettle: springs.natural,
   shake: { duration: durations.normal, ease: easings.customOut },
   slideIn: { duration: durations.normal, ease: easings.customOut },
-  slideOut: { duration: durations.quick, ease: easings.customIn },
+  slideOut: { duration: durations.quick, ease: easings.customOut },
   /** Crisp emergence — peeks, lifts, and small reveals on hover/focus */
   snappy: { duration: durations.snappy, ease: easings.snappy },
 } as const;

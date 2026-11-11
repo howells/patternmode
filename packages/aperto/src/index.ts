@@ -4,15 +4,13 @@
  * Package: @patternmode/aperto
  *
  * Opinionated thumbnail-to-expanded media transitions.
- * Built on Radix Dialog + Motion.
+ * Built on Base UI Dialog + Motion.
  *
  * Inspired by Cambio (https://github.com/raphaelsalaja/cambio)
  * by Raphael Salaja.
  *
  * @example
  * ```tsx
- * import { Aperto } from "@patternmode/aperto";
- *
  * import { Aperto } from "@patternmode/aperto";
  * import "@patternmode/aperto/styles.css";
  *
@@ -65,7 +63,6 @@ export type {
   DragSpringConfig,
   MotionPreset,
   MotionPresetName,
-  MotionProp,
   MotionVariants,
   NavigationMotionPresetName,
   RenderImage,

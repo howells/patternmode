@@ -1,5 +1,6 @@
 import type { OklabColor } from "./color";
 import { oklabToLinearRgb, oklabToOklch, oklchToOklab } from "./color";
+import { clamp, wrapHue } from "./math";
 
 const chromaLimits = new Map<string, number>();
 
@@ -12,7 +13,7 @@ const findChromaLimit = (lightness: number, hue: number): number => {
   if (!Number.isFinite(lightness) || !Number.isFinite(hue) || lightness <= 0 || lightness >= 1) {
     return 0;
   }
-  const h = ((hue % 360) + 360) % 360;
+  const h = wrapHue(hue);
   const key = `${Math.round(lightness * 10_000)}:${Math.round(h * 10)}`;
   const known = chromaLimits.get(key);
   if (known !== undefined) {
@@ -36,7 +37,5 @@ const findChromaLimit = (lightness: number, hue: number): number => {
 export const fitOklabToSrgbGamut = (lab: OklabColor): OklabColor => {
   const lch = oklabToOklch(lab);
   const limit = findChromaLimit(lab.L, lch.h);
-  return lch.C <= limit
-    ? lab
-    : oklchToOklab({ C: limit, L: Math.min(1, Math.max(0, lab.L)), h: lch.h });
+  return lch.C <= limit ? lab : oklchToOklab({ C: limit, L: clamp(lab.L, 0, 1), h: lch.h });
 };

@@ -9,6 +9,14 @@ import type { ReactNode } from "react";
 export interface ParquetTile extends WeightedColorSegment {
   /** Optional stable identity, used for the React key when present. */
   id?: string;
+  /**
+   * Whether the tile color reads as light, overriding the analysis. Without
+   * it, hex (3, 4, 6 or 8 digits), `rgb()`, `hsl()`, `oklab()`, `oklch()`,
+   * `white`, `black` and `transparent` are analysed; any other color
+   * (`var()`, `color-mix()`, most named colors) is treated as not light, so
+   * set this when such a tile is light.
+   */
+  isLight?: boolean;
 }
 
 /** Context passed to a {@link ParquetProps.renderTile} override. */

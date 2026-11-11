@@ -1,76 +1,74 @@
-/* Declare the full layer order before opening `components`: registering
-   `components` first would leave it ahead of the host's `theme` and `base`,
-   so a base reset would outrank these rules. A no-op when the app declared
-   the order first. */
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Halo only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
 @layer theme, base, components, utilities;
 
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override any of it with their own utilities. Do not
+   hoist a rule out of this block.
+
+   Written as plain declarations where no utility emits the same value: the
+   `border` and `outline` shorthands (their utilities route the style through
+   `--tw-*-style`), `clip`, the `background` shorthands, shadows,
+   transforms (`-translate-*` sets `translate`), `font-mono` (a different
+   fallback stack), SVG-only properties with no utility, and `line-height`
+   (`leading-*` also sets `--tw-leading`, which a consumer's `text-*` class on
+   the same element would then pick up). */
 @layer components {
   .patternmode-halo-picker {
     --patternmode-halo-color: #d99a81;
     border: 0;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin: 0;
-    min-inline-size: 0;
-    padding: 0;
-    vertical-align: top;
-    width: max-content;
+    @apply m-0 inline-flex w-max min-inline-0 flex-col gap-3 p-0 align-top;
   }
 
   .patternmode-halo-picker__legend {
     clip: rect(0, 0, 0, 0);
     border: 0;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    @apply absolute -m-px h-px w-px overflow-hidden p-0 whitespace-nowrap;
   }
 
   .patternmode-halo-picker__stage {
-    position: relative;
+    @apply relative;
   }
 
   .patternmode-halo-picker__pad {
     border: 1px solid rgb(17 24 39 / 12%);
-    border-radius: 999px;
-    cursor: crosshair;
-    overflow: hidden;
-    position: absolute;
-    touch-action: none;
+    @apply absolute touch-none cursor-crosshair overflow-hidden rounded-[999px];
   }
 
   .patternmode-halo-picker__pad:focus-visible {
     outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 3px;
+    @apply outline-offset-3;
   }
 
   /* The hue slider is a visually hidden range input, so its focus ring is
      drawn around the arc handle that follows it. An outline on the svg would
      box the pad as well and leave it unclear which control has focus. */
   .patternmode-halo-picker__arc-focus {
-    fill: none;
-    opacity: 0;
-    pointer-events: none;
-    stroke: var(--ring, #315c4b);
-    stroke-width: 2;
+    @apply pointer-events-none fill-none stroke-[var(--ring,#315c4b)] stroke-2 opacity-0;
   }
 
   .patternmode-halo-picker__arc-input:focus-visible
     + .patternmode-halo-picker__arc
     .patternmode-halo-picker__arc-focus {
-    opacity: 1;
+    @apply opacity-100;
   }
 
   .patternmode-halo-picker__pad-hue,
   .patternmode-halo-picker__pad-white,
   .patternmode-halo-picker__pad-black {
-    border-radius: inherit;
-    inset: 0;
-    position: absolute;
+    @apply absolute inset-0 rounded-[inherit];
   }
 
   .patternmode-halo-picker__pad-hue {
@@ -87,54 +85,39 @@
 
   .patternmode-halo-picker__pad-handle {
     border: 2px solid white;
-    border-radius: 999px;
     box-shadow: 0 0 0 1px rgb(0 0 0 / 25%);
-    height: 0.875rem;
-    position: absolute;
     transform: translate(-50%, -50%);
-    width: 0.875rem;
+    @apply absolute size-3.5 rounded-[999px];
   }
 
   .patternmode-halo-picker__arc {
-    inset: 0;
-    overflow: visible;
+    @apply absolute inset-0 touch-none overflow-visible;
     /*
      * The arc svg overlays the whole stage, including the round pad beneath
      * it. A blank svg root still hit-tests like any box, so without this it
      * swallows the pad's pointer events. The arc path and handle re-enable
      * their own hits below.
      */
-    pointer-events: none;
-    position: absolute;
-    touch-action: none;
+    @apply pointer-events-none;
   }
 
   .patternmode-halo-picker__arc-input {
     clip: rect(0, 0, 0, 0);
     border: 0;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    @apply absolute -m-px h-px w-px overflow-hidden p-0 whitespace-nowrap;
   }
 
   .patternmode-halo-picker__arc-path {
-    fill: none;
+    @apply fill-none;
     pointer-events: stroke;
     stroke-linecap: round;
   }
 
   .patternmode-halo-picker__arc-handle {
-    pointer-events: auto;
-    stroke: white;
-    stroke-width: 2;
+    @apply pointer-events-auto stroke-white stroke-2;
   }
 
   .patternmode-halo-picker__value {
-    color: var(--muted-foreground, #77756d);
     font-family: var(
       --font-mono,
       "SFMono-Regular",
@@ -144,8 +127,7 @@
       Menlo,
       monospace
     );
-    font-size: 0.75rem;
+    @apply text-center text-xs text-[color:var(--muted-foreground,#77756d)];
     line-height: 1;
-    text-align: center;
   }
 }

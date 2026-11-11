@@ -24,8 +24,10 @@
     @apply cursor-zoom-in transition-[filter,transform] duration-200 ease-out;
   }
 
-  [data-slot="aperto-trigger"]:hover {
-    @apply brightness-[0.96];
+  @media (hover: hover) and (pointer: fine) {
+    [data-slot="aperto-trigger"]:hover {
+      @apply brightness-[0.96];
+    }
   }
 
   [data-slot="aperto-trigger"]:focus-visible {

@@ -2,6 +2,8 @@
  * @see https://bottosson.github.io/posts/oklab/
  * @see https://www.w3.org/TR/css-color-4/#color-conversion-code
  */
+import { clamp, wrapHue } from "./math";
+
 export interface RgbColor {
   r: number;
   g: number;
@@ -47,11 +49,7 @@ export const hexToRgb = (hex: string): RgbColor | null => {
 /** Encodes rounded, clamped 0–255 sRGB channels as lowercase hex. */
 export const rgbToHex = (r: number, g: number, b: number): string =>
   `#${[r, g, b]
-    .map((value) =>
-      Math.min(255, Math.max(0, Math.round(value)))
-        .toString(16)
-        .padStart(2, "0"),
-    )
+    .map((value) => clamp(Math.round(value), 0, 255).toString(16).padStart(2, "0"))
     .join("")}`;
 
 /** Hue wraps in degrees; saturation and lightness clamp to 0–100. */
@@ -59,9 +57,9 @@ export const hslToRgb = (h: number, s: number, l: number): RgbColor => {
   if (![h, s, l].every(Number.isFinite)) {
     throw new TypeError("HSL channels must be finite numbers.");
   }
-  const hue = ((h % 360) + 360) % 360;
-  const saturation = Math.min(100, Math.max(0, s)) / 100;
-  const lightness = Math.min(100, Math.max(0, l)) / 100;
+  const hue = wrapHue(h);
+  const saturation = clamp(s, 0, 100) / 100;
+  const lightness = clamp(l, 0, 100) / 100;
   const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
   const secondary = chroma * (1 - Math.abs(((hue / 60) % 2) - 1));
   const offset = lightness - chroma / 2;
@@ -156,9 +154,6 @@ export const hexToOklab = (hex: string): OklabColor | null => {
   return rgb === null ? null : rgbToOklab(rgb.r, rgb.g, rgb.b);
 };
 
-/** Invalid hex has zero lightness for the distribution contrast decision. */
-export const hexLightness = (hex: string): number => hexToOklab(hex)?.L ?? 0;
-
 /** Euclidean distance in perceptual OKLab coordinates. */
 export const oklabDistance = (left: OklabColor, right: OklabColor): number =>
   Math.hypot(left.L - right.L, left.a - right.a, left.b - right.b);
@@ -179,7 +174,7 @@ export const oklabToLinearRgb = (lab: OklabColor): RgbColor => {
 };
 
 const encodeSrgb = (channel: number): number => {
-  const value = Math.min(1, Math.max(0, channel));
+  const value = clamp(channel, 0, 1);
   const encoded = value <= 0.0031308 ? 12.92 * value : 1.055 * value ** (1 / 2.4) - 0.055;
   return Math.round(encoded * 255);
 };

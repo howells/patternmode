@@ -1,37 +1,40 @@
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Swatch only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override it with their own utilities. Do not hoist a
+   rule out of this block. */
 @layer components {
   .patternmode-swatch {
     --patternmode-swatch-size: 2rem;
     --patternmode-swatch-fill: #e3e1dc;
     --patternmode-swatch-radius: 999px;
-    align-items: center;
-    aspect-ratio: 1;
+    @apply relative m-0 inline-flex aspect-square size-(--patternmode-swatch-size) min-inline-0 items-center justify-center rounded-(--patternmode-swatch-radius) p-0 align-middle text-white;
+    @apply transition-[box-shadow,opacity,transform] duration-[140ms] ease-[ease];
     border: 0;
-    border-radius: var(--patternmode-swatch-radius);
     box-shadow: 0 1px 2px rgb(17 24 39 / 10%);
-    color: white;
-    display: inline-flex;
-    height: var(--patternmode-swatch-size);
-    justify-content: center;
-    margin: 0;
-    min-inline-size: 0;
-    padding: 0;
-    position: relative;
-    transition:
-      box-shadow 140ms ease,
-      opacity 140ms ease,
-      transform 140ms ease;
-    vertical-align: middle;
-    width: var(--patternmode-swatch-size);
   }
 
   .patternmode-swatch[data-tone="light"] {
-    color: #1d1d1b;
+    @apply text-[#1d1d1b];
   }
 
   .patternmode-swatch[data-variant="pill"] {
     --patternmode-swatch-radius: 999px;
-    aspect-ratio: auto;
-    width: calc(var(--patternmode-swatch-size) * 3);
+    @apply aspect-auto w-[calc(var(--patternmode-swatch-size)*3)];
   }
 
   .patternmode-swatch[data-variant="square"] {
@@ -44,10 +47,7 @@
 	   corner radius with a `rounded-*` utility or --patternmode-swatch-radius. */
   .patternmode-swatch[data-variant="block"] {
     --patternmode-swatch-radius: 0.25rem;
-    aspect-ratio: auto;
-    display: block;
-    height: 100%;
-    width: 100%;
+    @apply block aspect-auto size-full;
   }
 
   .patternmode-swatch[data-raised="true"] {
@@ -64,7 +64,7 @@
   }
 
   .patternmode-swatch[data-unavailable="true"] {
-    opacity: 0.5;
+    @apply opacity-50;
   }
 
   /* Flat: a precise color block for data viz — no shadow (scrim is omitted
@@ -77,22 +77,15 @@
      a pale color keeps its outline on a pale page. Translucent, so it reads on
      light fills and vanishes into dark ones. */
   .patternmode-swatch[data-edge="true"]::after {
-    border-radius: inherit;
+    @apply pointer-events-none absolute inset-0 rounded-[inherit] content-[''];
     box-shadow: inset 0 0 0 1px var(--patternmode-swatch-edge, rgb(0 0 0 / 10%));
-    content: "";
-    inset: 0;
-    pointer-events: none;
-    position: absolute;
   }
 
   .patternmode-swatch__backdrop,
   .patternmode-swatch__fill,
   .patternmode-swatch__media,
   .patternmode-swatch__scrim {
-    border-radius: inherit;
-    inset: 0;
-    overflow: hidden;
-    position: absolute;
+    @apply absolute inset-0 overflow-hidden rounded-[inherit];
   }
 
   /* The transparency backdrop sits behind the fill so a translucent Visual
@@ -101,7 +94,7 @@
      consumer can set them on any ancestor — declaring a default on this element
      would beat an inherited value and make them inert. */
   .patternmode-swatch__backdrop {
-    background-color: var(--patternmode-swatch-backdrop-base, var(--card, #fff));
+    @apply bg-[var(--patternmode-swatch-backdrop-base,var(--card,#fff))];
     background-image: conic-gradient(
       var(--patternmode-swatch-backdrop-color, var(--border, #dcdcdc)) 0deg 90deg,
       transparent 90deg 180deg,
@@ -117,81 +110,51 @@
   }
 
   .patternmode-swatch__media > * {
-    display: block;
-    height: 100%;
+    @apply block size-full;
     object-fit: inherit;
     object-position: inherit;
-    width: 100%;
   }
 
   .patternmode-swatch__scrim {
+    @apply pointer-events-none;
     background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 20%) 100%);
-    pointer-events: none;
   }
 
   .patternmode-swatch__icon {
-    align-items: center;
-    display: inline-flex;
-    inset: 0;
-    justify-content: center;
-    position: absolute;
+    @apply absolute inset-0 inline-flex items-center justify-center;
   }
 
   .patternmode-swatch__icon svg {
-    display: block;
-    height: 48%;
-    stroke: currentColor;
+    @apply block size-[48%] stroke-current stroke-[2.4];
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 2.4;
-    width: 48%;
   }
 
   .patternmode-swatch__slash {
+    @apply absolute h-[2px] w-[112%] transform-[rotate(-45deg)] rounded-[999px];
     background: currentColor;
-    border-radius: 999px;
-    height: 2px;
-    position: absolute;
-    transform: rotate(-45deg);
-    width: 112%;
   }
 
   .patternmode-swatch__remove {
-    align-items: center;
+    @apply absolute top-[-1.1rem] right-[-1.1rem] inline-flex size-11 cursor-pointer items-center justify-center rounded-[999px] p-0 text-[color:var(--card,#fff)] opacity-0;
+    @apply transition-opacity duration-[140ms] ease-[ease];
     background: transparent;
     border: 0;
-    border-radius: 999px;
-    color: var(--card, #fff);
-    cursor: pointer;
-    display: inline-flex;
-    height: 2.75rem;
-    justify-content: center;
-    opacity: 0;
-    padding: 0;
-    position: absolute;
-    right: -1.1rem;
-    top: -1.1rem;
-    transition: opacity 140ms ease;
-    width: 2.75rem;
   }
 
   .patternmode-swatch__remove::before {
+    @apply absolute size-5 rounded-[inherit] content-[''];
+    @apply transition-[background] duration-[140ms] ease-[ease];
     background: var(--foreground, #1d1d1b);
-    border-radius: inherit;
-    content: "";
-    height: 1.25rem;
-    position: absolute;
-    transition: background 140ms ease;
-    width: 1.25rem;
   }
 
   .patternmode-swatch__remove:focus-visible {
-    opacity: 1;
+    @apply opacity-100;
   }
 
   @media (hover: hover) {
     .patternmode-swatch:hover .patternmode-swatch__remove {
-      opacity: 1;
+      @apply opacity-100;
     }
 
     .patternmode-swatch__remove:hover::before {
@@ -203,22 +166,17 @@
      visible so removal stays discoverable. */
   @media (hover: none) {
     .patternmode-swatch__remove {
-      opacity: 1;
+      @apply opacity-100;
     }
   }
 
   .patternmode-swatch__remove:focus-visible {
-    outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 2px;
+    @apply outline-2 outline-offset-2 outline-solid outline-[color:var(--ring,#315c4b)];
   }
 
   .patternmode-swatch__remove svg {
-    height: 0.8rem;
-    stroke: currentColor;
+    @apply z-1 size-[0.8rem] stroke-current stroke-2;
     stroke-linecap: round;
-    stroke-width: 2;
-    width: 0.8rem;
-    z-index: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -231,59 +189,44 @@
 
   .patternmode-distribution-bar,
   .patternmode-distribution-display {
+    @apply m-0 grid w-full min-inline-0 gap-[10px] p-0;
     border: 0;
-    display: grid;
-    gap: 10px;
-    margin: 0;
-    min-inline-size: 0;
-    padding: 0;
-    width: 100%;
   }
 
   .patternmode-distribution-bar__track {
-    height: var(--patternmode-distribution-height, 40px);
-    position: relative;
-    width: 100%;
+    @apply relative h-[var(--patternmode-distribution-height,40px)] w-full;
   }
 
   .patternmode-distribution-bar .patternmode-distribution-bar__track {
-    touch-action: none;
+    @apply touch-none;
   }
 
   .patternmode-distribution-bar__segments {
-    border: 1px solid var(--border, rgb(17 24 39 / 12%));
-    border-radius: var(--patternmode-distribution-radius, 999px);
-    display: flex;
-    height: 100%;
-    overflow: hidden;
-    width: 100%;
+    @apply flex size-full overflow-hidden rounded-[var(--patternmode-distribution-radius,999px)] border border-solid border-[color:var(--border,rgb(17_24_39/12%))];
   }
 
   .patternmode-distribution-bar__segment {
+    @apply m-0 h-full min-w-0 p-0;
+    @apply transition-[width] duration-[480ms] ease-[cubic-bezier(0.2,0,0,1)];
     background: var(--patternmode-distribution-segment-color);
     border: 0;
-    height: 100%;
-    margin: 0;
-    min-width: 0;
-    padding: 0;
-    transition: width 480ms cubic-bezier(0.2, 0, 0, 1);
   }
 
-  /* Live Distribution Adjustment: while a handle drag is active the segments
-     must track the pointer directly — the settle transition would lag it. */
-  .patternmode-distribution-bar[data-dragging="true"] .patternmode-distribution-bar__segment {
+  /* Live Distribution Adjustment: while a handle is dragged or moved by key
+     the segments must track the input directly — the settle transition would
+     lag it. */
+  .patternmode-distribution-bar:is([data-dragging="true"], [data-key-adjusting="true"])
+    .patternmode-distribution-bar__segment {
     transition: none;
   }
 
   /* Selectable segments (DistributionDisplay with onSegmentSelect) */
   button.patternmode-distribution-bar__segment {
-    cursor: pointer;
+    @apply cursor-pointer;
   }
 
   button.patternmode-distribution-bar__segment:focus-visible {
-    outline: 2px solid var(--ring, #315c4b);
-    outline-offset: -2px;
-    z-index: 2;
+    @apply z-2 -outline-offset-2 outline-2 outline-solid outline-[color:var(--ring,#315c4b)];
   }
 
   .patternmode-distribution-bar__segment + .patternmode-distribution-bar__segment {
@@ -294,23 +237,14 @@
      segment with its own color showing through — the same gesture as the
      bar's drag handles, halo's handles, and briolette's facet pin. */
   .patternmode-distribution-bar__segment[data-selected="true"] {
-    position: relative;
-    z-index: 2;
+    @apply relative z-2;
   }
 
   .patternmode-distribution-bar__segment[data-selected="true"]::after {
-    border: 2px solid var(--card, #fff);
-    border-radius: 999px;
+    @apply absolute top-1/2 left-1/2 size-[0.62rem] transform-[translate(-50%,-50%)] rounded-[999px] border-2 border-solid border-[color:var(--card,#fff)] content-[''];
     box-shadow:
       0 1px 4px rgb(17 24 39 / 28%),
       inset 0 0 0 1px rgb(17 24 39 / 12%);
-    content: "";
-    height: 0.62rem;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 0.62rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -320,7 +254,7 @@
   }
 
   .patternmode-distribution-bar__segment--empty {
-    background-color: var(--muted, #f7f5f0);
+    @apply bg-[var(--muted,#f7f5f0)];
     background-image: repeating-linear-gradient(
       45deg,
       transparent,
@@ -331,47 +265,33 @@
   }
 
   .patternmode-distribution-bar__handle {
-    align-items: center;
+    @apply absolute top-[calc(50%-1.375rem)] z-1 inline-flex size-11 cursor-ew-resize items-center justify-center rounded-[999px] p-0;
     background: transparent;
     border: 0;
-    border-radius: 999px;
-    cursor: ew-resize;
-    display: inline-flex;
-    height: 2.75rem;
-    justify-content: center;
-    padding: 0;
-    position: absolute;
-    top: calc(50% - 1.375rem);
     /* Travel with the segment edge it sits on: segment widths ease, so a
        handle that jumps detaches from its boundary on every key press. */
-    transition: left 480ms cubic-bezier(0.2, 0, 0, 1);
-    width: 2.75rem;
-    z-index: 1;
+    @apply transition-[left] duration-[480ms] ease-[cubic-bezier(0.2,0,0,1)];
   }
 
-  .patternmode-distribution-bar[data-dragging="true"] .patternmode-distribution-bar__handle {
+  .patternmode-distribution-bar:is([data-dragging="true"], [data-key-adjusting="true"])
+    .patternmode-distribution-bar__handle {
     transition: none;
   }
 
   .patternmode-distribution-bar__handle::before {
+    @apply size-[0.62rem] rounded-[999px] content-[''];
+    @apply transition-[box-shadow,transform] duration-[120ms] ease-[ease];
     background: var(--card, #fff);
-    border-radius: 999px;
     box-shadow:
       0 1px 4px rgb(17 24 39 / 18%),
       0 0 0 1px rgb(17 24 39 / 20%);
-    content: "";
-    height: 0.62rem;
-    transition:
-      box-shadow 120ms ease,
-      transform 120ms ease;
-    width: 0.62rem;
   }
 
   /* The ring hugs the pin between two card-coloured bands, so it reads on any
      segment colour, including one that matches the ring itself. The
      transparent outline keeps a ring in forced-colours mode. */
   .patternmode-distribution-bar__handle:focus-visible {
-    outline: 2px solid transparent;
+    @apply outline-2 outline-solid outline-transparent;
   }
 
   .patternmode-distribution-bar__handle:focus-visible::before {
@@ -384,10 +304,10 @@
 
   @media (hover: hover) {
     .patternmode-distribution-bar__handle:hover::before {
+      @apply transform-[scale(1.15)];
       box-shadow:
         0 5px 14px rgb(17 24 39 / 30%),
         0 0 0 1px rgb(17 24 39 / 22%);
-      transform: scale(1.15);
     }
   }
 
@@ -399,30 +319,20 @@
   }
 
   .patternmode-distribution-bar__legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 14px;
+    @apply flex flex-wrap gap-x-[14px] gap-y-[8px];
   }
 
   .patternmode-distribution-bar__legend > span {
-    align-items: center;
-    color: var(--muted-foreground, #595853);
-    display: inline-flex;
-    font-size: 0.68rem;
-    font-weight: 500;
-    gap: 6px;
+    @apply inline-flex items-center gap-[6px] text-[0.68rem] font-medium text-[color:var(--muted-foreground,#595853)];
   }
 
   .patternmode-distribution-bar__swatch {
+    @apply inline-flex size-[0.55rem] rounded-[999px];
     background: var(--patternmode-distribution-segment-color);
-    border-radius: 999px;
-    display: inline-flex;
-    height: 0.55rem;
-    width: 0.55rem;
   }
 
   .patternmode-distribution-bar__swatch--empty {
-    background-color: var(--muted, #f7f5f0);
+    @apply bg-[var(--muted,#f7f5f0)];
     background-image: repeating-linear-gradient(
       45deg,
       transparent,

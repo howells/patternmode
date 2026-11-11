@@ -182,13 +182,25 @@ math. All return a new array; none mutate.
 
 ### Constants and types
 
-`SWATCH_SIZES`, `SWATCH_SIZE_VALUES`, `SWATCH_VARIANTS`, `SWATCH_TEXTURES` — the
-allowed token lists, with `SwatchSize`, `SwatchVariant`, `SwatchTexture` derived
-from them, plus `SwatchColorStop` and `SwatchSharedProps`.
+`SWATCH_VARIANTS`, `SWATCH_TEXTURES` — the allowed token lists, with
+`SwatchVariant`, `SwatchTexture` derived from them, plus `SwatchColorStop` and
+`SwatchSharedProps`. `size` takes a token on the extended Patternmode scale,
+`2xs` to `7xl`: `PATTERNMODE_EXTENDED_SIZES`, `PATTERNMODE_EXTENDED_SIZE_VALUES`
+and `PatternmodeExtendedSize` from `@patternmode/system`.
 
 `DistributionSegment` and `DistributionSegmentUpdate` are the segment types.
-`DistributionBarSegment` and `DistributionBarSegmentUpdate` are their former
-names, kept as identical-shape aliases — prefer the neutral ones, since the
-segment belongs to both components rather than to the editor.
+
+### Tone
+
+`data-tone` (`light` or `dark`) picks the foreground colour for the icon and any content: dark on a light fill.
+Pass `isLight` to set it. Without it, a plain `color` is analysed with
+`@patternmode/system`'s `isLightColor`: hex (3, 4, 6 or 8 digits), `rgb()`,
+`hsl()`, `oklab()`, `oklch()`, `white`, `black` and `transparent`. Any other
+`color` — `var()`, `color-mix()`, most named colors — and every `background` or
+`colors` fill renders with the dark tone, so pass `isLight` when such a fill is
+light.
 
 Import `@patternmode/swatch/styles.css` once in your app.
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.

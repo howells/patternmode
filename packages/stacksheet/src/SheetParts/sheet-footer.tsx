@@ -3,7 +3,10 @@ import { SheetPartElement } from "./sheet-part-element";
 import type { SheetPartProps } from "./sheet-part-types";
 
 export const SheetFooter = ({ render, className, style, children }: SheetPartProps) => {
-  const defaults = render ? "shrink-0" : "flex shrink-0 items-center gap-2 border-t px-6 py-3";
+  // A custom footer keeps only its place in the panel's flex column.
+  const defaults = render
+    ? "patternmode-stacksheet__custom-footer"
+    : "patternmode-stacksheet__footer";
   return (
     <SheetPartElement
       defaultTagName="footer"

@@ -1,4 +1,4 @@
-import { hexToRgb, rgbToHex } from "@patternmode/system";
+import { clamp, hexToRgb, rgbToHex } from "@patternmode/system";
 
 import { isColorString } from "./swatch-colors";
 import type { SwatchColorStop } from "./swatch-types";
@@ -27,16 +27,6 @@ const POOLS: readonly (readonly [number, number, number, number, number])[] = [
   [80, 40, 0x44, 6, 1],
 ];
 
-/**
- * Build a soft, layered radial "atmosphere" background from color stops — a
- * stack of overlapping elliptical pools rather than a flat or linear fill.
- * Density controls how far each pool reaches; gravity shifts the pools
- * vertically. Returns `undefined` when there are no colors.
- */
-
-const clamp = (value: number, min: number, max: number): number =>
-  Math.min(max, Math.max(min, value));
-
 const withAlpha = (color: string, alpha: number): string => {
   const rgb = hexToRgb(color);
   if (rgb !== null) {
@@ -55,6 +45,12 @@ const withAlpha = (color: string, alpha: number): string => {
   return `color-mix(in oklab, ${color} ${percent}%, transparent)`;
 };
 
+/**
+ * Build a soft, layered radial "atmosphere" background from color stops — a
+ * stack of overlapping elliptical pools rather than a flat or linear fill.
+ * Density controls how far each pool reaches; gravity shifts the pools
+ * vertically. Returns `undefined` when there are no colors.
+ */
 export const getSwatchAtmosphereBackground = (
   colors: SwatchColorStop[] | undefined,
   options: SwatchAtmosphereOptions = {},

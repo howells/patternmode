@@ -1,16 +1,15 @@
+import type { useRender } from "@base-ui/react/use-render";
 import type { CSSProperties, ReactNode } from "react";
 
-import type { RenderProp } from "../render";
-
 export interface SheetPartProps {
-  render?: RenderProp;
+  render?: useRender.RenderProp;
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }
 
 export interface SheetOptionalContentPartProps {
-  render?: RenderProp;
+  render?: useRender.RenderProp;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;

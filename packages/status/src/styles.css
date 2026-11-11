@@ -1,3 +1,27 @@
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Status only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override any of it with their own utilities. Do not
+   hoist a rule out of this block.
+
+   Written as plain declarations where no utility emits the same value: SVG
+   stroke caps, joins and dashes have none, `-rotate-90` sets `rotate` rather
+   than `transform`, and `leading-*` also sets `--tw-leading`, which a
+   consumer's `text-*` class on the same element would then pick up. */
 @layer components {
   .patternmode-status-mark {
     --patternmode-status-size: 2rem;
@@ -23,15 +47,8 @@
       var(--patternmode-status-color) 12%,
       var(--patternmode-status-surface)
     );
-    align-items: center;
-    color: var(--patternmode-status-color);
-    display: inline-flex;
-    height: var(--patternmode-status-size);
-    justify-content: center;
+    @apply relative inline-flex size-(--patternmode-status-size) items-center justify-center align-middle text-(color:--patternmode-status-color);
     line-height: 0;
-    position: relative;
-    vertical-align: middle;
-    width: var(--patternmode-status-size);
   }
 
   .patternmode-status-mark[data-tone="accent"] {
@@ -51,31 +68,26 @@
    * Only `color`, `tone` and `--patternmode-status-color` decide the colour.
    */
   .patternmode-status-mark__svg {
-    color: var(--patternmode-status-color);
-    display: block;
-    height: 100%;
-    overflow: visible;
-    width: 100%;
+    @apply block size-full overflow-visible text-(color:--patternmode-status-color);
   }
 
   .patternmode-status-mark__track,
   .patternmode-status-mark__arc {
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 1.8;
+    @apply stroke-[1.8];
   }
 
   .patternmode-status-mark__disc {
-    fill: var(--patternmode-status-track);
+    @apply fill-(--patternmode-status-track);
   }
 
   .patternmode-status-mark__fill-sweep {
-    fill: currentColor;
+    @apply fill-current;
   }
 
   .patternmode-status-mark__track {
-    fill: none;
-    stroke: var(--patternmode-status-track);
+    @apply fill-none stroke-(--patternmode-status-track);
   }
 
   /*
@@ -86,18 +98,16 @@
    * other and from a full mark.
    */
   .patternmode-status-mark__track--null {
-    stroke: currentColor;
+    @apply stroke-current;
     stroke-dasharray: 2 2.5;
   }
 
   .patternmode-status-mark__empty {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.2;
+    @apply fill-none stroke-current stroke-[1.2];
   }
 
   .patternmode-status-mark__arc {
-    stroke: currentColor;
+    @apply stroke-current;
     transform: rotate(-90deg);
     transform-origin: 12px 12px;
   }

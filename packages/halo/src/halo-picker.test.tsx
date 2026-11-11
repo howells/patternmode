@@ -10,13 +10,12 @@ import {
   getHaloPadHandlePosition,
   HaloPicker,
   haloAngleToHue,
-  hslToHex,
   hueToHaloAngle,
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./index";
 import { getHaloHueGradient } from "./halo-utils";
-import type { HaloColor } from "./index";
+import type { HslColor } from "@patternmode/system";
 
 const value = { h: 16, l: 69, s: 48 };
 
@@ -32,11 +31,6 @@ const bySlot = (slot: string): HTMLElement => {
 };
 
 describe("HaloPicker utilities", () => {
-  it("converts HSL values to clamped hex colors", () => {
-    expect(hslToHex(16, 48, 69)).toBe("#d69e8a");
-    expect(hslToHex(720, 200, -20)).toBe("#000000");
-  });
-
   it("maps saturation/lightness and hue to stable handle coordinates", () => {
     expect(getHaloPadHandlePosition(50, 50)).toStrictEqual({ x: 52, y: 52 });
     const hueHandle = getHaloHueHandlePosition(0);
@@ -121,7 +115,7 @@ describe(HaloPicker, () => {
   });
 
   it("reports saturation and lightness changes from the round pad", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
+    const onChange = vi.fn<(value: HslColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
     const pad = bySlot("halo-picker-pad");
@@ -143,7 +137,7 @@ describe(HaloPicker, () => {
   });
 
   it("ignores non-primary pointerdown on the pad and arc", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
+    const onChange = vi.fn<(value: HslColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
     const pad = bySlot("halo-picker-pad");
@@ -160,7 +154,7 @@ describe(HaloPicker, () => {
   });
 
   it("changes hue through the range input", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
+    const onChange = vi.fn<(value: HslColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
     fireEvent.change(screen.getByRole("slider", { name: "Hue" }), { target: { value: "200" } });
@@ -169,7 +163,7 @@ describe(HaloPicker, () => {
   });
 
   it("normalizes a hue of 360 from the range input to the canonical 0", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
+    const onChange = vi.fn<(value: HslColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
     fireEvent.change(screen.getByRole("slider", { name: "Hue" }), { target: { value: "360" } });
@@ -181,7 +175,7 @@ describe(HaloPicker, () => {
     render(
       <HaloPicker
         aria-label="Accent color"
-        onChange={vi.fn<(value: HaloColor) => void>()}
+        onChange={vi.fn<(value: HslColor) => void>()}
         value={value}
       />,
     );
@@ -193,7 +187,7 @@ describe(HaloPicker, () => {
   });
 
   it("adjusts saturation and lightness from the keyboard on the pad", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
+    const onChange = vi.fn<(value: HslColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
     const pad = screen.getByRole("slider", { name: "Saturation and lightness" });
@@ -279,7 +273,7 @@ describe(HaloPicker, () => {
   });
 
   it("clamps keyboard adjustments to the pad's pointer range", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
+    const onChange = vi.fn<(value: HslColor) => void>();
     render(
       <HaloPicker aria-label="Accent color" onChange={onChange} value={{ h: 16, l: 96, s: 99 }} />,
     );

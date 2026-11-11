@@ -1,9 +1,5 @@
-/** HSL value used by HaloPicker. */
-export interface HaloColor {
-  h: number;
-  l: number;
-  s: number;
-}
+import { clamp, wrapHue } from "@patternmode/system";
+import type { HslColor } from "@patternmode/system";
 
 /** Which side of the pad the hue arc (and value readout) sits on. */
 export type HaloPlacement = "bottom" | "left" | "right" | "top";
@@ -104,28 +100,6 @@ const HALO_GEOMETRIES: Record<HaloPlacement, HaloGeometry> = {
 export const getHaloGeometry = (placement: HaloPlacement = "bottom"): HaloGeometry =>
   HALO_GEOMETRIES[placement];
 
-/* Legacy bottom-placement constants, kept for callers that predate
-   `placement`. They are the "bottom" geometry by another name. */
-export const HALO_ARC_START_DEG = HALO_GEOMETRIES.bottom.arcStartDeg;
-export const HALO_ARC_END_DEG = HALO_GEOMETRIES.bottom.arcEndDeg;
-export const HALO_WIDTH = HALO_GEOMETRIES.bottom.width;
-export const HALO_HEIGHT = HALO_GEOMETRIES.bottom.height;
-export const HALO_CENTER_X = HALO_GEOMETRIES.bottom.centerX;
-export const HALO_CENTER_Y = HALO_GEOMETRIES.bottom.centerY;
-export const HALO_VIEWBOX = HALO_GEOMETRIES.bottom.viewBox;
-export const HALO_ARC_PATH = HALO_GEOMETRIES.bottom.arcPath;
-
-export const clampValue = (value: number, min: number, max: number): number =>
-  Math.min(max, Math.max(min, value));
-
-export const normalizeHue = (hue: number): number => {
-  const normalized = hue % 360;
-  return normalized < 0 ? normalized + 360 : normalized;
-};
-
-/** Convert HSL to hex; hue wraps, percentages clamp, and non-finite values throw. */
-export { hslToHex } from "@patternmode/system";
-
 /** A position in the picker's pixel space. */
 export interface HaloPoint {
   x: number;
@@ -143,7 +117,7 @@ export const clampPointToCircle = (x: number, y: number, radius: number): HaloPo
 };
 
 export const hueToHaloAngle = (hue: number, placement: HaloPlacement = "bottom"): number =>
-  getHaloGeometry(placement).arcStartDeg + (normalizeHue(hue) / 360) * HALO_ARC_SPAN_DEG;
+  getHaloGeometry(placement).arcStartDeg + (wrapHue(hue) / 360) * HALO_ARC_SPAN_DEG;
 
 export const haloAngleToHue = (angleDeg: number, placement: HaloPlacement = "bottom"): number => {
   const { arcStartDeg } = getHaloGeometry(placement);
@@ -154,7 +128,7 @@ export const haloAngleToHue = (angleDeg: number, placement: HaloPlacement = "bot
   if (delta <= HALO_ARC_SPAN_DEG) {
     /* The arc's far end is the same red as its start — emit the canonical 0
        so consumers see one red and `aria-valuenow` stays within 0..359. */
-    return normalizeHue((delta / HALO_ARC_SPAN_DEG) * 360);
+    return wrapHue((delta / HALO_ARC_SPAN_DEG) * 360);
   }
   /* Pointers in the gap snap to the nearer arc end; both ends are red, so
      either way the canonical hue is 0. */
@@ -192,7 +166,7 @@ export const pointerToHaloPad = (
   clientX: number,
   clientY: number,
   padRect: DOMRect,
-): Pick<HaloColor, "l" | "s"> => {
+): Pick<HslColor, "l" | "s"> => {
   const localX = clientX - padRect.left - HALO_PAD_RADIUS;
   const localY = clientY - padRect.top - HALO_PAD_RADIUS;
   const clamped = clampPointToCircle(localX, localY, HALO_PAD_RADIUS);
@@ -200,8 +174,8 @@ export const pointerToHaloPad = (
   const yRatio = (clamped.y + HALO_PAD_RADIUS) / HALO_PAD_SIZE;
 
   return {
-    l: clampValue((1 - yRatio) * 100, 3, 97),
-    s: clampValue(xRatio * 100, 0, 100),
+    l: clamp((1 - yRatio) * 100, 3, 97),
+    s: clamp(xRatio * 100, 0, 100),
   };
 };
 

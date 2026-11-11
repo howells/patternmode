@@ -1,3 +1,4 @@
+import { easings } from "@howells/motion";
 import { AnimatePresence, m } from "motion/react";
 import type { TargetAndTransition, Transition } from "motion/react";
 
@@ -39,7 +40,7 @@ const NAVIGATION_MOTION_PRESETS: Record<NavigationMotionPresetName, NavigationMo
     offset: 58,
     scale: 0.984,
     transition: {
-      opacity: { duration: 0.24, ease: [0.4, 0, 0.2, 1] },
+      opacity: { duration: 0.24, ease: easings.smooth },
       scale: { damping: 28, mass: 0.95, stiffness: 150, type: "spring" },
       x: { damping: 28, mass: 0.95, stiffness: 150, type: "spring" },
     },

@@ -6,17 +6,19 @@ const MyComponent = () => null;
 const MySheet = () => null;
 const SheetA = () => null;
 const SheetB = () => null;
+// Three references that share a name, as an inline arrow re-created per render does.
+const namesakes = [() => null, () => null, () => null].map((component) =>
+  Object.assign(component, { displayName: "Inline" }),
+);
 
 const makeStore = (overrides = {}) => {
   const config = resolveConfig(overrides);
   return createSheetStore(config);
 };
 describe(createSheetStore, () => {
-  it("starts with empty stack and closed state", () => {
+  it("starts with an empty stack", () => {
     const { store } = makeStore();
-    const state = store.getState();
-    expect(state.stack).toStrictEqual([]);
-    expect(state.isOpen).toBe(false);
+    expect(store.getState().stack).toStrictEqual([]);
   });
   // ── open ────────────────────────────────────
   describe("open", () => {
@@ -24,7 +26,6 @@ describe(createSheetStore, () => {
       const { store } = makeStore();
       store.getState().open("settings", "id1", { theme: "dark" });
       const state = store.getState();
-      expect(state.isOpen).toBe(true);
       expect(state.stack).toHaveLength(1);
       expect(state.stack[0]?.type).toBe("settings");
       expect(state.stack[0]?.id).toBe("id1");
@@ -45,7 +46,6 @@ describe(createSheetStore, () => {
       const { store } = makeStore();
       store.getState().open(MyComponent, { title: "Test" });
       const state = store.getState();
-      expect(state.isOpen).toBe(true);
       expect(state.stack).toHaveLength(1);
       expect(state.stack[0]?.data).toStrictEqual({ title: "Test" });
     });
@@ -106,14 +106,12 @@ describe(createSheetStore, () => {
       const state = store.getState();
       expect(state.stack).toHaveLength(1);
       expect(state.stack[0]?.type).toBe("a");
-      expect(state.isOpen).toBe(true);
     });
 
     it("closes when popping last item", () => {
       const { store } = makeStore();
       store.getState().open("a", "1", {});
       store.getState().pop();
-      expect(store.getState().isOpen).toBe(false);
       expect(store.getState().stack).toHaveLength(0);
     });
   });
@@ -124,7 +122,6 @@ describe(createSheetStore, () => {
       store.getState().open("a", "1", {});
       store.getState().push("b", "2", {});
       store.getState().close();
-      expect(store.getState().isOpen).toBe(false);
       expect(store.getState().stack).toHaveLength(0);
     });
   });
@@ -214,7 +211,7 @@ describe(createSheetStore, () => {
       const { store } = makeStore();
       store.getState().open("a", "1", {});
       store.getState().remove("1");
-      expect(store.getState().isOpen).toBe(false);
+      expect(store.getState().stack).toHaveLength(0);
     });
 
     it("does nothing for non-existent id", () => {
@@ -240,22 +237,13 @@ describe(createSheetStore, () => {
       expect(store.getState().stack[0]?.data).toStrictEqual({ v: 1 });
     });
   });
-  // ── Ad-hoc component registry ───────────────
-  describe("ad-hoc components", () => {
-    it("registers components and deduplicates", () => {
-      const { store, componentRegistry } = makeStore();
-      store.getState().open(MySheet, { a: 1 });
-      store.getState().push(MySheet, { a: 2 });
-      // Same component should have same key
-      expect(componentRegistry.size).toBe(1);
-      expect(store.getState().stack[0]?.type).toBe(store.getState().stack[1]?.type);
-    });
-
-    it("assigns different keys to different components", () => {
-      const { store, componentRegistry } = makeStore();
+  // ── Sheets opened by component ──────────────
+  describe("sheets opened by component", () => {
+    it("holds the component itself as the Sheet's type", () => {
+      const { store } = makeStore();
       store.getState().open(SheetA, {});
       store.getState().push(SheetB, {});
-      expect(componentRegistry.size).toBe(2);
+      expect(store.getState().stack.map((item) => item.type)).toStrictEqual([SheetA, SheetB]);
     });
 
     it("navigate detects same component type", () => {
@@ -265,6 +253,94 @@ describe(createSheetStore, () => {
       // Same type → replace, not push
       expect(store.getState().stack).toHaveLength(1);
       expect(store.getState().stack[0]?.data).toStrictEqual({ v: 2 });
+    });
+
+    it("navigate pushes a different component", () => {
+      const { store } = makeStore();
+      store.getState().open(SheetA, {});
+      store.getState().navigate(SheetB, {});
+      expect(store.getState().stack.map((item) => item.type)).toStrictEqual([SheetA, SheetB]);
+    });
+
+    it("swap puts a component in the top Sheet and keeps its id", () => {
+      const { store } = makeStore();
+      store.getState().open("a", "1", {});
+      store.getState().swap(SheetB, { v: 2 });
+      expect(store.getState().stack).toStrictEqual([
+        { ariaLabel: undefined, data: { v: 2 }, id: "1", type: SheetB },
+      ]);
+    });
+
+    it("warns once when a namesake of a component in the stack is opened", () => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const { store } = makeStore();
+      for (const component of namesakes) {
+        store.getState().push(component, {});
+      }
+      expect(warn).toHaveBeenCalledOnce();
+      expect(warn.mock.calls[0]?.[0]).toContain('"Inline"');
+      warn.mockRestore();
+    });
+
+    it("does not warn when the same component is opened again", () => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const { store } = makeStore();
+      store.getState().open(MySheet, {});
+      store.getState().push(MySheet, {});
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
+    });
+  });
+  // ── Close reason ────────────────────────────
+  describe("close reason", () => {
+    it("is programmatic for the store's own close, pop and remove", () => {
+      const bundle = makeStore();
+      const actions = bundle.store.getState();
+      for (const empty of [
+        actions.close,
+        actions.pop,
+        () => {
+          actions.remove("1");
+        },
+      ]) {
+        actions.open("a", "1", {});
+        bundle.close("backdrop");
+        actions.open("a", "1", {});
+        empty();
+        expect(bundle.getCloseReason()).toBe("programmatic");
+      }
+    });
+
+    it("names the dismissal that emptied the stack", () => {
+      const bundle = makeStore();
+      bundle.store.getState().open("a", "1", {});
+      bundle.close("backdrop");
+      expect(bundle.getCloseReason()).toBe("backdrop");
+      bundle.store.getState().open("a", "1", {});
+      bundle.pop("swipe");
+      expect(bundle.getCloseReason()).toBe("swipe");
+      expect(bundle.store.getState().stack).toHaveLength(0);
+    });
+
+    it("does not carry a reason over from a dismissal that left Sheets open", () => {
+      const bundle = makeStore();
+      const actions = bundle.store.getState();
+      actions.open("a", "1", {});
+      actions.push("b", "2", {});
+      bundle.pop("escape");
+      expect(actions.pop).toBeTypeOf("function");
+      expect(bundle.store.getState().stack).toHaveLength(1);
+      actions.close();
+      expect(bundle.getCloseReason()).toBe("programmatic");
+    });
+
+    it("keeps the reason when a later dismissal finds the stack already empty", () => {
+      const bundle = makeStore();
+      bundle.store.getState().open("a", "1", {});
+      bundle.pop("swipe");
+      bundle.store.getState().close();
+      bundle.store.getState().pop();
+      expect(bundle.getCloseReason()).toBe("swipe");
     });
   });
 });

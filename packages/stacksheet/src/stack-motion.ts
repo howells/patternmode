@@ -39,7 +39,7 @@ export interface StackMotion {
   update: () => void;
 }
 
-const clampUnit = (value: number): number => Math.min(1, Math.max(0, value));
+export const clampUnit = (value: number): number => Math.min(1, Math.max(0, value));
 
 export const createStackMotion = (): StackMotion => {
   /** In registration order: bottom first. */

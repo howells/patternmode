@@ -1,11 +1,12 @@
 import type { StoreApi } from "zustand";
 
 import type {
+  CloseReason,
   SheetActions,
   SheetContentComponent,
   SheetData,
   SheetHeight,
-  StacksheetSnapshot,
+  StacksheetStoreState,
 } from "../types";
 
 export type AnyComponent = SheetContentComponent;
@@ -17,30 +18,29 @@ export type AnyComponent = SheetContentComponent;
  */
 export type SheetArg = SheetData | string | undefined;
 
-/** The positional form every sheet command takes before its arguments are parsed. */
-export type SheetCall = (
-  first: SheetArg,
-  second?: SheetArg,
-  third?: SheetArg,
-  fourth?: SheetArg,
-) => void;
+export type StoreState<TMap extends object> = StacksheetStoreState<TMap> & SheetActions<TMap>;
 
-export type StoreState<TMap extends object> = StacksheetSnapshot<TMap> & SheetActions<TMap>;
-
-/** Return type of createSheetStore — store plus ad-hoc component maps */
+/**
+ * What `createSheetStore` returns: the store, and the stack's dismissal
+ * controls. `close` and `pop` are the store's own actions with the reason
+ * named, for the paths that are not programmatic (Escape, the backdrop, a
+ * swipe).
+ */
 export interface SheetStoreBundle<TMap extends object> {
-  /** Generated type key → Component (for renderer lookup) */
-  componentMap: Map<string, AnyComponent>;
-  /** Component → generated type key (dedup) */
-  componentRegistry: Map<AnyComponent, string>;
+  /** Clear the whole stack, recording why. */
+  close: (reason: CloseReason) => void;
+  /** Why the stack was last emptied. */
+  getCloseReason: () => CloseReason;
+  /** Pop the top Sheet, closing the stack when it is the last, recording why. */
+  pop: (reason: CloseReason) => void;
   store: StoreApi<StoreState<TMap>>;
 }
 
-/** Pre-resolved args — skips resolveArgs entirely */
+/** A sheet command's arguments, parsed. */
 export interface ResolvedItem {
   ariaLabel?: string;
   height?: SheetHeight;
   data: SheetData;
   id: string;
-  type: string;
+  type: string | AnyComponent;
 }

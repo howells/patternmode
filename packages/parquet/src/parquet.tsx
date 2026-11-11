@@ -60,7 +60,9 @@ export const Parquet = ({
           color: tile.color,
           height: (rect.h / layoutHeight) * 100,
           id: tile.id ?? `index-${rect.index}`,
-          isLight: isLightColor(tile.color),
+          // An unparseable color (`var()`, `color-mix()`, most named colors)
+          // is an unknown tone and renders as not light unless the tile says.
+          isLight: tile.isLight ?? isLightColor(tile.color) ?? false,
           left: (rect.x / LAYOUT_WIDTH) * 100,
           percent: percentages[rect.index] ?? 0,
           tile,

@@ -11,7 +11,9 @@ export const cardExitVariants = {
       scale: 0.96,
       transition: {
         ...(speed > 600 ? CARD_EXIT_FAST_SPRING : CARD_EXIT_SLOW_SPRING),
-        opacity: { duration: 0.15, ease: "easeIn" as const },
+        // Linear: the card stays visible through the throw, where ease-out
+        // would dissolve it before it has travelled.
+        opacity: { duration: 0.15, ease: "linear" as const },
       },
       x: dir === "left" ? "-120%" : "120%",
     };

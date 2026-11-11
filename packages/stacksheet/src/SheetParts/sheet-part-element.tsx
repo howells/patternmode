@@ -1,6 +1,5 @@
 import type { CSSProperties, JSX, ReactNode } from "react";
-import { useRender } from "../render";
-import type { RenderProp } from "../render";
+import { useRender } from "@base-ui/react/use-render";
 
 /** The attributes the sheet parts pass to the element they render. */
 export interface SheetPartElementProps extends Record<string, unknown> {
@@ -30,5 +29,5 @@ export const SheetPartElement = ({
 }: {
   defaultTagName: keyof JSX.IntrinsicElements;
   props: SheetPartElementProps;
-  render: RenderProp | undefined;
+  render: useRender.RenderProp | undefined;
 }) => useRender({ defaultTagName, props, render });

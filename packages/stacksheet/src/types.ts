@@ -22,12 +22,6 @@ export type SnapPoint = number | string;
 export interface StacksheetClassNames {
   /** Applied to backdrop overlay */
   backdrop?: string;
-  /**
-   * @deprecated The header bar was removed — classic mode now renders
-   * floating corner controls instead, so this class is never applied.
-   * Style headers you build yourself in composable mode directly.
-   */
-  header?: string;
   /** Applied to each panel container */
   panel?: string;
 }
@@ -70,7 +64,7 @@ export interface SheetPresentationOptions {
  */
 export type SheetData = object;
 
-export interface SheetItem<TType extends string = string> {
+export interface SheetItem {
   /** Optional per-sheet presentation metadata */
   ariaLabel?: string;
   /** Per-sheet bottom Sheet height, when set at open/push/replace/swap */
@@ -79,14 +73,13 @@ export interface SheetItem<TType extends string = string> {
   data: SheetData;
   /** Unique identifier for this sheet instance */
   id: string;
-  /** Sheet type key from the TMap */
-  type: TType;
+  /** A key of the `sheets` map, or the content component itself when opened by component */
+  type: string | SheetContentComponent;
 }
 
 // ── Side configuration ──────────────────────────
 
 export type Side = "left" | "right" | "bottom";
-export type StacksheetLayout = "classic" | "composable";
 
 /**
  * Placement of the auto drag handle on a bottom sheet.
@@ -269,11 +262,16 @@ export type ContentMap<TMap extends object> = {
 
 // ── Store state + actions ───────────────────────
 
-export interface StacksheetSnapshot<_TMap extends object> {
-  /** Whether any sheets are currently visible */
-  isOpen: boolean;
+/** The state the store holds. Whether the stack is open is `stack.length > 0`. */
+export interface StacksheetStoreState<_TMap extends object> {
   /** Current sheet stack, ordered bottom to top */
   stack: SheetItem[];
+}
+
+/** What `useStacksheetState()` returns. */
+export interface StacksheetSnapshot<TMap extends object> extends StacksheetStoreState<TMap> {
+  /** Whether any sheets are currently visible */
+  isOpen: boolean;
 }
 
 interface SheetStackCommand<TMap extends object> {
@@ -347,29 +345,35 @@ export interface SheetActions<TMap extends object> {
 
 // ── Factory return type ─────────────────────────
 
-export interface StacksheetProviderProps<TMap extends object> {
+/**
+ * How Panels are laid out.
+ * - Classic (default): Stacksheet draws the header and the scroll wrapper.
+ *   `renderHeader` replaces the default close/back header.
+ * - Composable: Sheet content builds its own chrome from `Sheet.*` parts, so
+ *   there is no header to replace.
+ */
+export type StacksheetLayoutProps =
+  | {
+      layout?: "classic";
+      /** Custom header renderer, in place of the default close/back header */
+      renderHeader?: (props: HeaderRenderProps) => ReactNode;
+    }
+  | { layout: "composable"; renderHeader?: never };
+
+export type StacksheetProviderProps<TMap extends object> = StacksheetLayoutProps & {
   /** Your application content */
   children: ReactNode;
-  /** CSS class overrides for backdrop, panel, and header */
+  /** CSS class overrides for the backdrop and the panels */
   classNames?: StacksheetClassNames;
-  /** Panel layout mode. `composable` disables the auto header and scroll wrapper. */
-  layout?: StacksheetLayout;
-  /**
-   * Controls the classic-mode header rendering.
-   * - `undefined` — renders the default close/back header (classic mode)
-   * - `function` — custom header renderer (classic mode with custom header)
-   * - `false` — legacy alias for composable mode. Prefer `layout="composable"`.
-   */
-  renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
   /** Map of sheet type keys to content components (optional — only needed for type registry pattern) */
   sheets?: ContentMap<TMap>;
-}
+};
 
 export interface StacksheetInstance<TMap extends object> {
   /** Provider component — wrap your app, pass sheets map */
   StacksheetProvider: ComponentType<StacksheetProviderProps<TMap>>;
   /** Raw Zustand store for advanced use */
-  store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>;
+  store: StoreApi<StacksheetStoreState<TMap> & SheetActions<TMap>>;
   /** Hook returning sheet actions */
   useSheet: () => SheetActions<TMap>;
   /** Hook returning sheet state (stack, isOpen) */

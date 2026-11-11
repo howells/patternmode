@@ -13,21 +13,12 @@ import {
   VISUAL_TWEEN,
 } from "../renderer-helpers";
 import { getAnimatedBorderRadius, getPanelStyles } from "../stacking";
-import type { HandlePosition, HeaderRenderProps, SheetData, Side } from "../types";
+import type { HandlePosition, HeaderRenderProps, Side } from "../types";
 import { PanelInnerContent } from "./sheet-panel-content";
 import { ModalFocusTrap } from "./sheet-panel-focus";
 import { BottomHandle, SideHandle } from "./sheet-panel-handles";
-import { resolvePanelLayout } from "./sheet-panel-layout";
 import type { SheetPanelProps } from "./sheet-panel-types";
 import { usePanelMotion } from "./use-panel-motion";
-
-const hasLegacyAriaLabel = (data: SheetData): data is { __ariaLabel: string } =>
-  "__ariaLabel" in data && typeof data.__ariaLabel === "string";
-
-const getPanelAriaLabel = (item: SheetPanelProps["item"], fallbackLabel: string): string =>
-  item.ariaLabel ??
-  (hasLegacyAriaLabel(item.data) ? item.data.__ariaLabel : undefined) ??
-  fallbackLabel;
 
 const getPanelHoverProps = (enabled: boolean, setIsHovered: (value: boolean) => void) =>
   enabled
@@ -230,15 +221,13 @@ const useSheetPanelMotion = (
   const {
     activeSnapIndex,
     config,
-    isNested,
     isTop,
     onSnap,
+    onSwipeDismiss,
     prefersReducedMotion,
     side,
     snapHeights,
     stackMotion,
-    swipeClose,
-    swipePop,
   } = props;
   const measuredHeight = usePanelHeight(panelRef, snapHeights.length > 0);
   const { minTravel, rest, snapTravel } = getSnapGeometry(
@@ -253,7 +242,7 @@ const useSheetPanelMotion = (
     dragEnabled,
     fitted: isFittedSheet(props),
     isPresent: presence.isPresent,
-    onDismiss: isNested ? swipePop : swipeClose,
+    onDismiss: onSwipeDismiss,
     onEntered: () => {
       if (isTop) {
         config.onOpenComplete?.();
@@ -301,8 +290,7 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     close,
     snapHeights,
     keyboardInset,
-    layout,
-    renderHeader,
+    isComposable,
   } = props;
   const panelRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -318,15 +306,13 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   const lastFocused = useLastFocused(panelRef);
 
   const panelStyles = getPanelStyles(side, config, index, isFittedSheet(props));
-  const ariaLabel = getPanelAriaLabel(item, config.ariaLabel);
+  const ariaLabel = item.ariaLabel ?? config.ariaLabel;
   const panelId = `stacksheet-${item.id}`;
   const { hasDescription, hasTitle, panelContext } = useSheetPanelContext(
     { ...props, isTop: isActive },
     panelId,
   );
 
-  const panelLayout = resolvePanelLayout(layout, renderHeader);
-  const isComposable = panelLayout === "composable";
   const hasPanelClass = classNames.panel !== "";
   // Only the top bottom-sheet reacts to the keyboard (background panels are
   // inert and can't hold focus). Plain sheets pad content above the keyboard;
@@ -366,14 +352,13 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   // Composable layouts own their chrome — Sheet.Handle renders the pill, so
   // the auto handle would duplicate it.
   const showBottomHandle = isActive && side === "bottom" && !isComposable;
-  const dismiss = isNested ? pop : close;
   const sideHandle = getOptionalSideHandle({
     isHovered,
-    onDismiss: dismiss,
+    onDismiss: pop,
     show: showSideHandle,
     side,
   });
-  const bottomHandle = getOptionalBottomHandle(showBottomHandle, dismiss, config.handle);
+  const bottomHandle = getOptionalBottomHandle(showBottomHandle, pop, config.handle);
   // Outside handles must render above the overflow-hidden content wrapper, so
   // the panel places them at the panel level rather than inside it.
   const bottomHandleOutside = showBottomHandle && config.handle === "outside";
@@ -388,7 +373,6 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     hoverProps,
     inactivePanelProps,
     isActive,
-    isComposable,
     lastFocused,
     panelContext,
     panelRef,
@@ -399,7 +383,8 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
 };
 
 export const SheetPanel = (props: SheetPanelProps) => {
-  const { item, config, classNames, Content, shouldRender, renderHeader, side } = props;
+  const { item, config, classNames, Content, isComposable, shouldRender, renderHeader, side } =
+    props;
   const {
     ariaProps,
     bottomHandle,
@@ -408,7 +393,6 @@ export const SheetPanel = (props: SheetPanelProps) => {
     hoverProps,
     inactivePanelProps,
     isActive,
-    isComposable,
     lastFocused,
     panelContext,
     panelRef,
@@ -436,7 +420,7 @@ export const SheetPanel = (props: SheetPanelProps) => {
       <div aria-hidden="true" style={getOverscrollSkirtStyle(side)} />
       {sideHandle}
       {bottomHandleOutside ? bottomHandle : null}
-      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[inherit]">
+      <div className="patternmode-stacksheet__panel-inner">
         {bottomHandleOutside ? null : bottomHandle}
         <PanelInnerContent
           Content={Content}

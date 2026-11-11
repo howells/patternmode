@@ -22,6 +22,25 @@ import { durations, easings, presets, springs } from "@howells/motion";
 - `presets` — semantic transition bundles (`dialogOpen`, `fadeIn`, `slideIn`, …)
   plus `shakeKeyframes`.
 
+- `prefersReducedMotion()` — a one-off, SSR-safe read of the reduced-motion
+  preference.
+
+## React
+
+`@howells/motion/react` holds the React hook, kept off the token entry so that
+server code can import the tokens without pulling in a client module. It needs
+`react` (an optional peer dependency of this package).
+
+```tsx
+import { usePrefersReducedMotion } from "@howells/motion/react";
+
+const reduced = usePrefersReducedMotion();
+```
+
+`usePrefersReducedMotion()` is true while the user prefers reduced motion and
+re-renders when the setting changes. It is `false` on the server and wherever
+`matchMedia` is missing.
+
 These are the canonical values for the catalog. Prefer importing them over
 re-declaring spring or easing numbers locally, so motion feel stays consistent
 across components.

@@ -1,29 +1,15 @@
 "use client";
 
 import { joinClassNames } from "@patternmode/system";
-import { AnimatePresence, domMax, LazyMotion, m, useReducedMotion } from "motion/react";
-import { useEffect, useId, useReducer, useRef } from "react";
-import type { CSSProperties, Ref, RefCallback } from "react";
+import { useReducedMotion } from "motion/react";
+import { useId, useReducer } from "react";
+import type { CSSProperties } from "react";
 
-import { getDeckRenderKey, getVisibleDeckItems, resolveCardRotation } from "../logic";
-import type {
-  AdvanceDirection,
-  DeckEnterMode,
-  DeckItem,
-  DeckMode,
-  DeckRenderOverlayState,
-  DeckRootProps,
-} from "../types";
+import { getVisibleDeckItems } from "../logic";
+import type { DeckRootProps } from "../types";
+import { getDeckControlProps } from "./deck-a11y";
 import { DeckCard } from "./deck-card";
 import {
-  BG_RESPONSE_FACTOR,
-  BG_RESPONSE_RAMP,
-  CARD_DEFAULT_SPRING,
-  CARD_ENTER_OFFSET,
-  CARD_ENTER_SCALE,
-  CARD_ROTATE_SPRING,
-  CARD_SCALE_SPRING,
-  CARD_Y_SPRING,
   DEFAULT_DIRECTIONS,
   DEFAULT_DISTANCE_THRESHOLD,
   DEFAULT_DRAG_ELASTIC,
@@ -34,543 +20,53 @@ import {
   DEFAULT_SCALE_STEP,
   DEFAULT_VELOCITY_THRESHOLD,
   DEFAULT_VISIBLE_COUNT,
-  DRAG_INFLUENCE_RAMP,
-  DRAG_TILT_MAX,
-  DRAG_TILT_RAMP,
 } from "./deck-constants";
 import { DeckEmpty } from "./deck-empty";
-import { cardExitVariants } from "./deck-motion";
+import { DeckStack } from "./deck-stack";
 import { useDeckChildren } from "./use-deck-children";
 import { createDeckState, deckReducer, useDeckInteractions } from "./use-deck-interactions";
-import type { DeckInteractions } from "./use-deck-interactions";
-
-interface DeckRenderedCardProps {
-  activeIndex: number;
-  depth: number;
-  disabled: boolean;
-  dragElastic: number;
-  dragOffset: number;
-  dragProgress: number;
-  /** True when this card joined the visible stack after the deck first rendered. */
-  entering: boolean;
-  exitCustom: { direction: AdvanceDirection | null; velocity: number };
-  interactions: DeckInteractions;
-  isDragging: boolean;
-  item: DeckItem;
-  lastDirection: AdvanceDirection | null;
-  peekOffset: number;
-  reduceMotion: boolean;
-  renderOverlay: DeckRootProps["renderOverlay"];
-  rotation: number;
-  scaleStep: number;
-  visibleCount: number;
-}
-
-interface DeckRenderedCardsProps {
-  activeIndex: number;
-  cardsLength: number;
-  disabled: boolean;
-  dragElastic: number;
-  dragOffset: number;
-  dragProgress: number;
-  enteringIds: ReadonlySet<string>;
-  exitCustom: { direction: AdvanceDirection | null; velocity: number };
-  interactions: DeckInteractions;
-  isDragging: boolean;
-  lastDirection: AdvanceDirection | null;
-  mode: DeckMode;
-  peekOffset: number;
-  reduceMotion: boolean;
-  renderOverlay: DeckRootProps["renderOverlay"];
-  rotation: number;
-  scaleStep: number;
-  visibleCards: DeckItem[];
-  visualBaseIndex: number;
-}
-
-const getAbsoluteVisualIndex = (
-  mode: DeckMode,
-  visualBaseIndex: number,
-  activeIndex: number,
-  depth: number,
-) => (mode === "cycle" ? visualBaseIndex : activeIndex) + depth;
-
-const withDefault = <T,>(value: T | undefined, fallback: T): T => value ?? fallback;
-
-const getCardRotationValue = (
-  active: boolean,
-  isDragging: boolean,
-  reduceMotion: boolean,
-  dragOffset: number,
-  idleRotate: number,
-) => {
-  if (!active || !isDragging || reduceMotion) {
-    return idleRotate;
-  }
-
-  const influence = Math.min(1, Math.abs(dragOffset) / DRAG_INFLUENCE_RAMP);
-  const tilt = (dragOffset / DRAG_TILT_RAMP) * DRAG_TILT_MAX;
-
-  return Number((idleRotate * (1 - influence) + tilt).toFixed(3));
-};
-
-const getCardDepthMotion = (
-  active: boolean,
-  isDragging: boolean,
-  reduceMotion: boolean,
-  depth: number,
-  dragProgress: number,
-  peekOffset: number,
-  scaleStep: number,
-) => {
-  const restScale = reduceMotion ? 1 : Math.max(0.7, 1 - depth * scaleStep);
-  const restY = reduceMotion ? 0 : depth * peekOffset;
-
-  if (active || !isDragging || reduceMotion) {
-    return { scale: restScale, y: restY };
-  }
-
-  const promotedScale = Math.max(0.7, 1 - (depth - 1) * scaleStep);
-  const promotedY = (depth - 1) * peekOffset;
-
-  return {
-    scale: restScale + (promotedScale - restScale) * dragProgress * BG_RESPONSE_FACTOR,
-    y: restY + (promotedY - restY) * dragProgress * BG_RESPONSE_FACTOR,
-  };
-};
-
-/**
- * Where an entering card starts: a little beneath and behind its rest pose, so
- * it settles up into the stack on the same springs the stack already uses.
- * Reduced motion fades only.
- */
-const getCardEnterInitial = (
-  entering: boolean,
-  reduceMotion: boolean,
-  idleRotate: number,
-  rest: { scale: number; y: number },
-) => {
-  if (!entering) {
-    return false;
-  }
-
-  if (reduceMotion) {
-    return { opacity: 0 };
-  }
-
-  return {
-    opacity: 0,
-    rotate: idleRotate,
-    scale: rest.scale * CARD_ENTER_SCALE,
-    y: rest.y + CARD_ENTER_OFFSET,
-  };
-};
-
-const getRotateTransition = (active: boolean, isDragging: boolean) => {
-  if (isDragging && active) {
-    return { duration: 0 };
-  }
-
-  return CARD_ROTATE_SPRING;
-};
-
-const getWhileDrag = (draggable: boolean, reduceMotion: boolean) =>
-  draggable
-    ? {
-        cursor: "grabbing",
-        scale: reduceMotion ? 1 : 1.02,
-      }
-    : undefined;
-
-/** A card's own accessible name, when its owner gave it one. */
-const getCardLabel = (item: DeckItem): string | undefined => {
-  const label = item.element.props["aria-label"]?.trim();
-
-  return label === "" ? undefined : label;
-};
-
-/** A labelled card is exposed as a named group unless its owner chose a role. */
-const getCardRole = (item: DeckItem) =>
-  item.element.props.role ?? (getCardLabel(item) === undefined ? undefined : "group");
-
-/**
- * What a screen reader announces for the active card. Card ids are React keys
- * or generated ids, so they are never read out: a card's `aria-label` is used
- * when it has one, followed by its place in the deck.
- */
-const getDeckValueText = (activeCard: DeckItem | undefined, cards: readonly DeckItem[]) => {
-  if (activeCard === undefined) {
-    return "No cards";
-  }
-
-  const position = `${cards.indexOf(activeCard) + 1} of ${cards.length}`;
-  const label = getCardLabel(activeCard);
-
-  return label === undefined ? `Card ${position}` : `${label}, ${position}`;
-};
-
-const getDeckControlProps = ({
-  ariaLabel,
-  ariaLabelledBy,
-  activeCard,
-  activeIndex,
-  cards,
-}: {
-  ariaLabel: string | undefined;
-  ariaLabelledBy: string | undefined;
-  activeCard: DeckItem | undefined;
-  activeIndex: number;
-  cards: readonly DeckItem[];
-}) => {
-  const valueMax = Math.max(cards.length - 1, 0);
-  // Cycle mode can carry an index past the end; the card's own place is what
-  // the slider should report.
-  const valueNow =
-    activeCard === undefined
-      ? Math.min(Math.max(activeIndex, 0), valueMax)
-      : cards.indexOf(activeCard);
-
-  return {
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    "aria-valuetext": getDeckValueText(activeCard, cards),
-    max: valueMax,
-    min: 0,
-    readOnly: true,
-    type: "range" as const,
-    value: valueNow,
-  };
-};
-
-const getDeckRootDataProps = (disabled: boolean, exhausted: boolean) => ({
-  "data-disabled": disabled ? "true" : undefined,
-  "data-empty": exhausted ? "true" : undefined,
-});
-
-const isRefCallback = (ref: Ref<HTMLDivElement> | undefined): ref is RefCallback<HTMLDivElement> =>
-  typeof ref === "function";
-
-/** Hands a node to a callback ref or an object ref, whichever the owner supplied. */
-const assignRef = (ref: Ref<HTMLDivElement> | undefined, node: HTMLDivElement | null) => {
-  if (isRefCallback(ref)) {
-    ref(node);
-  } else if (ref !== null && ref !== undefined) {
-    ref.current = node;
-  }
-};
-
-const DeckRenderedCard = ({
-  activeIndex,
-  depth,
-  disabled,
-  dragElastic,
-  dragOffset,
-  dragProgress,
-  entering,
-  exitCustom,
-  interactions,
-  isDragging,
-  item,
-  lastDirection,
-  peekOffset,
-  reduceMotion,
-  renderOverlay,
-  rotation,
-  scaleStep,
-  visibleCount,
-}: DeckRenderedCardProps) => {
-  const active = depth === 0;
-  const card = item.element;
-  const cardProps = card.props;
-  const depthVariable = { "--deck-depth": depth };
-  const cardStyle: CSSProperties = { ...cardProps.style, ...depthVariable };
-  const draggable = active && !disabled;
-  const overlayState: DeckRenderOverlayState = {
-    active,
-    depth,
-    direction: lastDirection,
-    index: activeIndex + depth,
-    itemId: item.id,
-  };
-  const idleRotate = reduceMotion ? 0 : resolveCardRotation(item.id, rotation);
-  const cardRotate = getCardRotationValue(active, isDragging, reduceMotion, dragOffset, idleRotate);
-  const cardMotion = getCardDepthMotion(
-    active,
-    isDragging,
-    reduceMotion,
-    depth,
-    dragProgress,
-    peekOffset,
-    scaleStep,
-  );
-  const enterInitial = getCardEnterInitial(entering, reduceMotion, idleRotate, cardMotion);
-  const consumerRef = cardProps.ref;
-  const attachCardRef = (node: HTMLDivElement | null) => {
-    // Track the mounted active card so drag gestures can measure its width.
-    // Never clear on `null`: an exiting clone unmounts after its replacement
-    // has attached and must not clobber the live reference.
-    if (active && node !== null) {
-      assignRef(interactions.activeCardRef, node);
-    }
-
-    assignRef(consumerRef, node);
-  };
-
-  return (
-    <m.div
-      {...cardProps}
-      aria-hidden={active ? undefined : true}
-      role={getCardRole(item)}
-      animate={{
-        opacity: 1,
-        rotate: cardRotate,
-        scale: active ? 1 : cardMotion.scale,
-        y: active ? 0 : cardMotion.y,
-        zIndex: visibleCount - depth,
-      }}
-      className={joinClassNames("patternmode-deck-card", cardProps.className)}
-      custom={exitCustom}
-      data-active={active ? "true" : "false"}
-      data-depth={depth}
-      data-direction={lastDirection ?? undefined}
-      drag={active && !disabled ? "x" : false}
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={dragElastic}
-      dragMomentum={true}
-      dragTransition={{
-        bounceDamping: 22,
-        bounceStiffness: 300,
-        power: 0.3,
-        timeConstant: 350,
-      }}
-      exit="exit"
-      inert={active ? undefined : true}
-      initial={enterInitial}
-      onDrag={draggable ? interactions.handleDrag : undefined}
-      onDragEnd={draggable ? interactions.handleDragEnd : undefined}
-      onDragStart={draggable ? interactions.handleDragStart : undefined}
-      ref={attachCardRef}
-      style={cardStyle}
-      transition={{
-        default: CARD_DEFAULT_SPRING,
-        opacity: { duration: 0.2, ease: "easeOut" },
-        rotate: getRotateTransition(active, isDragging),
-        scale: CARD_SCALE_SPRING,
-        y: CARD_Y_SPRING,
-      }}
-      variants={cardExitVariants}
-      whileDrag={getWhileDrag(draggable, reduceMotion)}
-    >
-      {cardProps.children}
-      {renderOverlay?.(overlayState)}
-    </m.div>
-  );
-};
-
-const DeckRenderedCards = ({
-  activeIndex,
-  cardsLength,
-  disabled,
-  dragElastic,
-  dragOffset,
-  dragProgress,
-  enteringIds,
-  exitCustom,
-  interactions,
-  isDragging,
-  lastDirection,
-  mode,
-  peekOffset,
-  reduceMotion,
-  renderOverlay,
-  rotation,
-  scaleStep,
-  visibleCards,
-  visualBaseIndex,
-}: DeckRenderedCardsProps) => (
-  <LazyMotion features={domMax}>
-    <AnimatePresence
-      custom={exitCustom}
-      initial={false}
-      onExitComplete={interactions.handleExitComplete}
-    >
-      {visibleCards.map((item, depth) => (
-        <DeckRenderedCard
-          activeIndex={activeIndex}
-          depth={depth}
-          disabled={disabled}
-          dragElastic={dragElastic}
-          dragOffset={dragOffset}
-          dragProgress={dragProgress}
-          entering={enteringIds.has(item.id)}
-          exitCustom={exitCustom}
-          interactions={interactions}
-          isDragging={isDragging}
-          item={item}
-          key={getDeckRenderKey(
-            item.id,
-            getAbsoluteVisualIndex(mode, visualBaseIndex, activeIndex, depth),
-            cardsLength,
-            mode,
-          )}
-          lastDirection={lastDirection}
-          peekOffset={peekOffset}
-          reduceMotion={reduceMotion}
-          renderOverlay={renderOverlay}
-          rotation={rotation}
-          scaleStep={scaleStep}
-          visibleCount={visibleCards.length}
-        />
-      ))}
-    </AnimatePresence>
-  </LazyMotion>
-);
-
-/**
- * Ids of visible cards the deck has never shown before, excluding the first
- * render. A card stays "entering" for the render it mounts in and is then
- * remembered, so a cycle-mode repeat or a promotion never re-enters.
- */
-const useEnteringCardIds = (
-  visibleCards: DeckItem[],
-  enter: DeckEnterMode,
-): ReadonlySet<string> => {
-  const shownIds = useRef<Set<string> | null>(null);
-  const entering = new Set<string>();
-
-  /* oxlint-disable react/refs -- the ids shown on earlier commits decide which cards animate in, so this reads the ref during render by design and records new ids after commit. */
-  if (shownIds.current === null) {
-    shownIds.current = new Set(visibleCards.map((item) => item.id));
-  } else if (enter !== "none") {
-    for (const item of visibleCards) {
-      if (!shownIds.current.has(item.id)) {
-        entering.add(item.id);
-      }
-    }
-  }
-  /* oxlint-enable react/refs */
-
-  useEffect(() => {
-    for (const item of visibleCards) {
-      shownIds.current?.add(item.id);
-    }
-  });
-
-  return entering;
-};
-
-type DeckTuning = Pick<
-  DeckRootProps,
-  | "allowedDirections"
-  | "defaultIndex"
-  | "disabled"
-  | "distanceThreshold"
-  | "dragElastic"
-  | "enter"
-  | "mode"
-  | "peekOffset"
-  | "perspective"
-  | "rotation"
-  | "scaleStep"
-  | "velocityThreshold"
-  | "visibleCount"
->;
-
-/** Pulls the tuning props off the rest bag, applies defaults, and returns what is left for the root div. */
-const splitDeckTuning = <T extends DeckTuning>(rest: T) => {
-  const {
-    allowedDirections,
-    defaultIndex,
-    disabled,
-    distanceThreshold,
-    dragElastic,
-    enter,
-    mode,
-    peekOffset,
-    perspective,
-    rotation,
-    scaleStep,
-    velocityThreshold,
-    visibleCount,
-    ...props
-  } = rest;
-
-  return {
-    props,
-    tuning: {
-      allowedDirections: withDefault(allowedDirections, DEFAULT_DIRECTIONS),
-      defaultIndex: withDefault(defaultIndex, 0),
-      disabled: withDefault(disabled, false),
-      distanceThreshold: withDefault(distanceThreshold, DEFAULT_DISTANCE_THRESHOLD),
-      dragElastic: withDefault(dragElastic, DEFAULT_DRAG_ELASTIC),
-      enter: withDefault<DeckEnterMode>(enter, DEFAULT_ENTER),
-      mode: withDefault<DeckMode>(mode, "cycle"),
-      peekOffset: withDefault(peekOffset, DEFAULT_PEEK_OFFSET),
-      perspective: withDefault(perspective, DEFAULT_PERSPECTIVE),
-      rotation: withDefault(rotation, DEFAULT_ROTATION),
-      scaleStep: withDefault(scaleStep, DEFAULT_SCALE_STEP),
-      velocityThreshold: withDefault(velocityThreshold, DEFAULT_VELOCITY_THRESHOLD),
-      visibleCount: withDefault(visibleCount, DEFAULT_VISIBLE_COUNT),
-    },
-  };
-};
 
 export const DeckRoot = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
+  allowedDirections = DEFAULT_DIRECTIONS,
   children,
   className,
+  defaultIndex = 0,
+  disabled = false,
+  distanceThreshold = DEFAULT_DISTANCE_THRESHOLD,
+  dragElastic = DEFAULT_DRAG_ELASTIC,
+  enter = DEFAULT_ENTER,
   index,
+  mode = "cycle",
+  onAdvance,
+  onAdvanceEnd,
   onExhausted,
   onIndexChange,
   onKeyDown,
-  onAdvance,
-  onAdvanceEnd,
-  ref,
+  peekOffset = DEFAULT_PEEK_OFFSET,
+  perspective = DEFAULT_PERSPECTIVE,
   renderOverlay,
+  rotation = DEFAULT_ROTATION,
+  scaleStep = DEFAULT_SCALE_STEP,
   style,
-  tabIndex,
-  ...rest
+  velocityThreshold = DEFAULT_VELOCITY_THRESHOLD,
+  visibleCount = DEFAULT_VISIBLE_COUNT,
+  ...props
 }: DeckRootProps) => {
-  const {
-    props,
-    tuning: {
-      allowedDirections,
-      defaultIndex,
-      disabled,
-      distanceThreshold,
-      dragElastic,
-      enter,
-      mode,
-      peekOffset,
-      perspective,
-      rotation,
-      scaleStep,
-      velocityThreshold,
-      visibleCount,
-    },
-  } = splitDeckTuning(rest);
   const generatedId = useId();
   const [state, dispatch] = useReducer(deckReducer, defaultIndex, createDeckState);
   const reduceMotion = useReducedMotion() === true;
-  const controlled = index !== undefined;
-  const activeIndex = controlled ? index : state.internalIndex;
+  const activeIndex = index ?? state.internalIndex;
   const { cards, empty } = useDeckChildren(children, generatedId);
   const visibleCards = getVisibleDeckItems(cards, activeIndex, visibleCount, mode);
   const [activeCard] = visibleCards;
-  const enteringIds = useEnteringCardIds(visibleCards, enter);
   const exhausted = mode === "finite" && visibleCards.length === 0;
-
-  const isDragging = state.dragOffset !== 0;
-  const dragProgress = Math.min(1, Math.abs(state.dragOffset) / BG_RESPONSE_RAMP);
-
-  const exitCustom = { direction: state.lastDirection, velocity: state.exitVelocity };
   const interactions = useDeckInteractions({
     activeCard,
     activeIndex,
     allowedDirections,
     cards,
-    controlled,
     disabled,
     dispatch,
     distanceThreshold,
@@ -582,51 +78,41 @@ export const DeckRoot = ({
     onKeyDown,
     velocityThreshold,
   });
-
   const perspectiveVariable = { "--deck-perspective": `${perspective}px` };
   const rootStyle: CSSProperties = { ...style, ...perspectiveVariable };
-  const controlProps = getDeckControlProps({
-    activeCard,
-    activeIndex,
-    ariaLabel,
-    ariaLabelledBy,
-    cards,
-  });
-  const rootDataProps = getDeckRootDataProps(disabled, exhausted);
 
   return (
     <div
       {...props}
-      {...rootDataProps}
       className={joinClassNames("patternmode-deck", className)}
-      ref={ref}
+      data-disabled={disabled ? "true" : undefined}
+      data-empty={exhausted ? "true" : undefined}
       style={rootStyle}
-      tabIndex={tabIndex}
     >
       <input
-        {...controlProps}
+        {...getDeckControlProps({ activeCard, activeIndex, ariaLabel, ariaLabelledBy, cards })}
         className="patternmode-deck__control"
         disabled={disabled}
         onKeyDown={interactions.handleKeyDown}
       />
-      <DeckRenderedCards
-        activeIndex={activeIndex}
+      <DeckStack
         cardsLength={cards.length}
-        disabled={disabled}
-        dragElastic={dragElastic}
-        dragOffset={state.dragOffset}
-        dragProgress={dragProgress}
-        enteringIds={enteringIds}
-        exitCustom={exitCustom}
-        interactions={interactions}
-        isDragging={isDragging}
-        lastDirection={state.lastDirection}
+        enter={enter}
         mode={mode}
-        peekOffset={peekOffset}
-        reduceMotion={reduceMotion}
-        renderOverlay={renderOverlay}
-        rotation={rotation}
-        scaleStep={scaleStep}
+        stack={{
+          activeIndex,
+          disabled,
+          dragElastic,
+          exitCustom: { direction: state.lastDirection, velocity: state.exitVelocity },
+          interactions,
+          lastDirection: state.lastDirection,
+          peekOffset,
+          reduceMotion,
+          renderOverlay,
+          rotation,
+          scaleStep,
+          visibleCount,
+        }}
         visibleCards={visibleCards}
         visualBaseIndex={state.visualBaseIndex}
       />
@@ -642,6 +128,4 @@ const Deck = Object.assign(DeckRoot, {
   Empty: DeckEmpty,
 });
 
-const CardStack = Deck;
-
-export { CardStack, Deck };
+export { Deck };

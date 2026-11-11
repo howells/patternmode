@@ -1,12 +1,14 @@
-import { hexLightness, hslToRgb, rgbToOklab } from "./color";
+import { hexToOklab, hslToRgb, rgbToOklab } from "./color";
 
 /**
  * Shared logic for rendering weighted color segments — the one place that owns
  * how a raw distribution value is sanitized, totalled, and turned into a
- * percentage, plus the single contrast decision for whether a color reads as
- * light. Both Swatch's Distribution Bar and Parquet's Tiles derive through here
- * instead of re-implementing the math, so the same input reads the same way in
- * one and two dimensions.
+ * percentage or a cumulative edge, plus the single contrast decision for
+ * whether a color reads as light. Swatch's Distribution Segments, its weighted
+ * `colors` fill and Parquet's Tiles all derive through here instead of
+ * re-implementing the math, so the same input reads the same way in one and
+ * two dimensions. What to do with an all-zero distribution stays each caller's
+ * policy.
  */
 
 /**
@@ -18,7 +20,7 @@ import { hexLightness, hslToRgb, rgbToOklab } from "./color";
 export const sanitizeWeight = (value: number): number =>
   Number.isFinite(value) && value > 0 ? value : 0;
 
-/** The sanitized weights, their total, and each weight's share of the total. */
+/** The sanitized weights, their total, each weight's share, and the cumulative edges. */
 export interface DerivedDistribution {
   /** Input values with non-finite or negative entries coerced to `0`. */
   sanitized: number[];
@@ -30,6 +32,13 @@ export interface DerivedDistribution {
    * for an all-zero distribution is the caller's policy.
    */
   percentages: number[];
+  /**
+   * Cumulative edges as percentages (0–100), one more than there are weights:
+   * entry `i` is where weight `i` starts and entry `i + 1` where it ends. Each
+   * edge is the running weight over the total, so the last is exactly `100`.
+   * When the total is `0`, every edge is `0`.
+   */
+  edges: number[];
 }
 
 /**
@@ -40,9 +49,12 @@ export interface DerivedDistribution {
 export const deriveDistribution = (values: number[]): DerivedDistribution => {
   const sanitized = values.map(sanitizeWeight);
   const total = sanitized.reduce((sum, weight) => sum + weight, 0);
-  const percentages = sanitized.map((weight) => (total > 0 ? (weight / total) * 100 : 0));
+  const toPercent = (weight: number) => (total > 0 ? (weight / total) * 100 : 0);
+  const percentages = sanitized.map(toPercent);
+  let running = 0;
+  const edges = [0, ...sanitized.map((weight) => toPercent((running += weight)))];
 
-  return { percentages, sanitized, total };
+  return { edges, percentages, sanitized, total };
 };
 
 /**
@@ -59,9 +71,9 @@ export const deriveDistribution = (values: number[]): DerivedDistribution => {
 const LIGHT_LIGHTNESS_THRESHOLD = Math.cbrt(Math.sqrt(1.05 * 0.05) - 0.05);
 
 const NAMED_COLOR_LIGHTNESS = new Map([
-  ["black", false],
-  ["transparent", false],
-  ["white", true],
+  ["black", 0],
+  ["transparent", 0],
+  ["white", 1],
 ]);
 
 /**
@@ -141,24 +153,39 @@ const getOkFunctionLightness = (color: string): number | null => {
 };
 
 /**
+ * Hex with three or six digits, or four or eight with alpha. Alpha is dropped,
+ * as it is for the function syntaxes: tone only depends on the channels.
+ */
+const getHexLightness = (color: string): number | null => {
+  const digits = color.startsWith("#") ? color.slice(1) : color;
+  if (digits.length === 4 || digits.length === 8) {
+    return hexToOklab(digits.slice(0, (digits.length / 4) * 3))?.L ?? null;
+  }
+  return hexToOklab(digits)?.L ?? null;
+};
+
+/**
+ * Perceptual (OKLab) lightness of a CSS color, or `null` when it cannot be
+ * read. Parses hex (3, 4, 6 or 8 digits), `rgb()`/`rgba()`, `hsl()`/`hsla()`,
+ * `oklab()`/`oklch()`, and the named colors `white`/`black`/`transparent`.
+ * Anything else — other named colors, `hwb()`, `var()`, `color-mix()` — is
+ * `null`, never a guess.
+ */
+export const getColorLightness = (color: string): number | null =>
+  NAMED_COLOR_LIGHTNESS.get(color.trim().toLowerCase()) ??
+  getRgbFunctionLightness(color) ??
+  getHslFunctionLightness(color) ??
+  getOkFunctionLightness(color) ??
+  getHexLightness(color);
+
+/**
  * Whether a color reads as light, by perceptual (OKLab) lightness above a
  * single shared threshold — so contrast treatment (e.g. dark foreground over a
  * light fill) is decided the same way wherever a weighted color is rendered.
- * Parses hex, `rgb()`/`rgba()`, `hsl()`/`hsla()`, `oklab()`/`oklch()`, and the
- * named colors `white`/`black`/`transparent`; returns `false` for anything it
- * cannot parse.
+ * Returns `null` when the color cannot be parsed (see
+ * {@link getColorLightness}): the caller decides what an unknown tone means.
  */
-export const isLightColor = (color: string): boolean => {
-  const named = NAMED_COLOR_LIGHTNESS.get(color.trim().toLowerCase());
-  if (named !== undefined) {
-    return named;
-  }
-
-  // Function syntaxes first: hexLightness coerces anything non-hex to 0.
-  const lightness =
-    getRgbFunctionLightness(color) ??
-    getHslFunctionLightness(color) ??
-    getOkFunctionLightness(color) ??
-    hexLightness(color);
-  return Number.isFinite(lightness) && lightness > LIGHT_LIGHTNESS_THRESHOLD;
+export const isLightColor = (color: string): boolean | null => {
+  const lightness = getColorLightness(color);
+  return lightness === null ? null : lightness > LIGHT_LIGHTNESS_THRESHOLD;
 };

@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 
 import { fitOklabToSrgbGamut } from "./color-gamut";
 import {
-  hexLightness,
   hexToHsl,
   hexToOklab,
   hexToRgb,
@@ -40,7 +39,6 @@ describe("hex and HSL conversions", () => {
       expect(hexToRgb(hex)).toBeNull();
       expect(hexToOklab(hex)).toBeNull();
       expect(hexToHsl(hex)).toBeNull();
-      expect(hexLightness(hex)).toBe(0);
     }
   });
 
@@ -79,7 +77,7 @@ describe("perceptual colour conversions", () => {
     expect(lab.L).toBeCloseTo(0.627955, 6);
     expect(lab.a).toBeCloseTo(0.224863, 6);
     expect(lab.b).toBeCloseTo(0.125846, 6);
-    expect(hexLightness("#f00")).toBe(lab.L);
+    expect(hexToOklab("#f00")?.L).toBe(lab.L);
     expect(oklabToHex(lab)).toBe("#ff0000");
   });
 

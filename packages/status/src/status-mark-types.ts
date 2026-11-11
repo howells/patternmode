@@ -1,3 +1,4 @@
+import type { PatternmodeSize } from "@patternmode/system";
 import type { HTMLAttributes } from "react";
 
 export const STATUS_MARK_PROGRESS_STEPS = [
@@ -9,7 +10,6 @@ export const STATUS_MARK_PROGRESS_STEPS = [
   "full",
 ] as const;
 
-export const STATUS_MARK_STATUSES = STATUS_MARK_PROGRESS_STEPS;
 export const STATUS_MARK_PROGRESS_VALUES = [0, 25, 50, 75, 100] as const;
 export const STATUS_MARK_TONES = ["neutral", "accent", "muted"] as const;
 export const STATUS_MARK_VARIANTS = ["fill", "border"] as const;
@@ -18,7 +18,6 @@ export const STATUS_MARK_MOTIONS = ["smooth", "snap", "reduced"] as const;
 export type StatusMarkMotion = (typeof STATUS_MARK_MOTIONS)[number] | false;
 export type StatusMarkProgressStep = (typeof STATUS_MARK_PROGRESS_STEPS)[number];
 export type StatusMarkProgressValue = (typeof STATUS_MARK_PROGRESS_VALUES)[number];
-export type StatusMarkStatus = StatusMarkProgressStep;
 export type StatusMarkTone = (typeof STATUS_MARK_TONES)[number];
 export type StatusMarkVariant = (typeof STATUS_MARK_VARIANTS)[number];
 
@@ -58,7 +57,7 @@ export interface StatusMarkProps extends Omit<HTMLAttributes<HTMLSpanElement>, "
    *
    * Default `"base"`.
    */
-  size?: "2xl" | "2xs" | "3xl" | "base" | "lg" | "sm" | "xl" | "xs";
+  size?: PatternmodeSize;
   /**
    * Visual emphasis treatment. Tone changes color only; progress shape carries
    * meaning.

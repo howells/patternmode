@@ -2,7 +2,7 @@ import { createContext, use } from "react";
 import type { Side } from "./types";
 
 export interface SheetPanelContextValue {
-  /** Pop the top sheet (go back one level) */
+  /** Pop the top sheet (go back one level); closes the stack when it is the last */
   back: () => void;
   /** Close the entire sheet stack */
   close: () => void;

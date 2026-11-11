@@ -1,11 +1,11 @@
 "use client";
 
+import { useRender } from "@base-ui/react/use-render";
 import { joinClassNames } from "@patternmode/system";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 import type { MouseEvent } from "react";
 
-import { useRender } from "../render";
 import { useScrollFrame } from "./scroll-frame-context";
 import type {
   ScrollFrameEdge,

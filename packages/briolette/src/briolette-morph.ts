@@ -6,6 +6,7 @@ import { buildBriolettePalette } from "./briolette-colors";
 import {
   BRIOLETTE_DENSITIES,
   buildBrioletteFaces,
+  easeOutCubic,
   mapBrioletteParents,
   morphBrioletteFaces,
 } from "./briolette-geometry";
@@ -48,8 +49,6 @@ const parentCentersFor = (
 
 const MORPH_MS = 480;
 const MORPH_MAX_FRAME_MS = 64;
-
-const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
 
 interface BrioletteMorphState {
   from: BrioletteDensity;

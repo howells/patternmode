@@ -1,10 +1,11 @@
 "use client";
 
 import { easings } from "@howells/motion";
+import { usePrefersReducedMotion } from "@howells/motion/react";
 import { getSizeVariableStyle, joinClassNames } from "@patternmode/system";
 import { useEffect, useReducer, useRef } from "react";
 import type { CSSProperties } from "react";
-import { domMax, LazyMotion, m, useReducedMotion } from "motion/react";
+import { domMax, LazyMotion, m } from "motion/react";
 import type { Transition } from "motion/react";
 
 import { resolveStatusProgress } from "./status-mark-types";
@@ -276,8 +277,7 @@ export const StatusMark = ({
   variant = "fill",
   ...props
 }: StatusMarkProps) => {
-  const reducedMotion = useReducedMotion();
-  const hasReducedMotion = Boolean(reducedMotion);
+  const hasReducedMotion = usePrefersReducedMotion();
   const state = resolveStatusProgress({ status, value });
   const rootStyle = getRootStyle({ color, size, style, trackColor });
   const hasLabel = label !== undefined && label !== "";

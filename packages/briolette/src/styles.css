@@ -1,42 +1,54 @@
-/* Declare the full layer order before opening `components`: registering
-   `components` first would leave it ahead of the host's `theme` and `base`,
-   so a base reset would outrank these rules. A no-op when the app declared
-   the order first. */
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Briolette only opens `components`, so it cannot invert a consumer's
+   utilities the way a sheet opening `utilities` can. It declares the order
+   anyway, because registering `components` early would otherwise leave it
+   ahead of the host's `theme` and `base`, and a base reset would then outrank
+   these rules. */
 @layer theme, base, components, utilities;
 
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override any of it with their own utilities. Do not
+   hoist a rule out of this block.
+
+   Written as plain declarations where no utility emits the same value: the
+   `border` and `outline` shorthands (their utilities route the style through
+   `--tw-*-style`), `clip`, colour and width maths over custom properties, the
+   multi-property `transition` list, `transition: none` (`transition-none`
+   resets only `transition-property`), `font-mono` (a different fallback stack),
+   SVG-only properties with no utility, and `line-height` (`leading-*` also
+   sets `--tw-leading`, which a consumer's `text-*` class on the same element
+   would then pick up). */
 @layer components {
   .patternmode-briolette {
     border: 0;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin: 0;
-    min-inline-size: 0;
-    padding: 0;
-    vertical-align: top;
-    width: max-content;
+    @apply m-0 inline-flex w-max min-inline-0 flex-col gap-3 p-0 align-top;
   }
 
   .patternmode-briolette__stage {
-    border-radius: 999px;
+    @apply rounded-[999px];
     line-height: 0;
   }
 
   .patternmode-briolette__stage:focus-visible {
     outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 6px;
+    @apply outline-offset-6;
   }
 
   .patternmode-briolette__svg {
-    cursor: grab;
-    display: block;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
+    @apply block touch-none cursor-grab select-none;
   }
 
   .patternmode-briolette__svg[data-dragging] {
-    cursor: grabbing;
+    @apply cursor-grabbing;
   }
 
   .patternmode-briolette__face {
@@ -65,25 +77,16 @@
   }
 
   .patternmode-briolette__pin {
-    pointer-events: none;
-    stroke: var(--patternmode-briolette-seam, #fff);
-    stroke-width: 2.5;
+    @apply pointer-events-none stroke-[var(--patternmode-briolette-seam,#fff)] stroke-[2.5];
   }
 
   .patternmode-briolette__hint {
     clip: rect(0, 0, 0, 0);
     border: 0;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    @apply absolute -m-px h-px w-px overflow-hidden p-0 whitespace-nowrap;
   }
 
   .patternmode-briolette__value {
-    color: var(--muted-foreground, #77756d);
     font-family: var(
       --font-mono,
       "SFMono-Regular",
@@ -93,9 +96,8 @@
       Menlo,
       monospace
     );
-    font-size: 0.75rem;
+    @apply text-center text-xs text-[color:var(--muted-foreground,#77756d)];
     line-height: 1;
-    text-align: center;
   }
 
   @media (prefers-reduced-motion: reduce) {

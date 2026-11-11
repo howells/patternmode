@@ -16,7 +16,7 @@ import {
   SCALE_INPUT,
   SCALE_OUTPUT,
 } from "./physics";
-import { getDragSpring, resolvePreset } from "./presets";
+import { resolvePreset } from "./presets";
 import type { DismissibleConfig, MotionPresetName } from "./types";
 
 export interface ApertoContentProps extends Omit<
@@ -73,7 +73,7 @@ const ApertoContent = ({
   const contentLayoutId =
     sharedLayoutId === false ? undefined : (sharedLayoutId ?? `${ctx.layoutId}-shared`);
 
-  const dragSpring = getDragSpring(resolved);
+  const dragSpring = resolved.drag;
   const isDismissible = ctx.dismissible !== false;
 
   const dismissConfig: DismissibleConfig = isDismissibleConfig(ctx.dismissible)

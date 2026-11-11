@@ -1,6 +1,7 @@
+import type { CommandOption } from "./tag-selector-context";
 import type { TagItem } from "./types";
 
-export const DEFAULT_SEPARATORS = ["Enter", ","] as const;
+export const DEFAULT_SEPARATORS = [","] as const;
 export const NO_ACTIVE_OPTION = -1;
 
 export const normalizeTag = (value: string): string => value.trim().replaceAll(/\s+/gu, " ");
@@ -28,7 +29,7 @@ export const dedupeDrafts = (drafts: readonly string[]): string[] => {
   });
 };
 
-/** True when a key commits the current search draft (Enter or a configured separator). */
+/** True when a key commits the current search draft: Enter always does, plus each configured separator. */
 export const isCommitKey = (key: string, separators: readonly string[]): boolean =>
   key === "Enter" || separators.includes(key);
 
@@ -50,3 +51,11 @@ export const getPreviousIndex = (currentIndex: number, length: number): number =
 
   return currentIndex <= 0 ? length - 1 : currentIndex - 1;
 };
+
+/** The listbox option for a Tag Item; its id is stable so it can be the active descendant. */
+export const toItemOption = (item: TagItem, listboxId: string): CommandOption => ({
+  id: `${listboxId}-option-${item.id}`,
+  item,
+  label: item.label,
+  type: "item",
+});

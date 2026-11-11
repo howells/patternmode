@@ -1,6 +1,7 @@
 "use client";
 
 import { Popover } from "@base-ui/react/popover";
+import { useRender } from "@base-ui/react/use-render";
 import { ScrollFrame } from "@patternmode/scrollframe";
 import { joinClassNames } from "@patternmode/system";
 import { useEffect, useRef } from "react";
@@ -14,11 +15,16 @@ import type {
   RefCallback,
 } from "react";
 
-import { useRender } from "./render";
 import { useTagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
 import { TagSelectorRoot } from "./tag-selector-root";
-import { getNextIndex, getPreviousIndex, isCommitKey, splitPastedTags } from "./tag-selector-utils";
+import {
+  getNextIndex,
+  getPreviousIndex,
+  isCommitKey,
+  splitPastedTags,
+  toItemOption,
+} from "./tag-selector-utils";
 import type {
   BadgeProps,
   BadgeVariant,
@@ -31,21 +37,10 @@ import type {
   TagSelectorProps,
   TagSelectorSearchProps,
   TagSelectorTriggerProps,
-  TagTone,
 } from "./types";
 
 const DEFAULT_BADGE_VARIANT = "default" satisfies BadgeVariant;
-const TONE_VARIANT_MAP = {
-  accent: "default",
-  danger: "destructive",
-  info: "secondary",
-  neutral: "secondary",
-  success: "secondary",
-  warning: "outline",
-} as const satisfies Record<TagTone, BadgeVariant>;
-
-const getTagVariant = (variant: BadgeVariant | undefined, tone?: TagTone) =>
-  variant ?? (tone === undefined ? "secondary" : TONE_VARIANT_MAP[tone]);
+const DEFAULT_TAG_VARIANT = "secondary" satisfies BadgeVariant;
 
 export const Badge = (props: BadgeProps): ReactElement => {
   const { render, className, variant = DEFAULT_BADGE_VARIANT, ...badgeProps } = props;
@@ -74,9 +69,7 @@ export const Tag = (props: TagProps): ReactElement => {
     removeLabel,
     selected = false,
     size = "base",
-    variant,
-    // oxlint-disable-next-line typescript/no-deprecated -- Tag still honours its deprecated `tone` prop until the prop is removed.
-    tone: legacyTone,
+    variant = DEFAULT_TAG_VARIANT,
     ...tagProps
   } = props;
 
@@ -93,7 +86,7 @@ export const Tag = (props: TagProps): ReactElement => {
       data-selected={selected ? "true" : undefined}
       data-size={size}
       data-slot="tag"
-      variant={getTagVariant(variant, legacyTone)}
+      variant={variant}
     >
       {Icon === undefined ? null : (
         <span aria-hidden="true" className="patternmode-tag__icon">
@@ -150,7 +143,7 @@ const SelectedTagChip = ({
       data-disabled={disabled ? "true" : undefined}
       data-size="sm"
       data-slot="tag"
-      variant={getTagVariant(item.variant)}
+      variant={item.variant ?? DEFAULT_TAG_VARIANT}
     >
       <span className="patternmode-tag__label">{item.label}</span>
       {disabled ? null : (
@@ -402,6 +395,8 @@ const TagSelectorSearch = ({
     await context.resolveDrafts(pastedTags);
   };
 
+  // Only a failed creation without `onCreateItemError` rejects, and that
+  // rejection is meant to surface as unhandled.
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     void handleKeyDownAsync(event);
   };
@@ -462,40 +457,28 @@ const TagSelectorRenderedOption = ({
   </>
 );
 
-const TagSelectorOption = ({ item, option }: { item?: TagItem; option?: CommandOption }) => {
+/** One row of the listbox: a Tag Item to toggle, or the offer to create the draft. */
+const TagSelectorCommandOption = ({ option }: { option: CommandOption }) => {
   const context = useTagSelectorContext();
-  const resolvedOption =
-    option ??
-    (item === undefined
-      ? undefined
-      : {
-          id: `${context.listboxId}-option-${item.id}`,
-          item,
-          label: item.label,
-          type: "item" as const,
-        });
-
-  if (resolvedOption === undefined) {
-    return null;
-  }
-
-  const isCreate = resolvedOption.type === "create";
-  const optionItem = isCreate ? undefined : resolvedOption.item;
+  const isCreate = option.type === "create";
+  const optionItem = isCreate ? undefined : option.item;
   const selected =
     optionItem === undefined
       ? false
       : context.value.some((selectedItem) => selectedItem.id === optionItem.id);
   const disabled = context.disabled || (selected ? false : optionItem?.disabled === true);
-  const active = context.commandOptions[context.activeIndex]?.id === resolvedOption.id;
+  const active = context.commandOptions[context.activeIndex]?.id === option.id;
   const optionProps = {
     "aria-selected": selected,
     className: "patternmode-tag-selector__option",
     "data-active": active ? "true" : undefined,
     "data-slot": "tag-selector-option",
     disabled,
-    id: resolvedOption.id,
+    id: option.id,
     onClick: () => {
-      void context.selectCommandOption(resolvedOption);
+      // Only a failed creation without `onCreateItemError` rejects, and that
+      // rejection is meant to surface as unhandled.
+      void context.selectCommandOption(option);
     },
     role: "option",
   };
@@ -533,9 +516,16 @@ const TagSelectorOption = ({ item, option }: { item?: TagItem; option?: CommandO
       <span aria-hidden="true" className="patternmode-tag-selector__option-icon">
         {optionIcon}
       </span>
-      <span className="patternmode-tag-selector__option-label">{resolvedOption.label}</span>
+      <span className="patternmode-tag-selector__option-label">{option.label}</span>
     </button>
   );
+};
+
+/** A listbox option for one Tag Item, for composing `TagSelector.List` by hand. */
+const TagSelectorOption = ({ item }: { item: TagItem }) => {
+  const context = useTagSelectorContext();
+
+  return <TagSelectorCommandOption option={toItemOption(item, context.listboxId)} />;
 };
 
 const TagSelectorEmpty = ({ className, ref, ...emptyProps }: TagSelectorEmptyProps) => (
@@ -561,7 +551,9 @@ const TagSelectorList = ({ children, className, ref, ...listProps }: TagSelector
 
   const generatedChildren =
     context.commandOptions.length > 0 ? (
-      context.commandOptions.map((option) => <TagSelectorOption key={option.id} option={option} />)
+      context.commandOptions.map((option) => (
+        <TagSelectorCommandOption key={option.id} option={option} />
+      ))
     ) : (
       <TagSelectorEmpty>{context.emptyMessage}</TagSelectorEmpty>
     );

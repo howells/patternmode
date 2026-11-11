@@ -9,28 +9,26 @@ export const SheetHandle = ({
   style,
   children,
 }: SheetOptionalContentPartProps) => {
-  const { close, back, isNested, side } = useSheetPanel();
+  const { back, side } = useSheetPanel();
   // The grab pill is a top-of-sheet, drag-down affordance — it only belongs on
   // a bottom sheet. Side sheets drag horizontally, so a horizontal pill at the
   // top reads as wrong; render nothing rather than misplaced chrome.
   if (side !== "bottom") {
     return null;
   }
-  const dismiss = isNested ? back : close;
-  const defaults = render
-    ? undefined
-    : "flex shrink-0 cursor-grab touch-none select-none active:cursor-grabbing [-webkit-touch-callout:none] items-center justify-center border-none bg-transparent pt-4 pb-1 text-inherit";
+  const defaults = render ? undefined : "patternmode-stacksheet__handle";
   return (
     <SheetPartElement
       defaultTagName="button"
       props={{
         "aria-label": "Dismiss",
         children: children ?? (
-          <div aria-hidden="true" className="h-1 w-9 rounded-sm bg-current/25" />
+          <div aria-hidden="true" className="patternmode-stacksheet__handle-pill" />
         ),
         className: joinClassNames(defaults, className),
         "data-stacksheet-handle": "",
-        onClick: dismiss,
+        // `back` pops the top Sheet, which closes the stack when it is the last.
+        onClick: back,
         style,
         type: render ? undefined : "button",
       }}

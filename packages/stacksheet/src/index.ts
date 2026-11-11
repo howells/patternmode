@@ -21,6 +21,7 @@ export type {
   // Close reason
   CloseReason,
   ContentMap,
+  HandlePosition,
   HeaderRenderProps,
   ResponsiveSide,
   SheetActions,
@@ -40,8 +41,10 @@ export type {
   StacksheetClassNames,
   StacksheetConfig,
   StacksheetInstance,
+  StacksheetLayoutProps,
   // Factory
   StacksheetProviderProps,
   // Store
   StacksheetSnapshot,
+  StacksheetStoreState,
 } from "./types";

@@ -26,7 +26,9 @@ import "@patternmode/verge/styles.css";
 </Verge.Root>;
 ```
 
-Requires Tailwind CSS v4.
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.
 
 ## What it already handles
 

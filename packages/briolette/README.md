@@ -25,6 +25,10 @@ export function AccentColorField() {
 }
 ```
 
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.
+
 ## Interaction
 
 - **Drag** (or arrow keys) to spin the sphere; it drifts slowly while idle.
@@ -41,7 +45,7 @@ morphs are disabled, leaving only direct manipulation.
 
 | Prop          | Type                                          | Default               | Description                                                                                                                           |
 | ------------- | --------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`       | `string \| null`                              | —                     | Controlled hex color value.                                                                                                           |
+| `value`       | `string \| null`                              | —                     | Controlled hex color value (`#rgb` or `#rrggbb`), or `null`. Any other string throws.                                                 |
 | `onChange`    | `(value: string \| null) => void`             | —                     | Selection and unset callback.                                                                                                         |
 | `density`     | `"coarse" \| "base" \| "fine" \| "brilliant"` | `"base"`              | Facet count: 20, 80, 180, or 320. Cut changes animate; seam width scales with the cut.                                                |
 | `maxDepth`    | `number`                                      | `BRIOLETTE_MAX_DEPTH` | Deepest refinement level reachable by clicking near the anchor. Clamped to `1..BRIOLETTE_MAX_DEPTH`; cap it low for a broader sphere. |

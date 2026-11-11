@@ -1,36 +1,159 @@
-/* Declare Tailwind's canonical layer order, and do it FIRST — a `@layer` statement
-   is permitted before `@import`, and the position is load-bearing: emitted after
-   the layer blocks it has no effect, because a layer is registered the first time
-   it is seen and a later statement cannot move one that already exists. Loaded
-   before the app's own entry, this sheet would otherwise register `components`
-   ahead of the app's `theme` and `base`. First declaration wins, so this is a
-   no-op when the app declares the order first. */
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. Loaded before the app's own entry, this sheet would otherwise
+   register `components` ahead of the app's `theme` and `base`, and a base
+   reset would then outrank these rules. A no-op when the app declares the
+   order first, since first declaration wins. */
 @layer theme, base, components, utilities;
 
-@import "tailwindcss/theme" theme(reference) source(none);
-/* The Panel's own classes are Tailwind utilities, compiled here so that apps
-   without Tailwind get them. They ship in `components`, never `utilities`.
+@reference "tailwindcss";
 
-   `utilities` was the bug: the app's utilities live in that layer too, so the
-   two sheets competed on source order alone. Whichever loaded later won, and a
-   generic class compiled here (`hidden`, `flex`) landed after the app's
-   responsive variants and beat them: `hidden sm:table-cell` stayed hidden on
-   desktop inside a Sheet. In `components` every app utility outranks every
-   rule in this sheet, at any specificity and in any load order, while the
-   Panel still beats the app's `base` resets.
+/* Everything below is inside `components` on purpose, never `utilities` and
+   never layerless. In `utilities` this sheet competed with the app's own
+   utilities on load order alone, and a rule here could beat an app's
+   responsive variant (`hidden sm:table-cell` stayed hidden inside a Sheet). A
+   layerless rule outranks everything in a named layer at any specificity. In
+   `components` every app utility, including what a consumer passes as
+   `className` or `classNames`, outranks these rules in any load order, while
+   they still beat the app's `base` resets. Do not hoist a rule out of this
+   block. */
+@layer components {
+  .patternmode-stacksheet__backdrop {
+    @apply fixed inset-0;
+  }
 
-   `layer(...)` itself is load-bearing too: Tailwind's layer declaration lives in
-   its main entry, so importing `utilities` on its own emits these rules
-   layerless, and a layerless rule outranks everything in a named layer. */
-@import "tailwindcss/utilities" layer(components) source(none);
-@source "./**/*.{ts,tsx}";
-/* Tests mention classes the Panel never renders; don't ship them. */
-@source not "./**/*.test.{ts,tsx}";
-/* Words the scanner reads as classes from ordinary code ("hidden", "resize",
-   `style.transform`) that no Panel element carries. Shipping them would only
-   hand an app a second, unasked-for copy of its own generic utilities. */
-@source not inline("container filter hidden inline invisible outline resize static transform transition visible");
+  /* The fixed layer the Panels are positioned in. */
+  .patternmode-stacksheet__layer {
+    @apply pointer-events-none fixed inset-0 overflow-hidden;
+  }
 
-/* Base UI's ScrollArea Viewport renders a plain scrolling div with no inner
-   wrapper element, so the Radix `display:table` horizontal-sizing workaround
-   this file used to carry is no longer needed. */
+  .patternmode-stacksheet__panel-inner {
+    @apply relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[inherit];
+  }
+
+  .patternmode-stacksheet__content {
+    @apply min-h-0 flex-1 overflow-y-auto overscroll-contain;
+  }
+
+  /* text-inherit matters on every handle: the pill is a tint of currentcolor,
+     and without it the button falls back to the UA color — iOS Safari's
+     system blue. */
+  .patternmode-stacksheet__bottom-handle {
+    @apply absolute inset-x-0 z-10 flex w-full cursor-grab touch-none items-center justify-center border-none bg-transparent text-inherit select-none [-webkit-touch-callout:none] active:cursor-grabbing;
+  }
+
+  /* `inside` tucks the pill just below the top edge; `outside` floats it
+     above the sheet on the backdrop. */
+  .patternmode-stacksheet__bottom-handle[data-stacksheet-handle-position="inside"] {
+    @apply top-0 pt-2.5 pb-2;
+  }
+
+  .patternmode-stacksheet__bottom-handle[data-stacksheet-handle-position="outside"] {
+    @apply bottom-full pt-1 pb-2;
+  }
+
+  .patternmode-stacksheet__bottom-handle-pill {
+    @apply h-[5px] w-9 rounded-full bg-current/15;
+  }
+
+  .patternmode-stacksheet__side-handle {
+    @apply absolute top-0 bottom-0 flex w-6 cursor-grab touch-none items-center justify-center border-none bg-transparent p-0 text-inherit select-none [-webkit-touch-callout:none] active:cursor-grabbing;
+  }
+
+  .patternmode-stacksheet__side-handle-pill {
+    @apply h-8 w-1 rounded-full bg-current/20;
+  }
+
+  /* Sheet.Header: a navigation bar, as an iOS sheet has. One row, back at the
+     leading edge, the title centred on the sheet and cut to one line, close at
+     the trailing edge. The two edge columns are equal, so the title stays
+     centred whether or not back is shown. A description gets a row of its own
+     under the bar. Each part is placed by its data attribute, so order in the
+     markup doesn't matter, and a corner-floated Close is brought into the
+     row. */
+  .patternmode-stacksheet__header {
+    @apply grid min-h-11 shrink-0 grid-cols-[1fr_minmax(0,auto)_1fr] items-center gap-x-2;
+  }
+
+  .patternmode-stacksheet__header > [data-stacksheet-back] {
+    @apply col-start-1 row-start-1 justify-self-start;
+  }
+
+  .patternmode-stacksheet__header > [data-stacksheet-title] {
+    @apply col-start-2 row-start-1 min-w-0 truncate text-center;
+  }
+
+  .patternmode-stacksheet__header > [data-stacksheet-close] {
+    @apply static col-start-3 row-start-1 justify-self-end;
+  }
+
+  .patternmode-stacksheet__header > [data-stacksheet-description] {
+    @apply col-span-3 row-start-2 text-center text-balance;
+  }
+
+  /* A header passed through `render` keeps only its place in the panel's flex
+     column; without `shrink-0` it collapses. */
+  .patternmode-stacksheet__custom-header {
+    @apply shrink-0;
+  }
+
+  /* The header the default layout draws around Back and Close. */
+  .patternmode-stacksheet__default-header {
+    @apply px-2 pt-2;
+  }
+
+  .patternmode-stacksheet__title {
+    @apply text-sm font-semibold;
+  }
+
+  .patternmode-stacksheet__back {
+    @apply flex min-h-11 min-w-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-60 transition-opacity duration-150 select-none [-webkit-touch-callout:none] hover:opacity-100 active:opacity-100;
+  }
+
+  .patternmode-stacksheet__close {
+    @apply absolute top-2 right-2 z-20 flex min-h-11 min-w-11 cursor-pointer touch-manipulation items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-50 transition-opacity duration-150 select-none [-webkit-touch-callout:none] hover:opacity-100 active:opacity-100;
+  }
+
+  .patternmode-stacksheet__handle {
+    @apply flex shrink-0 cursor-grab touch-none items-center justify-center border-none bg-transparent pt-4 pb-1 text-inherit select-none [-webkit-touch-callout:none] active:cursor-grabbing;
+  }
+
+  .patternmode-stacksheet__handle-pill {
+    @apply h-1 w-9 rounded-sm bg-current/25;
+  }
+
+  /* Base UI's ScrollArea Viewport renders a plain scrolling div with no inner
+     wrapper element, so the Radix `display:table` horizontal-sizing
+     workaround this file used to carry is no longer needed. */
+  .patternmode-stacksheet__body {
+    @apply relative flex min-h-0 flex-1 flex-col overflow-hidden;
+  }
+
+  .patternmode-stacksheet__body-viewport {
+    @apply min-h-0 w-full flex-1 overscroll-contain;
+  }
+
+  .patternmode-stacksheet__scrollbar {
+    @apply flex w-2 touch-none p-0.5 opacity-0 transition-opacity select-none data-[hovering]:opacity-100 data-[scrolling]:opacity-100;
+  }
+
+  .patternmode-stacksheet__scrollbar-thumb {
+    @apply relative flex-1 rounded bg-current/15;
+  }
+
+  /* A body passed through `render` is the consumer's own scroll container; it
+     keeps only its structural place in the panel's flex column. */
+  .patternmode-stacksheet__custom-body {
+    @apply relative min-h-0 flex-1;
+  }
+
+  .patternmode-stacksheet__footer {
+    @apply flex shrink-0 items-center gap-2 border-t px-6 py-3;
+  }
+
+  .patternmode-stacksheet__custom-footer {
+    @apply shrink-0;
+  }
+}

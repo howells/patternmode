@@ -1,5 +1,6 @@
 "use client";
 
+export { TagCreationError } from "./tag-creation-error";
 export { Badge, Tag, TagSelector } from "./tags";
 export type {
   BadgeProps,
@@ -16,5 +17,4 @@ export type {
   TagSelectorSearchProps,
   TagSelectorTriggerProps,
   TagSize,
-  TagTone,
 } from "./types";

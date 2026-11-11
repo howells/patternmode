@@ -1,4 +1,4 @@
-import { sanitizeWeight } from "@patternmode/system";
+import { deriveDistribution } from "@patternmode/system";
 
 import type { SwatchColorStop } from "./swatch-types";
 
@@ -8,9 +8,8 @@ export const isColorString = (stop: SwatchColorStop): stop is string => typeof s
 const toColorStop = (stop: SwatchColorStop): { color: string; ratio?: number } =>
   isColorString(stop) ? { color: stop } : stop;
 
-/** Missing ratios default to equal weight; finite/negative handling is shared. */
-const getRatioWeight = (ratio: number | undefined): number =>
-  ratio === undefined ? 1 : sanitizeWeight(ratio);
+/** Missing ratios weigh 1; invalid and negative ones are sanitized to 0 by the shared derivation. */
+const getRatioWeight = (ratio: number | undefined): number => ratio ?? 1;
 
 const formatPercent = (value: number): string =>
   `${Number.isInteger(value) ? value : Number(value.toFixed(2))}%`;
@@ -35,34 +34,35 @@ export const getSwatchColorsBackground = (
      stop sits at the cumulative midpoint of its ratio share (a 90/10 palette
      centers at 45% and 95%), so weighted palettes still read proportionally.
      Equal, missing, or all-zero ratios fall back to even spacing. */
+  /* Bands and stops walk the shared percentages with a running cursor rather
+     than reading `edges`: summing shares rounds differently from dividing a
+     running weight, and the cursor keeps every stop position identical to the
+     published output. */
+  const weighted = deriveDistribution(stops.map((stop) => getRatioWeight(stop.ratio)));
+
   if (blend === "smooth") {
-    const weights = stops.map((stop) => getRatioWeight(stop.ratio));
-    const weightTotal = weights.reduce((sum, weight) => sum + weight, 0);
-    const useEvenSpacing = weightTotal <= 0 || weights.every((weight) => weight === weights[0]);
+    const { percentages, sanitized } = weighted;
+    const useEvenSpacing =
+      weighted.total <= 0 || sanitized.every((weight) => weight === sanitized[0]);
     let cursor = 0;
     const parts = stops.map((stop, index) => {
-      let position: number;
       if (useEvenSpacing) {
-        position = stops.length === 1 ? 0 : (index / (stops.length - 1)) * 100;
-      } else {
-        const share = ((weights[index] ?? 0) / weightTotal) * 100;
-        position = cursor + share / 2;
-        cursor += share;
+        return `${stop.color} ${formatPercent((index / (stops.length - 1)) * 100)}`;
       }
+      const share = percentages[index] ?? 0;
+      const position = cursor + share / 2;
+      cursor += share;
       return `${stop.color} ${formatPercent(position)}`;
     });
     return `linear-gradient(in oklab 90deg, ${parts.join(", ")})`;
   }
 
-  const weights = stops.map((stop) => getRatioWeight(stop.ratio));
-  const rawTotal = weights.reduce((sum, ratio) => sum + ratio, 0);
-  const useEqualWeights = rawTotal <= 0;
-  const total = useEqualWeights ? stops.length : rawTotal;
+  /* Swatch policy for an all-zero palette: equal bands, not empty ones. */
+  const { percentages } = weighted.total > 0 ? weighted : deriveDistribution(stops.map(() => 1));
   let cursor = 0;
   const parts = stops.map((stop, index) => {
-    const ratio = useEqualWeights ? 1 : (weights[index] ?? 0);
     const start = cursor;
-    const end = index === stops.length - 1 ? 100 : cursor + (ratio / total) * 100;
+    const end = index === stops.length - 1 ? 100 : cursor + (percentages[index] ?? 0);
     cursor = end;
     return `${stop.color} ${formatPercent(start)} ${formatPercent(end)}`;
   });

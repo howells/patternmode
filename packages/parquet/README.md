@@ -47,7 +47,11 @@ and on keyboard focus, and always on touch screens, where there is no hover. Eac
 labelled tile is a tab stop, and screen readers hear it as an image named by its
 label and percentage, such as "Terracotta, 42%". The label text uses a
 foreground color chosen for contrast (via `@patternmode/system`'s
-`isLightColor`, which resolves perceptual lightness). Pass
+`isLightColor`, which resolves perceptual lightness). It reads hex (3, 4, 6 or
+8 digits), `rgb()`, `hsl()`, `oklab()`, `oklch()`, `white`, `black` and
+`transparent`; any other color — `var()`, `color-mix()`, most named colors —
+is treated as not light, so set the tile's `isLight` when such a tile is light.
+Pass
 `renderTile(tile, { percent, isLight, slot, width, height })` to replace the
 label content entirely.
 

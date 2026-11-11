@@ -132,7 +132,3 @@ export const resolveCardRotation = (id: string, spread: number): number => {
   const normalized = hash / 0xff_ff_ff_ff;
   return Number(((normalized * 2 - 1) * spread).toFixed(3));
 };
-
-/** Returns the visual depth of an item within the currently visible stack. */
-export const getVisualDepth = (item: DeckItem, visibleItems: DeckItem[]): number =>
-  visibleItems.findIndex((visibleItem) => visibleItem.id === item.id);

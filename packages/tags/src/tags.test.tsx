@@ -7,7 +7,7 @@ import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as publicApi from "./index";
-import { Badge, Tag, TagSelector } from "./index";
+import { Badge, Tag, TagCreationError, TagSelector } from "./index";
 import type { TagItem } from "./types";
 
 class ResizeObserverMock {
@@ -43,8 +43,10 @@ const ControlledTagSelector = ({
   filterOption?: (item: TagItem, query: string) => boolean;
   name?: string;
   onCreateItem?: (label: string) => Promise<TagItem> | TagItem;
+  onCreateItemError?: (error: TagCreationError) => void;
   options?: TagItem[];
   searchValue?: string;
+  separators?: readonly string[];
   serializeItem?: (item: TagItem) => string;
 }) => {
   const [value, setValue] = useState(defaultValue);
@@ -110,6 +112,90 @@ describe(TagSelector, () => {
     const tag = screen.getByText("Needs review").closest("[data-slot='tag']");
     expect(tag).toHaveAttribute("data-slot", "tag");
     expect(tag).toHaveAttribute("data-variant", "destructive");
+  });
+
+  it("gives a Tag without a variant the secondary badge variant", () => {
+    render(<Tag>Plain</Tag>);
+
+    expect(screen.getByText("Plain").closest("[data-slot='tag']")).toHaveAttribute(
+      "data-variant",
+      "secondary",
+    );
+  });
+
+  it("commits on Enter and on each configured separator, and only those", async () => {
+    const user = userEvent.setup();
+    const onCreateItem = vi.fn<(label: string) => TagItem>((label) => ({
+      id: label.toLowerCase(),
+      label,
+    }));
+
+    render(<ControlledTagSelector onCreateItem={onCreateItem} separators={[";"]} />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    const search = screen.getByRole("combobox", { name: "Search Project tags" });
+    await user.type(search, "Indoor;Out,door{Enter}");
+
+    expect(onCreateItem.mock.calls).toStrictEqual([["Indoor"], ["Out,door"]]);
+  });
+
+  it("reports a failed creation and keeps the draft for a retry", async () => {
+    const user = userEvent.setup();
+    const failure = new Error("Tag service unavailable");
+    const onCreateItem = vi.fn<(label: string) => Promise<TagItem>>(async () => {
+      throw failure;
+    });
+    const onCreateItemError = vi.fn<(error: TagCreationError) => void>();
+
+    render(
+      <ControlledTagSelector onCreateItem={onCreateItem} onCreateItemError={onCreateItemError} />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    const search = screen.getByRole("combobox", { name: "Search Project tags" });
+    await user.type(search, "Broken{Enter}");
+
+    await waitFor(() => {
+      expect(onCreateItemError).toHaveBeenCalledOnce();
+    });
+    expect(onCreateItemError.mock.calls[0]?.[0]).toBeInstanceOf(TagCreationError);
+    expect(onCreateItemError.mock.calls[0]?.[0]).toMatchObject({ cause: failure, label: "Broken" });
+    expect(search).toHaveValue("Broken");
+    expect(
+      within(screen.getByRole("button", { name: "Project tags" })).queryByText("Broken"),
+    ).not.toBeInTheDocument();
+  });
+
+  it("selects the pasted labels that were created when another fails", async () => {
+    const user = userEvent.setup();
+    const failure = new Error("Rejected label");
+    const onCreateItem = vi.fn<(label: string) => Promise<TagItem>>(async (label) => {
+      if (label === "Broken") {
+        throw failure;
+      }
+      return { id: label.toLowerCase(), label };
+    });
+    const onCreateItemError = vi.fn<(error: TagCreationError) => void>();
+
+    render(
+      <ControlledTagSelector
+        name="tags"
+        onCreateItem={onCreateItem}
+        onCreateItemError={onCreateItemError}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    await user.paste("Indoor, Broken");
+
+    await waitFor(() => {
+      expect(onCreateItemError).toHaveBeenCalledOnce();
+    });
+    expect(onCreateItemError.mock.calls[0]?.[0]).toBeInstanceOf(TagCreationError);
+    expect(onCreateItemError.mock.calls[0]?.[0]).toMatchObject({ cause: failure, label: "Broken" });
+    expect(
+      screen.getAllByDisplayValue(/indoor|broken/u).map((input) => input.getAttribute("value")),
+    ).toStrictEqual(["indoor"]);
   });
 
   it("exports TagSelector as the public selector API without a TagsInput alias", () => {

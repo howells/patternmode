@@ -1,10 +1,12 @@
 import {
+  clamp,
   fitOklabToSrgbGamut,
   hexToOklab,
   oklabDistance,
   oklabToHex,
   oklchToOklab,
 } from "@patternmode/system";
+import type { OklabColor } from "@patternmode/system";
 
 import type { BrioletteFace, BrioletteVec3 } from "./briolette-geometry";
 import { normalizeBrioletteVec, quatFromAxisAngle, rotateBrioletteVec } from "./briolette-geometry";
@@ -110,7 +112,6 @@ const BLOOM_SIGN_WEIGHT = 0.3;
 
 const POLE: BrioletteVec3 = { x: 0, y: 1, z: 0 };
 const POLE_FALLBACK: BrioletteVec3 = { x: 1, y: 0, z: 0 };
-const FALLBACK_ANCHOR = { L: 0.6, a: 0, b: 0 };
 
 const cross = (a: BrioletteVec3, b: BrioletteVec3): BrioletteVec3 => ({
   x: a.y * b.z - a.z * b.y,
@@ -119,8 +120,6 @@ const cross = (a: BrioletteVec3, b: BrioletteVec3): BrioletteVec3 => ({
 });
 
 const dot = (a: BrioletteVec3, b: BrioletteVec3): number => a.x * b.x + a.y * b.y + a.z * b.z;
-
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 /**
  * Map a facet direction to the color universe: hue wraps the sphere's
@@ -155,13 +154,16 @@ export const brioletteNeighborhoodDelta = (depth: number): number =>
     BRIOLETTE_NEIGHBORHOOD_DELTA * BRIOLETTE_DEPTH_FALLOFF ** (Math.max(1, depth) - 1),
   );
 
-interface OklabPoint {
-  L: number;
-  a: number;
-  b: number;
-}
+/** Parses a hex color the Briolette helpers were handed, or throws: no color is invented. */
+const parseBrioletteHex = (hex: string): OklabColor => {
+  const lab = hexToOklab(hex);
+  if (lab === null) {
+    throw new TypeError(`Expected a hex color such as "#7a9c8b"; received ${JSON.stringify(hex)}.`);
+  }
+  return lab;
+};
 
-const rotateChroma = (anchor: OklabPoint, angle: number): Pick<OklabPoint, "a" | "b"> => {
+const rotateChroma = (anchor: OklabColor, angle: number): Pick<OklabColor, "a" | "b"> => {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
   return { a: anchor.a * cos - anchor.b * sin, b: anchor.a * sin + anchor.b * cos };
@@ -178,7 +180,7 @@ const rotateChroma = (anchor: OklabPoint, angle: number): Pick<OklabPoint, "a" |
  * anchor has, and distance swings chroma. Near-neutral anchors bloom into a
  * wheel of tints, and the far hemisphere glides toward the anchor's
  * complement so the antipode is a calm landmark rather than noise. Results
- * are gamut-clamped to sRGB.
+ * are gamut-clamped to sRGB. Throws when `anchorHex` is not a hex color.
  */
 export const brioletteNeighborColor = (
   direction: BrioletteVec3,
@@ -187,7 +189,7 @@ export const brioletteNeighborColor = (
   delta: number,
   chromaSign: number,
 ): string => {
-  const anchor = hexToOklab(anchorHex) ?? FALLBACK_ANCHOR;
+  const anchor = parseBrioletteHex(anchorHex);
   const reference = Math.abs(anchorDirection.y) > 0.98 ? POLE_FALLBACK : POLE;
   const hueAxis = normalizeBrioletteVec(cross(reference, anchorDirection));
   const lightnessAxis = normalizeBrioletteVec(cross(anchorDirection, hueAxis));
@@ -311,20 +313,15 @@ export const buildBriolettePalette = (
 
 /**
  * Perceptual OKLab distance between two hex colors, for callers that want
- * to measure neighborhood spread.
+ * to measure neighborhood spread. Throws when either is not a hex color.
  */
-export const brioletteColorDistance = (a: string, b: string): number => {
-  const left = hexToOklab(a);
-  const right = hexToOklab(b);
-  if (!left || !right) {
-    return 0;
-  }
-  return oklabDistance(left, right);
-};
+export const brioletteColorDistance = (a: string, b: string): number =>
+  oklabDistance(parseBrioletteHex(a), parseBrioletteHex(b));
 
 /**
  * The facet whose at-rest universe color is perceptually closest to `hex` —
- * where an externally supplied value anchors its neighborhood.
+ * where an externally supplied value anchors its neighborhood. Throws when
+ * `hex` is not a hex color.
  */
 export const nearestBrioletteFace = (
   faces: readonly BrioletteFace[],

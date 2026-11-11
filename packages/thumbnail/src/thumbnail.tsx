@@ -1,15 +1,9 @@
 "use client";
 
-import { joinClassNames } from "@patternmode/system";
-import type { CssSize } from "@patternmode/system";
+import { joinClassNames, toCssSize } from "@patternmode/system";
 import type { CSSProperties } from "react";
 
 import type { ThumbnailProps } from "./thumbnail-types";
-
-/** Numbers are pixels; strings pass through as written. */
-const isPixelCount = (value: CssSize): value is number => typeof value === "number";
-
-const toCssSize = (value: CssSize): string => (isPixelCount(value) ? `${value}px` : value);
 
 /**
  * A framed image.

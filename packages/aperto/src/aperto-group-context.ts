@@ -6,14 +6,10 @@ export interface ApertoGroupContextValue {
   classNames?: ApertoClassNames;
   index: number;
   media: ApertoMediaItem[];
-  open: boolean;
   openAtIndex: (index: number) => void;
   registerThumbnail: (index: number, node: HTMLButtonElement | null) => void;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-  setIndex: (index: number) => void;
-  sharedLayoutId: string;
-  sharedLayoutIdForIndex: (index: number) => string;
 }
 
 export const ApertoGroupContext = createContext<ApertoGroupContextValue | null>(null);

@@ -8,10 +8,11 @@ import type {
   PointerEvent,
   RefObject,
 } from "react";
+import { clamp, hslToHex, joinClassNames, wrapHue } from "@patternmode/system";
+import type { HslColor } from "@patternmode/system";
 import { useId, useRef } from "react";
 
 import {
-  clampValue,
   getHaloGeometry,
   getHaloHueGradient,
   getHaloHueHandlePosition,
@@ -19,12 +20,10 @@ import {
   HALO_ARC_STROKE_WIDTH,
   HALO_PAD_RADIUS,
   HALO_PAD_SIZE,
-  hslToHex,
-  normalizeHue,
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./halo-utils";
-import type { HaloColor, HaloGeometry, HaloHueGradient, HaloPlacement } from "./halo-utils";
+import type { HaloGeometry, HaloHueGradient, HaloPlacement } from "./halo-utils";
 
 type HaloPickerRootProps = Omit<ComponentPropsWithoutRef<"fieldset">, "onChange" | "value">;
 type HaloPadPointerEvent = PointerEvent<HTMLDivElement>;
@@ -45,7 +44,7 @@ export interface HaloPickerProps extends HaloPickerRootProps {
    */
   label?: string;
   /** Called whenever the pad or hue arc changes the HSL value. */
-  onChange: (value: HaloColor) => void;
+  onChange: (value: HslColor) => void;
   /**
    * Which side of the pad the hue arc sits on. The value readout follows
    * the arc: it renders above the wheel for `"top"`, below otherwise.
@@ -60,7 +59,7 @@ export interface HaloPickerProps extends HaloPickerRootProps {
    */
   showValue?: boolean;
   /** Controlled HSL color value. */
-  value: HaloColor;
+  value: HslColor;
 }
 
 /*
@@ -94,10 +93,7 @@ const releasePointerCapture = (event: PointerEvent<HTMLElement | SVGSVGElement>)
 };
 
 /** Arrow-key adjustment for the pad: S left/right, L up/down, Shift for 10×. */
-const padColorForKey = (
-  event: KeyboardEvent<HTMLDivElement>,
-  value: HaloColor,
-): HaloColor | null => {
+const padColorForKey = (event: KeyboardEvent<HTMLDivElement>, value: HslColor): HslColor | null => {
   const step = event.shiftKey ? PAD_KEY_STEP_LARGE : PAD_KEY_STEP;
   let { l, s } = value;
   switch (event.key) {
@@ -123,8 +119,8 @@ const padColorForKey = (
   }
   return {
     ...value,
-    l: clampValue(l, PAD_LIGHTNESS_MIN, PAD_LIGHTNESS_MAX),
-    s: clampValue(s, 0, 100),
+    l: clamp(l, PAD_LIGHTNESS_MIN, PAD_LIGHTNESS_MAX),
+    s: clamp(s, 0, 100),
   };
 };
 
@@ -406,7 +402,7 @@ export const HaloPicker = ({
   };
 
   const onHueInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...value, h: normalizeHue(Number(event.currentTarget.value)) });
+    onChange({ ...value, h: wrapHue(Number(event.currentTarget.value)) });
   };
 
   const onHuePointerUp = (event: HaloHuePointerEvent) => {
@@ -421,7 +417,7 @@ export const HaloPicker = ({
   return (
     <fieldset
       {...props}
-      className={["patternmode-halo-picker", className].filter(Boolean).join(" ")}
+      className={joinClassNames("patternmode-halo-picker", className)}
       data-placement={placement}
       data-slot="halo-picker"
       style={rootStyle}

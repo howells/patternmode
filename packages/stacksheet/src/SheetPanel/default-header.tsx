@@ -7,7 +7,7 @@ import { SheetHeader } from "../SheetParts/sheet-header";
 // row of their own. The title lives in the sheet's own content, which starts
 // under the bar, so neither button ever sits on top of it.
 export const DefaultHeader = () => (
-  <SheetHeader className="px-2 pt-2">
+  <SheetHeader className="patternmode-stacksheet__default-header">
     <SheetBack />
     <SheetClose />
   </SheetHeader>

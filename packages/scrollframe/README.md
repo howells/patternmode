@@ -93,7 +93,12 @@ painted `Fade` parts are unnecessary.
 
 ## Styling
 
-Import `@patternmode/scrollframe/styles.css` once. Theme hooks:
+Import `@patternmode/scrollframe/styles.css` once.
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.
+
+Theme hooks:
 
 - `--card`, `--border`, `--ring` — control chrome and focus ring fallbacks
 - `--patternmode-scrollframe-fade-color`, `--patternmode-scrollframe-fade-size`

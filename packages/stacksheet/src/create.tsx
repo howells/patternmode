@@ -14,9 +14,10 @@ import type {
   StacksheetInstance,
   StacksheetProviderProps,
   StacksheetSnapshot,
+  StacksheetStoreState,
 } from "./types";
 
-type StoreState<TMap extends object> = StacksheetSnapshot<TMap> & SheetActions<TMap>;
+type StoreState<TMap extends object> = StacksheetStoreState<TMap> & SheetActions<TMap>;
 /**
  * Create an isolated sheet stack instance with typed store, hooks, and provider.
  *
@@ -51,7 +52,7 @@ export const createStacksheet = <TMap extends object>(
   config?: StacksheetConfig,
 ): StacksheetInstance<TMap> => {
   const resolved = resolveConfig(config);
-  const { store, componentMap } = createSheetStore<TMap>(resolved);
+  const { store, ...dismissal } = createSheetStore<TMap>(resolved);
   // Like the store, one per instance: the Panels' shared depth and overlay motion.
   const stackMotion = createStackMotion();
   // Context for the store — allows multiple instances
@@ -69,23 +70,14 @@ export const createStacksheet = <TMap extends object>(
   // ── Provider ────────────────────────────────
   // Built once per instance and frozen, so every render hands consumers the same object.
   const providerValue = Object.freeze({ config: resolved, store });
-  const StacksheetProvider = ({
-    sheets,
-    children,
-    classNames,
-    layout,
-    renderHeader,
-  }: StacksheetProviderProps<TMap>) => (
+  const StacksheetProvider = ({ children, ...rendererProps }: StacksheetProviderProps<TMap>) => (
     <StoreContext.Provider value={providerValue}>
       {children}
       <SheetPortal>
         <SheetRenderer<TMap>
-          classNames={classNames}
-          componentMap={componentMap}
+          {...rendererProps}
           config={resolved}
-          layout={layout}
-          renderHeader={renderHeader}
-          sheets={sheets}
+          dismissal={dismissal}
           stackMotion={stackMotion}
           store={store}
         />
@@ -114,7 +106,7 @@ export const createStacksheet = <TMap extends object>(
     return useStore(
       s,
       useShallow((state) => ({
-        isOpen: state.isOpen,
+        isOpen: state.stack.length > 0,
         stack: state.stack,
       })),
     );

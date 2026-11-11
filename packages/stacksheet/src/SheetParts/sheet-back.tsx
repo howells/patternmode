@@ -14,9 +14,7 @@ export const SheetBack = ({
   if (!isNested) {
     return null;
   }
-  const defaults = render
-    ? undefined
-    : "flex min-h-11 min-w-11 shrink-0 cursor-pointer touch-manipulation select-none items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-60 transition-opacity duration-150 hover:opacity-100 active:opacity-100 [-webkit-touch-callout:none]";
+  const defaults = render ? undefined : "patternmode-stacksheet__back";
   return (
     <SheetPartElement
       defaultTagName="button"

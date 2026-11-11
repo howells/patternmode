@@ -7,7 +7,7 @@ import type { SheetPartProps } from "./sheet-part-types";
 export const SheetTitle = ({ render, className, style, children }: SheetPartProps) => {
   const { panelId, registerTitle } = useSheetPanel();
   useEffect(() => registerTitle(), [registerTitle]);
-  const defaults = render ? undefined : "font-semibold text-sm";
+  const defaults = render ? undefined : "patternmode-stacksheet__title";
   return (
     <SheetPartElement
       defaultTagName="h2"

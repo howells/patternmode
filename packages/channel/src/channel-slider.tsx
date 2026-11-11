@@ -1,8 +1,8 @@
 "use client";
 
 import { Slider } from "@base-ui/react/slider";
-import { SWATCH_SIZE_VALUES } from "@patternmode/swatch";
-import type { SwatchSize } from "@patternmode/swatch";
+import { clamp, joinClassNames, PATTERNMODE_EXTENDED_SIZE_VALUES } from "@patternmode/system";
+import type { PatternmodeExtendedSize } from "@patternmode/system";
 import type { CSSProperties } from "react";
 
 type ChannelValue = number | readonly [number, number];
@@ -16,8 +16,8 @@ export interface ChannelSliderProps<Value extends ChannelValue = ChannelValue> e
   label: string;
   /** CSS background, such as a colour gradient. */
   background: string;
-  /** Channel height from Swatch's exact size scale. Default: base (32px). */
-  size?: SwatchSize;
+  /** Channel height on the extended Patternmode size scale Swatch also uses. Default: base (32px). */
+  size?: PatternmodeExtendedSize;
   labelStart?: string;
   labelEnd?: string;
   /** Names for the two range handles when start/end are not meaningful. */
@@ -46,13 +46,13 @@ export const ChannelSlider = <Value extends ChannelValue = number>({
 }: ChannelSliderProps<Value>) => {
   const variables: CSSProperties & Record<`--${string}`, string> = {
     "--patternmode-channel-background": background,
-    "--patternmode-channel-size": SWATCH_SIZE_VALUES[size],
+    "--patternmode-channel-size": PATTERNMODE_EXTENDED_SIZE_VALUES[size],
     ...style,
   };
   const min = props.min ?? 0;
   const max = props.max ?? 100;
   const share = (value: number) =>
-    max <= min ? "0" : String(Math.min(1, Math.max(0, (value - min) / (max - min))));
+    max <= min ? "0" : String(clamp((value - min) / (max - min), 0, 1));
   const rangeTrack = (
     values: readonly number[],
   ): CSSProperties & Record<`--${string}`, string> => ({
@@ -65,7 +65,7 @@ export const ChannelSlider = <Value extends ChannelValue = number>({
     <Slider.Root
       {...props}
       aria-label={label}
-      className={["pm-channel", className].filter(Boolean).join(" ")}
+      className={joinClassNames("pm-channel", className)}
       data-size={size}
       data-slot="channel-slider"
       style={variables}

@@ -21,13 +21,6 @@ describe("renderer helpers", () => {
     });
   });
 
-  it("ignores the deprecated header class name", () => {
-    expect(resolveClassNames({ header: "legacy" })).toStrictEqual({
-      backdrop: "",
-      panel: "",
-    });
-  });
-
   it("builds ARIA props only for the top panel", () => {
     expect(
       buildAriaProps({

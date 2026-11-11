@@ -43,7 +43,6 @@ vi.mock(import("motion/react"), async (importOriginal) => {
       g: MotionG,
       path: MotionPath,
     },
-    useReducedMotion: () => false,
   };
 });
 

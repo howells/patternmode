@@ -1,9 +1,5 @@
-import { joinClassNames, sanitizeWeight } from "@patternmode/system";
+import { deriveDistribution, joinClassNames } from "@patternmode/system";
 import type { HTMLAttributes } from "react";
-import {
-  getDerivedDistributionPercentage,
-  getDistributionTotal,
-} from "../Distribution/distribution-math";
 import type { DistributionSegment } from "../Distribution/distribution-math";
 import {
   DistributionSegmentLegend,
@@ -44,25 +40,38 @@ export interface DistributionDisplayProps extends Omit<
 interface DistributionSummaryLegendProps {
   assignedLabel: string;
   emptyLabel: string;
+  emptyPercentage: number;
   emptyValue: number;
-  total: number;
 }
 
-const getDistributionDisplayTotal = (segments: DistributionSegment[], emptyValue: number): number =>
-  getDistributionTotal(segments) + sanitizeWeight(emptyValue);
+/**
+ * Segment shares and the unassigned remainder's share, from one derivation
+ * over the segment weights followed by `emptyValue`, so the remainder counts
+ * toward the total.
+ */
+const getDistributionDisplayShares = (segments: DistributionSegment[], emptyValue: number) => {
+  const { percentages } = deriveDistribution([
+    ...segments.map((segment) => segment.value),
+    emptyValue,
+  ]);
+  return {
+    emptyPercentage: percentages[segments.length] ?? 0,
+    percentages: percentages.slice(0, segments.length),
+  };
+};
 
 const getDistributionDisplayAccessibleLabel = (
   segments: DistributionSegment[],
+  percentages: number[],
   emptyValue: number,
   emptyLabel: string,
-  total: number,
+  emptyPercentage: number,
 ): string => {
   const segmentLabels = segments.map(
-    (segment) =>
-      `${segment.label ?? segment.id} ${getDerivedDistributionPercentage(segment.value, total)}%`,
+    (segment, index) => `${segment.label ?? segment.id} ${Math.round(percentages[index] ?? 0)}%`,
   );
   if (emptyValue > 0) {
-    segmentLabels.push(`${emptyLabel} ${getDerivedDistributionPercentage(emptyValue, total)}%`);
+    segmentLabels.push(`${emptyLabel} ${Math.round(emptyPercentage)}%`);
   }
 
   return segmentLabels.join(", ");
@@ -71,10 +80,10 @@ const getDistributionDisplayAccessibleLabel = (
 const DistributionSummaryLegend = ({
   assignedLabel,
   emptyLabel,
+  emptyPercentage: unroundedEmptyPercentage,
   emptyValue,
-  total,
 }: DistributionSummaryLegendProps) => {
-  const emptyPercentage = getDerivedDistributionPercentage(emptyValue, total);
+  const emptyPercentage = Math.round(unroundedEmptyPercentage);
 
   return (
     <div className="patternmode-distribution-bar__legend">
@@ -123,36 +132,45 @@ export const DistributionDisplay = ({
   selectedSegmentId,
   ...props
 }: DistributionDisplayProps) => {
-  const total = getDistributionDisplayTotal(segments, emptyValue);
+  const { emptyPercentage, percentages } = getDistributionDisplayShares(segments, emptyValue);
   const interactive = Boolean(onSegmentSelect);
   const accessibleLabel =
-    ariaLabel ?? getDistributionDisplayAccessibleLabel(segments, emptyValue, emptyLabel, total);
+    ariaLabel ??
+    getDistributionDisplayAccessibleLabel(
+      segments,
+      percentages,
+      emptyValue,
+      emptyLabel,
+      emptyPercentage,
+    );
 
   const content = (
     <>
       <div className="patternmode-distribution-bar__track">
         <DistributionSegments
+          emptyPercentage={emptyPercentage}
           emptyValue={emptyValue}
           onSegmentSelect={onSegmentSelect}
+          percentages={percentages}
           segments={segments}
           selectedSegmentId={selectedSegmentId}
-          total={total}
         />
       </div>
       {legend === "segments" ? (
         <DistributionSegmentLegend
           emptyLabel={emptyLabel}
+          emptyPercentage={emptyPercentage}
           emptyValue={emptyValue}
+          percentages={percentages}
           segments={segments}
-          total={total}
         />
       ) : null}
       {legend === "summary" ? (
         <DistributionSummaryLegend
           assignedLabel={assignedLabel}
           emptyLabel={emptyLabel}
+          emptyPercentage={emptyPercentage}
           emptyValue={emptyValue}
-          total={total}
         />
       ) : null}
     </>

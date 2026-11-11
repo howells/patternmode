@@ -85,6 +85,50 @@ describe(Parquet, () => {
     expect(container.querySelector(".patternmode-parquet__tile")).not.toHaveAttribute("data-light");
   });
 
+  it("renders unparseable colors as not light, and passes that to renderTile", () => {
+    const seen: boolean[] = [];
+    const { container } = render(
+      <Parquet
+        colors={[
+          { color: "var(--paper)", value: 3 },
+          { color: "color-mix(in oklab, white 90%, black)", value: 2 },
+          { color: "gold", value: 1 },
+        ]}
+        disableMotion
+        renderTile={(_tile, meta) => {
+          seen.push(meta.isLight);
+          return null;
+        }}
+      />,
+    );
+    for (const tile of container.querySelectorAll(".patternmode-parquet__tile")) {
+      expect(tile).not.toHaveAttribute("data-light");
+    }
+    expect(seen).toStrictEqual([false, false, false]);
+  });
+
+  it("lets a tile's isLight decide its tone", () => {
+    const { container } = render(
+      <Parquet
+        colors={[
+          { color: "var(--paper)", isLight: true, value: 2 },
+          { color: "#ffffff", isLight: false, value: 1 },
+        ]}
+        disableMotion
+      />,
+    );
+    const [paper, white] = container.querySelectorAll(".patternmode-parquet__tile");
+    expect(paper).toHaveAttribute("data-light");
+    expect(white).not.toHaveAttribute("data-light");
+  });
+
+  it("reads alpha hex colors by their channels", () => {
+    const { container } = render(
+      <Parquet colors={[{ color: "#ffffff80", value: 1 }]} disableMotion />,
+    );
+    expect(container.querySelector(".patternmode-parquet__tile")).toHaveAttribute("data-light");
+  });
+
   it("renders a custom tile via renderTile", () => {
     render(
       <Parquet

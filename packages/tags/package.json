@@ -78,5 +78,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "registry": {
+    "type": "component",
+    "css": "src/styles.css"
   }
 }

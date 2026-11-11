@@ -19,7 +19,8 @@ import "@patternmode/thumbnail/styles.css";
 <Thumbnail src={thumbHref} alt="" size={32} />;
 ```
 
-Requires Tailwind CSS v4.
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind.
 
 ## What it already handles
 

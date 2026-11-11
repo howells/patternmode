@@ -128,8 +128,12 @@ const walk = (dir, filePattern) => {
 };
 
 const packagesDir = path.join(root, "packages");
+// `site-ui` is the docs site's private UI kit: it is never published or
+// vendored, and its stylesheet is written against the docs site's own tokens
+// (`--ink`, `--surface`), not the theme a consumer installs.
+const DOCS_SITE_PACKAGES = new Set(["site-ui"]);
 const packageNames = readdirSync(packagesDir, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
+  .filter((entry) => entry.isDirectory() && !DOCS_SITE_PACKAGES.has(entry.name))
   .map((entry) => entry.name);
 
 /** @type {Map<string, string[]>} CSS files to scan, grouped by package. */

@@ -1,9 +1,6 @@
 export {
-  type DistributionBarSegment,
-  type DistributionBarSegmentUpdate,
   type DistributionSegment,
   type DistributionSegmentUpdate,
-  getDerivedDistributionPercentage,
   getDistributionBoundaryPercent,
   getDistributionTotal,
   moveDistributionBoundary,

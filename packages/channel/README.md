@@ -19,15 +19,19 @@ import "@patternmode/channel/styles.css";
 
 Use a number for one thumb or a readonly two-number tuple for a range. `defaultValue` supports uncontrolled usage. Values use Base UI's `min`, `max`, `step`, `largeStep` and `minStepsBetweenValues`. The default bounds are 0–100. Range thumbs stop at one another by default; `thumbCollisionBehavior` can change this.
 
-`size` is Swatch's exported `SwatchSize`, backed directly by `SWATCH_SIZE_VALUES`: `2xs`, `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`, `7xl`. The channel height matches the Swatch dimension; width fills its container. The default is `base` (32px). `xl` preserves Materia's 48px track, 40px thumb and 4px inset. Small visual sizes retain enlarged thumb hit regions; give adjacent controls enough space for touch.
+`size` is a token on the extended Patternmode size scale from `@patternmode/system` (`PatternmodeExtendedSize`, backed by `PATTERNMODE_EXTENDED_SIZE_VALUES`), the same scale Swatch uses: `2xs`, `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`, `7xl`. The channel height matches the Swatch dimension; width fills its container. The default is `base` (32px). `xl` preserves Materia's 48px track, 40px thumb and 4px inset. Small visual sizes retain enlarged thumb hit regions; give adjacent controls enough space for touch.
 
 `label` names the slider for assistive technology. Ranges append “start” and “end”; `thumbLabels` replaces those names. `getValueText(value, index)` describes values in domain language. `labelStart` and `labelEnd` are optional visible captions. `getThumbColor(value, index)` lets the app supply contrast against its own ramp; there is no assumption that the ramp runs light to dark.
 
-Base UI handles focus, keyboard navigation, pointer input, disabled state and form integration (`name`, `form`). Press motion respects reduced-motion preferences. Styling lives in a CSS layer so app utilities can override it.
+Base UI handles focus, keyboard navigation, pointer input, disabled state and form integration (`name`, `form`). Press motion respects reduced-motion preferences.
+
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.
 
 ## Reference implementation
 
-Materia’s Colour Studio is the canonical source for style and behaviour: `apps/web/features/color/components/color-range-slider.tsx` and `packages/ui/src/components/slider/slider-root.tsx` in the Materia repository. Samplize is a consumer of the same pattern. Preserve the glass treatment, two-speed press and release, range aperture and endpoint captions; Swatch supplies the size scale.
+Materia’s Colour Studio is the canonical source for style and behaviour: `apps/web/features/color/components/color-range-slider.tsx` and `packages/ui/src/components/slider/slider-root.tsx` in the Materia repository. Samplize is a consumer of the same pattern. Preserve the glass treatment, two-speed press and release, range aperture and endpoint captions; `@patternmode/system` supplies the size scale shared with Swatch.
 
 ## Migrating Colour Studio
 

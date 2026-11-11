@@ -173,6 +173,9 @@ export const buildBrioletteFaces = (frequency = 2): BrioletteFace[] => {
   return faces;
 };
 
+/** Ease-out cubic on `t` in `0..1`: fast start, gentle settle. */
+export const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
+
 export const BRIOLETTE_IDENTITY_QUAT: BrioletteQuat = { w: 1, x: 0, y: 0, z: 0 };
 
 export const quatFromAxisAngle = (axis: BrioletteVec3, angle: number): BrioletteQuat => {

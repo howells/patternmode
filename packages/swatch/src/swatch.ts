@@ -1,6 +1,4 @@
 export {
-  type DistributionBarSegment,
-  type DistributionBarSegmentUpdate,
   type DistributionSegment,
   type DistributionSegmentUpdate,
   getDistributionBoundaryPercent,
@@ -20,8 +18,6 @@ export { Swatch } from "./Swatch/swatch-root";
 export {
   getSwatchSizeVariableStyle,
   SWATCH_VARIANTS,
-  SWATCH_SIZE_VALUES,
-  SWATCH_SIZES,
   SWATCH_TEXTURES,
   type SwatchRenderProps,
   type SwatchColorStop,
@@ -29,6 +25,5 @@ export {
   type SwatchProps,
   type SwatchVariant,
   type SwatchSharedProps,
-  type SwatchSize,
   type SwatchTexture,
 } from "./Swatch/swatch-types";

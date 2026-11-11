@@ -2,8 +2,7 @@ import { getObjectSizingStyle, isLightColor, joinClassNames } from "@patternmode
 import { isValidElement } from "react";
 import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from "react";
 
-import { useRender } from "../render";
-import type { RenderProp } from "../render";
+import { useRender } from "@base-ui/react/use-render";
 import { getSwatchAtmosphereBackground } from "./swatch-atmosphere";
 import { getSwatchColorsBackground } from "./swatch-colors";
 import { getSwatchSizeVariableStyle } from "./swatch-types";
@@ -105,7 +104,11 @@ const getSwatchTone = ({
   const hasBackground = background !== undefined && background !== "";
   const hasColorsBackground = colorsBackground !== undefined && colorsBackground !== "";
 
-  if (hasColor && !hasBackground && !hasColorsBackground && isLightColor(color)) {
+  /* Only a plain `color` is analysed. A color `isLightColor` cannot parse
+     (`var()`, `color-mix()`, most named colors) is an unknown tone, and an
+     unknown tone renders dark, like every `background` and `colors` fill:
+     pass `isLight` to say otherwise. */
+  if (hasColor && !hasBackground && !hasColorsBackground && isLightColor(color) === true) {
     return "light";
   }
 
@@ -192,7 +195,7 @@ interface SwatchElementProps {
   content: ReactNode;
   dataProps: ReturnType<typeof getSwatchDataProps>;
   props: HTMLAttributes<HTMLElement>;
-  render: RenderProp | undefined;
+  render: useRender.RenderProp | undefined;
   rootStyle: SwatchRootStyle;
 }
 
@@ -221,7 +224,7 @@ const SwatchElement = ({
     render,
   });
 
-const warnOnRenderChildren = (render: RenderProp) => {
+const warnOnRenderChildren = (render: useRender.RenderProp) => {
   if (!isValidElement<{ children?: ReactNode }>(render)) {
     return;
   }

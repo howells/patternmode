@@ -4,6 +4,7 @@ import { Popover } from "@base-ui/react/popover";
 import { joinClassNames } from "@patternmode/system";
 import { useId, useLayoutEffect, useRef, useState } from "react";
 
+import { TagCreationError } from "./tag-creation-error";
 import { TagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
 import {
@@ -13,6 +14,7 @@ import {
   defaultFilterOption,
   normalizeComparable,
   normalizeTag,
+  toItemOption,
 } from "./tag-selector-utils";
 import type { TagItem, TagSelectorRootProps } from "./types";
 
@@ -38,12 +40,7 @@ const getCommandOptions = ({
   listboxId: string;
   query: string;
 }): CommandOption[] => {
-  const itemOptions: CommandOption[] = filteredOptions.map((item) => ({
-    id: `${listboxId}-option-${item.id}`,
-    item,
-    label: item.label,
-    type: "item",
-  }));
+  const itemOptions = filteredOptions.map((item) => toItemOption(item, listboxId));
 
   if (canCreate) {
     itemOptions.push({
@@ -87,6 +84,62 @@ const resolveDraftItem = async ({
   return null;
 };
 
+/**
+ * Resolves each distinct draft to an existing or created Tag Item. A draft
+ * whose creation throws or rejects becomes a `TagCreationError` instead of
+ * failing the others.
+ */
+const createDraftItems = async ({
+  drafts,
+  onCreateItem,
+  options,
+}: {
+  drafts: readonly string[];
+  onCreateItem: TagSelectorRootProps["onCreateItem"];
+  options: readonly TagItem[];
+}) => {
+  const results = await Promise.all(
+    dedupeDrafts(drafts).map(async (draft) => {
+      try {
+        return await resolveDraftItem({ draft, onCreateItem, options });
+      } catch (error) {
+        return new TagCreationError(normalizeTag(draft), { cause: error });
+      }
+    }),
+  );
+
+  return {
+    failures: results.filter((result) => result instanceof TagCreationError),
+    items: results.flatMap((result) =>
+      result === null || result instanceof TagCreationError ? [] : [result],
+    ),
+  };
+};
+
+/**
+ * Hands each failed creation to the consumer. Without a handler the failure is
+ * rethrown, so a rejecting `onCreateItem` is never silently dropped.
+ */
+const reportCreateFailures = (
+  failures: readonly TagCreationError[],
+  onCreateItemError: TagSelectorRootProps["onCreateItemError"],
+) => {
+  if (onCreateItemError !== undefined) {
+    for (const failure of failures) {
+      onCreateItemError(failure);
+    }
+    return;
+  }
+
+  const [failure] = failures;
+  if (failures.length === 1 && failure !== undefined) {
+    throw failure;
+  }
+  if (failures.length > 1) {
+    throw new AggregateError(failures, "TagSelector could not create some tags.");
+  }
+};
+
 /** A ref that follows the committed value, current before any awaited continuation reads it. */
 const useLatestRef = <TValue,>(value: TValue) => {
   const ref = useRef(value);
@@ -106,6 +159,7 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
     name,
     onChange,
     onCreateItem,
+    onCreateItemError,
     onSearchChange,
     options,
     placeholder = "Select tags",
@@ -150,17 +204,13 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
       return;
     }
 
-    const uniqueDrafts = dedupeDrafts(drafts);
-    const resolvedDrafts = await Promise.all(
-      uniqueDrafts.map(async (draft) => await resolveDraftItem({ draft, onCreateItem, options })),
-    );
-
+    const { failures, items } = await createDraftItems({ drafts, onCreateItem, options });
     const nextValue = [...latestValueRef.current];
     const nextIds = new Set(nextValue.map((item) => item.id));
     let changed = false;
 
-    for (const item of resolvedDrafts) {
-      if (item === null || nextIds.has(item.id)) {
+    for (const item of items) {
+      if (nextIds.has(item.id)) {
         continue;
       }
       nextValue.push(item);
@@ -172,6 +222,8 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
       onChange(nextValue);
       updateQuery("");
     }
+
+    reportCreateFailures(failures, onCreateItemError);
   };
 
   const resolveDraft = async (draft: string): Promise<void> => {
@@ -203,7 +255,6 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
     commandOptions,
     disabled,
     emptyMessage,
-    filteredOptions,
     inputId,
     listboxId,
     name,
@@ -249,6 +300,7 @@ export const TagSelectorRoot = (props: TagSelectorRootProps) => {
     name: _name,
     onChange: _onChange,
     onCreateItem: _onCreateItem,
+    onCreateItemError: _onCreateItemError,
     onSearchChange: _onSearchChange,
     options: _options,
     placeholder: _placeholder,

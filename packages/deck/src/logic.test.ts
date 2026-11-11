@@ -5,7 +5,6 @@ import {
   getDeckRenderKey,
   getNextDeckIndex,
   getVisibleDeckItems,
-  getVisualDepth,
   resolveCardRotation,
 } from "./logic";
 import type { DeckItem } from "./types";
@@ -126,16 +125,5 @@ describe(resolveCardRotation, () => {
 
     expect(leaningLeft).toBeGreaterThan(60);
     expect(leaningLeft).toBeLessThan(140);
-  });
-});
-
-describe(getVisualDepth, () => {
-  it("maps the active card to zero depth and preserves later cards", () => {
-    const visible = getVisibleDeckItems(items, 1, 3, "cycle");
-    expect(visible.map((item) => getVisualDepth(item, visible))).toStrictEqual([0, 1, 2]);
-  });
-
-  it("returns -1 when a card is not in the visible stack", () => {
-    expect(getVisualDepth({ element: "X", id: "x" }, items)).toBe(-1);
   });
 });

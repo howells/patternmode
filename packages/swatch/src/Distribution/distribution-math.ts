@@ -1,4 +1,4 @@
-import { sanitizeWeight } from "@patternmode/system";
+import { clamp, deriveDistribution, sanitizeWeight } from "@patternmode/system";
 import type { WeightedColorSegment } from "@patternmode/system";
 
 /**
@@ -20,51 +20,26 @@ export type DistributionSegmentUpdate = Partial<Omit<DistributionSegment, "value
   value?: never;
 };
 
-/**
- * The former name for {@link DistributionSegment}, kept so the rename is not a
- * breaking change. Identical shape. Prefer `DistributionSegment` — this name
- * says the segment belongs to the editor, which is exactly the confusion the
- * rename removes.
- *
- * Not tagged `@deprecated`: nothing is wrong with code that uses it, and the tag
- * would fire the repo's `no-deprecated` rule on the barrels that must re-export
- * it for the alias to reach consumers at all.
- */
-export type DistributionBarSegment = DistributionSegment;
-
-/**
- * The former name for {@link DistributionSegmentUpdate}, kept so the rename is
- * not a breaking change. Identical shape. Prefer `DistributionSegmentUpdate`.
- */
-export type DistributionBarSegmentUpdate = DistributionSegmentUpdate;
-
-/** A segment's share of `total`, rounded to whole percent. */
-export const getDerivedDistributionPercentage = (value: number, total: number): number =>
-  total > 0 ? Math.round((sanitizeWeight(value) / total) * 100) : 0;
-
-const clamp = (value: number, min: number, max: number): number =>
-  Math.min(Math.max(value, min), max);
-
 const roundValue = (value: number): number => Number(value.toFixed(1));
+
+/** Derives the shared distribution (sanitized weights, percentages, edges) for segments. */
+export const deriveSegmentDistribution = (segments: DistributionSegment[]) =>
+  deriveDistribution(segments.map((segment) => segment.value));
 
 /** Sums sanitized segment weights, treating invalid or negative values as 0. */
 export const getDistributionTotal = (segments: DistributionSegment[]): number =>
-  segments.reduce((sum, segment) => sum + sanitizeWeight(segment.value), 0);
+  deriveSegmentDistribution(segments).total;
 
-/** Returns the percentage position of the boundary after `boundaryIndex`. */
+/**
+ * Returns the percentage position of the boundary after `boundaryIndex`,
+ * rounded to one decimal. An index past the last segment reads as the end.
+ */
 export const getDistributionBoundaryPercent = (
   segments: DistributionSegment[],
   boundaryIndex: number,
 ): number => {
-  const total = getDistributionTotal(segments);
-  if (total <= 0) {
-    return 0;
-  }
-
-  const boundaryValue = segments
-    .slice(0, boundaryIndex + 1)
-    .reduce((sum, segment) => sum + sanitizeWeight(segment.value), 0);
-  return roundValue((boundaryValue / total) * 100);
+  const { edges } = deriveSegmentDistribution(segments);
+  return roundValue(edges[Math.min(boundaryIndex + 1, segments.length)] ?? 0);
 };
 
 /**

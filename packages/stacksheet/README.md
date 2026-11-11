@@ -174,13 +174,9 @@ Panels pad their edges with `env(safe-area-inset-*)`, so add `viewport-fit=cover
 
 ## Styling and Tailwind
 
-`styles.css` is precompiled. Its utilities ship inside `@layer components`, so in a Tailwind v4 app your own utilities (`hidden sm:table-cell`, for example) always win over the package's. Importing it is safe whether or not your app uses Tailwind.
+Import `styles.css` once. Each styled element carries one class, named after its part (`.patternmode-stacksheet__back`, `.patternmode-stacksheet__header`, `.patternmode-stacksheet__footer`, …), alongside the `data-stacksheet-*` attributes; those classes and attributes are the styling contract. The rules ship inside `@layer components`, so in a Tailwind v4 app your own utilities, including anything you pass as `className` or `classNames`, always win over the package's. Values read your theme's variables (`--spacing`, `--radius-md`, `--text-sm`) and fall back to Tailwind's defaults, so the sheet works whether or not your app uses Tailwind.
 
-If your app uses Tailwind v4 and you would rather generate the package's classes with your own theme, skip `styles.css` and point Tailwind at the package instead:
-
-```css
-@source "../node_modules/@patternmode/stacksheet/dist";
-```
+A part rendered through `render` drops its default class; Sheet.Header, Sheet.Body and Sheet.Footer keep a minimal structural class (`.patternmode-stacksheet__custom-header`, `__custom-body`, `__custom-footer`) so they still sit in the panel's flex column.
 
 ## Accessibility
 

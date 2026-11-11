@@ -1,10 +1,9 @@
+import { easings } from "@howells/motion";
 import type { CSSProperties } from "react";
 import { getSnapOffset } from "./snap-points";
 import type { Side, StacksheetClassNames } from "./types";
 
-// `header` is deprecated (the header bar is gone) and intentionally dropped
-// from the resolved shape — nothing applies it anymore.
-export type ResolvedClassNames = Required<Omit<StacksheetClassNames, "header">>;
+export type ResolvedClassNames = Required<StacksheetClassNames>;
 const EMPTY_CLASSNAMES: ResolvedClassNames = {
   backdrop: "",
   panel: "",
@@ -70,7 +69,7 @@ export const buildAriaProps = ({
 };
 export const VISUAL_TWEEN = {
   duration: 0.25,
-  ease: "easeOut" as const,
+  ease: easings.snappy,
   type: "tween" as const,
 };
 const SHADOW_SM = "0px 1px 3px 0px rgba(0,0,0,0.06), 0px 6px 12px 0px rgba(0,0,0,0.06)";

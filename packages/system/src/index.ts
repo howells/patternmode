@@ -1,6 +1,5 @@
 export { fitOklabToSrgbGamut } from "./color-gamut";
 export {
-  hexLightness,
   hexToHsl,
   hexToOklab,
   hexToRgb,
@@ -20,9 +19,12 @@ export {
 export {
   type DerivedDistribution,
   deriveDistribution,
+  getColorLightness,
   isLightColor,
   sanitizeWeight,
 } from "./weighted-distribution";
+
+export { clamp, wrapHue } from "./math";
 
 export const PATTERNMODE_SIZES = ["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"] as const;
 
@@ -54,18 +56,46 @@ export const PATTERNMODE_SIZE_PIXELS = {
   xs: 20,
 } as const satisfies Record<PatternmodeSize, number>;
 
+/**
+ * The size scale extended past `3xl` for larger color controls (Swatch,
+ * ChannelSlider). The first eight tokens are {@link PATTERNMODE_SIZES}.
+ */
+export const PATTERNMODE_EXTENDED_SIZES = [
+  ...PATTERNMODE_SIZES,
+  "4xl",
+  "5xl",
+  "6xl",
+  "7xl",
+] as const;
+
+/** Token names on the extended size scale. */
+export type PatternmodeExtendedSize = (typeof PATTERNMODE_EXTENDED_SIZES)[number];
+
+export const PATTERNMODE_EXTENDED_SIZE_VALUES = {
+  ...PATTERNMODE_SIZE_VALUES,
+  "4xl": "4.5rem",
+  "5xl": "5rem",
+  "6xl": "5.5rem",
+  "7xl": "6rem",
+} as const satisfies Record<PatternmodeExtendedSize, string>;
+
 export const getPatternmodeSizeValue = (size: PatternmodeSize): string =>
   PATTERNMODE_SIZE_VALUES[size];
 
 const isPixelCount = (value: CssSize | undefined): value is number => typeof value === "number";
 
-/** Converts numeric size values to pixel strings while preserving CSS strings. */
-export const toCssSize = (value: CssSize | undefined): string | undefined => {
+/**
+ * Converts numeric size values to pixel strings while preserving CSS strings.
+ * `undefined` passes through, so a defined size always yields a string.
+ */
+export function toCssSize(value: CssSize): string;
+export function toCssSize(value: CssSize | undefined): string | undefined;
+export function toCssSize(value: CssSize | undefined): string | undefined {
   if (isPixelCount(value)) {
     return `${value}px`;
   }
   return value;
-};
+}
 
 /** Builds a CSS custom-property style object for a Patternmode size token. */
 export const getSizeVariableStyle = (

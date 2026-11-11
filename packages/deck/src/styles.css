@@ -1,33 +1,49 @@
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Deck only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override any of it with their own utilities. Do not
+   hoist a rule out of this block.
+
+   Written as plain declarations where no utility emits the same value:
+   `touch-pan-y` composes through `--tw-pan-*`, `select-none` adds a prefixed
+   declaration, and `outline-2` routes the style through `--tw-outline-style`. */
 @layer components {
   .patternmode-deck {
     perspective: var(--deck-perspective, 1000px);
-    position: relative;
+    @apply relative;
     touch-action: pan-y;
   }
 
   .patternmode-deck__control {
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    width: 1px;
+    @apply pointer-events-none absolute h-px w-px opacity-0;
   }
 
   .patternmode-deck-card {
-    cursor: grab;
-    inset: 0;
-    position: absolute;
+    @apply absolute inset-0 cursor-grab;
     transform-origin: center 70%;
     user-select: none;
   }
 
   .patternmode-deck-card[data-active="false"] {
-    cursor: default;
-    pointer-events: none;
+    @apply pointer-events-none cursor-default;
   }
 
   .patternmode-deck-card[data-active="true"] {
-    pointer-events: auto;
+    @apply pointer-events-auto;
     will-change: transform, opacity;
   }
 
@@ -38,17 +54,16 @@
   .patternmode-deck:has(> .patternmode-deck__control:focus-visible)
     > :is(.patternmode-deck-card[data-active="true"], .patternmode-deck-empty) {
     outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 4px;
+    @apply outline-offset-4;
   }
 
   /* The empty wrapper is usually unstyled around a rounded child; give the
      ring the theme radius so it does not draw square corners around it. */
   .patternmode-deck:has(> .patternmode-deck__control:focus-visible) > .patternmode-deck-empty {
-    border-radius: var(--radius, 0.5rem);
+    @apply rounded-[var(--radius,0.5rem)];
   }
 
   .patternmode-deck-empty {
-    inset: 0;
-    position: absolute;
+    @apply absolute inset-0;
   }
 }

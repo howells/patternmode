@@ -1,34 +1,22 @@
-import { PATTERNMODE_SIZE_VALUES, PATTERNMODE_SIZES } from "@patternmode/system";
-import type { ObjectFit } from "@patternmode/system";
+import type { useRender } from "@base-ui/react/use-render";
+import { PATTERNMODE_EXTENDED_SIZE_VALUES } from "@patternmode/system";
+import type { ObjectFit, PatternmodeExtendedSize } from "@patternmode/system";
 import type { ComponentType, HTMLAttributes, ReactNode, SVGProps } from "react";
-
-import type { RenderProp } from "../render";
-
-export const SWATCH_SIZES = [...PATTERNMODE_SIZES, "4xl", "5xl", "6xl", "7xl"] as const;
-
-export const SWATCH_SIZE_VALUES = {
-  ...PATTERNMODE_SIZE_VALUES,
-  "4xl": "4.5rem",
-  "5xl": "5rem",
-  "6xl": "5.5rem",
-  "7xl": "6rem",
-} as const satisfies Record<SwatchSize, string>;
 
 export const SWATCH_VARIANTS = ["circle", "pill", "square", "block"] as const;
 
 export const SWATCH_TEXTURES = ["atmosphere"] as const;
 
-export type SwatchSize = (typeof SWATCH_SIZES)[number];
 export type SwatchVariant = (typeof SWATCH_VARIANTS)[number];
 export type SwatchTexture = (typeof SWATCH_TEXTURES)[number];
 export type SwatchColorStop = string | { color: string; ratio?: number };
 type SwatchIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 export const getSwatchSizeVariableStyle = (
-  size: SwatchSize,
+  size: PatternmodeExtendedSize,
   variableName = "--patternmode-swatch-size",
 ) => ({
-  [variableName]: SWATCH_SIZE_VALUES[size],
+  [variableName]: PATTERNMODE_EXTENDED_SIZE_VALUES[size],
 });
 
 /**
@@ -81,6 +69,15 @@ export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
    */
   gravity?: number;
   icon?: SwatchIcon;
+  /**
+   * Whether the fill reads as light, which sets `data-tone` and so a dark
+   * foreground for the icon and any content. When omitted, a plain `color` is
+   * analysed: hex (3, 4, 6 or 8 digits), `rgb()`, `hsl()`, `oklab()`,
+   * `oklch()`, `white`, `black` and `transparent`. Any other `color` (`var()`,
+   * `color-mix()`, most named colors), and every `background` or `colors`
+   * fill, renders with the dark tone — pass `isLight` for those when the fill
+   * is light.
+   */
   isLight?: boolean;
   /**
    * Object-fit mode applied to media children through CSS variables.
@@ -114,11 +111,12 @@ export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
    */
   showRing?: boolean;
   /**
-   * Size token used for the swatch dimensions.
+   * Size token on the extended Patternmode scale (`2xs`…`7xl`) used for the
+   * swatch dimensions.
    *
    * Default `"base"`.
    */
-  size?: SwatchSize;
+  size?: PatternmodeExtendedSize;
   /**
    * Render supplied colors as a soft, layered radial atmosphere — overlapping
    * color pools — instead of a ratio-encoded weighted palette. Pair with
@@ -185,7 +183,7 @@ export interface SwatchDefaultProps extends SwatchSharedProps {
  * when a remove control is required.
  */
 export interface SwatchRenderProps extends SwatchSharedProps {
-  render: RenderProp;
+  render: useRender.RenderProp;
   children?: ReactNode;
   onRemove?: never;
   removeLabel?: never;

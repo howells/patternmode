@@ -1,4 +1,4 @@
-import { joinClassNames } from "@patternmode/system";
+import { easings } from "@howells/motion";
 import { m } from "motion/react";
 import type { CSSProperties } from "react";
 import type { HandlePosition, Side } from "../types";
@@ -12,19 +12,13 @@ export const BottomHandle = ({
 }) => (
   <button
     aria-label="Dismiss"
-    className={joinClassNames(
-      // text-inherit matters: the pill is bg-current/15, and without it the
-      // button falls back to the UA color — iOS Safari's system blue.
-      "absolute inset-x-0 z-10 flex w-full cursor-grab touch-none select-none active:cursor-grabbing [-webkit-touch-callout:none] items-center justify-center border-none bg-transparent text-inherit",
-      // `outside` floats the pill above the sheet on the backdrop; `inside`
-      // tucks it just below the top edge.
-      position === "outside" ? "bottom-full pt-1 pb-2" : "top-0 pt-2.5 pb-2",
-    )}
+    className="patternmode-stacksheet__bottom-handle"
     data-stacksheet-handle=""
+    data-stacksheet-handle-position={position}
     onClick={onDismiss}
     type="button"
   >
-    <div aria-hidden="true" className="h-[5px] w-9 rounded-full bg-current/15" />
+    <div aria-hidden="true" className="patternmode-stacksheet__bottom-handle-pill" />
   </button>
 );
 export const SideHandle = ({
@@ -41,14 +35,14 @@ export const SideHandle = ({
     <m.button
       animate={{ opacity: isHovered ? 1 : 0 }}
       aria-label="Dismiss"
-      className="absolute top-0 bottom-0 flex w-6 cursor-grab touch-none select-none active:cursor-grabbing [-webkit-touch-callout:none] items-center justify-center border-none bg-transparent p-0 text-inherit"
+      className="patternmode-stacksheet__side-handle"
       data-stacksheet-handle=""
       onClick={onDismiss}
       style={position}
-      transition={{ duration: isHovered ? 0.15 : 0.4, ease: "easeOut" }}
+      transition={{ duration: isHovered ? 0.15 : 0.4, ease: easings.snappy }}
       type="button"
     >
-      <div aria-hidden="true" className="h-8 w-1 rounded-full bg-current/20" />
+      <div aria-hidden="true" className="patternmode-stacksheet__side-handle-pill" />
     </m.button>
   );
 };

@@ -26,7 +26,6 @@ export interface TagSelectorContextValue {
   commandOptions: CommandOption[];
   disabled: boolean;
   emptyMessage: ReactNode;
-  filteredOptions: TagItem[];
   inputId: string;
   listboxId: string;
   name: string | undefined;

@@ -1,103 +1,142 @@
 import type { NavigationDirection } from "../expanded-media-stage";
 import type { ApertoMediaTransition, ApertoRect } from "../media-transition-utils";
+import type { ApertoMediaItem } from "../types";
+
+/**
+ * Where the Expanded Media is in its life. `openerIndex` is the Thumbnail that
+ * opened it; focus returns there on close, so `closed` keeps the last one.
+ * An `opening` phase without `to` is still measuring its target.
+ */
+export type ApertoGroupPhase =
+  | { name: "closed"; openerIndex: number | null }
+  | {
+      from: ApertoRect;
+      item: ApertoMediaItem;
+      name: "opening";
+      openerIndex: number;
+      to?: ApertoRect;
+    }
+  | { name: "open"; openerIndex: number }
+  | ({ name: "closing"; openerIndex: number } & ApertoMediaTransition);
 
 export interface ApertoGroupState {
-  closing: boolean;
+  /** Active index while the group is uncontrolled. */
   internalIndex: number;
-  layoutSourceIndex: number;
-  mediaTransition: ApertoMediaTransition | null;
   navigationDirection: NavigationDirection;
-  open: boolean;
-  /** Index of the thumbnail that opened the Media Transition; focus returns here on close. */
-  openerIndex: number | null;
+  phase: ApertoGroupPhase;
 }
 
-export type ApertoGroupAction =
-  | { type: "close-without-transition" }
-  | { type: "complete-opening-target"; rect: ApertoRect }
+type ApertoPhaseAction =
   | { type: "finish-transition" }
-  | { type: "navigate"; direction: NavigationDirection; index: number }
+  | { type: "measure-opening-target"; rect: ApertoRect }
+  | { type: "open"; index: number }
   | {
-      type: "open-at-index";
+      type: "open-from-thumbnail";
       index: number;
-      transition: ApertoMediaTransition | null;
+      source: { from: ApertoRect; item: ApertoMediaItem } | null;
     }
-  | { type: "set-index"; index: number }
-  | { type: "set-open"; open: boolean }
-  | { type: "start-close"; transition: ApertoMediaTransition };
+  | { type: "start-close"; transition: ApertoMediaTransition | null };
+
+export type ApertoGroupAction =
+  | ApertoPhaseAction
+  | { type: "navigate"; direction: NavigationDirection }
+  | { type: "set-index"; index: number };
 
 export const getInitialGroupState = (initialIndex: number): ApertoGroupState => ({
-  closing: false,
   internalIndex: initialIndex,
-  layoutSourceIndex: initialIndex,
-  mediaTransition: null,
   navigationDirection: 0,
-  open: false,
-  openerIndex: null,
+  phase: { name: "closed", openerIndex: null },
 });
+
+const unhandled = (action: never): never => {
+  throw new Error(`Unhandled Aperto group action: ${JSON.stringify(action)}`);
+};
+
+const finishTransition = (phase: ApertoGroupPhase): ApertoGroupPhase => {
+  if (phase.name === "opening" && phase.to !== undefined) {
+    return { name: "open", openerIndex: phase.openerIndex };
+  }
+  if (phase.name === "closing") {
+    return { name: "closed", openerIndex: phase.openerIndex };
+  }
+  return phase;
+};
+
+const startClose = (
+  phase: ApertoGroupPhase,
+  transition: ApertoMediaTransition | null,
+): ApertoGroupPhase => {
+  if (phase.name !== "opening" && phase.name !== "open") {
+    return phase;
+  }
+  return transition === null
+    ? { name: "closed", openerIndex: phase.openerIndex }
+    : { ...transition, name: "closing", openerIndex: phase.openerIndex };
+};
+
+const reducePhase = (phase: ApertoGroupPhase, action: ApertoPhaseAction): ApertoGroupPhase => {
+  switch (action.type) {
+    case "finish-transition": {
+      return finishTransition(phase);
+    }
+    case "measure-opening-target": {
+      return phase.name === "opening" && phase.to === undefined
+        ? { ...phase, to: action.rect }
+        : phase;
+    }
+    case "open": {
+      return phase.name === "closed" ? { name: "open", openerIndex: action.index } : phase;
+    }
+    case "open-from-thumbnail": {
+      return action.source === null
+        ? { name: "open", openerIndex: action.index }
+        : { ...action.source, name: "opening", openerIndex: action.index };
+    }
+    case "start-close": {
+      return startClose(phase, action.transition);
+    }
+    default: {
+      return unhandled(action);
+    }
+  }
+};
 
 export const apertoGroupReducer = (
   state: ApertoGroupState,
   action: ApertoGroupAction,
 ): ApertoGroupState => {
   switch (action.type) {
-    case "close-without-transition": {
-      return { ...state, closing: false, mediaTransition: null, open: false };
-    }
-    case "complete-opening-target": {
-      if (state.mediaTransition?.phase !== "opening" || state.mediaTransition.to) {
-        return state;
-      }
-      return {
-        ...state,
-        mediaTransition: { ...state.mediaTransition, to: action.rect },
-      };
-    }
-    case "finish-transition": {
-      return {
-        ...state,
-        closing: false,
-        mediaTransition: null,
-        open: state.mediaTransition?.phase === "closing" ? false : state.open,
-      };
-    }
     case "navigate": {
-      return {
-        ...state,
-        internalIndex: action.index,
-        layoutSourceIndex: action.index,
-        navigationDirection: action.direction,
-      };
-    }
-    case "open-at-index": {
-      return {
-        ...state,
-        closing: false,
-        internalIndex: action.index,
-        layoutSourceIndex: action.index,
-        mediaTransition: action.transition,
-        navigationDirection: 0,
-        open: true,
-        openerIndex: action.index,
-      };
+      return { ...state, navigationDirection: action.direction };
     }
     case "set-index": {
       return { ...state, internalIndex: action.index };
     }
-    case "set-open": {
-      return action.open
-        ? { ...state, closing: false, open: true, openerIndex: state.internalIndex }
-        : { ...state, open: false };
+    case "open-from-thumbnail": {
+      return { ...state, navigationDirection: 0, phase: reducePhase(state.phase, action) };
     }
+    case "finish-transition":
+    case "measure-opening-target":
+    case "open":
     case "start-close": {
-      return {
-        ...state,
-        closing: true,
-        mediaTransition: action.transition,
-      };
+      const phase = reducePhase(state.phase, action);
+      return phase === state.phase ? state : { ...state, phase };
     }
     default: {
-      return state;
+      return unhandled(action);
     }
   }
+};
+
+export const isPhaseOpen = (phase: ApertoGroupPhase): boolean => phase.name !== "closed";
+
+/** The clone's flight, once both ends are known. */
+export const getFlight = (phase: ApertoGroupPhase): ApertoMediaTransition | null => {
+  if (phase.name === "closing") {
+    return { from: phase.from, item: phase.item, to: phase.to };
+  }
+  if (phase.name === "opening" && phase.to !== undefined) {
+    return { from: phase.from, item: phase.item, to: phase.to };
+  }
+  return null;
 };

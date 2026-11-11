@@ -11,9 +11,7 @@ export const SheetClose = ({
   children,
 }: SheetOptionalContentPartProps) => {
   const { close } = useSheetPanel();
-  const defaults = render
-    ? undefined
-    : "absolute right-2 top-2 z-20 flex min-h-11 min-w-11 cursor-pointer touch-manipulation select-none items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-50 transition-opacity duration-150 hover:opacity-100 active:opacity-100 [-webkit-touch-callout:none]";
+  const defaults = render ? undefined : "patternmode-stacksheet__close";
   return (
     <SheetPartElement
       defaultTagName="button"

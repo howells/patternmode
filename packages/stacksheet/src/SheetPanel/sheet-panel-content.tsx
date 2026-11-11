@@ -14,24 +14,22 @@ export const PanelInnerContent = ({
 }: {
   isComposable: boolean;
   shouldRender: boolean;
-  Content: ComponentType<SheetData> | undefined;
+  Content: ComponentType<SheetData>;
   data: SheetData;
-  renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
+  renderHeader?: (props: HeaderRenderProps) => ReactNode;
   headerProps: HeaderRenderProps;
 }) => {
   if (isComposable) {
-    return shouldRender && Content !== undefined ? <Content {...data} /> : null;
+    return shouldRender ? <Content {...data} /> : null;
   }
-  const customHeader =
-    renderHeader !== undefined && renderHeader !== false ? renderHeader : undefined;
 
   return (
     <>
-      {customHeader === undefined ? <DefaultHeader /> : customHeader(headerProps)}
-      {shouldRender && Content !== undefined && (
+      {renderHeader === undefined ? <DefaultHeader /> : renderHeader(headerProps)}
+      {shouldRender && (
         <section
           aria-label="Sheet content"
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+          className="patternmode-stacksheet__content"
           style={{ paddingBottom: SAFE_BOTTOM_PADDING }}
           // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex, react-doctor/no-noninteractive-tabindex -- axe requires keyboard access to this overflow scroll region.
           tabIndex={0}

@@ -1,123 +1,21 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createElement, Fragment, useEffect, useLayoutEffect, useRef } from "react";
-import type { HTMLAttributes, ReactNode, Ref } from "react";
 import type * as MotionModule from "motion/react";
-import type { TargetAndTransition } from "motion/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
 
 import { Aperto } from "./index";
 import { rectFromTrigger } from "./media-transition-utils";
+import { cloneAnimation, resetCloneAnimation } from "./motion-test-double";
 import type { ApertoMediaItem } from "./index";
 
-const unmountedLayoutIds = vi.hoisted((): string[] => []);
-
-type MotionTestProps = HTMLAttributes<HTMLElement> & {
-  animate?: boolean | string | TargetAndTransition;
-  "data-slot"?: string;
-  drag?: boolean;
-  dragConstraints?: unknown;
-  dragElastic?: unknown;
-  dragMomentum?: unknown;
-  dragSnapToOrigin?: unknown;
-  exit?: unknown;
-  initial?: unknown;
-  layout?: boolean;
-  layoutCrossfade?: unknown;
-  layoutId?: string;
-  onAnimationComplete?: () => void;
-  onDrag?: unknown;
-  onDragEnd?: unknown;
-  onLayoutAnimationComplete?: unknown;
-  ref?: Ref<HTMLElement>;
-  transition?: unknown;
-};
-type MotionDivTestProps = Omit<MotionTestProps, "ref"> & { ref?: Ref<HTMLDivElement> };
-type MotionButtonTestProps = Omit<MotionTestProps, "ref"> & { ref?: Ref<HTMLButtonElement> };
-
-const getMotionDataValue = (value: boolean | undefined): string | undefined =>
-  value === undefined ? undefined : String(value);
-
-const isAnimationConfigured = (value: MotionTestProps["animate"]): boolean =>
-  value !== undefined && value !== false;
-
-const stripMotionProps = ({
-  animate: _animate,
-  drag: _drag,
-  dragConstraints: _dragConstraints,
-  dragElastic: _dragElastic,
-  dragMomentum: _dragMomentum,
-  dragSnapToOrigin: _dragSnapToOrigin,
-  exit: _exit,
-  initial: _initial,
-  layout,
-  layoutCrossfade: _layoutCrossfade,
-  layoutId,
-  onAnimationComplete: _onAnimationComplete,
-  onDrag: _onDrag,
-  onDragEnd: _onDragEnd,
-  onLayoutAnimationComplete: _onLayoutAnimationComplete,
-  ref: _ref,
-  transition: _transition,
-  ...props
-}: MotionTestProps) => ({
-  ...props,
-  "data-drag": getMotionDataValue(_drag),
-  "data-layout": layout === undefined ? undefined : String(layout),
-  "data-layout-id": layoutId,
-});
-// oxlint-disable-next-line anti-slop/no-module-mocking, vitest/prefer-import-in-mock -- Aperto imports motion/react directly; the double implements only the div and button elements Aperto renders, so the full module type of an import() cannot describe it. It strips animation props, completes transitions at once and records unmounted layout ids.
+// oxlint-disable-next-line anti-slop/no-module-mocking, vitest/prefer-import-in-mock -- Aperto imports motion/react directly; the double (see motion-test-double) implements only the elements Aperto renders, so the full module type of an import() cannot describe it.
 vi.mock("motion/react", async (importOriginal) => {
-  const actual = await importOriginal<typeof MotionModule>();
-  // oxlint-disable-next-line unicorn/consistent-function-scoping -- vi.mock factories run before module-level bindings exist, so the stub has to be defined inside the factory.
-  const LayoutGroupShell = ({ children }: { children?: ReactNode }) =>
-    createElement(Fragment, null, children);
-  const MotionDiv = ({ ref, ...props }: MotionDivTestProps) => {
-    const latestLayoutIdRef = useRef(props.layoutId);
-    useLayoutEffect(() => {
-      latestLayoutIdRef.current = props.layoutId;
-    });
-
-    useEffect(
-      () => () => {
-        if (latestLayoutIdRef.current !== undefined && latestLayoutIdRef.current !== "") {
-          unmountedLayoutIds.push(latestLayoutIdRef.current);
-        }
-      },
-      [],
-    );
-
-    useEffect(() => {
-      if (
-        props["data-slot"] === "aperto-transition-media" &&
-        isAnimationConfigured(props.animate)
-      ) {
-        props.onAnimationComplete?.();
-      }
-    }, [props]);
-
-    return <div ref={ref} {...stripMotionProps(props)} />;
-  };
-
-  const motionComponents = {
-    button: ({ ref, ...props }: MotionButtonTestProps) => (
-      <button ref={ref} type="button" {...stripMotionProps(props)} />
-    ),
-    div: MotionDiv,
-  };
-
-  return {
-    ...actual,
-    AnimatePresence: LayoutGroupShell,
-    LayoutGroup: LayoutGroupShell,
-    m: motionComponents,
-    motion: motionComponents,
-    useReducedMotion: () => false,
-  };
+  const { motionDouble } = await import("./motion-test-double");
+  return { ...(await importOriginal<typeof MotionModule>()), ...motionDouble };
 });
 
 describe("Aperto layout projection", () => {
@@ -136,7 +34,7 @@ describe("Aperto layout projection", () => {
     } finally {
       consoleErrorSpy.mockRestore();
       cleanup();
-      unmountedLayoutIds.length = 0;
+      resetCloneAnimation();
     }
   });
 
@@ -424,46 +322,8 @@ describe("Aperto layout projection", () => {
     expect(document.activeElement).toBe(openerThumbnail);
   });
 
-  it("completes the media transition when the parent re-renders mid-flight", () => {
-    vi.useFakeTimers();
-    try {
-      const media: ApertoMediaItem[] = [
-        {
-          alt: "Ceramic vessels on linen",
-          src: "/first-large.jpg",
-          title: "Studio table",
-          type: "image",
-        },
-      ];
-      // Each call recreates the onIndexChange identity, mimicking a parent re-render.
-      const renderGroup = () => (
-        <Aperto.Group media={media} onIndexChange={() => {}}>
-          <Aperto.Thumbnail index={0} />
-        </Aperto.Group>
-      );
-
-      const view = render(renderGroup());
-
-      fireEvent.click(screen.getByRole("button", { name: "Open Studio table" }));
-      expect(document.querySelector('[data-slot="aperto-transition-media"]')).toBeInTheDocument();
-
-      act(() => {
-        vi.advanceTimersByTime(300);
-      });
-      view.rerender(renderGroup());
-      act(() => {
-        vi.advanceTimersByTime(160);
-      });
-
-      expect(
-        document.querySelector('[data-slot="aperto-transition-media"]'),
-      ).not.toBeInTheDocument();
-    } finally {
-      vi.useRealTimers();
-    }
-  });
-
   it("layers the transition clone above the overlay and content", async () => {
+    cloneAnimation.manual = true;
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
@@ -516,6 +376,7 @@ describe("Aperto layout projection", () => {
   });
 
   it("uses the supplied media renderer for transition clones", async () => {
+    cloneAnimation.manual = true;
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
@@ -551,6 +412,7 @@ describe("Aperto layout projection", () => {
   });
 
   it("flies the transition clone with the thumbnail source, not the unloaded full-size source", async () => {
+    cloneAnimation.manual = true;
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {

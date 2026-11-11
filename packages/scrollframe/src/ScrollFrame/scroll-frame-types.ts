@@ -7,7 +7,7 @@ import type {
   Ref,
 } from "react";
 
-import type { RenderProp } from "../render";
+import type { useRender } from "@base-ui/react/use-render";
 
 export const SCROLL_FRAME_AXES = ["vertical", "horizontal", "both"] as const;
 export const SCROLL_FRAME_EDGES = ["start", "end"] as const;
@@ -223,7 +223,7 @@ export interface ScrollFrameFadeProps extends HTMLAttributes<HTMLSpanElement> {
 /** Props for compound previous/next movement controls. */
 export interface ScrollFrameMovementControlProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Render the control through a provided element while preserving behavior. */
-  render?: RenderProp;
+  render?: useRender.RenderProp;
   /** Axis moved by this control. Defaults to the root's control axis. */
   axis?: ScrollFrameAxis;
   /**

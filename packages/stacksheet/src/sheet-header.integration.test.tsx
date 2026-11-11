@@ -35,7 +35,7 @@ describe("Sheet.Header", () => {
       </SheetPanelContext>,
     );
     const title = screen.getByRole("heading", { name: "Settings" });
-    expect(title.parentElement).toHaveClass("grid", "grid-cols-[1fr_minmax(0,auto)_1fr]");
+    expect(title.parentElement).toHaveClass("patternmode-stacksheet__header");
     expect(title).toHaveAttribute("data-stacksheet-title");
     expect(screen.getByRole("button", { name: "Back" })).toHaveAttribute("data-stacksheet-back");
     expect(screen.getByRole("button", { name: "Close" })).toHaveAttribute("data-stacksheet-close");

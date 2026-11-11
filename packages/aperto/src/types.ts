@@ -2,10 +2,10 @@
  * Package: @patternmode/aperto
  *
  * Shared element transitions with physics-based drag dismissal.
- * Built on Radix Dialog + Motion.
+ * Built on Base UI Dialog + Motion.
  *
  * Inspired by Cambio (https://github.com/raphaelsalaja/cambio)
- * by Raphael Salaja. Reimplemented for Radix UI primitives.
+ * by Raphael Salaja. Reimplemented for Base UI primitives.
  */
 
 import type { Transition } from "motion/react";
@@ -88,13 +88,9 @@ export type NavigationMotionPresetName = "float" | "glide" | "snap";
 
 /** Per-component motion variant overrides */
 export interface MotionVariants {
-  backdrop?: MotionPresetName;
   content?: MotionPresetName;
   trigger?: MotionPresetName;
 }
-
-/** Motion prop: a single preset name, per-component variants, or nothing */
-export type MotionProp = MotionPresetName | MotionVariants;
 
 /** Spring config for drag physics */
 export interface DragSpringConfig {

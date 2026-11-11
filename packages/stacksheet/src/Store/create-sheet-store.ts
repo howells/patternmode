@@ -1,21 +1,15 @@
 import { createStore } from "zustand";
-import type { StateCreator } from "zustand";
-import type { ResolvedConfig, SheetItem } from "../types";
+import type { StoreApi } from "zustand";
+import type { CloseReason, ResolvedConfig, SheetItem } from "../types";
 import {
   getStringArg,
   isComponent,
-  registerComponent,
   resolveArgs,
   resolvePresentationOptions,
   toSheetData,
+  warnInlineComponent,
 } from "./store-args";
-import type {
-  AnyComponent,
-  ResolvedItem,
-  SheetArg,
-  SheetStoreBundle,
-  StoreState,
-} from "./store-types";
+import type { ResolvedItem, SheetArg, SheetStoreBundle, StoreState } from "./store-types";
 
 const createItem = ({ type, id, data, ariaLabel, height }: ResolvedItem): SheetItem => {
   const item: SheetItem = { ariaLabel, data, id, type };
@@ -26,277 +20,183 @@ const createItem = ({ type, id, data, ariaLabel, height }: ResolvedItem): SheetI
   return item;
 };
 
-interface StoreInternals {
-  componentMap: Map<string, AnyComponent>;
-  componentRegistry: Map<AnyComponent, string>;
-  config: ResolvedConfig;
-  getNextKey: () => string;
-  pruneRegistry: (remainingStack: readonly SheetItem[]) => void;
-  resolve: (first: SheetArg, second: SheetArg, third: SheetArg, fourth?: SheetArg) => ResolvedItem;
-  warnedNames: Set<string>;
-}
+type NextStack = (stack: SheetItem[]) => SheetItem[];
 
-type StoreSet<TMap extends object> = Parameters<StateCreator<StoreState<TMap>>>[0];
-type StoreGet<TMap extends object> = Parameters<StateCreator<StoreState<TMap>>>[1];
+/**
+ * Writes the next stack. Returning the same array writes nothing. `reason` is
+ * recorded only when the write empties a stack that held Sheets, so it always
+ * names the dismissal that closed the stack.
+ */
+type WriteStack = (toNextStack: NextStack, reason?: CloseReason) => void;
 
-interface ResolvedWriters {
-  openResolved: (resolved: ResolvedItem) => void;
-  pushResolved: (resolved: ResolvedItem) => void;
-  replaceResolved: (resolved: ResolvedItem) => void;
-}
-
-const createResolvedWriters = <TMap extends object>(
-  set: StoreSet<TMap>,
-  config: ResolvedConfig,
-): ResolvedWriters => ({
-  openResolved: (resolved) => {
-    set({
-      isOpen: true,
-      stack: [createItem(resolved)],
-    });
-  },
-  pushResolved: (resolved) => {
-    set((state) => {
-      const item = createItem(resolved);
-      if (Number.isFinite(config.maxDepth) && state.stack.length >= config.maxDepth) {
-        return {
-          isOpen: true,
-          stack: [...state.stack.slice(0, -1), item],
-        };
-      }
-      return {
-        isOpen: true,
-        stack: [...state.stack, item],
-      };
-    });
-  },
-  replaceResolved: (resolved) => {
-    set((state) => {
-      const item = createItem(resolved);
-      if (state.stack.length === 0) {
-        return { isOpen: true, stack: [item] };
-      }
-      return {
-        isOpen: true,
-        stack: [...state.stack.slice(0, -1), item],
-      };
-    });
-  },
-});
-
-const createNavigate =
+const createWriteStack =
   <TMap extends object>(
-    componentMap: Map<string, AnyComponent>,
-    get: StoreGet<TMap>,
-    resolve: StoreInternals["resolve"],
-    writers: ResolvedWriters,
-  ): StoreState<TMap>["navigate"] =>
-  (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
-    const resolved = resolve(first, second, third, fourth);
-    const { stack } = get();
+    setState: StoreApi<StoreState<TMap>>["setState"],
+    recordCloseReason: (reason: CloseReason) => void,
+  ): WriteStack =>
+  (toNextStack, reason = "programmatic") => {
+    setState((state) => {
+      const stack = toNextStack(state.stack);
+      if (stack === state.stack) {
+        return state;
+      }
+      if (stack.length === 0) {
+        recordCloseReason(reason);
+      }
+      return { stack };
+    });
+  };
+
+const withoutTop = (stack: SheetItem[]): SheetItem[] => stack.slice(0, -1);
+
+const cleared: NextStack = (stack) => (stack.length === 0 ? stack : []);
+
+const popped: NextStack = (stack) => (stack.length === 0 ? stack : withoutTop(stack));
+
+const replacedWith =
+  (item: SheetItem): NextStack =>
+  (stack) => [...withoutTop(stack), item];
+
+const pushedWith =
+  (item: SheetItem, maxDepth: number): NextStack =>
+  (stack) =>
+    Number.isFinite(maxDepth) && stack.length >= maxDepth
+      ? [...withoutTop(stack), item]
+      : [...stack, item];
+
+const removed =
+  (id: string): NextStack =>
+  (stack) => {
+    const next = stack.filter((item) => item.id !== id);
+    return next.length === stack.length ? stack : next;
+  };
+
+const withData =
+  ({ id, data }: Pick<ResolvedItem, "data" | "id">): NextStack =>
+  (stack) => {
+    const index = stack.findIndex((item) => item.id === id);
+    const existing = stack[index];
+    if (existing === undefined) {
+      return stack;
+    }
+    const updated = [...stack];
+    updated[index] = { ...existing, data };
+    return updated;
+  };
+
+/** The top Sheet with new content: same id, so it does not animate. */
+const swappedTo =
+  (type: SheetItem["type"], dataArg: SheetArg, optionsArg: SheetArg): NextStack =>
+  (stack) => {
     const top = stack.at(-1);
-    if (stack.length === 0) {
-      writers.openResolved(resolved);
-      return;
+    if (top === undefined) {
+      return stack;
     }
-    let isSameType = top?.type === resolved.type;
-    if (!isSameType && isComponent(first)) {
-      const topComponent = componentMap.get(top?.type ?? "");
-      isSameType = topComponent === first;
-    }
-    if (isSameType) {
-      writers.replaceResolved(resolved);
-      return;
-    }
-    writers.pushResolved(resolved);
-  };
-
-const createPop =
-  <TMap extends object>(
-    set: StoreSet<TMap>,
-    pruneRegistry: StoreInternals["pruneRegistry"],
-  ): StoreState<TMap>["pop"] =>
-  () => {
-    set((state) => {
-      if (state.stack.length <= 1) {
-        pruneRegistry([]);
-        return { isOpen: false, stack: [] };
-      }
-      const next = state.stack.slice(0, -1);
-      pruneRegistry(next);
-      return { isOpen: true, stack: next };
-    });
-  };
-
-const createRemove =
-  <TMap extends object>(
-    set: StoreSet<TMap>,
-    pruneRegistry: StoreInternals["pruneRegistry"],
-  ): StoreState<TMap>["remove"] =>
-  (id) => {
-    set((state) => {
-      const next = state.stack.filter((item) => item.id !== id);
-      if (next.length === state.stack.length) {
-        return state;
-      }
-      pruneRegistry(next);
-      return next.length === 0 ? { isOpen: false, stack: [] } : { stack: next };
-    });
-  };
-
-const createSetData =
-  <TMap extends object>(
-    set: StoreSet<TMap>,
-    resolve: StoreInternals["resolve"],
-  ): StoreState<TMap>["setData"] =>
-  (first: SheetArg, second?: SheetArg, third?: SheetArg) => {
-    const { id, data } = resolve(first, second, third);
-    set((state) => {
-      const index = state.stack.findIndex((item) => item.id === id);
-      const existing = state.stack[index];
-      if (existing === undefined) {
-        return state;
-      }
-      const updated = [...state.stack];
-      updated[index] = { ...existing, data };
-      return { stack: updated };
-    });
-  };
-
-const createSwap =
-  <TMap extends object>(
-    set: StoreSet<TMap>,
-    internals: Pick<
-      StoreInternals,
-      "componentMap" | "componentRegistry" | "getNextKey" | "warnedNames"
-    >,
-  ): StoreState<TMap>["swap"] =>
-  (first: SheetArg, second?: SheetArg, third?: SheetArg) => {
-    const type = isComponent(first)
-      ? registerComponent(
-          first,
-          internals.componentRegistry,
-          internals.componentMap,
-          internals.getNextKey,
-          internals.warnedNames,
-        )
-      : getStringArg(first, "sheet type");
-    const data = toSheetData(second);
-    const presentation = resolvePresentationOptions(third);
-    set((state) => {
-      const top = state.stack.at(-1);
-      if (top === undefined) {
-        return state;
-      }
-      const newStack = [...state.stack];
-      const swapped: SheetItem = {
-        ariaLabel: presentation?.ariaLabel ?? top.ariaLabel,
-        data,
-        id: top.id,
-        type,
-      };
-      const height = presentation?.height ?? top.height;
-      if (height !== undefined) {
-        swapped.height = height;
-      }
-      newStack[newStack.length - 1] = swapped;
-      return { stack: newStack };
-    });
-  };
-
-const createStoreState =
-  <TMap extends object>({
-    componentMap,
-    componentRegistry,
-    config,
-    getNextKey,
-    pruneRegistry,
-    resolve,
-    warnedNames,
-  }: StoreInternals): StateCreator<StoreState<TMap>> =>
-  (set, get) => {
-    const writers = createResolvedWriters(set, config);
-
-    return {
-      close: () => {
-        pruneRegistry([]);
-        set({ isOpen: false, stack: [] });
-      },
-      isOpen: false,
-      navigate: createNavigate(componentMap, get, resolve, writers),
-      open: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
-        writers.openResolved(resolve(first, second, third, fourth));
-      },
-      pop: createPop(set, pruneRegistry),
-      push: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
-        writers.pushResolved(resolve(first, second, third, fourth));
-      },
-      remove: createRemove(set, pruneRegistry),
-      replace: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
-        writers.replaceResolved(resolve(first, second, third, fourth));
-      },
-      setData: createSetData(set, resolve),
-      stack: [],
-      swap: createSwap(set, { componentMap, componentRegistry, getNextKey, warnedNames }),
+    const presentation = resolvePresentationOptions(optionsArg);
+    const swapped: SheetItem = {
+      ariaLabel: presentation?.ariaLabel ?? top.ariaLabel,
+      data: toSheetData(dataArg),
+      id: top.id,
+      type,
     };
+    const height = presentation?.height ?? top.height;
+    if (height !== undefined) {
+      swapped.height = height;
+    }
+    return [...withoutTop(stack), swapped];
   };
+
+const createActions = <TMap extends object>({
+  config,
+  getStack,
+  warnedNames,
+  write,
+}: {
+  config: ResolvedConfig;
+  getStack: () => SheetItem[];
+  warnedNames: Set<string>;
+  write: WriteStack;
+}): StoreState<TMap> => {
+  const warn = (first: SheetArg) => {
+    if (isComponent(first)) {
+      warnInlineComponent(first, getStack(), warnedNames);
+    }
+  };
+  const resolve = (first: SheetArg, second: SheetArg, third: SheetArg, fourth?: SheetArg) => {
+    warn(first);
+    return createItem(resolveArgs(first, second, third, fourth));
+  };
+
+  return {
+    close: () => {
+      write(cleared);
+    },
+    navigate: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
+      const item = resolve(first, second, third, fourth);
+      const isSameType = getStack().at(-1)?.type === item.type;
+      write(isSameType ? replacedWith(item) : pushedWith(item, config.maxDepth));
+    },
+    open: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
+      const item = resolve(first, second, third, fourth);
+      write(() => [item]);
+    },
+    pop: () => {
+      write(popped);
+    },
+    push: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
+      write(pushedWith(resolve(first, second, third, fourth), config.maxDepth));
+    },
+    remove: (id) => {
+      write(removed(id));
+    },
+    replace: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
+      write(replacedWith(resolve(first, second, third, fourth)));
+    },
+    setData: (first: SheetArg, second?: SheetArg, third?: SheetArg) => {
+      write(withData(resolveArgs(first, second, third)));
+    },
+    stack: [],
+    swap: (first: SheetArg, second?: SheetArg, third?: SheetArg) => {
+      warn(first);
+      const type = isComponent(first) ? first : getStringArg(first, "sheet type");
+      write(swappedTo(type, second, third));
+    },
+  };
+};
 
 /**
  * Create an isolated Zustand store for a sheet stack instance.
  *
- * Returns a store bundle containing the Zustand store plus two maps
- * that track ad-hoc (component-direct) registrations:
- * - `componentRegistry` — maps `ComponentType` → generated type key (dedup)
- * - `componentMap` — maps generated type key → `ComponentType` (renderer lookup)
- *
- * The ad-hoc counter is scoped per instance to prevent identity leaks across
- * multiple `createStacksheet()` calls or test runs.
+ * A Sheet's `type` is either a key of the `sheets` map or the content
+ * component itself, so two Sheets are the same type when their `type`s are
+ * identical.
  */
 export const createSheetStore = <TMap extends object>(
   config: ResolvedConfig,
 ): SheetStoreBundle<TMap> => {
-  const componentRegistry = new Map<AnyComponent, string>();
-  const componentMap = new Map<string, AnyComponent>();
-  // Per-instance counter (not module-level) — prevents identity leaks across instances/tests
-  let adhocCounter = 0;
-  const getNextKey = () => {
-    const key = `__adhoc_${adhocCounter}`;
-    adhocCounter += 1;
-    return key;
-  };
-  // Set of component names already warned about (avoid log spam)
+  // Component names already warned about (avoid log spam), per instance.
   const warnedNames = new Set<string>();
-  const resolve = (first: SheetArg, second: SheetArg, third: SheetArg, fourth?: SheetArg) =>
-    resolveArgs(
-      componentRegistry,
-      componentMap,
-      getNextKey,
-      warnedNames,
-      first,
-      second,
-      third,
-      fourth,
-    );
-  /** Remove registry entries for type keys no longer in the stack */
-  const pruneRegistry = (remainingStack: readonly SheetItem[]) => {
-    const usedTypes = new Set(remainingStack.map((item) => item.type));
-    for (const [component, typeKey] of componentRegistry) {
-      if (!usedTypes.has(typeKey)) {
-        componentRegistry.delete(component);
-        componentMap.delete(typeKey);
-      }
-    }
+  let closeReason: CloseReason = "programmatic";
+  const recordCloseReason = (reason: CloseReason) => {
+    closeReason = reason;
   };
-  const store = createStore<StoreState<TMap>>()(
-    createStoreState<TMap>({
-      componentMap,
-      componentRegistry,
+  const store = createStore<StoreState<TMap>>()((set, get) =>
+    createActions<TMap>({
       config,
-      getNextKey,
-      pruneRegistry,
-      resolve,
+      getStack: () => get().stack,
       warnedNames,
+      write: createWriteStack<TMap>(set, recordCloseReason),
     }),
   );
-  return { componentMap, componentRegistry, store };
+  const write = createWriteStack<TMap>(store.setState, recordCloseReason);
+  return {
+    close: (reason) => {
+      write(cleared, reason);
+    },
+    getCloseReason: () => closeReason,
+    pop: (reason) => {
+      write(popped, reason);
+    },
+    store,
+  };
 };

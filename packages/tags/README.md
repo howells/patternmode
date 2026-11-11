@@ -71,6 +71,11 @@ Use `name` to render hidden form inputs for each selected Tag Item (serialized w
 filtering, `searchValue`/`onSearchChange` for a controlled query, and
 `renderTag`/`renderOption` to customize selected-tag and option rendering.
 
+`onCreateItem` may throw or reject to decline a label. Each failure reaches
+`onCreateItemError` as a `TagCreationError` with the `label` and the original error as
+`cause`; labels that were created are still selected, and an Enter-committed draft stays
+in the search so it can be retried. Without `onCreateItemError` the error is rethrown.
+
 ## Composable layout
 
 When the classic layout doesn't fit, own the structure with Tag Selector Parts. State,
@@ -100,8 +105,8 @@ back to the generated, filtered option list.
 - `ArrowDown` / `ArrowUp` move the active option; the active option is scrolled into
   view and announced via `aria-activedescendant`.
 - `Enter` selects the active option, or commits the current draft when no option is
-  active. `,` also commits drafts (configurable via `separators`). Commits are ignored
-  while an IME composition is in progress.
+  active. `,` also commits drafts; `separators` replaces `,` with your own keys, and Enter
+  always commits. Commits are ignored while an IME composition is in progress.
 - `Backspace` in an empty search removes the last selected tag.
 
 ## Styling
@@ -111,6 +116,10 @@ Import the stylesheet once:
 ```tsx
 import "@patternmode/tags/styles.css";
 ```
+
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.
 
 Every part carries a `patternmode-tag*` class and a `data-slot` attribute
 (`tag`, `badge`, `tag-selector`, `tag-selector-trigger`, `tag-selector-content`,

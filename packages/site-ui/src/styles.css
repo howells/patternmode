@@ -1,0 +1,131 @@
+.product-heading h2,
+.product-heading h2 {
+  @apply m-0 text-sm font-normal leading-[1.5] tracking-normal;
+}
+
+.product-heading p,
+.api-section-header p {
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
+}
+
+.link-set {
+  @apply flex gap-3;
+}
+
+.link-set a {
+  @apply text-[13px] text-[color:var(--muted-foreground)];
+}
+
+.product-section {
+  @apply flex scroll-mt-8 flex-col gap-7;
+}
+
+.product-heading {
+  @apply border-t border-[color:var(--border)] pt-6;
+}
+
+.docs-block {
+  @apply flex flex-col gap-5;
+}
+
+.docs-header {
+  @apply border-t border-border pt-6;
+}
+
+.docs-header h3 {
+  @apply m-0 type-title font-normal;
+}
+
+.code-block {
+  @apply m-0 overflow-x-auto rounded-[var(--radius)] border border-[color:var(--code-border)] bg-[var(--code-background)] px-[18px] py-4 type-data leading-[1.7] text-[color:var(--ink)];
+  -webkit-overflow-scrolling: touch;
+}
+
+.code-block code {
+  font: inherit;
+}
+
+/* On phones the code wraps rather than scrolling sideways: a sideways scroll
+   region would need its own tab stop to be reachable by keyboard. */
+@media (max-width: 40rem) {
+  .code-block {
+    @apply break-words whitespace-pre-wrap;
+  }
+}
+
+.code-block-install {
+  @apply border-[color:var(--ink)] bg-[var(--ink)] text-[#f6f4ee];
+}
+
+.api-list {
+  @apply flex flex-col gap-5;
+}
+
+.api-section {
+  @apply overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)];
+}
+
+.api-section-header h4 {
+  @apply m-0 text-sm font-medium leading-5 tracking-normal;
+}
+
+.api-section-header {
+  @apply px-[18px] py-4;
+}
+
+.api-section-header p {
+  @apply mt-1;
+}
+
+.prop-list {
+  @apply m-0 border-t border-[color:var(--border-soft)];
+}
+
+.prop-row {
+  @apply grid gap-3 px-[18px] py-[14px] [grid-template-columns:minmax(120px,0.45fr)_1fr];
+}
+
+.prop-row + .prop-row {
+  @apply border-t border-[color:var(--border-soft)];
+}
+
+.prop-row dt {
+  @apply text-sm text-[color:var(--ink)];
+}
+
+.prop-row dd {
+  @apply m-0 flex flex-wrap gap-2;
+}
+
+.prop-row code,
+.api-section-header code {
+  @apply rounded-[5px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[5px] py-0.5 type-data;
+}
+
+.prop-type,
+.prop-default {
+  @apply rounded-[5px] bg-[var(--surface-soft)] px-[7px] py-[3px] type-data text-[color:var(--muted-foreground)];
+}
+
+.prop-description {
+  @apply w-full text-sm leading-normal text-[color:var(--muted-foreground)];
+}
+
+@media (max-width: 720px) {
+  .prop-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .segmented-field,
+  .link-set {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .segmented-control {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}

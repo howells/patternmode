@@ -16,6 +16,10 @@ export function Example() {
 }
 ```
 
+The rules live in `@layer components`, so your own utilities override them.
+The published `styles.css` is compiled and needs no Tailwind; the shadcn
+registry item ships the source stylesheet, which needs Tailwind CSS v4.
+
 `StatusMark` is for compact, discrete progress communication: null, empty,
 quarter, half, three-quarter, and full. Numeric `value` props are clamped from
 `0` to `100` and snapped to the nearest quarter step.

@@ -1,3 +1,4 @@
+import { easings } from "@howells/motion";
 import { animate, useMotionValue, useTransform } from "motion/react";
 import type { MotionValue, ValueAnimationTransition } from "motion/react";
 import { useEffect, useLayoutEffect, useRef } from "react";
@@ -5,21 +6,19 @@ import type { RefObject } from "react";
 
 import { getDismissAxis, getPanelDimension } from "../Drag/drag-geometry";
 import type { DragAxis, DragOutcome, DragTarget } from "../Drag/drag-types";
+import { clampUnit } from "../stack-motion";
 import type { StackMotion } from "../stack-motion";
 import { getStackTransform } from "../stacking";
 import type { Side, SpringConfig, StackingConfig } from "../types";
 
-/** `--ease-out-quint`: entrances and exits. */
-const EASE_OUT_QUINT = [0.23, 1, 0.32, 1] as const;
-
 /** Reduced motion: a short crossfade replaces travel and scale. */
 export const REDUCED_FADE_IN: ValueAnimationTransition<number> = {
   duration: 0.2,
-  ease: EASE_OUT_QUINT,
+  ease: easings.snappy,
 };
 export const REDUCED_FADE_OUT: ValueAnimationTransition<number> = {
   duration: 0.15,
-  ease: EASE_OUT_QUINT,
+  ease: easings.snappy,
 };
 
 /**
@@ -54,8 +53,6 @@ const getSpringTransition = (
  */
 const guessHiddenTravel = (axis: DragAxis): number =>
   axis === "x" ? window.innerWidth : window.innerHeight;
-
-const clampUnit = (value: number): number => Math.min(1, Math.max(0, value));
 
 /** `--ease-sheet`: the iOS sheet curve, for a fitted Sheet changing height. */
 const EASE_SHEET = "cubic-bezier(0.32, 0.72, 0, 1)";

@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { deriveDistribution, isLightColor, sanitizeWeight } from "./weighted-distribution";
+import {
+  deriveDistribution,
+  getColorLightness,
+  isLightColor,
+  sanitizeWeight,
+} from "./weighted-distribution";
 
 /** WCAG relative luminance of one sRGB grey channel value. */
 const greyLuminance = (channel: number) => {
@@ -45,6 +50,7 @@ describe(deriveDistribution, () => {
 
   it("returns zeros for an all-zero distribution (equal-weight fallback is caller policy)", () => {
     expect(deriveDistribution([0, 0])).toStrictEqual({
+      edges: [0, 0, 0],
       percentages: [0, 0],
       sanitized: [0, 0],
       total: 0,
@@ -52,7 +58,21 @@ describe(deriveDistribution, () => {
   });
 
   it("handles the empty distribution", () => {
-    expect(deriveDistribution([])).toStrictEqual({ percentages: [], sanitized: [], total: 0 });
+    expect(deriveDistribution([])).toStrictEqual({
+      edges: [0],
+      percentages: [],
+      sanitized: [],
+      total: 0,
+    });
+  });
+
+  it("derives cumulative edges from the running weight, ending exactly at 100", () => {
+    expect(deriveDistribution([1, 3]).edges).toStrictEqual([0, 25, 100]);
+    expect(deriveDistribution([2, -1, 2]).edges).toStrictEqual([0, 50, 50, 100]);
+    const { edges } = deriveDistribution([1, 1, 1]);
+    expect(edges[1]).toBe((1 / 3) * 100);
+    expect(edges[2]).toBe((2 / 3) * 100);
+    expect(edges[3]).toBe(100);
   });
 });
 
@@ -152,8 +172,28 @@ describe(isLightColor, () => {
     expect(isLightColor("transparent")).toBe(false);
   });
 
-  it("returns false for colors that cannot be parsed", () => {
-    expect(isLightColor("not-a-color")).toBe(false);
-    expect(isLightColor("var(--surface)")).toBe(false);
+  it("reads 4- and 8-digit hex, ignoring alpha", () => {
+    expect(isLightColor("#ffffff80")).toBe(true);
+    expect(isLightColor("#fff8")).toBe(true);
+    expect(isLightColor("#00000080")).toBe(false);
+    expect(isLightColor("#0008")).toBe(false);
+    expect(getColorLightness("#ff000080")).toBe(getColorLightness("#ff0000"));
+  });
+
+  it("returns null, not a guess, for colors it cannot parse", () => {
+    for (const color of [
+      "not-a-color",
+      "gold",
+      "hwb(0 0% 0%)",
+      "var(--surface)",
+      "color-mix(in oklab, white 50%, black)",
+      "rgb(none 0 0)",
+      " #fff",
+      "#12345",
+      "",
+    ]) {
+      expect({ color, light: isLightColor(color) }).toStrictEqual({ color, light: null });
+      expect(getColorLightness(color)).toBeNull();
+    }
   });
 });

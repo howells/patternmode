@@ -16,6 +16,7 @@ interface TestPanInfo {
 }
 
 interface TestDragHandlers {
+  onDrag?: (event: Event, info: TestPanInfo) => void;
   onDragEnd?: (event: Event, info: TestPanInfo) => void;
   onDragStart?: () => void;
 }
@@ -29,6 +30,7 @@ type MotionTestProps = HTMLAttributes<HTMLElement> & {
   dragTransition?: unknown;
   exit?: unknown;
   initial?: unknown;
+  onDrag?: TestDragHandlers["onDrag"];
   onDragEnd?: TestDragHandlers["onDragEnd"];
   onDragStart?: TestDragHandlers["onDragStart"];
   ref?: Ref<HTMLDivElement>;
@@ -48,6 +50,7 @@ const stripMotionProps = vi.hoisted(
       dragTransition: _dragTransition,
       exit: _exit,
       initial: _initial,
+      onDrag: _onDrag,
       onDragEnd: _onDragEnd,
       onDragStart: _onDragStart,
       transition: _transition,
@@ -93,6 +96,7 @@ vi.mock(import("motion/react"), async (importOriginal) => {
     }
     if (props.onDragEnd !== undefined) {
       recordDragHandlers({
+        onDrag: props.onDrag,
         onDragEnd: props.onDragEnd,
         onDragStart: props.onDragStart,
       });
@@ -113,9 +117,21 @@ vi.mock(import("motion/react"), async (importOriginal) => {
   };
 });
 
+const CARD_WIDTH = 320;
+
+/** jsdom has no layout, so every element reports the width a laid-out card would. */
+const measureCardsAt = (width: number) =>
+  vi
+    .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+    .mockReturnValue(DOMRect.fromRect({ height: 400, width }));
+
 const dragActiveCard = (offsetX: number, velocityX = 0) => {
   act(() => {
     latestDragHandlers.current.onDragStart?.();
+    latestDragHandlers.current.onDrag?.(new Event("pointermove"), {
+      offset: { x: offsetX, y: 0 },
+      velocity: { x: velocityX, y: 0 },
+    });
     latestDragHandlers.current.onDragEnd?.(new Event("pointerup"), {
       offset: { x: offsetX, y: 0 },
       velocity: { x: velocityX, y: 0 },
@@ -146,6 +162,46 @@ const renderCyclicDeck = () => {
   return { onAdvance, onIndexChange };
 };
 
+const renderCharacterisedDeck = () =>
+  render(
+    <Deck
+      aria-label="Characterised"
+      className="custom-deck"
+      mode="cycle"
+      renderOverlay={({ active, depth, direction, index, itemId }) => (
+        <span data-testid={`overlay-${itemId}`}>
+          {`${String(active)}|${depth}|${direction ?? "none"}|${index}`}
+        </span>
+      )}
+      visibleCount={2}
+    >
+      <Deck.Card className="custom-card" key="a">
+        A
+      </Deck.Card>
+      <Deck.Card key="b">B</Deck.Card>
+      <Deck.Card key="c">C</Deck.Card>
+    </Deck>,
+  );
+
+const describeRoot = (container: HTMLElement) => {
+  const root = container.querySelector<HTMLElement>(".patternmode-deck");
+
+  return { disabled: root?.dataset.disabled, empty: root?.dataset.empty };
+};
+
+const describeCard = (label: string) => {
+  const card = screen.getByText(label);
+  const id = label.toLowerCase();
+
+  return {
+    active: card.dataset.active,
+    depth: card.dataset.depth,
+    direction: card.dataset.direction,
+    hidden: card.getAttribute("aria-hidden"),
+    overlay: screen.getByTestId(`overlay-${id}`).textContent,
+  };
+};
+
 describe(Deck, () => {
   beforeEach(() => {
     mountedInitials.current.clear();
@@ -155,6 +211,7 @@ describe(Deck, () => {
 
   afterEach(() => {
     cleanup();
+    vi.restoreAllMocks();
   });
 
   it("renders a cyclic stack with the active card in front", () => {
@@ -291,7 +348,8 @@ describe(Deck, () => {
     expect(onAdvanceEnd).toHaveBeenCalledOnce();
   });
 
-  it("measures drag distance against a real card width, not a 1px fallback", () => {
+  it("measures drag distance against the card's measured width", () => {
+    measureCardsAt(CARD_WIDTH);
     const onAdvance = vi.fn<(event: DeckAdvanceEvent) => void>();
 
     render(
@@ -301,8 +359,7 @@ describe(Deck, () => {
       </Deck>,
     );
 
-    // jsdom cannot measure layout, so the fallback width (320px) applies and
-    // the 0.35 ratio threshold resolves to 112px, not 0.35px.
+    // The 0.35 ratio threshold resolves to 112px of a 320px card, not 0.35px.
     dragActiveCard(40);
     expect(onAdvance).not.toHaveBeenCalled();
 
@@ -313,6 +370,7 @@ describe(Deck, () => {
   });
 
   it("still advances a short drag past the velocity threshold", () => {
+    measureCardsAt(CARD_WIDTH);
     const onAdvance = vi.fn<(event: DeckAdvanceEvent) => void>();
 
     render(
@@ -327,6 +385,48 @@ describe(Deck, () => {
     expect(onAdvance).toHaveBeenCalledWith(
       expect.objectContaining({ direction: "left", index: 0 }),
     );
+  });
+
+  it("follows a drag without re-rendering the stack", () => {
+    measureCardsAt(CARD_WIDTH);
+    const renderOverlay = vi.fn<() => null>(() => null);
+
+    render(
+      <Deck aria-label="Dragged cards" renderOverlay={renderOverlay} visibleCount={3}>
+        <Deck.Card>First</Deck.Card>
+        <Deck.Card>Second</Deck.Card>
+        <Deck.Card>Third</Deck.Card>
+      </Deck>,
+    );
+
+    const rendersBeforeDrag = renderOverlay.mock.calls.length;
+
+    act(() => {
+      latestDragHandlers.current.onDragStart?.();
+      for (let offset = 1; offset <= 60; offset += 1) {
+        latestDragHandlers.current.onDrag?.(new Event("pointermove"), {
+          offset: { x: offset, y: 0 },
+          velocity: { x: 0, y: 0 },
+        });
+      }
+    });
+
+    expect(renderOverlay).toHaveBeenCalledTimes(rendersBeforeDrag);
+  });
+
+  it("fails loudly when a drag ends on a card that was never measured", () => {
+    measureCardsAt(0);
+
+    render(
+      <Deck aria-label="Unmeasured cards">
+        <Deck.Card>First</Deck.Card>
+        <Deck.Card>Second</Deck.Card>
+      </Deck>,
+    );
+
+    expect(() => {
+      dragActiveCard(200);
+    }).toThrow("could not measure the active card's width");
   });
 
   it("renders card children inside fragments", () => {
@@ -405,6 +505,71 @@ describe(Deck, () => {
     );
 
     expect(mountedInitials.current.get("Beta")).toBe(false);
+  });
+
+  it("keeps its classes, data attributes and overlay state before an advance", () => {
+    const { container } = renderCharacterisedDeck();
+
+    expect(container.firstElementChild).toHaveClass("patternmode-deck", "custom-deck");
+    expect(describeRoot(container)).toStrictEqual({ disabled: undefined, empty: undefined });
+    expect(screen.getByText("A")).toHaveClass("patternmode-deck-card", "custom-card");
+    expect(describeCard("A")).toStrictEqual({
+      active: "true",
+      depth: "0",
+      direction: undefined,
+      hidden: null,
+      overlay: "true|0|none|0",
+    });
+    expect(describeCard("B")).toStrictEqual({
+      active: "false",
+      depth: "1",
+      direction: undefined,
+      hidden: "true",
+      overlay: "false|1|none|1",
+    });
+  });
+
+  it("keeps its data attributes and overlay state after cycling round", async () => {
+    const user = userEvent.setup();
+    renderCharacterisedDeck();
+
+    screen.getByRole("slider", { name: "Characterised" }).focus();
+    await user.keyboard("{ArrowLeft}{ArrowLeft}{ArrowLeft}");
+
+    expect(describeCard("A")).toStrictEqual({
+      active: "true",
+      depth: "0",
+      direction: "left",
+      hidden: null,
+      overlay: "true|0|left|0",
+    });
+    expect(describeCard("B")).toStrictEqual({
+      active: "false",
+      depth: "1",
+      direction: "left",
+      hidden: "true",
+      overlay: "false|1|left|1",
+    });
+  });
+
+  it("marks a disabled deck and ignores the keyboard", async () => {
+    const user = userEvent.setup();
+    const onAdvance = vi.fn<(event: DeckAdvanceEvent) => void>();
+
+    const { container } = render(
+      <Deck aria-label="Disabled cards" disabled onAdvance={onAdvance} tabIndex={-1}>
+        <Deck.Card>First</Deck.Card>
+        <Deck.Card>Second</Deck.Card>
+      </Deck>,
+    );
+
+    expect(container.firstElementChild).toHaveAttribute("data-disabled", "true");
+    expect(container.firstElementChild).toHaveAttribute("tabindex", "-1");
+    screen.getByRole("slider", { name: "Disabled cards" }).focus();
+    await user.keyboard("{ArrowRight}");
+
+    expect(onAdvance).not.toHaveBeenCalled();
+    expect(screen.getByText("First")).toHaveAttribute("data-active", "true");
   });
 
   it("warns when cards are wrapped in unsupported elements", () => {

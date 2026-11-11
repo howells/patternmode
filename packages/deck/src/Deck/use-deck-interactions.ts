@@ -1,3 +1,4 @@
+import { useMotionValue } from "motion/react";
 import type { PanInfo } from "motion/react";
 import { useRef } from "react";
 import type { KeyboardEvent } from "react";
@@ -10,61 +11,35 @@ import type {
   DeckMode,
   DeckRootProps,
 } from "../types";
-import { FALLBACK_CARD_WIDTH } from "./deck-constants";
 
 export interface DeckState {
-  dragOffset: number;
   exitVelocity: number;
+  /** The active index of an uncontrolled deck. A controlled deck reads its `index` prop instead. */
   internalIndex: number;
   lastDirection: AdvanceDirection | null;
+  /** Counts advances so a cycle-mode card that comes round again mounts under a new key. */
   visualBaseIndex: number;
 }
 
-export type DeckAction =
-  | {
-      type: "advance";
-      controlled: boolean;
-      direction: AdvanceDirection;
-      mode: DeckMode;
-      nextIndex: number;
-      velocity: number;
-    }
-  | {
-      type: "drag";
-      offset: number;
-    }
-  | {
-      type: "reset-drag";
-    };
-
-export type DeckDispatch = (action: DeckAction) => void;
+export interface DeckAdvance {
+  direction: AdvanceDirection;
+  nextIndex: number;
+  velocity: number;
+}
 
 export const createDeckState = (defaultIndex: number): DeckState => ({
-  dragOffset: 0,
   exitVelocity: 0,
   internalIndex: defaultIndex,
   lastDirection: null,
   visualBaseIndex: defaultIndex,
 });
 
-export const deckReducer = (state: DeckState, action: DeckAction): DeckState => {
-  if (action.type === "drag") {
-    return { ...state, dragOffset: action.offset };
-  }
-
-  if (action.type === "reset-drag") {
-    return { ...state, dragOffset: 0 };
-  }
-
-  return {
-    ...state,
-    dragOffset: 0,
-    exitVelocity: action.velocity,
-    internalIndex: action.controlled ? state.internalIndex : action.nextIndex,
-    lastDirection: action.direction,
-    visualBaseIndex: action.mode === "cycle" ? state.visualBaseIndex + 1 : action.nextIndex,
-  };
-};
+export const deckReducer = (state: DeckState, advance: DeckAdvance): DeckState => ({
+  exitVelocity: advance.velocity,
+  internalIndex: advance.nextIndex,
+  lastDirection: advance.direction,
+  visualBaseIndex: state.visualBaseIndex + 1,
+});
 
 /** Drag, keyboard, and advance-lifecycle handlers shared by the deck's cards. */
 export const useDeckInteractions = ({
@@ -72,7 +47,6 @@ export const useDeckInteractions = ({
   activeIndex,
   allowedDirections,
   cards,
-  controlled,
   disabled,
   dispatch,
   distanceThreshold,
@@ -88,9 +62,8 @@ export const useDeckInteractions = ({
   activeIndex: number;
   allowedDirections: AdvanceDirection[];
   cards: DeckItem[];
-  controlled: boolean;
   disabled: boolean;
-  dispatch: DeckDispatch;
+  dispatch: (advance: DeckAdvance) => void;
   distanceThreshold: number;
   mode: DeckMode;
   onAdvance: DeckRootProps["onAdvance"];
@@ -101,10 +74,10 @@ export const useDeckInteractions = ({
   velocityThreshold: number;
 }) => {
   const activeCardRef = useRef<HTMLDivElement | null>(null);
+  /** The active card's horizontal drag offset, shared by the stack without re-rendering it. */
+  const dragOffset = useMotionValue(0);
   const dragWidthRef = useRef(0);
   const pendingAdvanceEndRef = useRef<DeckAdvanceEvent | null>(null);
-
-  const measureActiveCardWidth = () => activeCardRef.current?.getBoundingClientRect().width ?? 0;
 
   const flushAdvanceEnd = () => {
     const pending = pendingAdvanceEndRef.current;
@@ -131,14 +104,7 @@ export const useDeckInteractions = ({
       nextIndex,
     };
 
-    dispatch({
-      controlled,
-      direction,
-      mode,
-      nextIndex,
-      type: "advance",
-      velocity,
-    });
+    dispatch({ direction, nextIndex, velocity });
     onAdvance?.(event);
     onIndexChange?.(nextIndex);
     // Deliver any advance whose exit never completed, then defer this one
@@ -152,28 +118,32 @@ export const useDeckInteractions = ({
   };
 
   const handleDrag = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    dispatch({ offset: info.offset.x, type: "drag" });
+    dragOffset.set(info.offset.x);
   };
 
   const handleDragStart = () => {
-    dragWidthRef.current = measureActiveCardWidth();
+    dragWidthRef.current = activeCardRef.current?.getBoundingClientRect().width ?? 0;
   };
 
   const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    dispatch({ type: "reset-drag" });
+    dragOffset.set(0);
 
-    // Prefer the width captured at drag start; the drag-end event is
-    // dispatched from the window, so its currentTarget cannot be measured.
-    const measuredWidth =
-      dragWidthRef.current > 0 ? dragWidthRef.current : measureActiveCardWidth();
+    const width = dragWidthRef.current;
     dragWidthRef.current = 0;
+
+    // A drag can only start on a card the pointer hit, so a laid-out card
+    // always has a width. Zero means the card was never measured.
+    if (width <= 0) {
+      throw new Error("Deck could not measure the active card's width at drag start.");
+    }
+
     const decision = getAdvanceDecision({
       allowedDirections,
       distanceThreshold,
       offsetX: info.offset.x,
       velocityThreshold,
       velocityX: info.velocity.x,
-      width: measuredWidth > 0 ? measuredWidth : FALLBACK_CARD_WIDTH,
+      width,
     });
 
     if (decision.accepted) {
@@ -201,6 +171,7 @@ export const useDeckInteractions = ({
 
   return {
     activeCardRef,
+    dragOffset,
     handleDrag,
     handleDragEnd,
     handleDragStart,

@@ -1,4 +1,4 @@
-// oxlint-disable typescript/no-deprecated -- Exercise the legacy API contract and complete MediaQueryList test doubles.
+// oxlint-disable typescript/no-deprecated -- Complete MediaQueryList test doubles.
 // @vitest-environment jsdom
 import { setTimeout as sleep } from "node:timers/promises";
 import "@testing-library/jest-dom/vitest";
@@ -254,7 +254,9 @@ describe("SheetRenderer integration", () => {
     expect(screen.getByRole("dialog", { name: "Nested sheet" })).toBeInTheDocument();
     expect(screen.queryByRole("dialog", { name: "Root sheet" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Open nested" })).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Back" })).toHaveClass("min-h-11", "min-w-11");
+    expect(screen.getByRole("button", { name: "Back" })).toHaveClass(
+      "patternmode-stacksheet__back",
+    );
   });
 
   it("backs out of the Nested Sheet and closes the Sheet Stack", async () => {
@@ -266,7 +268,7 @@ describe("SheetRenderer integration", () => {
     expect(screen.getByRole("dialog", { name: "Root sheet" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open nested" })).toBeInTheDocument();
     const closeButton = screen.getByRole("button", { name: "Close" });
-    expect(closeButton).toHaveClass("min-h-11", "min-w-11");
+    expect(closeButton).toHaveClass("patternmode-stacksheet__close");
     await user.click(closeButton);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
@@ -302,7 +304,9 @@ describe("SheetRenderer integration", () => {
     expect(dialog).toBeInTheDocument();
     expect(dialog).toHaveAttribute("aria-labelledby");
     expect(dialog).toHaveAttribute("aria-describedby");
-    expect(screen.getByRole("button", { name: "Close" })).toHaveClass("min-h-11", "min-w-11");
+    expect(screen.getByRole("button", { name: "Close" })).toHaveClass(
+      "patternmode-stacksheet__close",
+    );
   });
 
   it("labels a composable sheet without a Sheet.Title via its ariaLabel option", async () => {
@@ -604,16 +608,16 @@ describe("SheetRenderer handle placement", () => {
   it("renders the bottom handle inside the top edge by default", async () => {
     await openSheet({ side: "bottom" });
     const handle = screen.getByRole("button", { name: "Dismiss" });
-    expect(handle.className).toContain("top-0");
+    expect(handle).toHaveAttribute("data-stacksheet-handle-position", "inside");
     // Nested inside the overflow-hidden content wrapper.
-    expect(handle.parentElement?.className).toContain("overflow-hidden");
+    expect(handle.parentElement).toHaveClass("patternmode-stacksheet__panel-inner");
   });
 
   it("floats the bottom handle above the sheet when handle is 'outside'", async () => {
     await openSheet({ handle: "outside", side: "bottom" });
     const handle = screen.getByRole("button", { name: "Dismiss" });
     const dialog = screen.getByRole("dialog", { name: "Sheet" });
-    expect(handle.className).toContain("bottom-full");
+    expect(handle).toHaveAttribute("data-stacksheet-handle-position", "outside");
     // Hoisted to the panel level so the content wrapper can't clip it.
     expect(handle.parentElement).toBe(dialog);
   });

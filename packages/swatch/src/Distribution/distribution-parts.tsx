@@ -1,6 +1,4 @@
-import { sanitizeWeight } from "@patternmode/system";
 import type { CSSProperties } from "react";
-import { getDerivedDistributionPercentage } from "./distribution-math";
 import type { DistributionSegment } from "./distribution-math";
 
 /**
@@ -17,41 +15,52 @@ import type { DistributionSegment } from "./distribution-math";
 type DistributionSegmentStyle = CSSProperties &
   Partial<Record<`--${string}`, number | string | undefined>>;
 
-interface DistributionSegmentsProps {
+/**
+ * Each segment's unrounded share (0–100), index-aligned with `segments`, and
+ * the unassigned remainder's share. Both come from one `deriveDistribution`
+ * call over the segment weights followed by the empty weight; an all-zero
+ * distribution draws and labels every share as 0%.
+ */
+interface DistributionShares {
+  emptyPercentage?: number;
+  percentages: number[];
+}
+
+interface DistributionSegmentsProps extends DistributionShares {
   emptyValue?: number;
   onSegmentSelect?: (segment: DistributionSegment) => void;
   segments: DistributionSegment[];
   selectedSegmentId?: string;
-  total: number;
 }
 
-interface DistributionSegmentLegendProps {
+interface DistributionSegmentLegendProps extends DistributionShares {
   emptyLabel?: string;
   emptyValue?: number;
   segments: DistributionSegment[];
-  total: number;
 }
 
 /** The coloured track: one element per segment, plus any unassigned remainder. */
 export const DistributionSegments = ({
+  emptyPercentage = 0,
   emptyValue = 0,
   onSegmentSelect,
+  percentages,
   segments,
   selectedSegmentId,
-  total,
 }: DistributionSegmentsProps) => (
   <div className="patternmode-distribution-bar__segments">
-    {segments.map((segment) => {
+    {segments.map((segment, index) => {
+      const percentage = percentages[index] ?? 0;
       const segmentStyle = {
         "--patternmode-distribution-segment-color": segment.color,
-        width: total > 0 ? `${(sanitizeWeight(segment.value) / total) * 100}%` : "0%",
+        width: `${percentage}%`,
       } satisfies DistributionSegmentStyle;
       const isSelected = selectedSegmentId === segment.id;
 
       if (onSegmentSelect) {
         return (
           <button
-            aria-label={`${segment.label ?? segment.id} ${getDerivedDistributionPercentage(segment.value, total)}%`}
+            aria-label={`${segment.label ?? segment.id} ${Math.round(percentage)}%`}
             aria-pressed={isSelected}
             className="patternmode-distribution-bar__segment"
             data-selected={isSelected ? "true" : undefined}
@@ -79,9 +88,7 @@ export const DistributionSegments = ({
       <div
         aria-hidden="true"
         className="patternmode-distribution-bar__segment patternmode-distribution-bar__segment--empty"
-        style={{
-          width: total > 0 ? `${(sanitizeWeight(emptyValue) / total) * 100}%` : "0%",
-        }}
+        style={{ width: `${emptyPercentage}%` }}
       />
     ) : null}
   </div>
@@ -90,12 +97,13 @@ export const DistributionSegments = ({
 /** Swatch-and-label legend, one entry per segment. */
 export const DistributionSegmentLegend = ({
   emptyLabel,
+  emptyPercentage = 0,
   emptyValue = 0,
+  percentages,
   segments,
-  total,
 }: DistributionSegmentLegendProps) => (
   <div className="patternmode-distribution-bar__legend">
-    {segments.map((segment) => {
+    {segments.map((segment, index) => {
       const segmentStyle = {
         "--patternmode-distribution-segment-color": segment.color,
         backgroundColor: undefined,
@@ -108,7 +116,7 @@ export const DistributionSegmentLegend = ({
             className="patternmode-distribution-bar__swatch"
             style={segmentStyle}
           />
-          {segment.label ?? segment.id} {getDerivedDistributionPercentage(segment.value, total)}%
+          {segment.label ?? segment.id} {Math.round(percentages[index] ?? 0)}%
         </span>
       );
     })}
@@ -118,7 +126,7 @@ export const DistributionSegmentLegend = ({
           aria-hidden="true"
           className="patternmode-distribution-bar__swatch patternmode-distribution-bar__swatch--empty"
         />
-        {emptyLabel} {getDerivedDistributionPercentage(emptyValue, total)}%
+        {emptyLabel} {Math.round(emptyPercentage)}%
       </span>
     ) : null}
   </div>

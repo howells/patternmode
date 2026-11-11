@@ -14,6 +14,7 @@ import {
   brioletteColorDistance,
   brioletteNeighborhoodDelta,
   brioletteUniverseColor,
+  nearestBrioletteFace,
   nextBrioletteDepth,
 } from "./briolette-colors";
 import {
@@ -610,5 +611,40 @@ describe(BriolettePicker, () => {
 
     expect(onChange).toHaveBeenCalledOnce();
     expect(onChange.mock.calls[0]?.[0]).toMatch(HEX_PATTERN);
+  });
+});
+
+describe("BriolettePicker hex input", () => {
+  afterEach(cleanup);
+
+  it.each(["red", "rgb(255 0 0)", "#12", "#7a9c8b80", ""])(
+    "throws on a value that is not a hex color: %j",
+    (value) => {
+      const onChange = vi.fn<(value: string | null) => void>();
+      // React logs the render error before rethrowing it; keep the run quiet.
+      const consoleError = vi.spyOn(console, "error").mockImplementation(() => {
+        // Expected render error.
+      });
+      expect(() => render(<BriolettePicker onChange={onChange} value={value} />)).toThrow(
+        /BriolettePicker `value` must be a hex color/u,
+      );
+      consoleError.mockRestore();
+    },
+  );
+
+  it("refuses to measure or anchor around a color it cannot parse", () => {
+    const faces = buildBrioletteFaces(2);
+    expect(() => brioletteColorDistance("red", "#ffffff")).toThrow(/Expected a hex color/u);
+    expect(() => brioletteColorDistance("#ffffff", "")).toThrow(/Expected a hex color/u);
+    expect(() => nearestBrioletteFace(faces, "red")).toThrow(/Expected a hex color/u);
+    expect(() =>
+      buildBriolettePalette(faces, { anchorFaceIndex: 0, anchorHex: "red", depth: 1 }),
+    ).toThrow(/Expected a hex color/u);
+  });
+
+  it("accepts three- and six-digit hex", () => {
+    const faces = buildBrioletteFaces(2);
+    expect(brioletteColorDistance("#fff", "#ffffff")).toBe(0);
+    expect(nearestBrioletteFace(faces, "#7a9c8b")).toBeDefined();
   });
 });

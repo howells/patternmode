@@ -1,5 +1,5 @@
 import { durations, easings, springs } from "@howells/motion";
-import type { DragSpringConfig, MotionPreset, MotionPresetName, MotionVariants } from "./types";
+import type { MotionPreset, MotionPresetName, MotionVariants } from "./types";
 
 /**
  * Motion presets — each bundles transition timing AND drag physics
@@ -44,7 +44,7 @@ export const PRESETS: Record<MotionPresetName, MotionPreset> = {
   },
 };
 
-type ComponentType = "trigger" | "content" | "backdrop";
+type ComponentType = keyof MotionVariants;
 
 /**
  * Three-level motion resolution:
@@ -78,6 +78,3 @@ export const resolvePreset = (
   // 3. Global preset
   return PRESETS[globalPreset];
 };
-
-/** Extract the drag spring config from a preset */
-export const getDragSpring = (preset: MotionPreset): DragSpringConfig => preset.drag;

@@ -5,7 +5,7 @@
   "description": "Patternmode shadcn theme + registry source. Private: distributed via the shadcn registry (apps/web/public/r), never npm.",
   "type": "module",
   "scripts": {
-    "build": "node ../../scripts/build-registry.mjs",
+    "build": "node ../../scripts/build-registry.mjs dist/registry",
     "lint": "howells-check . --no-error-on-unmatched-pattern",
     "lint:fix": "howells-fix . --no-error-on-unmatched-pattern",
     "test": "vitest run"

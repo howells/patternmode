@@ -1,8 +1,7 @@
 import { ScrollArea } from "@base-ui/react/scroll-area";
 import { joinClassNames } from "@patternmode/system";
-import { useRender } from "../render";
+import { useRender } from "@base-ui/react/use-render";
 import { SAFE_BOTTOM_PADDING } from "../stacking";
-import type { RenderProp } from "../render";
 import type { SheetPartProps } from "./sheet-part-types";
 
 // When `render` is provided the consumer supplies their own scroll container,
@@ -14,16 +13,16 @@ const SheetBodyRendered = ({
   style,
   children,
 }: {
-  render: RenderProp;
+  render: useRender.RenderProp;
   className?: string;
   style?: SheetPartProps["style"];
   children: SheetPartProps["children"];
 }) =>
   useRender({
     props: {
-      // `relative min-h-0 flex-1` is structural for the panel flex layout.
+      // The custom body keeps its structural place in the panel flex layout.
       children,
-      className: joinClassNames("relative min-h-0 flex-1", className),
+      className: joinClassNames("patternmode-stacksheet__custom-body", className),
       style,
     },
     render,
@@ -42,11 +41,11 @@ export const SheetBody = ({ render, className, style, children }: SheetPartProps
   }
   return (
     <ScrollArea.Root
-      className={joinClassNames("relative flex min-h-0 flex-1 flex-col overflow-hidden", className)}
+      className={joinClassNames("patternmode-stacksheet__body", className)}
       style={style}
     >
       <ScrollArea.Viewport
-        className="min-h-0 w-full flex-1 overscroll-contain"
+        className="patternmode-stacksheet__body-viewport"
         // Content scrolls under the home indicator and its end clears it.
         style={{ paddingBottom: SAFE_BOTTOM_PADDING }}
       >
@@ -55,10 +54,10 @@ export const SheetBody = ({ render, className, style, children }: SheetPartProps
       {/* Dragging the thumb scrolls; it must never move the Sheet. */}
       <ScrollArea.Scrollbar
         data-stacksheet-no-drag=""
-        className="flex w-2 touch-none select-none p-0.5 opacity-0 transition-opacity data-[hovering]:opacity-100 data-[scrolling]:opacity-100"
+        className="patternmode-stacksheet__scrollbar"
         orientation="vertical"
       >
-        <ScrollArea.Thumb className="relative flex-1 rounded bg-current/15" />
+        <ScrollArea.Thumb className="patternmode-stacksheet__scrollbar-thumb" />
       </ScrollArea.Scrollbar>
     </ScrollArea.Root>
   );

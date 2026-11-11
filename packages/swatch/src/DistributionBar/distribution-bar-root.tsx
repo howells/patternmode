@@ -1,9 +1,10 @@
-import { joinClassNames, sanitizeWeight } from "@patternmode/system";
+import { deriveDistribution, joinClassNames, sanitizeWeight } from "@patternmode/system";
 import { domMax, LazyMotion, m } from "motion/react";
 import type { PanInfo } from "motion/react";
 import type { HTMLAttributes, KeyboardEvent } from "react";
 import { useRef, useState } from "react";
 import {
+  deriveSegmentDistribution,
   getDistributionBoundaryPercent,
   getDistributionTotal,
   moveDistributionBoundary,
@@ -146,7 +147,10 @@ export const DistributionBar = ({
   const trackRef = useRef<HTMLDivElement>(null);
   const dragStartSegmentsRef = useRef<DistributionSegment[] | null>(null);
   const [dragging, setDragging] = useState(false);
-  const total = getDistributionTotal(segments);
+  // Key presses move a boundary at once: the settle transition is for values
+  // that change from outside, and would lag a held arrow key.
+  const [keyAdjusting, setKeyAdjusting] = useState(false);
+  const { percentages } = deriveSegmentDistribution(segments);
 
   const moveBoundary = (boundaryIndex: number, deltaValue: number, sourceSegments = segments) => {
     onChange?.(moveDistributionBoundary(sourceSegments, boundaryIndex, deltaValue, minValue));
@@ -180,6 +184,7 @@ export const DistributionBar = ({
       return;
     }
     event.preventDefault();
+    setKeyAdjusting(true);
     moveBoundary(boundaryIndex, delta);
   };
 
@@ -189,22 +194,30 @@ export const DistributionBar = ({
       aria-label={ariaLabel}
       className={joinClassNames("patternmode-distribution-bar", className)}
       data-dragging={dragging ? "true" : undefined}
+      data-key-adjusting={keyAdjusting ? "true" : undefined}
       data-slot="distribution-bar"
     >
-      <div className="patternmode-distribution-bar__track" ref={trackRef}>
-        <DistributionSegments segments={segments} total={total} />
+      <div
+        className="patternmode-distribution-bar__track"
+        onBlur={() => {
+          setKeyAdjusting(false);
+        }}
+        ref={trackRef}
+      >
+        <DistributionSegments percentages={percentages} segments={segments} />
         {segments.slice(0, -1).map((segment, boundaryIndex) => {
           const nextSegment = segments[boundaryIndex + 1];
           const boundaryPercent = getDistributionBoundaryPercent(segments, boundaryIndex);
           const label = `Adjust ${segment.label ?? segment.id} and ${
             nextSegment?.label ?? nextSegment?.id
           } distribution`;
-          const leftValue = sanitizeWeight(segment.value);
-          const rightValue = sanitizeWeight(nextSegment?.value ?? 0);
-          const pairTotal = leftValue + rightValue;
           /* Slider value: the left segment's share of the adjacent pair, so
              arrow keys and drags read as moving weight between neighbours. */
-          const leftShare = pairTotal > 0 ? Math.round((leftValue / pairTotal) * 100) : 0;
+          const [pairPercentage = 0] = deriveDistribution([
+            segment.value,
+            nextSegment?.value ?? 0,
+          ]).percentages;
+          const leftShare = Math.round(pairPercentage);
           const valueText = `${segment.label ?? segment.id} ${leftShare}%, ${
             nextSegment?.label ?? nextSegment?.id
           } ${100 - leftShare}%`;
@@ -230,7 +243,7 @@ export const DistributionBar = ({
         })}
       </div>
       {legend === "segments" ? (
-        <DistributionSegmentLegend segments={segments} total={total} />
+        <DistributionSegmentLegend percentages={percentages} segments={segments} />
       ) : null}
     </fieldset>
   );

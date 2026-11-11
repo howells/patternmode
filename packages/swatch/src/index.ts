@@ -3,8 +3,6 @@
 export {
   DistributionBar,
   type DistributionBarProps,
-  type DistributionBarSegment,
-  type DistributionBarSegmentUpdate,
   DistributionDisplay,
   type DistributionDisplayProps,
   type DistributionSegment,
@@ -17,8 +15,6 @@ export {
   moveDistributionBoundary,
   removeDistributionSegment,
   SWATCH_VARIANTS,
-  SWATCH_SIZE_VALUES,
-  SWATCH_SIZES,
   SWATCH_TEXTURES,
   Swatch,
   type SwatchRenderProps,
@@ -28,7 +24,6 @@ export {
   type SwatchProps,
   type SwatchVariant,
   type SwatchSharedProps,
-  type SwatchSize,
   type SwatchTexture,
   updateDistributionSegment,
 } from "./swatch";

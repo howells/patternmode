@@ -1,6 +1,7 @@
 "use client";
 
-import { prefersReducedMotion } from "@howells/motion";
+import { usePrefersReducedMotion } from "@howells/motion/react";
+import { hexToOklab, joinClassNames } from "@patternmode/system";
 import type { ComponentPropsWithoutRef, CSSProperties, KeyboardEvent, PointerEvent } from "react";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
@@ -95,7 +96,11 @@ export interface BriolettePickerProps extends BriolettePickerRootProps {
    * @default 280
    */
   size?: number;
-  /** Controlled hex color value, or `null` when nothing is selected. */
+  /**
+   * Controlled hex color value (`#rgb` or `#rrggbb`), or `null` when nothing
+   * is selected. Any other string throws: the picker cannot place a color it
+   * cannot read.
+   */
   value: string | null;
 }
 
@@ -173,6 +178,15 @@ const useExternalValueAnchor = (
   return { pendingCenter, setAnchoredValue };
 };
 
+/** The picker places colors by OKLab; a value it cannot read has no place. */
+const assertBrioletteValue = (value: string | null) => {
+  if (value !== null && hexToOklab(value) === null) {
+    throw new TypeError(
+      `BriolettePicker \`value\` must be a hex color such as "#7a9c8b", or null; received ${JSON.stringify(value)}.`,
+    );
+  }
+};
+
 /** Friendly three-quarter starting orientation. */
 const INITIAL_ORIENTATION: BrioletteQuat = rotateBrioletteOrientation(
   { w: 1, x: 0, y: 0, z: 0 },
@@ -194,7 +208,7 @@ const getRootStyle = (
   ...style,
 });
 
-const useBrioletteRotation = (isDriftEnabled: boolean) => {
+const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean) => {
   const [orientation, setOrientation] = useState<BrioletteQuat>(INITIAL_ORIENTATION);
   const [isDragging, setIsDragging] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -212,6 +226,7 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
     { isInViewportRef, isPointerActiveRef, tweenRef, velocityRef },
     setOrientation,
     isDriftEnabled,
+    isMotionReduced,
   );
 
   const rotateBy = (yaw: number, pitch: number) => {
@@ -223,7 +238,7 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
   const centerOn = (center: BrioletteVec3) => {
     const target = orientationFacingFront(orientationRef.current, center);
     velocityRef.current = { pitch: 0, yaw: 0 };
-    if (prefersReducedMotion() || typeof requestAnimationFrame === "undefined") {
+    if (isMotionReduced || typeof requestAnimationFrame === "undefined") {
       tweenRef.current = null;
       setOrientation(() => target);
       return;
@@ -269,7 +284,7 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
     }
     isPointerActiveRef.current = false;
     setIsDragging(false);
-    if (prefersReducedMotion()) {
+    if (isMotionReduced) {
       velocityRef.current = { pitch: 0, yaw: 0 };
     }
   };
@@ -476,6 +491,8 @@ export const BriolettePicker = ({
   value,
   ...props
 }: BriolettePickerProps) => {
+  assertBrioletteValue(value);
+  const isMotionReduced = usePrefersReducedMotion();
   const [selection, setSelection] = useState<BrioletteSelection | null>(null);
   const {
     centerOn,
@@ -487,7 +504,7 @@ export const BriolettePicker = ({
     orientation,
     rotateBy,
     stageRef,
-  } = useBrioletteRotation(value === null);
+  } = useBrioletteRotation(value === null, isMotionReduced);
   const hintId = useId();
   const faces = facesForDensity(density);
   const { pendingCenter, setAnchoredValue } = useExternalValueAnchor(
@@ -519,7 +536,7 @@ export const BriolettePicker = ({
 
   // Cut changes animate: the coarser cut sits beneath while the finer cut
   // grows over it (or shrinks away), every vertex interpolated on the sphere.
-  const morphLayers = useBrioletteMorph(density, palette, prefersReducedMotion());
+  const morphLayers = useBrioletteMorph(density, palette, isMotionReduced);
   const isMorphing = morphLayers !== null;
 
   const selectFace = (faceIndex: number) => {
@@ -590,7 +607,7 @@ export const BriolettePicker = ({
   return (
     <div
       {...props}
-      className={["patternmode-briolette", className].filter(Boolean).join(" ")}
+      className={joinClassNames("patternmode-briolette", className)}
       data-slot="briolette-picker"
       style={getRootStyle(value, seamColor, seamOpacity, SEAM_WIDTHS[density], style)}
     >

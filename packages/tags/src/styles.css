@@ -1,40 +1,32 @@
-/* Declare the full layer order before opening `components`: registering
-   `components` first would leave it ahead of the host's `theme` and `base`,
-   so a base reset would outrank these rules. A no-op when the app declared
-   the order first. */
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Tags only opens `components`, so it cannot invert a consumer's utilities the
+   way a sheet opening `utilities` can. It declares the order anyway, because
+   registering `components` early would otherwise leave it ahead of the host's
+   `theme` and `base`, and a base reset would then outrank these rules. */
 @layer theme, base, components, utilities;
 
+@reference "tailwindcss";
+
+/* Everything below is inside `components` on purpose: a layerless declaration
+   outranks every rule in a named layer regardless of specificity, so a
+   consumer could not override it with their own utilities. Do not hoist a
+   rule out of this block. */
 @layer components {
   .patternmode-badge {
-    align-items: center;
+    @apply inline-flex w-fit max-w-full min-h-5.5 flex-none items-center justify-center gap-1 overflow-hidden rounded-[999px] px-2 py-0.5 align-middle text-[0.75rem] leading-none font-medium whitespace-nowrap text-(color:--patternmode-badge-color);
+    @apply border border-solid border-[color:var(--patternmode-badge-border,transparent)];
+    @apply transition-[box-shadow,color] duration-[140ms] ease-[ease];
     background: var(--patternmode-badge-background);
-    border: 1px solid var(--patternmode-badge-border, transparent);
-    border-radius: 999px;
-    color: var(--patternmode-badge-color);
-    display: inline-flex;
-    flex: 0 0 auto;
-    font-size: 0.75rem;
-    font-weight: 500;
-    gap: 0.25rem;
-    justify-content: center;
-    line-height: 1;
-    max-width: 100%;
-    min-height: 1.375rem;
-    overflow: hidden;
-    padding: 0.125rem 0.5rem;
-    transition:
-      box-shadow 140ms ease,
-      color 140ms ease;
-    vertical-align: middle;
-    white-space: nowrap;
-    width: fit-content;
   }
 
   .patternmode-badge > svg {
-    flex: 0 0 auto;
-    height: 0.75rem;
-    pointer-events: none;
-    width: 0.75rem;
+    @apply pointer-events-none size-3 flex-none;
   }
 
   .patternmode-badge[data-variant="default"] {
@@ -67,35 +59,28 @@
   .patternmode-badge[data-variant="link"] {
     --patternmode-badge-background: transparent;
     --patternmode-badge-color: var(--ring, #315c4b);
+    @apply underline-offset-4;
     text-decoration: underline;
-    text-underline-offset: 4px;
   }
 
   .patternmode-badge:focus-visible {
-    outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 2px;
+    @apply outline-2 outline-offset-2 outline-solid outline-[color:var(--ring,#315c4b)];
   }
 
   .patternmode-tag {
-    gap: 0.375rem;
+    @apply gap-1.5;
   }
 
   .patternmode-tag[data-size="base"] {
-    font-size: 0.8125rem;
-    min-height: 1.75rem;
-    padding: 0.25rem 0.625rem;
+    @apply min-h-7 px-2.5 py-1 text-[0.8125rem];
   }
 
   .patternmode-tag[data-size="sm"] {
-    font-size: 0.75rem;
-    min-height: 1.5rem;
-    padding: 0.1875rem 0.5rem;
+    @apply min-h-6 px-2 py-0.75 text-[0.75rem];
   }
 
   .patternmode-tag[data-size="lg"] {
-    font-size: 0.875rem;
-    min-height: 2rem;
-    padding: 0.3125rem 0.75rem;
+    @apply min-h-8 px-3 py-1.25 text-[0.875rem];
   }
 
   /* Selected reads as the theme's ring colour on the tag's own 1px border, so
@@ -118,142 +103,97 @@
   }
 
   .patternmode-tag[data-disabled="true"] {
-    opacity: 0.52;
+    @apply opacity-52;
   }
 
   .patternmode-tag__icon {
-    align-items: center;
-    display: inline-flex;
-    flex: 0 0 auto;
+    @apply inline-flex flex-none items-center;
   }
 
   .patternmode-tag__icon svg {
-    display: block;
-    height: 0.875rem;
-    stroke: currentColor;
+    @apply block size-3.5 stroke-current stroke-2;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 2;
-    width: 0.875rem;
   }
 
   .patternmode-tag__label {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
   }
 
   /* The label clips for its ellipsis, and a line-height-1 box ends above an
      offset underline, so a link tag showed no underline at all. Extend the
      clip box downward; the matching negative margin keeps the layout. */
   .patternmode-badge[data-variant="link"] .patternmode-tag__label {
-    margin-block-end: -0.375em;
-    padding-block-end: 0.375em;
+    @apply mbe-[-0.375em] pbe-[0.375em];
   }
 
   .patternmode-tag__remove {
-    align-items: center;
+    @apply -mr-1 inline-flex size-4 flex-none cursor-pointer items-center justify-center rounded-[999px] p-0 text-current opacity-64;
     background: transparent;
     border: 0;
-    border-radius: 999px;
-    color: currentColor;
-    cursor: pointer;
-    display: inline-flex;
-    flex: 0 0 auto;
-    height: 1rem;
-    justify-content: center;
-    margin-right: -0.25rem;
-    opacity: 0.64;
-    padding: 0;
-    width: 1rem;
   }
 
-  .patternmode-tag__remove:hover {
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    .patternmode-tag__remove:hover {
+      @apply opacity-100;
+    }
   }
 
   .patternmode-tag__remove:focus-visible {
-    outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 2px;
+    @apply outline-2 outline-offset-2 outline-solid outline-[color:var(--ring,#315c4b)];
   }
 
   .patternmode-tag__remove svg {
-    height: 0.75rem;
-    stroke: currentColor;
+    @apply size-3 stroke-current stroke-2;
     stroke-linecap: round;
-    stroke-width: 2;
-    width: 0.75rem;
   }
 
   .patternmode-tag-selector {
-    min-width: min(100%, 16rem);
-    position: relative;
+    @apply relative min-w-[min(100%,16rem)];
   }
 
   .patternmode-tag-selector[data-disabled="true"] {
-    opacity: 0.62;
+    @apply opacity-62;
   }
 
   .patternmode-tag-selector__trigger {
-    align-items: center;
+    @apply flex min-h-11 w-full cursor-pointer items-center rounded-[var(--radius,8px)] p-1.5 text-[color:var(--foreground,#1d1d1b)];
+    @apply border border-solid border-[color:var(--border,#e3e1dc)];
+    @apply transition-[border-color,box-shadow] duration-[140ms] ease-[ease];
     background: var(--card, #fff);
-    border: 1px solid var(--border, #e3e1dc);
-    border-radius: var(--radius, 8px);
-    color: var(--foreground, #1d1d1b);
-    cursor: pointer;
-    display: flex;
-    min-height: 2.75rem;
-    padding: 0.375rem;
-    transition:
-      border-color 140ms ease,
-      box-shadow 140ms ease;
-    width: 100%;
   }
 
   .patternmode-tag-selector__trigger[aria-disabled="true"] {
-    cursor: not-allowed;
-    pointer-events: none;
+    @apply pointer-events-none cursor-not-allowed;
   }
 
   /* A 54% border with a 12% halo measured 2.3:1 against the resting border
      and 1.2:1 for the halo, so keyboard focus was hard to find. The halo also
      reads the theme's ring rather than a fixed pine. */
   .patternmode-tag-selector__trigger:focus-visible {
-    border-color: var(--ring, #315c4b);
+    @apply border-[color:var(--ring,#315c4b)];
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring, #315c4b) 24%, transparent);
     outline: 0;
   }
 
   .patternmode-tag-selector__scroll {
-    min-width: 0;
-    width: 100%;
+    @apply w-full min-w-0;
   }
 
   /* Says "this opens a list", which a row of chips alone does not. */
   .patternmode-tag-selector__chevron {
-    align-items: center;
-    color: var(--muted-foreground, #77756d);
-    display: inline-flex;
-    flex: 0 0 auto;
-    height: 1.75rem;
-    justify-content: center;
-    margin-inline-start: 0.25rem;
-    transition: transform 140ms ease;
-    width: 1.25rem;
+    @apply ms-1 inline-flex h-7 w-5 flex-none items-center justify-center text-[color:var(--muted-foreground,#77756d)];
+    @apply transition-[transform] duration-[140ms] ease-[ease];
   }
 
   .patternmode-tag-selector__chevron svg {
-    height: 1rem;
-    stroke: currentColor;
+    @apply size-4 stroke-current stroke-[1.5];
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 1.5;
-    width: 1rem;
   }
 
   .patternmode-tag-selector__trigger[aria-expanded="true"] .patternmode-tag-selector__chevron {
-    transform: rotate(180deg);
+    @apply transform-[rotate(180deg)];
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -266,71 +206,48 @@
      largest target that fits inside it. */
   @media (pointer: coarse) {
     .patternmode-tag-selector__remove {
-      height: 1.5rem;
-      margin-block: -0.1875rem;
-      margin-inline: -0.125rem -0.5rem;
-      width: 1.5rem;
+      @apply -my-0.75 -ms-0.5 -me-2 size-6;
     }
   }
 
   .patternmode-tag-selector__scroll-content {
-    align-items: center;
-    display: flex;
-    gap: 0.375rem;
-    min-height: 1.75rem;
-    min-width: max-content;
+    @apply flex min-h-7 min-w-max items-center gap-1.5;
   }
 
   .patternmode-tag-selector__selected-item {
-    display: inline-flex;
-    flex: 0 0 auto;
+    @apply inline-flex flex-none;
   }
 
   .patternmode-tag-selector__placeholder {
-    color: var(--muted-foreground, #77756d);
-    font-size: 0.875rem;
-    padding: 0 0.25rem;
-    white-space: nowrap;
+    @apply px-1 py-0 text-[0.875rem] whitespace-nowrap text-[color:var(--muted-foreground,#77756d)];
   }
 
   .patternmode-tag-selector__content {
+    @apply z-50 flex max-h-[min(18rem,var(--available-height))] min-w-(--anchor-width) flex-col gap-1 overflow-hidden rounded-[var(--radius,8px)] p-1.5;
+    @apply border border-solid border-[color:var(--border,#eeece7)];
     background: var(--card, #fff);
-    border: 1px solid var(--border, #eeece7);
-    border-radius: var(--radius, 8px);
     box-shadow: 0 14px 34px rgb(17 24 39 / 14%);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    max-height: min(18rem, var(--available-height));
-    min-width: var(--anchor-width);
-    overflow: hidden;
-    padding: 0.375rem;
-    z-index: 50;
   }
 
   .patternmode-tag-selector__search {
-    background: var(--muted, #f6f5f1);
-    border: 1px solid transparent;
-    border-radius: 6px;
-    color: var(--foreground, #1d1d1b);
+    /* `font` resets `font-size`, so it comes before the size below. */
     font: inherit;
-    font-size: 0.875rem;
-    min-height: 2.25rem;
+    @apply min-h-9 w-full rounded-[6px] px-2.5 py-0 text-[0.875rem] text-[color:var(--foreground,#1d1d1b)];
+    @apply border border-solid border-transparent;
+    background: var(--muted, #f6f5f1);
     outline: 0;
-    padding: 0 0.625rem;
-    width: 100%;
   }
 
   /* iOS Safari zooms the page into any input under 16px when it takes focus,
      and the selector focuses its search as soon as it opens. */
   @media (pointer: coarse) {
     .patternmode-tag-selector__search {
-      font-size: 1rem;
+      @apply text-[1rem];
     }
   }
 
   .patternmode-tag-selector__search::placeholder {
-    color: var(--muted-foreground, #77756d);
+    @apply text-[color:var(--muted-foreground,#77756d)];
   }
 
   .patternmode-tag-selector__search:focus-visible {
@@ -338,36 +255,22 @@
   }
 
   .patternmode-tag-selector__list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-    max-height: 13rem;
-    overflow-y: auto;
-    padding-top: 0.125rem;
+    @apply flex max-h-52 flex-col gap-0.5 overflow-y-auto pt-0.5;
   }
 
   .patternmode-tag-selector__option {
-    align-items: center;
+    /* `font` resets `font-size`, so it comes before the size below. */
+    font: inherit;
+    @apply flex min-h-8 w-full cursor-pointer items-center gap-2 rounded-[6px] px-2 py-1.5 text-left text-[0.8125rem] text-[color:var(--foreground,#1d1d1b)];
+    @apply transition-[background,color] duration-[140ms] ease-[ease];
     background: transparent;
     border: 0;
-    border-radius: 6px;
-    color: var(--foreground, #1d1d1b);
-    cursor: pointer;
-    display: flex;
-    font: inherit;
-    font-size: 0.8125rem;
-    gap: 0.5rem;
-    min-height: 2rem;
-    padding: 0.375rem 0.5rem;
-    text-align: left;
-    transition:
-      background 140ms ease,
-      color 140ms ease;
-    width: 100%;
   }
 
-  .patternmode-tag-selector__option:hover {
-    background: var(--muted, #f6f5f1);
+  @media (hover: hover) and (pointer: fine) {
+    .patternmode-tag-selector__option:hover {
+      background: var(--muted, #f6f5f1);
+    }
   }
 
   /*
@@ -378,56 +281,38 @@
    * colour every other focus indicator uses.
    */
   .patternmode-tag-selector__option[data-active="true"] {
+    @apply text-[color:var(--accent-foreground,#1d3d30)];
     background: var(--accent, #e1ebe5);
     box-shadow: inset 0 0 0 1px var(--ring, #315c4b);
-    color: var(--accent-foreground, #1d3d30);
   }
 
   .patternmode-tag-selector__option[aria-selected="true"] {
-    color: var(--ring, #315c4b);
+    @apply text-[color:var(--ring,#315c4b)];
   }
 
   .patternmode-tag-selector__option:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+    @apply cursor-not-allowed opacity-50;
   }
 
   .patternmode-tag-selector__option:focus-visible {
-    outline: 2px solid var(--ring, #315c4b);
-    outline-offset: 1px;
+    @apply outline-2 outline-offset-1 outline-solid outline-[color:var(--ring,#315c4b)];
   }
 
   .patternmode-tag-selector__option-icon {
-    align-items: center;
-    color: currentColor;
-    display: inline-flex;
-    flex: 0 0 auto;
-    height: 1rem;
-    justify-content: center;
-    opacity: 0.82;
-    width: 1rem;
+    @apply inline-flex size-4 flex-none items-center justify-center text-current opacity-82;
   }
 
   .patternmode-tag-selector__option-icon svg {
-    height: 0.875rem;
-    stroke: currentColor;
+    @apply size-3.5 stroke-current stroke-2;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 2;
-    width: 0.875rem;
   }
 
   .patternmode-tag-selector__option-label {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
   }
 
   .patternmode-tag-selector__empty {
-    color: var(--muted-foreground, #77756d);
-    font-size: 0.8125rem;
-    padding: 0.75rem 0.625rem;
-    text-align: center;
+    @apply px-2.5 py-3 text-center text-[0.8125rem] text-[color:var(--muted-foreground,#77756d)];
   }
 }

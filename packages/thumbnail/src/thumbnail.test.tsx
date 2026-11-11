@@ -32,7 +32,7 @@ describe("the frame's edge", () => {
     expect(styles).toMatch(
       /\.patternmode-thumbnail::after\s*\{[^}]*box-shadow:\s*inset 0 0 0 1px var\(--patternmode-thumbnail-frame\)/u,
     );
-    expect(styles).toMatch(/\.patternmode-thumbnail::after\s*\{[^}]*position:\s*absolute/u);
+    expect(styles).toMatch(/\.patternmode-thumbnail::after\s*\{[^}]*@apply[^;]*\babsolute\b/u);
   });
 
   it("is translucent rather than a solid colour", () => {
@@ -55,7 +55,7 @@ describe("the frame's edge", () => {
     // A `border-radius` on the frame does nothing to a child `<img>` unless the
     // frame clips. Without this the corners are square and only the hairline
     // curves.
-    expect(styles).toMatch(/\.patternmode-thumbnail\s*\{[^}]*overflow:\s*hidden/u);
+    expect(styles).toMatch(/\.patternmode-thumbnail\s*\{[^}]*@apply[^;]*\boverflow-hidden\b/u);
   });
 
   it("fills the frame with the img inside a picture, not only with the picture", () => {

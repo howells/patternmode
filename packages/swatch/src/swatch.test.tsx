@@ -18,7 +18,6 @@ import {
   getSwatchAtmosphereBackground,
   getSwatchColorsBackground,
   SWATCH_VARIANTS,
-  SWATCH_SIZES,
   Swatch,
 } from "./index";
 import type { DistributionSegment } from "./index";
@@ -201,21 +200,6 @@ describe(Swatch, () => {
   });
 
   it("supports extended swatch sizes through 7xl", () => {
-    expect(SWATCH_SIZES).toStrictEqual([
-      "2xs",
-      "xs",
-      "sm",
-      "base",
-      "lg",
-      "xl",
-      "2xl",
-      "3xl",
-      "4xl",
-      "5xl",
-      "6xl",
-      "7xl",
-    ]);
-
     render(<Swatch aria-label="Huge" color="#315c4b" size="7xl" />);
 
     expect(screen.getByLabelText("Huge")).toHaveStyle({
@@ -363,6 +347,26 @@ describe(Swatch, () => {
   it("applies light tone metadata for non-hex color formats", () => {
     render(<Swatch aria-label="Paper" color="white" />);
     expect(screen.getByLabelText("Paper")).toHaveAttribute("data-tone", "light");
+  });
+
+  it("reads alpha hex colors by their channels", () => {
+    render(<Swatch aria-label="Veil" color="#ffffff80" />);
+    expect(screen.getByLabelText("Veil")).toHaveAttribute("data-tone", "light");
+  });
+
+  it("renders unparseable colors with the dark tone unless isLight says otherwise", () => {
+    render(
+      <>
+        <Swatch aria-label="Token" color="var(--paper)" />
+        <Swatch aria-label="Mix" color="color-mix(in oklab, white 90%, black)" />
+        <Swatch aria-label="Gold" color="gold" />
+        <Swatch aria-label="Token light" color="var(--paper)" isLight />
+      </>,
+    );
+    expect(screen.getByLabelText("Token")).toHaveAttribute("data-tone", "dark");
+    expect(screen.getByLabelText("Mix")).toHaveAttribute("data-tone", "dark");
+    expect(screen.getByLabelText("Gold")).toHaveAttribute("data-tone", "dark");
+    expect(screen.getByLabelText("Token light")).toHaveAttribute("data-tone", "light");
   });
 
   it("applies a consumer-provided role to the rendered wrapper", () => {
