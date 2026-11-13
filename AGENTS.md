@@ -18,7 +18,7 @@ pnpm e2e         # browser tests in packages that have them
 
 ### Issue tracker
 
-Issues live in Linear (howells, PAT). See `docs/agents/issue-tracker.md`.
+Linear, workspace `howells`, team `PAT`. See `~/Sites/home/docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
