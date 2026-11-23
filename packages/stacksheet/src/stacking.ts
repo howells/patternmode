@@ -105,14 +105,18 @@ export const SAFE_BOTTOM_PADDING = `var(${SAFE_BOTTOM}, 0px)`;
 const SAFE_BOTTOM_VALUE = { [SAFE_BOTTOM]: SAFE_AREA.bottom };
 /**
  * Fixed-position styles for a panel, accounting for side, width, and depth.
+ * `width` is the Sheet's own side Panel width; it defaults to the stack's.
+ * Stacked Panels recede by a px offset and scale from the stack edge, so
+ * Panels of different widths stack without further adjustment.
  */
 export const getPanelStyles = (
   side: Side,
   config: ResolvedConfig,
   index: number,
   fitted = false,
+  width = config.width,
 ): CSSProperties => {
-  const { width, maxWidth, zIndex } = config;
+  const { maxWidth, zIndex } = config;
   const base: CSSProperties = {
     // Inherited: nothing tapped inside a Sheet gets the browser's grey flash.
     // The Sheet's own controls give press feedback with `:active` instead.

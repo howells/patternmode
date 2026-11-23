@@ -66,12 +66,16 @@ const getActiveInternalSnapIndex = ({
     ? internalSnap.index
     : defaultSnapIndex;
 
-const getBackdropStyle = (config: ResolvedConfig, hasBackdropClass: boolean): CSSProperties => {
+const getBackdropStyle = (
+  config: ResolvedConfig,
+  hasBackdropClass: boolean,
+  dismissible: boolean,
+): CSSProperties => {
   const style: CSSProperties = {
     // A tap on the overlay closes the stack; without this iOS and Android
     // paint their grey tap flash over the whole screen as it fades.
     WebkitTapHighlightColor: "transparent",
-    cursor: config.closeOnBackdrop && config.dismissible ? "pointer" : undefined,
+    cursor: config.closeOnBackdrop && dismissible ? "pointer" : undefined,
     willChange: "opacity",
     zIndex: config.zIndex,
   };
@@ -236,16 +240,19 @@ const useFocusRestore = (isOpen: boolean) => {
 
 const useDismissalEffects = ({
   config,
+  dismissible,
   isOpen,
   onDismiss,
 }: {
   config: ResolvedConfig;
+  /** Whether the top Sheet can be dismissed */
+  dismissible: boolean;
   isOpen: boolean;
   /** Pop the top Sheet for an Escape or a close request. Must be stable. */
   onDismiss: () => void;
 }) => {
   useEffect(() => {
-    const shouldListen = isOpen && config.closeOnEscape && config.dismissible;
+    const shouldListen = isOpen && config.closeOnEscape && dismissible;
     const handleKeyDown = (e: KeyboardEvent) => {
       // An inner layer (popover, select, menu) already consumed this Escape —
       // don't also pop the sheet.
@@ -263,14 +270,14 @@ const useDismissalEffects = ({
         document.removeEventListener("keydown", handleKeyDown);
       }
     };
-  }, [isOpen, config.closeOnEscape, config.dismissible, onDismiss]);
+  }, [isOpen, config.closeOnEscape, dismissible, onDismiss]);
   useEffect(() => {
     const CloseWatcherConstructor = globalThis.CloseWatcher;
     // CloseWatcher cannot distinguish Escape from other close requests (e.g.
     // the Android back gesture), so gating on `closeOnEscape` conservatively
     // disables back-gesture dismissal too when Escape dismissal is turned off.
     const shouldListen =
-      isOpen && config.closeOnEscape && config.dismissible && CloseWatcherConstructor !== undefined;
+      isOpen && config.closeOnEscape && dismissible && CloseWatcherConstructor !== undefined;
     let watcher: InstanceType<NonNullable<typeof CloseWatcherConstructor>> | undefined;
     const handleClose = () => {
       onDismiss();
@@ -285,7 +292,7 @@ const useDismissalEffects = ({
         watcher.destroy();
       }
     };
-  }, [isOpen, config.closeOnEscape, config.dismissible, onDismiss]);
+  }, [isOpen, config.closeOnEscape, dismissible, onDismiss]);
 };
 
 /**
@@ -344,12 +351,15 @@ export const SheetRenderer = <TMap extends object>({
   const { panelWrapperRef, keyboardInset } = usePanelKeyboardInset(config, isOpen, side);
   useBodyScale(config, isOpen, prefersReducedMotion);
   useFocusRestore(isOpen);
-  useDismissalEffects({ config, isOpen, onDismiss: popFromEscape });
+  // The top Sheet decides: a dismissible Sheet pushed over one that is not can
+  // be dismissed, and so the other way round.
+  const dismissible = stack.at(-1)?.dismissible ?? config.dismissible;
+  useDismissalEffects({ config, dismissible, isOpen, onDismiss: popFromEscape });
   useSteppedStack(stackMotion, prefersReducedMotion);
   const isModal = config.modal;
   const showOverlay = isModal && config.showOverlay;
   const hasBackdropClass = classNames.backdrop !== "";
-  const backdropStyle = getBackdropStyle(config, hasBackdropClass);
+  const backdropStyle = getBackdropStyle(config, hasBackdropClass, dismissible);
   const handleExitComplete = () => {
     if (stack.length === 0) {
       config.onCloseComplete?.(dismissal.getCloseReason());
@@ -364,7 +374,7 @@ export const SheetRenderer = <TMap extends object>({
             <Backdrop
               className={joinClassNames("patternmode-stacksheet__backdrop", classNames.backdrop)}
               key="stacksheet-backdrop"
-              onClick={config.closeOnBackdrop && config.dismissible ? closeFromBackdrop : undefined}
+              onClick={config.closeOnBackdrop && dismissible ? closeFromBackdrop : undefined}
               opacity={stackMotion.backdrop}
               style={backdropStyle}
             />

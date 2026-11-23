@@ -14,6 +14,12 @@ const isSheetHeight = (value: unknown): value is SheetHeight => value === "full"
 const hasHeight = (value: SheetData): value is { height: SheetHeight } =>
   "height" in value && isSheetHeight(value.height);
 
+const hasDismissible = (value: SheetData): value is { dismissible: boolean } =>
+  "dismissible" in value && typeof value.dismissible === "boolean";
+
+const hasWidth = (value: SheetData): value is { width: number } =>
+  "width" in value && typeof value.width === "number";
+
 export const toSheetData = (value: SheetArg): SheetData => (isSheetData(value) ? value : {});
 
 export const isComponent = (value: SheetArg | AnyComponent): value is AnyComponent =>
@@ -56,13 +62,26 @@ export const resolvePresentationOptions = (
   if (hasHeight(value)) {
     options.height = value.height;
   }
+  if (hasDismissible(value)) {
+    options.dismissible = value.dismissible;
+  }
+  if (hasWidth(value)) {
+    options.width = value.width;
+  }
   return options;
 };
 
 /** The presentation fields a resolved item carries. */
-const toPresentation = (value: SheetArg): Pick<ResolvedItem, "ariaLabel" | "height"> => {
+const toPresentation = (
+  value: SheetArg,
+): Pick<ResolvedItem, "ariaLabel" | "dismissible" | "height" | "width"> => {
   const options = resolvePresentationOptions(value);
-  return { ariaLabel: options?.ariaLabel, height: options?.height };
+  return {
+    ariaLabel: options?.ariaLabel,
+    dismissible: options?.dismissible,
+    height: options?.height,
+    width: options?.width,
+  };
 };
 /**
  * Warn when a content component shares its name with a different component

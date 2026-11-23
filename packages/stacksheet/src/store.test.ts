@@ -171,6 +171,35 @@ describe(createSheetStore, () => {
       expect(item?.data).toStrictEqual({ value: 2 });
     });
   });
+  // ── width and dismissible ───────────────────
+  describe("width and dismissible", () => {
+    it("keeps width and dismissible per item", () => {
+      const { store } = makeStore();
+      store.getState().open("a", "1", {}, { dismissible: false, width: 560 });
+      store.getState().push("b", "2", {});
+      store.getState().push("c", "3", {}, { dismissible: true, width: 400 });
+      const [first, second, third] = store.getState().stack;
+      expect(first).toMatchObject({ dismissible: false, width: 560 });
+      expect(second).not.toHaveProperty("dismissible");
+      expect(second).not.toHaveProperty("width");
+      expect(third).toMatchObject({ dismissible: true, width: 400 });
+    });
+
+    it("carries the options through a component command", () => {
+      const { store } = makeStore();
+      store.getState().open(SheetA, {}, { dismissible: false, width: 480 });
+      expect(store.getState().stack[0]).toMatchObject({ dismissible: false, width: 480 });
+    });
+
+    it("swap keeps the top item's values unless new ones are given", () => {
+      const { store } = makeStore();
+      store.getState().open("a", "1", {}, { dismissible: false, width: 560 });
+      store.getState().swap("b", {});
+      expect(store.getState().stack[0]).toMatchObject({ dismissible: false, width: 560 });
+      store.getState().swap("c", {}, { dismissible: true, width: 400 });
+      expect(store.getState().stack[0]).toMatchObject({ dismissible: true, width: 400 });
+    });
+  });
   // ── navigate ────────────────────────────────
   describe("navigate", () => {
     it("opens when stack is empty", () => {

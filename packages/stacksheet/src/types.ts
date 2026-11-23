@@ -53,6 +53,14 @@ export interface SheetPresentationOptions {
   ariaLabel?: string;
   /** Height of this Sheet when it is a bottom Sheet. Defaults to the stack's `height`. */
   height?: SheetHeight;
+  /**
+   * Whether this Sheet can be dismissed by Escape, a backdrop click or a drag.
+   * Defaults to the stack's `dismissible`. `close()`, `pop()` and `remove()`
+   * still work.
+   */
+  dismissible?: boolean;
+  /** Panel width in px when this Sheet is a side Sheet. Defaults to the stack's `width`. Bottom Sheets ignore it. */
+  width?: number;
 }
 
 // ── Sheet item ──────────────────────────────────
@@ -69,6 +77,10 @@ export interface SheetItem {
   ariaLabel?: string;
   /** Per-sheet bottom Sheet height, when set at open/push/replace/swap */
   height?: SheetHeight;
+  /** Per-sheet dismissibility, when set at open/push/replace/swap */
+  dismissible?: boolean;
+  /** Per-sheet side Sheet width in px, when set at open/push/replace/swap */
+  width?: number;
   /** Data payload passed when opening the sheet */
   data: SheetData;
   /** Unique identifier for this sheet instance */

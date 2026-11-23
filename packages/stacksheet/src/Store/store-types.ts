@@ -40,6 +40,8 @@ export interface SheetStoreBundle<TMap extends object> {
 export interface ResolvedItem {
   ariaLabel?: string;
   height?: SheetHeight;
+  dismissible?: boolean;
+  width?: number;
   data: SheetData;
   id: string;
   type: string | AnyComponent;

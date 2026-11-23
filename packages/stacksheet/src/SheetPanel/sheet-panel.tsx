@@ -222,6 +222,7 @@ const useSheetPanelMotion = (
     activeSnapIndex,
     config,
     isTop,
+    item,
     onSnap,
     onSwipeDismiss,
     prefersReducedMotion,
@@ -237,7 +238,7 @@ const useSheetPanelMotion = (
     measuredHeight,
   );
   // Drag stays on under reduced motion: it is direct manipulation, not decoration.
-  const dragEnabled = isActive && config.drag && config.dismissible;
+  const dragEnabled = isActive && config.drag && (item.dismissible ?? config.dismissible);
   const motion = usePanelMotion({
     dragEnabled,
     fitted: isFittedSheet(props),
@@ -305,7 +306,7 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   });
   const lastFocused = useLastFocused(panelRef);
 
-  const panelStyles = getPanelStyles(side, config, index, isFittedSheet(props));
+  const panelStyles = getPanelStyles(side, config, index, isFittedSheet(props), item.width);
   const ariaLabel = item.ariaLabel ?? config.ariaLabel;
   const panelId = `stacksheet-${item.id}`;
   const { hasDescription, hasTitle, panelContext } = useSheetPanelContext(

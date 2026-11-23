@@ -159,6 +159,19 @@ open(Filters, {}, { height: "fit" });
 
 Set a default for every Sheet with `createStacksheet({ height: "fit" })` and override it per Sheet with `{ height: "full" }`. The type is `SheetHeight` (`"full" | "fit"`). A fitted Sheet drags, stacks and animates like any other, and when its content grows or shrinks while it is open, the change in height animates. `height` applies to bottom Sheets without Snap Points; side Panels and snapping Sheets ignore it.
 
+## Width and dismissal per Sheet
+
+Width and dismissal are set for the whole stack, and each Sheet can override them. Pass them as presentation options to `open`, `push`, `replace`, `navigate` or `swap`:
+
+```tsx
+open(Filters, {}, { width: 400 });
+push(EditForm, { id }, { dismissible: false, width: 560 });
+```
+
+`width` is the Panel width in px for a side Sheet. It defaults to the stack's `width`, and bottom Sheets ignore it. Panels of different widths stack on each other without further setup.
+
+`dismissible` decides whether Escape, a backdrop click or a drag can dismiss the Sheet. It defaults to the stack's `dismissible`. The top Sheet decides: while a non-dismissible Sheet is on top, Escape and the backdrop do nothing, the backdrop cursor is not a pointer and the Sheet cannot be dragged away. Push a dismissible Sheet over it and the stack can be dismissed again. `close()`, `pop()` and `remove()` always work, so your own buttons can still close the Sheet. `swap` keeps the top Sheet's `width` and `dismissible` unless you pass new ones.
+
 ## Drag and motion
 
 Bottom Sheets are dragged down to dismiss and side Panels outward. Motion runs on Motion values, so a drag never re-renders React.

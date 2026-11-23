@@ -11,11 +11,25 @@ import {
 } from "./store-args";
 import type { ResolvedItem, SheetArg, SheetStoreBundle, StoreState } from "./store-types";
 
-const createItem = ({ type, id, data, ariaLabel, height }: ResolvedItem): SheetItem => {
+const createItem = ({
+  type,
+  id,
+  data,
+  ariaLabel,
+  dismissible,
+  height,
+  width,
+}: ResolvedItem): SheetItem => {
   const item: SheetItem = { ariaLabel, data, id, type };
   // Only set when asked for, so items stay as they were for every other Sheet.
   if (height !== undefined) {
     item.height = height;
+  }
+  if (dismissible !== undefined) {
+    item.dismissible = dismissible;
+  }
+  if (width !== undefined) {
+    item.width = width;
   }
   return item;
 };
@@ -102,6 +116,14 @@ const swappedTo =
     const height = presentation?.height ?? top.height;
     if (height !== undefined) {
       swapped.height = height;
+    }
+    const dismissible = presentation?.dismissible ?? top.dismissible;
+    if (dismissible !== undefined) {
+      swapped.dismissible = dismissible;
+    }
+    const width = presentation?.width ?? top.width;
+    if (width !== undefined) {
+      swapped.width = width;
     }
     return [...withoutTop(stack), swapped];
   };

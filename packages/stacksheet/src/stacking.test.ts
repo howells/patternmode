@@ -177,6 +177,16 @@ describe(getPanelStyles, () => {
     });
   });
 
+  it("uses the Sheet's own width over the stack's, and the stack's otherwise", () => {
+    expect(getPanelStyles("right", mockConfig, 0, false, 560)).toMatchObject({ width: 560 });
+    expect(getPanelStyles("left", mockConfig, 1, false, 400)).toMatchObject({ width: 400 });
+    expect(getPanelStyles("right", mockConfig, 0)).toMatchObject({ width: 420 });
+  });
+
+  it("ignores the Sheet's width for a bottom panel", () => {
+    expect(getPanelStyles("bottom", mockConfig, 0, false, 560)).not.toHaveProperty("width");
+  });
+
   it("increments zIndex by index", () => {
     const s0 = getPanelStyles("right", mockConfig, 0);
     const s1 = getPanelStyles("right", mockConfig, 1);
