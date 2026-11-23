@@ -1,5 +1,39 @@
 # @patternmode/stacksheet
 
+## 4.0.0
+
+### Major Changes
+
+- d960b32: Stacksheet's elements carry named classes instead of Tailwind utilities, and its registry item ships its stylesheet.
+
+  - **Breaking:** the Panel's elements no longer carry Tailwind utility classes (`min-h-11`, `fixed inset-0`, `grid`, …). Each styled element carries one class named after its part, such as `.patternmode-stacksheet__back`, `.patternmode-stacksheet__close`, `.patternmode-stacksheet__header`, `.patternmode-stacksheet__body` and `.patternmode-stacksheet__footer`, styled by `styles.css`. CSS or tests that selected the old utility classes must select the new class or the `data-stacksheet-*` attribute instead. The rendered styles are unchanged.
+  - **Breaking:** the bottom handle's position is a `data-stacksheet-handle-position="inside" | "outside"` attribute rather than its `top-0` or `bottom-full` class.
+  - **Breaking:** pointing your own Tailwind at the package (`@source ".../@patternmode/stacksheet/dist"`) no longer generates its styles, because there are no utilities in the markup to find. Import `@patternmode/stacksheet/styles.css`.
+  - **Breaking:** the shadcn registry item now ships `styles.css` beside the component and imports it. It used to ship no CSS and relied on your Tailwind scanning the vendored source; a vendored copy now brings its own stylesheet.
+  - The stylesheet still ships entirely inside `@layer components`, so your own utilities, and what you pass as `className` or `classNames`, still outrank it. It no longer ships the stray generic `.shadow` utility.
+
+- d960b32: One dismissal path, Sheets typed by key or component, and no compatibility aliases.
+
+  - **Fix:** `onCloseComplete` now reports the reason for the dismissal that actually closed the stack. A `close()` or `pop()` from `useSheet()` after an earlier swipe, Escape or backdrop close used to report that earlier reason.
+  - **Breaking:** the raw `store` no longer holds `isOpen`; it is `stack.length > 0`. `useStacksheetState()` still returns `isOpen`. The store's state type is exported as `StacksheetStoreState`.
+  - **Breaking:** a Sheet opened by component has that component as its `type`, where it used to have a generated `__adhoc_N` key. `SheetItem["type"]` is `string | SheetContentComponent`, and `SheetItem` is no longer generic.
+  - **Breaking:** a Sheet whose `type` is not in the `sheets` map throws; it used to render an empty Panel.
+  - **Breaking:** removed the `renderHeader={false}` alias for `layout="composable"`, the deprecated `classNames.header`, and the `__ariaLabel` data field (use the `ariaLabel` presentation option). `renderHeader` is only accepted with the classic layout.
+  - The inline-component warning is no longer limited to non-production builds.
+  - `HandlePosition` and `StacksheetLayoutProps` are exported.
+
+### Minor Changes
+
+- 7761c56: Add per-Sheet `width` and `dismissible` presentation options. `width` sets the side Panel width for one Sheet, and `dismissible: false` stops Escape, a backdrop click or a drag dismissing it; both default to the stack's config, and the top Sheet decides.
+
+### Patch Changes
+
+- Updated dependencies [d960b32]
+- Updated dependencies [d960b32]
+- Updated dependencies [d960b32]
+  - @howells/motion@1.0.0
+  - @patternmode/system@1.0.0
+
 ## 3.1.1
 
 ### Patch Changes

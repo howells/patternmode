@@ -1,5 +1,17 @@
 # @howells/motion
 
+## 1.0.0
+
+### Major Changes
+
+- d960b32: Exits ease out. `presets.dialogClose`, `presets.fadeOut` and `presets.slideOut` used the ease-in `customIn` curve, which spends its first frames barely moving; they now use `customOut`.
+
+  - **Breaking:** removed `easings.customIn` and `easingsCSS.customIn`.
+
+### Minor Changes
+
+- d960b32: Added `usePrefersReducedMotion` at `@howells/motion/react`: a live, SSR-safe reduced-motion hook built on `useSyncExternalStore`. It lives on its own subpath so the token entry stays importable from server code; `react` is an optional peer dependency used only by that subpath.
+
 ## 0.2.1
 
 ### Patch Changes

@@ -1,5 +1,29 @@
 # @patternmode/halo
 
+## 1.0.0
+
+### Major Changes
+
+- d960b32: Removed exports that duplicated `@patternmode/system` or predated `placement`.
+
+  - **Breaking:** removed `HaloColor`. The value type is `HslColor` from `@patternmode/system`, which has the same shape (`{ h, s, l }`).
+  - **Breaking:** removed the `hslToHex` re-export. Import it from `@patternmode/system`.
+  - **Breaking:** removed `clampValue` and `normalizeHue`. Use `clamp` and `wrapHue` from `@patternmode/system`.
+  - **Breaking:** removed the bottom-placement constants `HALO_ARC_START_DEG`, `HALO_ARC_END_DEG`, `HALO_WIDTH`, `HALO_HEIGHT`, `HALO_CENTER_X`, `HALO_CENTER_Y`, `HALO_VIEWBOX` and `HALO_ARC_PATH`. Use `getHaloGeometry("bottom")`.
+
+### Patch Changes
+
+- d960b32: Author each stylesheet with Tailwind v4 `@apply` against the theme, like the other packages. Class names, `data-*` selectors and `--patternmode-*` properties are unchanged, and the compiled `styles.css` resolves to the same declarations, with these exceptions:
+
+  - Deck and Status now declare `@layer theme, base, components, utilities;` before their rules. If their stylesheet loaded before the app declared its own layer order, `components` was registered ahead of `theme` and `base`, so the app's base reset outranked these rules. `components` now always sorts after them.
+  - Status (the track tint) and Briolette (the facet seam) use `color-mix()`. The compiled sheet now carries a fallback for browsers without `color-mix()`: the track draws in the mark's colour and the seam in the seam colour, where those browsers previously dropped the declaration. Browsers with `color-mix()` are unaffected.
+  - Halo and Briolette read the gap and value font size from the host's Tailwind theme (`--spacing`, `--text-xs`), and Halo's arc handle stroke from `--color-white`, falling back to the previous values when the theme does not define them.
+
+  The shadcn registry items for Deck, Halo, Briolette, Status and Verge ship `styles.css` as a file, which needs Tailwind CSS v4 to compile. Thumbnail is not a registry item.
+
+- Updated dependencies [d960b32]
+  - @patternmode/system@1.0.0
+
 ## 0.6.5
 
 ### Patch Changes

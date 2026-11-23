@@ -1,5 +1,16 @@
 # @patternmode/parquet
 
+## 0.2.0
+
+### Minor Changes
+
+- d960b32: A tile can set `isLight` to override the tone analysis. A tile color the analysis cannot parse (`var()`, `color-mix()`, most named colors) still renders as not light, as before; set `isLight` when such a tile is light. Tiles with 4- or 8-digit hex now get a tone from their channels.
+
+### Patch Changes
+
+- Updated dependencies [d960b32]
+  - @patternmode/system@1.0.0
+
 ## 0.1.10
 
 ### Patch Changes

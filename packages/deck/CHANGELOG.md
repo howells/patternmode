@@ -1,5 +1,35 @@
 # @patternmode/deck
 
+## 1.0.0
+
+### Major Changes
+
+- d960b32: Dragging a card no longer re-renders the Deck. The drag offset is a Motion value shared by the stack: background cards derive their response with `useTransform` and follow it on their existing springs, and the active card's tilt follows the pointer directly, so React renders once per advance, not once per pointer move.
+
+  - **Breaking:** removed the `CardStack` alias. Use `Deck`.
+  - **Breaking:** removed internal helpers from the public entry: `getAdvanceDecision`, `getNextDeckIndex`, `getVisibleDeckItems`, `getVisualDepth` (deleted outright), `resolveCardRotation`, and the `AdvanceDecision`, `AdvanceDecisionInput` and `DeckItem` types.
+  - **Breaking:** a drag that ends on a card that was never measured now throws, instead of assuming a 320px card. A card the pointer can grab always has a width in a browser.
+
+### Patch Changes
+
+- d960b32: Motion fixes.
+
+  - Swatch: a Distribution Bar boundary moved by key lands at once; the settle transition no longer lags a held arrow key.
+  - Channel: the active thumb's core scales on a plain ease-out, without overshoot or delay.
+  - Deck: a leaving card fades on a linear curve, not ease-in.
+  - Tags and Aperto: hover styles apply only on devices that hover with a fine pointer, so a tap no longer leaves them stuck.
+
+- d960b32: Author each stylesheet with Tailwind v4 `@apply` against the theme, like the other packages. Class names, `data-*` selectors and `--patternmode-*` properties are unchanged, and the compiled `styles.css` resolves to the same declarations, with these exceptions:
+
+  - Deck and Status now declare `@layer theme, base, components, utilities;` before their rules. If their stylesheet loaded before the app declared its own layer order, `components` was registered ahead of `theme` and `base`, so the app's base reset outranked these rules. `components` now always sorts after them.
+  - Status (the track tint) and Briolette (the facet seam) use `color-mix()`. The compiled sheet now carries a fallback for browsers without `color-mix()`: the track draws in the mark's colour and the seam in the seam colour, where those browsers previously dropped the declaration. Browsers with `color-mix()` are unaffected.
+  - Halo and Briolette read the gap and value font size from the host's Tailwind theme (`--spacing`, `--text-xs`), and Halo's arc handle stroke from `--color-white`, falling back to the previous values when the theme does not define them.
+
+  The shadcn registry items for Deck, Halo, Briolette, Status and Verge ship `styles.css` as a file, which needs Tailwind CSS v4 to compile. Thumbnail is not a registry item.
+
+- Updated dependencies [d960b32]
+  - @patternmode/system@1.0.0
+
 ## 0.5.4
 
 ### Patch Changes

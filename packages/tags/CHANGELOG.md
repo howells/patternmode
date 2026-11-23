@@ -1,5 +1,40 @@
 # @patternmode/tags
 
+## 3.0.0
+
+### Major Changes
+
+- d960b32: Creation failures reach the consumer, and Tag takes only `variant`.
+
+  - **Fix:** a throwing or rejecting `onCreateItem` used to become an unhandled rejection from Enter, paste or the create option, and one failure in a paste discarded every label. Each failed label now produces a `TagCreationError` (exported, with `label` and the original error as `cause`) passed to the new `onCreateItemError` prop. Labels that were created are still selected, and an Enter-committed draft stays in the search for a retry. Without `onCreateItemError` the error is rethrown, as before.
+  - **Breaking:** removed the deprecated `tone` prop on `Tag` and the `TagTone` type. Use `variant`; a Tag without one is still `"secondary"`.
+  - **Breaking:** `TagSelector.Option` takes a required `item`. Its undocumented `option` prop is removed, and rendering it with neither is no longer possible.
+  - `separators` now defaults to `[","]` and lists only the keys that commit in addition to Enter, which always commits. Behaviour is unchanged: Enter already committed whatever `separators` held.
+
+### Patch Changes
+
+- d960b32: Motion fixes.
+
+  - Swatch: a Distribution Bar boundary moved by key lands at once; the settle transition no longer lags a held arrow key.
+  - Channel: the active thumb's core scales on a plain ease-out, without overshoot or delay.
+  - Deck: a leaving card fades on a linear curve, not ease-in.
+  - Tags and Aperto: hover styles apply only on devices that hover with a fine pointer, so a tap no longer leaves them stuck.
+
+- d960b32: Author each stylesheet with Tailwind v4 `@apply` against the theme, like the other packages. Class names, `data-*` selectors and `--patternmode-*` properties are unchanged, and the compiled `styles.css` resolves to the same declarations, with these exceptions:
+
+  - Swatch and ScrollFrame now declare `@layer theme, base, components, utilities;` before their rules. If their stylesheet loaded before the app declared its own layer order, `components` was registered ahead of `theme` and `base`, so the app's base reset outranked these rules. `components` now always sorts after them. Tags and Channel already declared it.
+  - Tags (the trigger's focus halo and the search field's focus border) and ScrollFrame (the scrollbar thumb, and the control's background and border) use `color-mix()`. The compiled sheet now carries a fallback for browsers without `color-mix()`: the halo and border draw in the solid ring colour, the thumb in solid `currentColor`, and the control in the solid card and border colours, where those browsers previously dropped the declaration. Browsers with `color-mix()` are unaffected.
+  - Spacing and font weight read the host's Tailwind theme (`--spacing`, `--font-weight-medium`), and Swatch's icon colour reads `--color-white`, falling back to the previous values when the theme does not define them.
+  - Transitions are written as `transition-property`, `transition-duration` and `transition-timing-function` instead of the `transition` shorthand, so they no longer reset `transition-delay`. Nothing in these stylesheets sets a delay, so the delay is still 0s unless an app sets one.
+
+  The shadcn registry items for Swatch, Tags and ScrollFrame now ship `styles.css` as a file, like Channel, which needs Tailwind CSS v4 to compile.
+
+- Updated dependencies [d960b32]
+- Updated dependencies [d960b32]
+- Updated dependencies [d960b32]
+  - @patternmode/scrollframe@2.0.10
+  - @patternmode/system@1.0.0
+
 ## 2.0.9
 
 ### Patch Changes

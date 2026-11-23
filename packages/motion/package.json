@@ -1,6 +1,6 @@
 {
   "name": "@howells/motion",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "private": false,
   "description": "Shared motion tokens — springs, easings, durations, scales, and semantic presets for Patternmode interfaces.",
   "keywords": [

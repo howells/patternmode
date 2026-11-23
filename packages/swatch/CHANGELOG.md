@@ -1,5 +1,38 @@
 # @patternmode/swatch
 
+## 6.0.0
+
+### Major Changes
+
+- d960b32: Distribution Segments and weighted `colors` fills now derive their shares through `@patternmode/system`'s `deriveDistribution` instead of re-implementing the sanitize/total/percentage arithmetic. Rendered output is unchanged, including the two all-zero policies: a Distribution Bar or Display draws every segment at 0%, and a weighted `colors` fill falls back to equal bands.
+
+  A plain `color` the tone analysis cannot parse (`var()`, `color-mix()`, most named colors) still renders with the dark tone; pass `isLight` for such a fill when it is light. Colors with 4- or 8-digit hex now get a tone from their channels.
+
+  - **Breaking:** removed the `DistributionBarSegment` and `DistributionBarSegmentUpdate` aliases. Use `DistributionSegment` and `DistributionSegmentUpdate`.
+  - **Breaking:** removed `SWATCH_SIZES`, `SWATCH_SIZE_VALUES` and `SwatchSize`. The scale lives in `@patternmode/system` as `PATTERNMODE_EXTENDED_SIZES`, `PATTERNMODE_EXTENDED_SIZE_VALUES` and `PatternmodeExtendedSize`.
+  - `getDistributionBoundaryPercent` with an index past the last segment returns the end of the bar.
+
+### Patch Changes
+
+- d960b32: Motion fixes.
+
+  - Swatch: a Distribution Bar boundary moved by key lands at once; the settle transition no longer lags a held arrow key.
+  - Channel: the active thumb's core scales on a plain ease-out, without overshoot or delay.
+  - Deck: a leaving card fades on a linear curve, not ease-in.
+  - Tags and Aperto: hover styles apply only on devices that hover with a fine pointer, so a tap no longer leaves them stuck.
+
+- d960b32: Author each stylesheet with Tailwind v4 `@apply` against the theme, like the other packages. Class names, `data-*` selectors and `--patternmode-*` properties are unchanged, and the compiled `styles.css` resolves to the same declarations, with these exceptions:
+
+  - Swatch and ScrollFrame now declare `@layer theme, base, components, utilities;` before their rules. If their stylesheet loaded before the app declared its own layer order, `components` was registered ahead of `theme` and `base`, so the app's base reset outranked these rules. `components` now always sorts after them. Tags and Channel already declared it.
+  - Tags (the trigger's focus halo and the search field's focus border) and ScrollFrame (the scrollbar thumb, and the control's background and border) use `color-mix()`. The compiled sheet now carries a fallback for browsers without `color-mix()`: the halo and border draw in the solid ring colour, the thumb in solid `currentColor`, and the control in the solid card and border colours, where those browsers previously dropped the declaration. Browsers with `color-mix()` are unaffected.
+  - Spacing and font weight read the host's Tailwind theme (`--spacing`, `--font-weight-medium`), and Swatch's icon colour reads `--color-white`, falling back to the previous values when the theme does not define them.
+  - Transitions are written as `transition-property`, `transition-duration` and `transition-timing-function` instead of the `transition` shorthand, so they no longer reset `transition-delay`. Nothing in these stylesheets sets a delay, so the delay is still 0s unless an app sets one.
+
+  The shadcn registry items for Swatch, Tags and ScrollFrame now ship `styles.css` as a file, like Channel, which needs Tailwind CSS v4 to compile.
+
+- Updated dependencies [d960b32]
+  - @patternmode/system@1.0.0
+
 ## 5.1.3
 
 ### Patch Changes
