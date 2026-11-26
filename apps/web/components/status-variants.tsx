@@ -1,6 +1,7 @@
 import { StatusMark } from "@patternmode/status";
 
 import { VariantCell, VariantsBlock } from "./variant-cells";
+import "@patternmode/status/styles.css";
 import "./status-demo.css";
 
 const TRACK = "var(--border)";

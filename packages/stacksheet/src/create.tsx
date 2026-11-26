@@ -70,13 +70,30 @@ export const createStacksheet = <TMap extends object>(
   // ── Provider ────────────────────────────────
   // Built once per instance and frozen, so every render hands consumers the same object.
   const providerValue = Object.freeze({ config: resolved, store });
-  const StacksheetProvider = ({ children, ...rendererProps }: StacksheetProviderProps<TMap>) => (
+  const initialState = store.getState();
+  const stableActions: SheetActions<TMap> = Object.freeze({
+    close: initialState.close,
+    navigate: initialState.navigate,
+    open: initialState.open,
+    pop: initialState.pop,
+    push: initialState.push,
+    remove: initialState.remove,
+    replace: initialState.replace,
+    setData: initialState.setData,
+    swap: initialState.swap,
+  });
+  const StacksheetProvider = ({
+    children,
+    container,
+    ...rendererProps
+  }: StacksheetProviderProps<TMap>) => (
     <StoreContext.Provider value={providerValue}>
       {children}
-      <SheetPortal>
+      <SheetPortal container={container}>
         <SheetRenderer<TMap>
           {...rendererProps}
           config={resolved}
+          container={container ?? undefined}
           dismissal={dismissal}
           stackMotion={stackMotion}
           store={store}
@@ -86,20 +103,8 @@ export const createStacksheet = <TMap extends object>(
   );
   // ── Hooks ───────────────────────────────────
   const useSheet = (): SheetActions<TMap> => {
-    const { store: s } = useStoreContext();
-    // Actions are stable refs in Zustand v5 — read once, no subscription needed
-    const state = s.getState();
-    return {
-      close: state.close,
-      navigate: state.navigate,
-      open: state.open,
-      pop: state.pop,
-      push: state.push,
-      remove: state.remove,
-      replace: state.replace,
-      setData: state.setData,
-      swap: state.swap,
-    };
+    useStoreContext();
+    return stableActions;
   };
   const useStacksheetState = (): StacksheetSnapshot<TMap> => {
     const { store: s } = useStoreContext();

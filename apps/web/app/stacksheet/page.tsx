@@ -1,8 +1,7 @@
-import { ApiTable, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
+import { DocsBlock } from "@/components/docs-blocks";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { StacksheetDemo } from "@/components/stacksheet-demo";
 import { StacksheetVariants } from "@/components/stacksheet-variants";
 import { StacksheetExamples } from "@/components/stacksheet-examples";
@@ -76,26 +75,19 @@ function OpenSettings() {
 
 export default function StacksheetPage() {
   return (
-    <ComponentFrame
+    <PackageDocs
+      api={stacksheetApi}
       caption="Two sheets deep. The root sheet steps back; Back pops, Escape pops, Close clears the stack."
       demo={<StacksheetDemo />}
+      example={stacksheetExample}
+      installLead="Create the stack once, wrap the app in its provider, then open sheets from any component."
+      readMore="Read the package README for callbacks, snap points, accessibility, and styling details."
       slug="stacksheet"
+      variants={<StacksheetVariants />}
     >
-      <StacksheetVariants />
-      <InstallBlock
-        command="npm i @patternmode/stacksheet motion"
-        example={stacksheetExample}
-        lead="Create the stack once, wrap the app in its provider, then open sheets from any component."
-      />
       <DocsBlock title="Examples">
         <StacksheetExamples />
       </DocsBlock>
-      <DocsBlock title="Core API">
-        <ApiTable sections={stacksheetApi} />
-      </DocsBlock>
-      <p className="read-more">
-        Read the package README for callbacks, snap points, accessibility, and styling details.
-      </p>
-    </ComponentFrame>
+    </PackageDocs>
   );
 }

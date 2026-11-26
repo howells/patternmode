@@ -49,7 +49,7 @@ const StacksheetPreview = () => (
     <span className="absolute top-8 right-15 size-75 rounded-xl border border-border bg-card shadow-fixture-sheet" />
     <div className="absolute top-5 right-6 flex size-75 flex-col rounded-xl border border-border bg-card shadow-fixture-sheet-top">
       <div className="flex h-11 shrink-0 items-center justify-between border-b border-border pr-3 pl-2">
-        <span className="flex items-center gap-1.5 type-ui">
+        <span className="flex items-center gap-1.5 type-body">
           <Chevron direction="left" stroke="var(--foreground)" />
           Sample order
         </span>
@@ -58,10 +58,10 @@ const StacksheetPreview = () => (
       <div className="flex flex-col gap-3.5 p-4">
         <span className="text-4xl leading-9 tracking-fixture-figure">18.90</span>
         <span className="flex flex-col">
-          <span className="flex h-8 items-center justify-between border-b border-border type-ui">
+          <span className="flex h-8 items-center justify-between border-b border-border type-body">
             <span className="text-muted-foreground">Swatches</span>6
           </span>
-          <span className="flex h-8 items-center justify-between border-b border-border type-ui">
+          <span className="flex h-8 items-center justify-between border-b border-border type-body">
             <span className="text-muted-foreground">Shipped</span>28 Oct
           </span>
         </span>
@@ -123,11 +123,11 @@ const ScrollFramePreview = () => (
     <div className="relative flex h-42.5 w-58 flex-col overflow-hidden rounded-lg border border-border bg-card px-3.5">
       {SCROLL_ROWS.map(([label, time], index) => (
         <span
-          className={`flex h-9 shrink-0 items-center justify-between type-ui ${index < SCROLL_ROWS.length - 1 ? "border-b border-border" : ""}`}
+          className={`flex h-9 shrink-0 items-center justify-between type-body ${index < SCROLL_ROWS.length - 1 ? "border-b border-border" : ""}`}
           key={label}
         >
           {label}
-          <span className="type-meta text-muted-foreground">{time}</span>
+          <span className="type-body text-muted-foreground">{time}</span>
         </span>
       ))}
       <span className="absolute bottom-0 left-0 h-18 w-full bg-linear-to-b from-fixture-clear to-card" />
@@ -168,7 +168,7 @@ const VergePreview = () => (
     <div className="flex w-62 flex-col rounded-lg border border-border bg-card p-1">
       {VERGE_ROWS.map((row) => (
         <span
-          className={`flex h-10 items-center gap-2.5 rounded-md pr-1 pl-2.5 type-ui ${row.active === true ? "bg-muted" : ""}`}
+          className={`flex h-10 items-center gap-2.5 rounded-md pr-1 pl-2.5 type-body ${row.active === true ? "bg-muted" : ""}`}
           key={row.name}
         >
           <span className="size-4 shrink-0 rounded-full" style={{ background: row.color }} />
@@ -258,7 +258,7 @@ const StatusPreview = () => (
         <circle cx="14" cy="14" r="11" stroke="var(--ring)" strokeWidth="2" />
       </svg>
     </span>
-    <span className="flex w-59 justify-between type-meta text-muted-foreground">
+    <span className="flex w-59 justify-between type-body text-muted-foreground">
       <span>Not known</span>
       <span>Done</span>
     </span>
@@ -283,7 +283,7 @@ const ParquetPreview = () => (
   <div className="preview-stage flex items-center justify-center">
     <span className="flex h-44 w-62 gap-0.75 overflow-hidden rounded-lg">
       <span className="flex w-25.75 shrink-0 items-end p-2.5" style={{ background: EVERGREEN }}>
-        <span className="type-meta text-fixture-on-dark">Evergreen 42%</span>
+        <span className="type-body text-fixture-on-dark">Evergreen 42%</span>
       </span>
       <span className="flex grow flex-col gap-0.75">
         <span className="h-21 shrink-0" style={{ background: SAFFRON }} />
@@ -344,7 +344,7 @@ const glassThumb = "absolute top-1 size-6 rounded-full bg-fixture-glass shadow-f
 const ChannelPreview = () => (
   <div className="preview-stage flex flex-col justify-center gap-5.5 px-10">
     <span className="flex flex-col gap-2">
-      <span className="flex justify-between type-ui">
+      <span className="flex justify-between type-body">
         Lightness<span className="type-data text-muted-foreground">62</span>
       </span>
       <span
@@ -357,7 +357,7 @@ const ChannelPreview = () => (
       </span>
     </span>
     <span className="flex flex-col gap-2">
-      <span className="flex justify-between type-ui">
+      <span className="flex justify-between type-body">
         Chroma range<span className="type-data text-muted-foreground">20–70</span>
       </span>
       <span
@@ -379,7 +379,7 @@ const ApertoPreview = () => (
     <span className="h-40.25 w-60 overflow-hidden rounded-md">
       <Photo className="size-full object-cover" sizes="240px" src="/media/slit-window.jpg" />
     </span>
-    <span className="flex w-60 justify-between type-meta">
+    <span className="flex w-60 justify-between type-body">
       <span className="text-fixture-dark-text">Slit window</span>
       <span className="text-fixture-dark-muted">3 of 6</span>
     </span>
@@ -473,7 +473,7 @@ const TagsPreview = () => (
       <span className="flex h-10 items-center gap-1.5 rounded-lg border border-ring bg-card px-1.5 shadow-fixture-focus">
         {["Accessible", "Keyboard first"].map((tag) => (
           <span
-            className="flex h-6.5 items-center gap-1 rounded-md bg-muted pr-1.5 pl-2.25 type-ui"
+            className="flex h-6.5 items-center gap-1 rounded-md bg-muted pr-1.5 pl-2.25 type-body"
             key={tag}
           >
             {tag}
@@ -482,11 +482,11 @@ const TagsPreview = () => (
         ))}
       </span>
       <span className="flex flex-col gap-0.5 rounded-lg border border-border bg-card p-1 shadow-fixture-menu">
-        <span className="flex h-9 items-center border-b border-border px-2 type-ui">touch</span>
-        <span className="flex h-8.5 items-center rounded-md bg-muted px-2 type-ui">
+        <span className="flex h-9 items-center border-b border-border px-2 type-body">touch</span>
+        <span className="flex h-8.5 items-center rounded-md bg-muted px-2 type-body">
           Touch friendly
         </span>
-        <span className="flex h-8.5 items-center px-2 type-ui text-muted-foreground">
+        <span className="flex h-8.5 items-center px-2 type-body text-muted-foreground">
           Create “touch”
         </span>
       </span>

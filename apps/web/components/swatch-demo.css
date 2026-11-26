@@ -23,7 +23,7 @@
 }
 
 .swatch-demo-restore {
-  @apply type-ui cursor-pointer rounded-md border-0 bg-transparent px-3 py-1.5 text-foreground shadow-[inset_0_0_0_1px_var(--border)];
+  @apply type-body cursor-pointer rounded-md border-0 bg-transparent px-3 py-1.5 text-foreground shadow-[inset_0_0_0_1px_var(--border)];
 }
 
 .swatch-demo-restore:focus-visible {

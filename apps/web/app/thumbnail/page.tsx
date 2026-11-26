@@ -1,11 +1,10 @@
-import { ApiTable, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 import { Thumbnail } from "@patternmode/thumbnail";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
 import { componentMetadata } from "@/lib/catalogue";
+import "@patternmode/thumbnail/styles.css";
 import "./thumbnail.css";
 
 export const metadata = componentMetadata("thumbnail");
@@ -163,16 +162,13 @@ const ThumbnailVariants = () => (
 
 export default function ThumbnailPage() {
   return (
-    <ComponentFrame demo={<ThumbnailDemo />} slug="thumbnail">
-      <ThumbnailVariants />
-      <InstallBlock
-        command="npm i @patternmode/thumbnail"
-        example={example}
-        lead="Pass src for a plain img, or children for your own media element. Needs Tailwind CSS v4."
-      />
-      <DocsBlock title="Core API">
-        <ApiTable sections={thumbnailApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={thumbnailApi}
+      demo={<ThumbnailDemo />}
+      example={example}
+      installLead="Pass src for a plain img, or children for your own media element. Needs Tailwind CSS v4."
+      slug="thumbnail"
+      variants={<ThumbnailVariants />}
+    />
   );
 }

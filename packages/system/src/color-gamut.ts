@@ -2,6 +2,9 @@ import type { OklabColor } from "./color";
 import { oklabToLinearRgb, oklabToOklch, oklchToOklab } from "./color";
 import { clamp, wrapHue } from "./math";
 
+/** Upper bound on cached chroma limits; the oldest entry is evicted first. */
+const MAX_CHROMA_LIMITS = 4096;
+
 const chromaLimits = new Map<string, number>();
 
 const withinGamut = (L: number, C: number, h: number): boolean => {
@@ -27,6 +30,12 @@ const findChromaLimit = (lightness: number, hue: number): number => {
       lower = candidate;
     } else {
       upper = candidate;
+    }
+  }
+  if (chromaLimits.size >= MAX_CHROMA_LIMITS) {
+    const [oldest] = chromaLimits.keys();
+    if (oldest !== undefined) {
+      chromaLimits.delete(oldest);
     }
   }
   chromaLimits.set(key, lower);

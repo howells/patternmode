@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * Inter is not wired here: the `font-inter` registry item (a transitive
- * dependency of @patternmode/theme) injects `@fontsource-variable/inter`
- * imports and `--font-inter` into globals.css on every registry sync — the
- * same path external consumers get.
+ * Fonts are not wired here: the `font-inter` registry item (a transitive
+ * dependency of @patternmode/theme) injects the `inter-ui` import and
+ * `--font-inter` into globals.css on every registry sync — the same path
+ * external consumers get.
  */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

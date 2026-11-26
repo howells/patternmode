@@ -84,6 +84,28 @@ const getRootStyle = (
   ...style,
 });
 
+/**
+ * Re-measures when the viewport or its content wrapper resizes, or the
+ * viewport scrolls. The viewport keeps its size inside a fixed-size frame, so
+ * children changing show up as the content wrapper resizing, not the viewport.
+ * Returns the cleanup.
+ */
+const observeViewport = (viewport: HTMLDivElement, measure: () => void): (() => void) => {
+  measure();
+  const content = viewport.querySelector(":scope > [data-slot='scrollframe-content']");
+  const ResizeObserverCtor = globalThis.ResizeObserver;
+  const resizeObserver = ResizeObserverCtor === undefined ? null : new ResizeObserverCtor(measure);
+  resizeObserver?.observe(viewport);
+  if (content !== null) {
+    resizeObserver?.observe(content);
+  }
+  viewport.addEventListener("scroll", measure, { passive: true });
+  return () => {
+    resizeObserver?.disconnect();
+    viewport.removeEventListener("scroll", measure);
+  };
+};
+
 const useMeasuredViewport = () => {
   const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
   const [edgeState, setEdgeState] = useState<ScrollFrameEdgeState>(DEFAULT_EDGE_STATE);
@@ -120,28 +142,15 @@ const useMeasuredViewport = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const cleanupMeasure = measureRef.current;
-    if (viewport === null) {
-      return () => {
-        cleanupMeasure();
-      };
-    }
-
-    const handleMeasure = () => {
-      measureRef.current();
-    };
-    handleMeasure();
-    const ResizeObserverCtor = globalThis.ResizeObserver;
-    const resizeObserver =
-      ResizeObserverCtor === undefined ? null : new ResizeObserverCtor(handleMeasure);
-    resizeObserver?.observe(viewport);
-    viewport.addEventListener("scroll", handleMeasure, { passive: true });
-    return () => {
-      resizeObserver?.disconnect();
-      viewport.removeEventListener("scroll", handleMeasure);
-    };
-  }, [viewport]);
+  useEffect(
+    () =>
+      viewport === null
+        ? undefined
+        : observeViewport(viewport, () => {
+            measureRef.current();
+          }),
+    [viewport],
+  );
 
   return { edgeState, registerViewport, viewport, viewportRef };
 };

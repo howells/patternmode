@@ -174,6 +174,33 @@ describe("Verge reveal contract", () => {
     });
   });
 
+  describe("polymorphic ref", () => {
+    it("types and forwards the ref of the rendered element", () => {
+      let root: HTMLUListElement | null = null;
+      let slot: HTMLButtonElement | null = null;
+      render(
+        <VergeRoot
+          as="ul"
+          ref={(node: HTMLUListElement | null) => {
+            root = node;
+          }}
+        >
+          <VergeSlot
+            as="button"
+            ref={(node: HTMLButtonElement | null) => {
+              slot = node;
+            }}
+            slots={2}
+            style={{ color: "red" }}
+          />
+        </VergeRoot>,
+      );
+
+      expect(root).toBeInstanceOf(HTMLUListElement);
+      expect(slot).toBeInstanceOf(HTMLButtonElement);
+    });
+  });
+
   describe("namespace", () => {
     it("exposes the same components as Verge.Root and Verge.Slot", () => {
       expect(Verge.Root).toBe(VergeRoot);

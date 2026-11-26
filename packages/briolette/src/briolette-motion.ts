@@ -20,7 +20,10 @@ export interface BrioletteTween {
   to: BrioletteQuat;
 }
 
-export const useViewportPresence = (stageRef: RefObject<HTMLDivElement | null>) => {
+export const useViewportPresence = (
+  stageRef: RefObject<HTMLDivElement | null>,
+  onVisibleRef: RefObject<(() => void) | null>,
+) => {
   const isInViewportRef = useRef(true);
 
   useEffect(() => {
@@ -28,7 +31,11 @@ export const useViewportPresence = (stageRef: RefObject<HTMLDivElement | null>) 
     const observer =
       stage && typeof IntersectionObserver !== "undefined"
         ? new IntersectionObserver(([entry]) => {
-            isInViewportRef.current = entry?.isIntersecting ?? true;
+            const visible = entry?.isIntersecting ?? true;
+            isInViewportRef.current = visible;
+            if (visible) {
+              onVisibleRef.current?.();
+            }
           })
         : null;
     if (stage && observer) {
@@ -37,7 +44,7 @@ export const useViewportPresence = (stageRef: RefObject<HTMLDivElement | null>) 
     return () => {
       observer?.disconnect();
     };
-  }, [stageRef]);
+  }, [onVisibleRef, stageRef]);
 
   return isInViewportRef;
 };
@@ -55,17 +62,22 @@ export interface BrioletteMotionRefs {
  * pinned facet stays put; reduced motion opts out of all autonomous motion.
  * `isMotionReduced` is live, so turning "reduce motion" on while mounted stops
  * inertia and lands any in-flight glide on its target at once.
+ *
+ * Schedules frames only while work is active; callers invoke the returned
+ * `wake` callback whenever a tween, inertia release, or viewport reveal
+ * introduces new motion.
  */
 export const useIdleMotion = (
   refs: BrioletteMotionRefs,
   setOrientation: (update: (q: BrioletteQuat) => BrioletteQuat) => void,
   isDriftEnabled: boolean,
   isMotionReduced: boolean,
+  wakeRef: RefObject<(() => void) | null>,
 ) => {
   const { isInViewportRef, isPointerActiveRef, tweenRef, velocityRef } = refs;
   useEffect(() => {
-    let frame = 0;
     if (typeof requestAnimationFrame === "undefined") {
+      wakeRef.current = null;
       return () => {
         // No animation scheduled without a frame scheduler.
       };
@@ -78,17 +90,33 @@ export const useIdleMotion = (
         tweenRef.current = null;
         setOrientation(() => tween.to);
       }
+      wakeRef.current = null;
+      return () => {
+        // Reduced motion runs no autonomous animation frames.
+      };
     }
 
+    let frame = 0;
     let last = performance.now();
+
+    const needsFrame = () => {
+      if (tweenRef.current !== null) {
+        return true;
+      }
+      if (isPointerActiveRef.current || !isInViewportRef.current || document.hidden) {
+        return false;
+      }
+      const velocity = velocityRef.current;
+      return isDriftEnabled || Math.hypot(velocity.yaw, velocity.pitch) > INERTIA_REST_SPEED;
+    };
+
     const tick = (now: number) => {
+      frame = 0;
       const elapsed = Math.min(now - last, MAX_FRAME_MS);
       last = now;
 
       const tween = tweenRef.current;
-      if (isMotionReduced) {
-        // Autonomous motion is opted out; direct manipulation still applies.
-      } else if (tween) {
+      if (tween) {
         tween.elapsed += elapsed;
         const t = Math.min(tween.elapsed / tween.duration, 1);
         setOrientation(() => quatSlerp(tween.from, tween.to, easeOutCubic(t)));
@@ -115,12 +143,36 @@ export const useIdleMotion = (
         }
       }
 
-      frame = requestAnimationFrame(tick);
+      if (needsFrame()) {
+        frame = requestAnimationFrame(tick);
+      }
     };
 
-    frame = requestAnimationFrame(tick);
+    const wake = () => {
+      if (frame === 0 && needsFrame()) {
+        last = performance.now();
+        frame = requestAnimationFrame(tick);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        wake();
+      }
+    };
+
+    wakeRef.current = wake;
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    wake();
+
     return () => {
-      cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (wakeRef.current === wake) {
+        wakeRef.current = null;
+      }
+      if (frame !== 0) {
+        cancelAnimationFrame(frame);
+      }
     };
   }, [
     isInViewportRef,
@@ -130,5 +182,6 @@ export const useIdleMotion = (
     setOrientation,
     isDriftEnabled,
     isMotionReduced,
+    wakeRef,
   ]);
 };

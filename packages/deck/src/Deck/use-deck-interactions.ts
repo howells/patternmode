@@ -12,6 +12,17 @@ import type {
   DeckRootProps,
 } from "../types";
 
+const RANGE_NAVIGATION_KEYS = new Set([
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowUp",
+  "End",
+  "Home",
+  "PageDown",
+  "PageUp",
+]);
+
 export interface DeckState {
   exitVelocity: number;
   /** The active index of an uncontrolled deck. A controlled deck reads its `index` prop instead. */
@@ -22,6 +33,7 @@ export interface DeckState {
 }
 
 export interface DeckAdvance {
+  controlled: boolean;
   direction: AdvanceDirection;
   nextIndex: number;
   velocity: number;
@@ -36,9 +48,9 @@ export const createDeckState = (defaultIndex: number): DeckState => ({
 
 export const deckReducer = (state: DeckState, advance: DeckAdvance): DeckState => ({
   exitVelocity: advance.velocity,
-  internalIndex: advance.nextIndex,
+  internalIndex: advance.controlled ? state.internalIndex : advance.nextIndex,
   lastDirection: advance.direction,
-  visualBaseIndex: state.visualBaseIndex + 1,
+  visualBaseIndex: advance.controlled ? state.visualBaseIndex : state.visualBaseIndex + 1,
 });
 
 /** Drag, keyboard, and advance-lifecycle handlers shared by the deck's cards. */
@@ -50,6 +62,7 @@ export const useDeckInteractions = ({
   disabled,
   dispatch,
   distanceThreshold,
+  isControlled,
   mode,
   onAdvance,
   onAdvanceEnd,
@@ -65,6 +78,7 @@ export const useDeckInteractions = ({
   disabled: boolean;
   dispatch: (advance: DeckAdvance) => void;
   distanceThreshold: number;
+  isControlled: boolean;
   mode: DeckMode;
   onAdvance: DeckRootProps["onAdvance"];
   onAdvanceEnd: DeckRootProps["onAdvanceEnd"];
@@ -104,12 +118,16 @@ export const useDeckInteractions = ({
       nextIndex,
     };
 
-    dispatch({ direction, nextIndex, velocity });
+    dispatch({ controlled: isControlled, direction, nextIndex, velocity });
     onAdvance?.(event);
     onIndexChange?.(nextIndex);
-    // Deliver any advance whose exit never completed, then defer this one
-    // until AnimatePresence reports the exit animation has finished.
-    flushAdvanceEnd();
+    // Deliver any uncontrolled advance whose exit never completed, then defer
+    // this one until AnimatePresence reports the exit animation has finished.
+    // In controlled mode an unaccepted advance never exits a card, so do not
+    // flush it as completed when a subsequent gesture arrives.
+    if (!isControlled) {
+      flushAdvanceEnd();
+    }
     pendingAdvanceEndRef.current = event;
 
     if (mode === "finite" && nextIndex >= cards.length) {
@@ -158,13 +176,15 @@ export const useDeckInteractions = ({
       return;
     }
 
-    if (event.key === "ArrowLeft" && allowedDirections.includes("left")) {
+    if (RANGE_NAVIGATION_KEYS.has(event.key)) {
       event.preventDefault();
+    }
+
+    if (event.key === "ArrowLeft" && allowedDirections.includes("left")) {
       commitAdvance("left");
     }
 
     if (event.key === "ArrowRight" && allowedDirections.includes("right")) {
-      event.preventDefault();
       commitAdvance("right");
     }
   };

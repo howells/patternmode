@@ -167,8 +167,10 @@ export const pointerToHaloPad = (
   clientY: number,
   padRect: DOMRect,
 ): Pick<HslColor, "l" | "s"> => {
-  const localX = clientX - padRect.left - HALO_PAD_RADIUS;
-  const localY = clientY - padRect.top - HALO_PAD_RADIUS;
+  const scaleX = padRect.width > 0 ? HALO_PAD_SIZE / padRect.width : 1;
+  const scaleY = padRect.height > 0 ? HALO_PAD_SIZE / padRect.height : 1;
+  const localX = (clientX - padRect.left) * scaleX - HALO_PAD_RADIUS;
+  const localY = (clientY - padRect.top) * scaleY - HALO_PAD_RADIUS;
   const clamped = clampPointToCircle(localX, localY, HALO_PAD_RADIUS);
   const xRatio = (clamped.x + HALO_PAD_RADIUS) / HALO_PAD_SIZE;
   const yRatio = (clamped.y + HALO_PAD_RADIUS) / HALO_PAD_SIZE;
@@ -185,9 +187,11 @@ export const pointerToHaloHue = (
   svgRect: DOMRect,
   placement: HaloPlacement = "bottom",
 ): number => {
-  const { centerX, centerY } = getHaloGeometry(placement);
-  const localX = clientX - svgRect.left;
-  const localY = clientY - svgRect.top;
+  const { centerX, centerY, height, width } = getHaloGeometry(placement);
+  const scaleX = svgRect.width > 0 ? width / svgRect.width : 1;
+  const scaleY = svgRect.height > 0 ? height / svgRect.height : 1;
+  const localX = (clientX - svgRect.left) * scaleX;
+  const localY = (clientY - svgRect.top) * scaleY;
   const dx = localX - centerX;
   const dy = localY - centerY;
   const angleRad = Math.atan2(dy, dx);

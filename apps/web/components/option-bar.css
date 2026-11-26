@@ -5,7 +5,7 @@
 }
 
 .option-bar-label {
-  @apply float-left type-ui text-muted-foreground;
+  @apply float-left type-body text-muted-foreground;
 }
 
 .option-bar-items {
@@ -13,7 +13,7 @@
 }
 
 .option-bar-item {
-  @apply relative h-7 min-w-8 cursor-pointer rounded-[6px] border-0 bg-transparent px-2.5 type-ui tabular-nums text-muted-foreground transition-[background,color,box-shadow] duration-[120ms];
+  @apply relative h-7 min-w-8 cursor-pointer rounded-[6px] border-0 bg-transparent px-2.5 type-body tabular-nums text-muted-foreground transition-[background,color,box-shadow] duration-[120ms];
 }
 
 /* 44px tall to the touch, 28px to the eye. */

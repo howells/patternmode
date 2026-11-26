@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { apertoMedia } from "@/lib/aperto-media";
 
+import "@patternmode/deck/styles.css";
 import "./deck-demo.css";
 
 const count = apertoMedia.length;

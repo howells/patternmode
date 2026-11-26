@@ -103,11 +103,17 @@ const SAFE_AREA = {
 export const SAFE_BOTTOM = "--stacksheet-safe-bottom";
 export const SAFE_BOTTOM_PADDING = `var(${SAFE_BOTTOM}, 0px)`;
 const SAFE_BOTTOM_VALUE = { [SAFE_BOTTOM]: SAFE_AREA.bottom };
+/** Resting height of a bottom sheet in a contained stack: a share of its container. */
+const CONTAINED_BOTTOM_SHEET_HEIGHT = "85%";
 /**
- * Fixed-position styles for a panel, accounting for side, width, and depth.
+ * Positioning styles for a panel, accounting for side, width, and depth.
  * `width` is the Sheet's own side Panel width; it defaults to the stack's.
  * Stacked Panels recede by a px offset and scale from the stack edge, so
  * Panels of different widths stack without further adjustment.
+ *
+ * A `contained` stack (rendered into a `container`) positions its Panels
+ * absolutely within that element, sizes bottom Sheets against its height, and
+ * leaves the screen's safe areas alone: they belong to the viewport.
  */
 export const getPanelStyles = (
   side: Side,
@@ -115,8 +121,10 @@ export const getPanelStyles = (
   index: number,
   fitted = false,
   width = config.width,
+  contained = false,
 ): CSSProperties => {
   const { maxWidth, zIndex } = config;
+  const sheetHeight = contained ? CONTAINED_BOTTOM_SHEET_HEIGHT : BOTTOM_SHEET_HEIGHT;
   const base: CSSProperties = {
     // Inherited: nothing tapped inside a Sheet gets the browser's grey flash.
     // The Sheet's own controls give press feedback with `:active` instead.
@@ -126,40 +134,45 @@ export const getPanelStyles = (
     // The panel is focused programmatically on open (to move focus into the
     // dialog); it's not a keyboard tab stop, so suppress the container ring.
     outline: "none",
-    position: "fixed",
+    position: contained ? "absolute" : "fixed",
     transformOrigin: getTransformOrigin(side),
     willChange: "transform",
     zIndex: zIndex + 10 + index,
   };
   if (side === "bottom") {
-    return {
+    const bottomSheet: CSSProperties = {
       ...base,
       bottom: 0,
       // dvh tracks the dynamic viewport on iOS Safari (accounts for browser chrome).
       // A fitted Sheet takes its content's height, up to the same cap.
-      height: fitted ? "auto" : BOTTOM_SHEET_HEIGHT,
+      height: fitted ? "auto" : sheetHeight,
       left: 0,
       // borderRadius is animated via Motion's animate prop for scale correction
-      maxHeight: BOTTOM_SHEET_HEIGHT,
+      maxHeight: sheetHeight,
       right: 0,
-      // The surface runs to the bottom edge; its content clears the home
-      // indicator itself, so a background it paints reaches the edge too.
-      ...SAFE_BOTTOM_VALUE,
     };
+    // The surface runs to the bottom edge; its content clears the home
+    // indicator itself, so a background it paints reaches the edge too.
+    return contained ? bottomSheet : { ...bottomSheet, ...SAFE_BOTTOM_VALUE };
   }
   // Left or right side panel
   // Full-height side panels clear the notch, the home indicator and, in
   // landscape, the sensor housing on their outer edge. All zero on desktop.
-  const sideStyles: CSSProperties =
-    side === "right"
-      ? { bottom: 0, paddingRight: SAFE_AREA.right, right: 0, top: 0 }
-      : { bottom: 0, left: 0, paddingLeft: SAFE_AREA.left, top: 0 };
+  const edge: CSSProperties = side === "right" ? { right: 0 } : { left: 0 };
+  if (contained) {
+    return { ...base, ...edge, bottom: 0, maxWidth, top: 0, width };
+  }
+  const safeEdge: CSSProperties =
+    side === "right" ? { paddingRight: SAFE_AREA.right } : { paddingLeft: SAFE_AREA.left };
   return {
     ...base,
-    ...sideStyles,
+    ...edge,
+    ...safeEdge,
+    bottom: 0,
     maxWidth,
     paddingBottom: SAFE_AREA.bottom,
     paddingTop: SAFE_AREA.top,
+    top: 0,
     width,
   };
 };

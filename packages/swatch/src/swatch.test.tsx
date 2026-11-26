@@ -3,12 +3,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type {
-  ButtonHTMLAttributes,
-  ReactNode,
-  PointerEvent as ReactPointerEvent,
-  SVGProps,
-} from "react";
+import type { SVGProps } from "react";
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -17,83 +12,11 @@ import {
   DistributionDisplay,
   getSwatchAtmosphereBackground,
   getSwatchColorsBackground,
+  getSwatchSizeVariableStyle,
   SWATCH_VARIANTS,
   Swatch,
 } from "./index";
 import type { DistributionSegment } from "./index";
-
-interface MockPanInfo {
-  offset: {
-    x: number;
-    y: number;
-  };
-}
-
-interface MockMotionButtonProps extends Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  "onDrag" | "onDragEnd" | "onDragStart"
-> {
-  children?: ReactNode;
-  drag?: string;
-  dragElastic?: number;
-  dragMomentum?: boolean;
-  dragSnapToOrigin?: boolean;
-  onDrag?: (event: PointerEvent, info: MockPanInfo) => void;
-  onDragEnd?: (event: PointerEvent, info: MockPanInfo) => void;
-  onDragStart?: (event: PointerEvent, info: MockPanInfo) => void;
-  transformTemplate?: () => string;
-}
-
-const getPanInfo = vi.hoisted(() => (event: ReactPointerEvent<HTMLButtonElement>) => ({
-  offset: {
-    x: Number(event.currentTarget.dataset.offsetX ?? 0),
-    y: Number(event.currentTarget.dataset.offsetY ?? 0),
-  },
-}));
-// oxlint-disable-next-line anti-slop/no-module-mocking -- Swatch imports motion/react directly; the mock replaces the draggable button with a plain button that turns pointer events into drag callbacks, since jsdom cannot drag.
-vi.mock(import("motion/react"), async (importOriginal) => {
-  const actual = await importOriginal();
-  const MockMotionButton = ({
-    children,
-    drag: _drag,
-    dragElastic: _dragElastic,
-    dragMomentum: _dragMomentum,
-    dragSnapToOrigin: _dragSnapToOrigin,
-    onDrag,
-    onDragEnd,
-    onDragStart,
-    transformTemplate: _transformTemplate,
-    ...props
-  }: MockMotionButtonProps) => (
-    <button
-      type="button"
-      {...props}
-      onPointerDown={(event) => {
-        props.onPointerDown?.(event);
-        onDragStart?.(event.nativeEvent, getPanInfo(event));
-      }}
-      onPointerMove={(event) => {
-        props.onPointerMove?.(event);
-        onDrag?.(event.nativeEvent, getPanInfo(event));
-      }}
-      onPointerUp={(event) => {
-        props.onPointerUp?.(event);
-        onDragEnd?.(event.nativeEvent, getPanInfo(event));
-      }}
-    >
-      {children}
-    </button>
-  );
-  const motionComponents = {
-    button: MockMotionButton,
-  };
-
-  return {
-    ...actual,
-    m: motionComponents,
-    motion: motionComponents,
-  };
-});
 
 const CheckIcon = (props: SVGProps<SVGSVGElement>) => <svg data-testid="check-icon" {...props} />;
 
@@ -204,6 +127,15 @@ describe(Swatch, () => {
 
     expect(screen.getByLabelText("Huge")).toHaveStyle({
       "--patternmode-swatch-size": "6rem",
+    });
+  });
+
+  it("exposes the swatch size variable for frames it does not render", () => {
+    expect(getSwatchSizeVariableStyle("7xl")).toStrictEqual({
+      "--patternmode-swatch-size": "6rem",
+    });
+    expect(getSwatchSizeVariableStyle("sm", "--frame-size")).toStrictEqual({
+      "--frame-size": "1.5rem",
     });
   });
 
@@ -414,6 +346,17 @@ describe(Swatch, () => {
     );
     warn.mockRestore();
   });
+
+  it("throws when onRemove is combined with render", () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    const props = { onRemove: () => {}, render: <button aria-label="Cell" type="button" /> };
+
+    expect(() => {
+      // @ts-expect-error -- the types reject onRemove together with render.
+      render(<Swatch color="#315c4b" {...props} />);
+    }).toThrow("cannot be combined with `render`");
+    error.mockRestore();
+  });
 });
 
 describe(DistributionBar, () => {
@@ -543,10 +486,9 @@ describe(DistributionBar, () => {
       throw new Error("Distribution bar track was not rendered");
     }
     track.getBoundingClientRect = () => new DOMRect(0, 0, 100, 0);
-    handle.dataset.offsetX = "10";
 
-    fireEvent.pointerDown(handle);
-    fireEvent.pointerMove(handle);
+    fireEvent.pointerDown(handle, { button: 0, clientX: 0, pointerId: 1 });
+    fireEvent.pointerMove(handle, { clientX: 10, pointerId: 1 });
 
     expect(onChange).toHaveBeenCalledWith([
       { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 58 },
@@ -650,11 +592,34 @@ describe(DistributionBar, () => {
     });
     expect(group).not.toHaveAttribute("data-dragging");
 
-    fireEvent.pointerDown(handle);
+    fireEvent.pointerDown(handle, { button: 0, clientX: 0, pointerId: 1 });
     expect(group).toHaveAttribute("data-dragging", "true");
 
-    fireEvent.pointerUp(handle);
+    fireEvent.pointerUp(handle, { clientX: 0, pointerId: 1 });
     expect(group).not.toHaveAttribute("data-dragging");
+  });
+
+  it("clears data-key-adjusting when a pointer drag starts", () => {
+    render(
+      <DistributionBar
+        aria-label="Finish distribution"
+        onChange={vi.fn<(segments: DistributionSegment[]) => void>()}
+        segments={[
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 60 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 40 },
+        ]}
+      />,
+    );
+
+    const group = screen.getByRole("group", { name: "Finish distribution" });
+    const handle = screen.getByRole("slider", {
+      name: "Adjust Evergreen and Saffron distribution",
+    });
+
+    fireEvent.keyDown(handle, { key: "ArrowRight" });
+    expect(group).toHaveAttribute("data-key-adjusting", "true");
+    fireEvent.pointerDown(handle, { button: 0, clientX: 0, pointerId: 1 });
+    expect(group).not.toHaveAttribute("data-key-adjusting");
   });
 
   it("renders derived percentages in the legend for weighted values", () => {

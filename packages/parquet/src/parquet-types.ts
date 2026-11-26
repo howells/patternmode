@@ -7,8 +7,6 @@ import type { ReactNode } from "react";
  * `DistributionBar` and a `Parquet`.
  */
 export interface ParquetTile extends WeightedColorSegment {
-  /** Optional stable identity, used for the React key when present. */
-  id?: string;
   /**
    * Whether the tile color reads as light, overriding the analysis. Without
    * it, hex (3, 4, 6 or 8 digits), `rgb()`, `hsl()`, `oklab()`, `oklch()`,
@@ -39,7 +37,7 @@ export interface ParquetProps {
    * changes; pass a new array to animate to a different palette.
    */
   colors: ParquetTile[];
-  /** Aspect ratio (width ÷ height) of the mosaic. Default `4 / 3`. */
+  /** Aspect ratio (width ÷ height) of the mosaic. Must be a finite number above 0. Default `4 / 3`. */
   aspectRatio?: number;
   /** Optional className merged onto the mosaic container. */
   className?: string;

@@ -47,6 +47,32 @@ export const rectFromTrigger = (trigger: Element | null): ApertoRect | null => {
   return rectFromElement(media ?? trigger);
 };
 
+const hasArea = (rect: ApertoRect): boolean => rect.width > 0 && rect.height > 0;
+
+/**
+ * True when a flight cannot visibly animate in a real browser: either both
+ * ends have identical non-zero geometry (so Motion may skip
+ * `onAnimationComplete` and strand the transition phase), or one end has area
+ * while the other is collapsed/hidden (flying to or from a 0x0 corner).
+ * Two 0x0 rects (unlaid-out jsdom) return false so tests still exercise flights.
+ */
+export const isDegenerateFlight = (from: ApertoRect, to: ApertoRect): boolean => {
+  const fromHasArea = hasArea(from);
+  const toHasArea = hasArea(to);
+  if (fromHasArea !== toHasArea) {
+    return true;
+  }
+  if (!fromHasArea) {
+    return false;
+  }
+  return (
+    from.left === to.left &&
+    from.top === to.top &&
+    from.width === to.width &&
+    from.height === to.height
+  );
+};
+
 export const rectTarget = (rect: ApertoRect): TargetAndTransition => ({
   height: rect.height,
   left: rect.left,

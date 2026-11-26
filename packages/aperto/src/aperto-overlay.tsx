@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog } from "@base-ui/react/dialog";
-import { m } from "motion/react";
+import { m, useIsPresent } from "motion/react";
 import type { Transition } from "motion/react";
 import type { CSSProperties, Ref } from "react";
 
@@ -27,9 +27,19 @@ const OVERLAY_TRANSITION_REDUCED: Transition = {
   ease: "linear",
 };
 
+const OVERLAY_TRANSITION_INSTANT: Transition = {
+  duration: 0,
+};
+
 const ApertoOverlay = ({ className, fadeOut, ref, style }: ApertoOverlayProps) => {
   const ctx = useApertoContext();
   const transition = ctx.reduceMotion ? OVERLAY_TRANSITION_REDUCED : OVERLAY_TRANSITION;
+  const isPresent = useIsPresent();
+  const isFadingOut = fadeOut === true;
+  // Once fading out, or exiting, the backdrop is only a visual: it must not
+  // intercept clicks on the page behind it.
+  const overlayStyle: CSSProperties | undefined =
+    isFadingOut || !isPresent ? { ...style, pointerEvents: "none" } : style;
 
   return (
     // `hidden={false}` neutralises Base UI's `hidden: !mounted` so the backdrop
@@ -39,13 +49,16 @@ const ApertoOverlay = ({ className, fadeOut, ref, style }: ApertoOverlayProps) =
       hidden={false}
       render={
         <m.div
-          animate={{ opacity: fadeOut === true ? 0 : 1 }}
+          animate={{ opacity: isFadingOut ? 0 : 1 }}
           className={className}
           data-slot="aperto-overlay"
-          exit={{ opacity: 0 }}
+          exit={{
+            opacity: 0,
+            transition: isFadingOut ? OVERLAY_TRANSITION_INSTANT : transition,
+          }}
           initial={{ opacity: 0 }}
           ref={ref}
-          style={style}
+          style={overlayStyle}
           transition={transition}
         />
       }

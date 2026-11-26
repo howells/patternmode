@@ -14,7 +14,7 @@
 }
 
 .channel-demo-label {
-  @apply type-label;
+  @apply type-body;
 }
 
 .channel-demo-value {

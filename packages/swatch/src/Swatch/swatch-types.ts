@@ -1,5 +1,5 @@
 import type { useRender } from "@base-ui/react/use-render";
-import { PATTERNMODE_EXTENDED_SIZE_VALUES } from "@patternmode/system";
+import { getSizeVariableStyle } from "@patternmode/system";
 import type { ObjectFit, PatternmodeExtendedSize } from "@patternmode/system";
 import type { ComponentType, HTMLAttributes, ReactNode, SVGProps } from "react";
 
@@ -12,12 +12,11 @@ export type SwatchTexture = (typeof SWATCH_TEXTURES)[number];
 export type SwatchColorStop = string | { color: string; ratio?: number };
 type SwatchIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
+/** The inline style setting `--patternmode-swatch-size` for a size token. */
 export const getSwatchSizeVariableStyle = (
   size: PatternmodeExtendedSize,
   variableName = "--patternmode-swatch-size",
-) => ({
-  [variableName]: PATTERNMODE_EXTENDED_SIZE_VALUES[size],
-});
+) => getSizeVariableStyle(size, variableName);
 
 /**
  * Visual and behavioural props shared by every Swatch rendering mode. These

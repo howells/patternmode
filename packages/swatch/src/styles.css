@@ -265,7 +265,7 @@
   }
 
   .patternmode-distribution-bar__handle {
-    @apply absolute top-[calc(50%-1.375rem)] z-1 inline-flex size-11 cursor-ew-resize items-center justify-center rounded-[999px] p-0;
+    @apply absolute top-[calc(50%-1.375rem)] z-1 inline-flex size-11 cursor-ew-resize items-center justify-center rounded-[999px] p-0 touch-none;
     background: transparent;
     border: 0;
     /* Travel with the segment edge it sits on: segment widths ease, so a
@@ -341,11 +341,5 @@
       var(--border, rgb(17 24 39 / 12%)) 3px
     );
     box-shadow: inset 0 0 0 1px var(--border, rgb(17 24 39 / 12%));
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .patternmode-distribution-bar__handle::before {
-      transition: none;
-    }
   }
 }

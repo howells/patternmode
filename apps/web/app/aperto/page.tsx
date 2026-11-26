@@ -1,10 +1,8 @@
-import { ApiTable, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
 import { ApertoDemo } from "@/components/aperto-demo";
 import { ApertoVariants } from "@/components/aperto-variants";
-import { ComponentFrame } from "@/components/component-frame";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { apertoMedia } from "@/lib/aperto-media";
 import { componentMetadata } from "@/lib/catalogue";
 
@@ -90,19 +88,14 @@ export function MediaGroupExample() {
 
 export default function ApertoPage() {
   return (
-    <ComponentFrame demo={<ApertoDemo media={apertoMedia} />} slug="aperto">
-      <ApertoVariants />
-      <InstallBlock
-        command="npm i @patternmode/aperto motion lucide-react"
-        example={apertoExample}
-        lead="Pass the media once to the group. Each thumbnail only needs its index."
-      />
-      <DocsBlock title="Core API">
-        <ApiTable sections={apertoApi} />
-      </DocsBlock>
-      <p className="read-more">
-        Read the package README for primitive composition, media renderers, and motion presets.
-      </p>
-    </ComponentFrame>
+    <PackageDocs
+      api={apertoApi}
+      demo={<ApertoDemo media={apertoMedia} />}
+      example={apertoExample}
+      installLead="Pass the media once to the group. Each thumbnail only needs its index."
+      readMore="Read the package README for primitive composition, media renderers, and motion presets."
+      slug="aperto"
+      variants={<ApertoVariants />}
+    />
   );
 }

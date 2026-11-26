@@ -1,9 +1,9 @@
 "use client";
 
 import { ScrollArea } from "@base-ui/react/scroll-area";
-import { joinClassNames } from "@patternmode/system";
+import { assignRef, joinClassNames } from "@patternmode/system";
 import type { MouseEvent, PointerEvent } from "react";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
 import { useScrollFrame } from "./scroll-frame-context";
 import type {
@@ -11,7 +11,7 @@ import type {
   ScrollFrameResolvedDragScrollConfig,
   ScrollFrameViewportProps,
 } from "./scroll-frame-types";
-import { getMaskVars, isDragScrollIgnored, setRef, supportsAxis } from "./scroll-frame-utils";
+import { getMaskVars, isDragScrollIgnored, supportsAxis } from "./scroll-frame-utils";
 
 const getDragDistance = (
   offset: { x: number; y: number },
@@ -79,6 +79,7 @@ const useDragScrollHandlers = ({
   const sessionRef = useRef<DragScrollSession | null>(null);
   const committedRef = useRef(false);
   const suppressClickRef = useRef(false);
+  const suppressClickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const detachRef = useRef<(() => void) | null>(null);
   // The move handler is recreated every render and closes over `axes`,
   // `dragScroll` and `viewport`; the window listener must always call the
@@ -86,9 +87,16 @@ const useDragScrollHandlers = ({
   const trackRef = useRef<(event: globalThis.PointerEvent) => void>(() => {
     // Replaced on every render; only a no-op before the first one.
   });
-  const endRef = useRef<() => void>(() => {
+  const endRef = useRef<(event: globalThis.PointerEvent) => void>(() => {
     // As above.
   });
+
+  const clearSuppressClickTimer = () => {
+    if (suppressClickTimerRef.current !== null) {
+      clearTimeout(suppressClickTimerRef.current);
+      suppressClickTimerRef.current = null;
+    }
+  };
 
   const detachWindowTracking = () => {
     detachRef.current?.();
@@ -103,8 +111,8 @@ const useDragScrollHandlers = ({
     const onMove = (event: globalThis.PointerEvent) => {
       trackRef.current(event);
     };
-    const onEnd = () => {
-      endRef.current();
+    const onEnd = (event: globalThis.PointerEvent) => {
+      endRef.current(event);
     };
     // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- detachRef removes every listener when dragging ends or the component unmounts.
     window.addEventListener("pointermove", onMove, { capture: true });
@@ -117,7 +125,11 @@ const useDragScrollHandlers = ({
     };
   };
 
-  const endDrag = () => {
+  const endDrag = (event: globalThis.PointerEvent) => {
+    const session = sessionRef.current;
+    if (session === null || event.pointerId !== session.pointerId) {
+      return;
+    }
     detachWindowTracking();
     if (committedRef.current) {
       setDragging(false);
@@ -127,7 +139,9 @@ const useDragScrollHandlers = ({
       // pointerup) still be swallowed, while making sure a gesture that never
       // produces a click cannot leave the flag set and eat somebody else's
       // click minutes later.
-      setTimeout(() => {
+      clearSuppressClickTimer();
+      suppressClickTimerRef.current = setTimeout(() => {
+        suppressClickTimerRef.current = null;
         suppressClickRef.current = false;
       }, 0);
     }
@@ -136,6 +150,8 @@ const useDragScrollHandlers = ({
   };
 
   const handlePointerDownCapture = (event: PointerEvent<HTMLDivElement>) => {
+    clearSuppressClickTimer();
+    suppressClickRef.current = false;
     const activeDragScroll = dragScroll;
     const activeViewport = viewport;
     if (
@@ -174,10 +190,9 @@ const useDragScrollHandlers = ({
 
   /**
    * Runs for every move in the gesture, whether the cursor is still inside the
-   * frame or not. Takes the DOM event rather than React's synthetic one so the
-   * window listener and the element handler can share it.
+   * frame or not.
    */
-  const trackDrag = (event: globalThis.PointerEvent | PointerEvent<HTMLDivElement>) => {
+  const trackDrag = (event: globalThis.PointerEvent) => {
     const session = sessionRef.current;
     if (
       !(
@@ -212,6 +227,8 @@ const useDragScrollHandlers = ({
       setDragging(true);
     }
 
+    // Every move, not just the commit: the browser keeps extending the text
+    // selection as the pointer travels. One window listener means once per event.
     clearPageSelection();
     scrollViewportTo(
       viewport,
@@ -219,10 +236,6 @@ const useDragScrollHandlers = ({
       canScrollVertically ? session.scrollTop - offset.y : null,
     );
     event.preventDefault();
-  };
-
-  const handlePointerEndCapture = () => {
-    endDrag();
   };
 
   const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
@@ -245,6 +258,10 @@ const useDragScrollHandlers = ({
     () => () => {
       detachRef.current?.();
       detachRef.current = null;
+      if (suppressClickTimerRef.current !== null) {
+        clearTimeout(suppressClickTimerRef.current);
+        suppressClickTimerRef.current = null;
+      }
     },
     [],
   );
@@ -252,8 +269,6 @@ const useDragScrollHandlers = ({
   return {
     handleClickCapture,
     handlePointerDownCapture,
-    handlePointerEndCapture,
-    handlePointerMoveCapture: trackDrag,
   };
 };
 
@@ -270,17 +285,21 @@ export const ScrollFrameViewport = ({
   const context = useScrollFrame();
   const { axes, dragScroll, edgeState, fadeMode, fades, registerViewport, setDragging, viewport } =
     context;
-  const {
-    handleClickCapture,
-    handlePointerDownCapture,
-    handlePointerEndCapture,
-    handlePointerMoveCapture,
-  } = useDragScrollHandlers({ axes, dragScroll, setDragging, viewport });
-  const assignRef = (node: HTMLDivElement | null) => {
-    registerViewport(node);
-    setRef(ref, node);
-    setRef(viewportRef, node);
-  };
+  const { handleClickCapture, handlePointerDownCapture } = useDragScrollHandlers({
+    axes,
+    dragScroll,
+    setDragging,
+    viewport,
+  });
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- an inline ref callback makes React 19 call ref(null) then ref(node) on every render, resetting the viewport state each time; the library build does not run React Compiler.
+  const attachViewport = useCallback(
+    (node: HTMLDivElement | null) => {
+      registerViewport(node);
+      assignRef(ref, node);
+      assignRef(viewportRef, node);
+    },
+    [ref, registerViewport, viewportRef],
+  );
   const maskStyle = fadeMode === "mask" ? getMaskVars(axes, edgeState, fades) : undefined;
 
   return (
@@ -289,7 +308,7 @@ export const ScrollFrameViewport = ({
       className={joinClassNames("patternmode-scrollframe__viewport", className)}
       data-fade-mode={fadeMode === "mask" ? "mask" : undefined}
       data-slot="scrollframe-viewport"
-      ref={assignRef}
+      ref={attachViewport}
       style={maskStyle === undefined ? style : { ...maskStyle, ...style }}
     >
       <div
@@ -297,10 +316,7 @@ export const ScrollFrameViewport = ({
         data-scrollframe-drag-surface={dragScroll === null ? undefined : ""}
         data-slot="scrollframe-content"
         onClickCapture={handleClickCapture}
-        onPointerCancelCapture={handlePointerEndCapture}
         onPointerDownCapture={handlePointerDownCapture}
-        onPointerMoveCapture={handlePointerMoveCapture}
-        onPointerUpCapture={handlePointerEndCapture}
         style={contentStyle}
       >
         {children}

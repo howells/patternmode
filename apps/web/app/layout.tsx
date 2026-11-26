@@ -3,19 +3,6 @@ import type { ReactNode } from "react";
 
 import "./globals.css";
 import "./shell.css";
-import "@patternmode/channel/styles.css";
-import "@patternmode/stacksheet/styles.css";
-import "@patternmode/aperto/styles.css";
-import "@patternmode/deck/styles.css";
-import "@patternmode/briolette/styles.css";
-import "@patternmode/halo/styles.css";
-import "@patternmode/swatch/styles.css";
-import "@patternmode/parquet/styles.css";
-import "@patternmode/scrollframe/styles.css";
-import "@patternmode/status/styles.css";
-import "@patternmode/tags/styles.css";
-import "@patternmode/thumbnail/styles.css";
-import "@patternmode/verge/styles.css";
 
 import { SiteHeader } from "@/components/site-header";
 

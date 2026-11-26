@@ -20,14 +20,14 @@ export type CommandOption =
     };
 
 export interface TagSelectorContextValue {
-  activeIndex: number;
-  activeOption: CommandOption | undefined;
+  activeOptionId: string | null;
   ariaLabel: string | undefined;
   commandOptions: CommandOption[];
   disabled: boolean;
   emptyMessage: ReactNode;
   inputId: string;
   listboxId: string;
+  moveActiveOption: (direction: "next" | "previous") => void;
   name: string | undefined;
   onSearchInput: (query: string) => void;
   open: boolean;
@@ -41,7 +41,8 @@ export interface TagSelectorContextValue {
   selectCommandOption: (option: CommandOption) => Promise<void>;
   serializeItem: (item: TagItem) => string;
   separators: readonly string[];
-  setActiveIndex: (index: number | ((currentIndex: number) => number)) => void;
+  selectActiveOption: () => boolean;
+  setActiveOptionId: (id: string | null) => void;
   setOpen: (open: boolean) => void;
   value: readonly TagItem[];
 }

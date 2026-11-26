@@ -1,4 +1,4 @@
-import { CodeBlock } from "@howells/site-ui";
+import { CodeBlock } from "@/components/docs-blocks";
 
 import { CopyCommand } from "@/components/copy-command";
 

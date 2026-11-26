@@ -2,6 +2,7 @@
 
 import { ScrollFrame } from "@patternmode/scrollframe";
 import Image from "next/image";
+import "@patternmode/scrollframe/styles.css";
 import "./scrollframe-demo.css";
 
 const studies = [
@@ -39,7 +40,7 @@ export const ScrollFrameDemo = () => (
     >
       {studies.map(([name], index) => (
         <div className="scrollframe-demo-row" key={name}>
-          <span className="type-ui">{name}</span>
+          <span className="type-body">{name}</span>
           <span className="type-data text-muted-foreground">
             {String(index + 1).padStart(2, "0")}
           </span>

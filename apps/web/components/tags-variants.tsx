@@ -5,6 +5,7 @@ import type { TagItem } from "@patternmode/tags";
 import { useState } from "react";
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
 import { createTag, findTagOption, tagOptions } from "./tags-items";
+import "@patternmode/tags/styles.css";
 import "./tags-variants.css";
 
 const Selector = ({

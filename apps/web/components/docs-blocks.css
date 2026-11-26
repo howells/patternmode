@@ -1,0 +1,73 @@
+@reference "../app/globals.css";
+
+.docs-block {
+  @apply flex flex-col gap-4;
+}
+
+.docs-header h3 {
+  @apply m-0 type-heading tracking-[-0.01em];
+}
+
+.code-block {
+  @apply m-0 overflow-x-auto rounded-[12px] border border-[var(--dark-border)] bg-[var(--dark-background)] px-6 py-5 type-data leading-[21px] whitespace-pre text-[var(--dark-foreground)];
+  scrollbar-color: var(--dark-border) transparent;
+  scrollbar-width: thin;
+}
+
+.code-block code {
+  font: inherit;
+}
+
+.api-list {
+  @apply flex flex-col gap-5;
+}
+
+.api-section {
+  @apply overflow-hidden rounded-[var(--radius)] border border-border bg-card;
+}
+
+.api-section-header {
+  @apply px-4 py-[14px];
+}
+
+.api-section-header h4 {
+  @apply m-0 type-body;
+}
+
+.api-section-header p {
+  @apply mx-0 mt-1 mb-0 max-w-[62ch] type-body text-muted-foreground;
+}
+
+.prop-list {
+  @apply m-0 border-t border-border;
+}
+
+.prop-row {
+  @apply grid grid-cols-1 gap-1.5 px-4 py-3;
+}
+
+.prop-row + .prop-row {
+  @apply border-t border-border;
+}
+
+.prop-row dt {
+  @apply type-body text-foreground;
+}
+
+.prop-row dd {
+  @apply m-0 flex flex-wrap gap-2;
+}
+
+.prop-row code,
+.api-section-header code {
+  @apply rounded-[5px] border border-border bg-muted px-[5px] py-0.5 type-data;
+}
+
+.prop-type,
+.prop-default {
+  @apply rounded-[5px] bg-muted px-[7px] py-[3px] type-data text-muted-foreground;
+}
+
+.prop-description {
+  @apply w-full type-body text-muted-foreground;
+}

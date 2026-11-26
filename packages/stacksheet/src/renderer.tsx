@@ -2,17 +2,17 @@ import { usePrefersReducedMotion } from "@howells/motion/react";
 import { joinClassNames } from "@patternmode/system";
 import { AnimatePresence, domMax, LazyMotion, m, usePresence } from "motion/react";
 import type { MotionValue } from "motion/react";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import type { ComponentType, CSSProperties } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
 import { useResolvedSide } from "./media";
-import { useBodyScale, useKeyboardInset, useViewportHeight } from "./renderer-effects";
+import { useBodyScale, useKeyboardInset } from "./renderer-effects";
 import { resolveClassNames } from "./renderer-helpers";
 import { SheetPanel } from "./sheet-panel";
 import { isComponent } from "./Store/store-args";
-import { resolveSnapPoints } from "./snap-points";
+import { useSnapState } from "./snap-state";
 import type { StackMotion } from "./stack-motion";
 import type { SheetStoreBundle } from "./store";
 import type {
@@ -43,28 +43,6 @@ const handleBackdropExitComplete = () => {
     void document.body.offsetHeight;
   });
 };
-
-const getResolvedSnapHeights = (
-  side: Side,
-  snapPoints: ResolvedConfig["snapPoints"],
-  viewportHeight: number,
-) =>
-  side === "bottom" && snapPoints.length > 0 ? resolveSnapPoints(snapPoints, viewportHeight) : [];
-
-const getActiveInternalSnapIndex = ({
-  defaultSnapIndex,
-  internalSnap,
-  snapContext,
-  snapHeights,
-}: {
-  defaultSnapIndex: number;
-  internalSnap: { context: string; index: number; snapCount: number };
-  snapContext: string;
-  snapHeights: number[];
-}) =>
-  internalSnap.context === snapContext && internalSnap.snapCount === snapHeights.length
-    ? internalSnap.index
-    : defaultSnapIndex;
 
 const getBackdropStyle = (
   config: ResolvedConfig,
@@ -97,11 +75,13 @@ const BACKDROP_EXIT_FALLBACK_MS = 1000;
  */
 const Backdrop = ({
   className,
+  contained,
   onClick,
   opacity,
   style,
 }: {
   className: string | undefined;
+  contained: boolean;
   onClick: (() => void) | undefined;
   opacity: MotionValue<number>;
   style: CSSProperties;
@@ -133,6 +113,7 @@ const Backdrop = ({
   return (
     <m.div
       className={className}
+      data-stacksheet-contained={contained ? "" : undefined}
       onClick={isPresent ? onClick : undefined}
       style={{ ...style, opacity, pointerEvents: isPresent ? undefined : "none" }}
     />
@@ -150,8 +131,10 @@ type SheetStore<TMap extends object> = StoreApi<StacksheetStoreState<TMap> & She
 type SheetRendererProps<TMap extends object> = StacksheetLayoutProps & {
   classNames?: StacksheetClassNames;
   config: ResolvedConfig;
+  /** The element a contained stack renders into; undefined renders over the page */
+  container: HTMLElement | undefined;
   /** The stack's dismissal controls, which record why the stack closed */
-  dismissal: Pick<SheetStoreBundle<TMap>, "close" | "getCloseReason" | "pop">;
+  dismissal: Pick<SheetStoreBundle<TMap>, "close" | "getCloseReason" | "getOpenerElement" | "pop">;
   sheets?: ContentMap<TMap>;
   /** Motion shared by this Sheet Stack's Panels and overlay */
   stackMotion: StackMotion;
@@ -182,60 +165,37 @@ const resolveContent = <TMap extends object>(
   return content;
 };
 
-const useSnapState = (config: ResolvedConfig, isOpen: boolean, side: Side, stack: SheetItem[]) => {
-  const viewportHeight = useViewportHeight(
-    isOpen && side === "bottom" && config.snapPoints.length > 0,
-  );
-  const snapHeights = getResolvedSnapHeights(side, config.snapPoints, viewportHeight);
-  const snapContext = isOpen ? stack.map((item) => item.id).join("\u0000") : "";
-  const defaultSnapIndex = snapHeights.length > 0 ? snapHeights.length - 1 : 0;
-  const [internalSnap, setInternalSnap] = useState({
-    context: "",
-    index: defaultSnapIndex,
-    snapCount: snapHeights.length,
-  });
-  const internalSnapIndex = getActiveInternalSnapIndex({
-    defaultSnapIndex,
-    internalSnap,
-    snapContext,
-    snapHeights,
-  });
-  const activeSnapIndex = config.snapPointIndex ?? internalSnapIndex;
-  const handleSnap = (index: number) => {
-    setInternalSnap({
-      context: snapContext,
-      index,
-      snapCount: snapHeights.length,
-    });
-    config.onSnapPointChange?.(index);
-  };
-  return { activeSnapIndex, handleSnap, snapHeights };
-};
-
-const usePanelKeyboardInset = (config: ResolvedConfig, isOpen: boolean, side: Side) => {
+const usePanelKeyboardInset = (
+  config: ResolvedConfig,
+  isOpen: boolean,
+  side: Side,
+  contained: boolean,
+) => {
   const panelWrapperRef = useRef<HTMLDivElement>(null);
+  // The keyboard covers the viewport's bottom edge, which a contained stack doesn't sit on.
   const keyboardInset = useKeyboardInset(
-    isOpen && side === "bottom" && config.repositionInputs,
+    isOpen && side === "bottom" && config.repositionInputs && !contained,
     panelWrapperRef,
   );
   return { keyboardInset, panelWrapperRef };
 };
 
-const useFocusRestore = (isOpen: boolean) => {
-  const triggerRef = useRef<Element | null>(null);
+const useFocusRestore = (isOpen: boolean, getOpenerElement: () => Element | null) => {
   const wasOpenRef = useRef(false);
   useEffect(() => {
-    if (isOpen && !wasOpenRef.current) {
-      triggerRef.current = document.activeElement;
-    } else if (!isOpen && wasOpenRef.current) {
-      const el = triggerRef.current;
-      if (el && el instanceof HTMLElement && el !== document.body && el.tagName !== "BODY") {
+    if (!isOpen && wasOpenRef.current) {
+      const el = getOpenerElement();
+      if (
+        el instanceof HTMLElement &&
+        el.isConnected &&
+        el !== document.body &&
+        el.tagName !== "BODY"
+      ) {
         el.focus();
       }
-      triggerRef.current = null;
     }
     wasOpenRef.current = isOpen;
-  }, [isOpen]);
+  }, [getOpenerElement, isOpen]);
 };
 
 const useDismissalEffects = ({
@@ -243,6 +203,7 @@ const useDismissalEffects = ({
   dismissible,
   isOpen,
   onDismiss,
+  stackDepth,
 }: {
   config: ResolvedConfig;
   /** Whether the top Sheet can be dismissed */
@@ -250,6 +211,8 @@ const useDismissalEffects = ({
   isOpen: boolean;
   /** Pop the top Sheet for an Escape or a close request. Must be stable. */
   onDismiss: () => void;
+  /** Current number of open Sheets; each close consumes a CloseWatcher, so depth changes arm a fresh one. */
+  stackDepth: number;
 }) => {
   useEffect(() => {
     const shouldListen = isOpen && config.closeOnEscape && dismissible;
@@ -277,7 +240,10 @@ const useDismissalEffects = ({
     // the Android back gesture), so gating on `closeOnEscape` conservatively
     // disables back-gesture dismissal too when Escape dismissal is turned off.
     const shouldListen =
-      isOpen && config.closeOnEscape && dismissible && CloseWatcherConstructor !== undefined;
+      stackDepth > 0 &&
+      config.closeOnEscape &&
+      dismissible &&
+      CloseWatcherConstructor !== undefined;
     let watcher: InstanceType<NonNullable<typeof CloseWatcherConstructor>> | undefined;
     const handleClose = () => {
       onDismiss();
@@ -292,7 +258,7 @@ const useDismissalEffects = ({
         watcher.destroy();
       }
     };
-  }, [isOpen, config.closeOnEscape, dismissible, onDismiss]);
+  }, [stackDepth, config.closeOnEscape, dismissible, onDismiss]);
 };
 
 /**
@@ -333,6 +299,7 @@ export const SheetRenderer = <TMap extends object>({
   config,
   sheets,
   classNames: classNamesProp,
+  container,
   dismissal,
   layout,
   renderHeader,
@@ -343,18 +310,31 @@ export const SheetRenderer = <TMap extends object>({
   const side = useResolvedSide(config);
   const prefersReducedMotion = usePrefersReducedMotion();
   const classNames = resolveClassNames(classNamesProp);
-  const { activeSnapIndex, handleSnap, snapHeights } = useSnapState(config, isOpen, side, stack);
+  const contained = container !== undefined;
+  const { activeSnapIndex, handleSnap, snapHeights } = useSnapState(
+    config,
+    isOpen,
+    side,
+    stack,
+    container,
+  );
   const { close, closeFromBackdrop, pop, popFromEscape, popFromSwipe } = useDismissals(
     store,
     dismissal,
   );
-  const { panelWrapperRef, keyboardInset } = usePanelKeyboardInset(config, isOpen, side);
+  const { panelWrapperRef, keyboardInset } = usePanelKeyboardInset(config, isOpen, side, contained);
   useBodyScale(config, isOpen, prefersReducedMotion);
-  useFocusRestore(isOpen);
+  useFocusRestore(isOpen, dismissal.getOpenerElement);
   // The top Sheet decides: a dismissible Sheet pushed over one that is not can
   // be dismissed, and so the other way round.
   const dismissible = stack.at(-1)?.dismissible ?? config.dismissible;
-  useDismissalEffects({ config, dismissible, isOpen, onDismiss: popFromEscape });
+  useDismissalEffects({
+    config,
+    dismissible,
+    isOpen,
+    onDismiss: popFromEscape,
+    stackDepth: stack.length,
+  });
   useSteppedStack(stackMotion, prefersReducedMotion);
   const isModal = config.modal;
   const showOverlay = isModal && config.showOverlay;
@@ -373,6 +353,7 @@ export const SheetRenderer = <TMap extends object>({
           {isOpen && (
             <Backdrop
               className={joinClassNames("patternmode-stacksheet__backdrop", classNames.backdrop)}
+              contained={contained}
               key="stacksheet-backdrop"
               onClick={config.closeOnBackdrop && dismissible ? closeFromBackdrop : undefined}
               opacity={stackMotion.backdrop}
@@ -383,7 +364,11 @@ export const SheetRenderer = <TMap extends object>({
       )}
 
       <RemoveScroll enabled={shouldLockScroll} forwardProps ref={panelWrapperRef}>
-        <div className="patternmode-stacksheet__layer" style={{ zIndex: config.zIndex + 1 }}>
+        <div
+          className="patternmode-stacksheet__layer"
+          data-stacksheet-contained={contained ? "" : undefined}
+          style={{ zIndex: config.zIndex + 1 }}
+        >
           <AnimatePresence onExitComplete={handleExitComplete}>
             {stack.map((item, index) => {
               const depth = stack.length - 1 - index;
@@ -397,6 +382,7 @@ export const SheetRenderer = <TMap extends object>({
                   classNames={classNames}
                   close={close}
                   config={config}
+                  contained={contained}
                   depth={depth}
                   index={index}
                   isComposable={layout === "composable"}

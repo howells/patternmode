@@ -124,8 +124,10 @@ export const ApertoTransitionMedia = ({
     height: item.height,
     item,
     poster: item.poster,
-    src: item.src,
-    variant: "expanded",
+    // Fly the already-decoded thumbnail frame instead of mounting a duplicate
+    // `<video>` element for the duration of the shared-element flight.
+    src: item.thumbnailSrc,
+    variant: "thumbnail",
     width: item.width,
   };
   return (renderVideo ?? renderDefaultVideo)(videoProps);

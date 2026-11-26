@@ -85,8 +85,6 @@ export const VergeSlot = <TElement extends ElementType = "div">({
   ...props
 }: VergeSlotProps<TElement>) => {
   const Tag = as ?? "div";
-  // SAFETY: `style` comes from the props of the polymorphic element, and every element
-  // type that accepts a `style` prop takes React's CSSProperties object.
   const reservedStyle =
     slots === undefined
       ? style
@@ -95,7 +93,7 @@ export const VergeSlot = <TElement extends ElementType = "div">({
           // reservation at either gap (2px fine pointer; on coarse pointers, enough
           // to make each control plus its gap 48px).
           minInlineSize: `calc(var(--patternmode-verge-slot-size, 1.75rem) * ${slots} + var(--patternmode-verge-resolved-gap, 0px) * ${Math.max(slots - 1, 0)})`,
-          ...(style as CSSProperties | undefined),
+          ...style,
         } satisfies CSSProperties);
 
   return (

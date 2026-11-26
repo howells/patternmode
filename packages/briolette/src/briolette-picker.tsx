@@ -2,7 +2,13 @@
 
 import { usePrefersReducedMotion } from "@howells/motion/react";
 import { hexToOklab, joinClassNames } from "@patternmode/system";
-import type { ComponentPropsWithoutRef, CSSProperties, KeyboardEvent, PointerEvent } from "react";
+import type {
+  ComponentPropsWithoutRef,
+  CSSProperties,
+  KeyboardEvent,
+  MouseEvent,
+  PointerEvent,
+} from "react";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import {
@@ -30,15 +36,13 @@ import type { BrioletteMorphLayers } from "./briolette-morph";
 import { useIdleMotion, useViewportPresence } from "./briolette-motion";
 import type { BrioletteTween } from "./briolette-motion";
 
-declare module "react" {
-  interface CSSProperties {
-    "--patternmode-briolette-color"?: string;
-    "--patternmode-briolette-facet"?: string;
-    "--patternmode-briolette-seam"?: string;
-    "--patternmode-briolette-seam-opacity"?: string;
-    "--patternmode-briolette-seam-width"?: string;
-  }
-}
+type BrioletteStyle = CSSProperties & {
+  "--patternmode-briolette-color"?: string;
+  "--patternmode-briolette-facet"?: string;
+  "--patternmode-briolette-seam"?: string;
+  "--patternmode-briolette-seam-opacity"?: string;
+  "--patternmode-briolette-seam-width"?: string;
+};
 
 type BriolettePickerRootProps = Omit<ComponentPropsWithoutRef<"div">, "onChange">;
 type BriolettePointerEvent = PointerEvent<SVGSVGElement>;
@@ -130,8 +134,13 @@ const BrioletteValue = ({ value }: { value: string | null }) => (
   </output>
 );
 
-const ignoreFaceClick = () => {
-  // Selection pauses for the few hundred ms of a cut morph.
+/** The facet a pointer event landed on, read from the polygon's `data-face-index`. */
+const faceIndexFromTarget = (target: EventTarget): number | undefined => {
+  const raw =
+    target instanceof Element
+      ? target.closest<SVGElement>("[data-face-index]")?.dataset.faceIndex
+      : undefined;
+  return raw === undefined ? undefined : Number(raw);
 };
 
 interface BrioletteSelection {
@@ -142,8 +151,10 @@ interface BrioletteSelection {
 /**
  * Makes the value prop fully controllable: a hex supplied from outside (not
  * from a facet click) re-anchors the neighborhood around the facet whose
- * universe color is nearest, and glides it to the center. Adjusted during
- * render; the caller runs the glide to `pendingCenter` after commit.
+ * universe color is nearest, and glides it to the center. A cut change
+ * re-anchors the same way, since facet indices only mean something within one
+ * cut; a null value clears the selection. Adjusted during render; the caller
+ * runs the glide to `pendingCenter` after commit.
  */
 const useExternalValueAnchor = (
   value: string | null,
@@ -155,11 +166,15 @@ const useExternalValueAnchor = (
      (e.g. restored from a URL) anchors exactly like a later external
      change would, instead of being silently absorbed as the baseline. */
   const [anchoredValue, setAnchoredValue] = useState<string | null>(null);
+  const [anchoredFaces, setAnchoredFaces] = useState(faces);
   const [pendingCenter, setPendingCenter] = useState<{ center: BrioletteVec3 } | null>(null);
 
-  if (value !== anchoredValue) {
+  if (value !== anchoredValue || faces !== anchoredFaces) {
     setAnchoredValue(value);
-    if (value !== null && value !== selection?.view.anchorHex) {
+    setAnchoredFaces(faces);
+    if (value === null) {
+      setSelection(() => null);
+    } else if (selection?.faceCount !== faces.length || value !== selection.view.anchorHex) {
       const anchorFace = nearestBrioletteFace(faces, value);
       if (anchorFace) {
         setSelection((current) => ({
@@ -200,7 +215,7 @@ const getRootStyle = (
   seamOpacity: number,
   seamWidth: number,
   style: CSSProperties | undefined,
-): CSSProperties => ({
+): BrioletteStyle => ({
   "--patternmode-briolette-color": value ?? "transparent",
   "--patternmode-briolette-seam-opacity": String(Math.min(Math.max(seamOpacity, 0), 1)),
   "--patternmode-briolette-seam-width": String(seamWidth),
@@ -212,21 +227,26 @@ const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean)
   const [orientation, setOrientation] = useState<BrioletteQuat>(INITIAL_ORIENTATION);
   const [isDragging, setIsDragging] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
-  const pointerRef = useRef({ lastTime: 0, lastX: 0, lastY: 0, movement: 0 });
+  const pointerRef = useRef({ lastTime: 0, lastX: 0, lastY: 0, movement: 0, pointerId: -1 });
   const isPointerActiveRef = useRef(false);
   const velocityRef = useRef({ pitch: 0, yaw: 0 });
   const tweenRef = useRef<BrioletteTween | null>(null);
+  const wakeRef = useRef<(() => void) | null>(null);
+  /* The pointer is captured on pointerdown, which retargets the click to the
+     svg, so the facet under the press is remembered to select on click. */
+  const pressedFaceRef = useRef<number | null>(null);
   const orientationRef = useRef(orientation);
   useLayoutEffect(() => {
     orientationRef.current = orientation;
   }, [orientation]);
-  const isInViewportRef = useViewportPresence(stageRef);
+  const isInViewportRef = useViewportPresence(stageRef, wakeRef);
 
   useIdleMotion(
     { isInViewportRef, isPointerActiveRef, tweenRef, velocityRef },
     setOrientation,
     isDriftEnabled,
     isMotionReduced,
+    wakeRef,
   );
 
   const rotateBy = (yaw: number, pitch: number) => {
@@ -249,12 +269,13 @@ const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean)
       from: orientationRef.current,
       to: target,
     };
+    wakeRef.current?.();
   };
 
   const onPointerDown = (event: BriolettePointerEvent) => {
     // Only the primary button starts a drag session — a right-click would
     // otherwise begin a rotation the context menu never ends.
-    if (event.button !== 0) {
+    if (event.button !== 0 || isPointerActiveRef.current) {
       return;
     }
     event.preventDefault();
@@ -266,16 +287,24 @@ const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean)
     tweenRef.current = null;
     isPointerActiveRef.current = true;
     velocityRef.current = { pitch: 0, yaw: 0 };
+    pressedFaceRef.current = faceIndexFromTarget(event.target) ?? null;
+    if ("setPointerCapture" in event.currentTarget) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
     pointerRef.current = {
       lastTime: event.timeStamp,
       lastX: event.clientX,
       lastY: event.clientY,
       movement: 0,
+      pointerId: event.pointerId,
     };
     setIsDragging(true);
   };
 
   const endPointer = (event: BriolettePointerEvent) => {
+    if (!isPointerActiveRef.current || event.pointerId !== pointerRef.current.pointerId) {
+      return;
+    }
     if (
       "hasPointerCapture" in event.currentTarget &&
       event.currentTarget.hasPointerCapture(event.pointerId)
@@ -283,14 +312,17 @@ const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean)
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
     isPointerActiveRef.current = false;
+    pointerRef.current.pointerId = -1;
     setIsDragging(false);
     if (isMotionReduced) {
       velocityRef.current = { pitch: 0, yaw: 0 };
+      return;
     }
+    wakeRef.current?.();
   };
 
   const onPointerMove = (event: BriolettePointerEvent) => {
-    if (!isPointerActiveRef.current) {
+    if (!isPointerActiveRef.current || event.pointerId !== pointerRef.current.pointerId) {
       return;
     }
     /* If the primary button is no longer held, a pointerup was missed
@@ -311,16 +343,6 @@ const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean)
     pointer.lastTime = event.timeStamp;
     pointer.movement += Math.abs(dx) + Math.abs(dy);
 
-    // Capture only once the gesture becomes a drag — capturing on pointerdown
-    // would retarget the click event away from the facet polygons.
-    if (
-      pointer.movement > CLICK_MOVEMENT_LIMIT &&
-      "setPointerCapture" in event.currentTarget &&
-      !event.currentTarget.hasPointerCapture(event.pointerId)
-    ) {
-      event.currentTarget.setPointerCapture(event.pointerId);
-    }
-
     const yaw = dx * DRAG_RADIANS_PER_PIXEL;
     const pitch = dy * DRAG_RADIANS_PER_PIXEL;
     rotateBy(yaw, pitch);
@@ -330,18 +352,23 @@ const useBrioletteRotation = (isDriftEnabled: boolean, isMotionReduced: boolean)
     velocity.pitch = velocity.pitch * 0.7 + (pitch / elapsed) * 0.3;
   };
 
-  const isClickGesture = () => pointerRef.current.movement <= CLICK_MOVEMENT_LIMIT;
+  /** The facet a finished click selects, or undefined when the gesture was a drag. */
+  const takeClickedFace = (event: MouseEvent<SVGSVGElement>): number | undefined => {
+    const face = pressedFaceRef.current ?? faceIndexFromTarget(event.target);
+    pressedFaceRef.current = null;
+    return pointerRef.current.movement <= CLICK_MOVEMENT_LIMIT ? face : undefined;
+  };
 
   return {
     centerOn,
     endPointer,
-    isClickGesture,
     isDragging,
     onPointerDown,
     onPointerMove,
     orientation,
     rotateBy,
     stageRef,
+    takeClickedFace,
   };
 };
 
@@ -395,14 +422,16 @@ const handleBrioletteKey = (event: KeyboardEvent<HTMLDivElement>, actions: Briol
   }
 };
 
+const getFacetStyle = (color: string | undefined): BrioletteStyle => ({
+  "--patternmode-briolette-facet": color,
+});
+
 const BrioletteFacets = ({
-  onFaceClick,
   palette,
   pinHex,
   projected,
   selectedIndex,
 }: {
-  onFaceClick: (faceIndex: number) => void;
   palette: readonly string[];
   pinHex: string | undefined;
   projected: readonly BrioletteProjectedFace[];
@@ -422,11 +451,8 @@ const BrioletteFacets = ({
           data-selected={selectedIndex === face.index || undefined}
           fill={palette[face.index]}
           key={face.index}
-          onClick={() => {
-            onFaceClick(face.index);
-          }}
           points={face.points}
-          style={{ "--patternmode-briolette-facet": palette[face.index] }}
+          style={getFacetStyle(palette[face.index])}
         />
       ))}
       {pinned ? (
@@ -452,7 +478,6 @@ const BrioletteMorphSphere = ({
   <>
     <g>
       <BrioletteFacets
-        onFaceClick={ignoreFaceClick}
         palette={layers.under.palette}
         pinHex={undefined}
         projected={projectBrioletteFaces(layers.under.faces, orientation)}
@@ -461,7 +486,6 @@ const BrioletteMorphSphere = ({
     </g>
     <g>
       <BrioletteFacets
-        onFaceClick={ignoreFaceClick}
         palette={layers.over.palette}
         pinHex={undefined}
         projected={projectBrioletteFaces(layers.over.faces, orientation, layers.over.cull)}
@@ -497,13 +521,13 @@ export const BriolettePicker = ({
   const {
     centerOn,
     endPointer,
-    isClickGesture,
     isDragging,
     onPointerDown,
     onPointerMove,
     orientation,
     rotateBy,
     stageRef,
+    takeClickedFace,
   } = useBrioletteRotation(value === null, isMotionReduced);
   const hintId = useId();
   const faces = facesForDensity(density);
@@ -513,14 +537,18 @@ export const BriolettePicker = ({
     selection,
     setSelection,
   );
+  const centerOnRef = useRef(centerOn);
+  useLayoutEffect(() => {
+    centerOnRef.current = centerOn;
+  });
   const handledCenterRef = useRef<typeof pendingCenter>(null);
   // Each external anchor makes a new pending object, so the glide runs once per anchor.
   useEffect(() => {
     if (pendingCenter !== null && handledCenterRef.current !== pendingCenter) {
       handledCenterRef.current = pendingCenter;
-      centerOn(pendingCenter.center);
+      centerOnRef.current(pendingCenter.center);
     }
-  });
+  }, [pendingCenter]);
 
   // External resets (form clears, programmatic unset) collapse back to the
   // universe by derivation — the stored view only applies while a value is
@@ -635,6 +663,12 @@ export const BriolettePicker = ({
           className="patternmode-briolette__svg"
           data-dragging={isDragging || undefined}
           data-slot="briolette-sphere"
+          onClick={(event) => {
+            const faceIndex = takeClickedFace(event);
+            if (faceIndex !== undefined) {
+              selectFace(faceIndex);
+            }
+          }}
           onPointerCancel={endPointer}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -646,11 +680,6 @@ export const BriolettePicker = ({
             <BrioletteMorphSphere layers={morphLayers} orientation={orientation} />
           ) : (
             <BrioletteFacets
-              onFaceClick={(faceIndex) => {
-                if (isClickGesture()) {
-                  selectFace(faceIndex);
-                }
-              }}
               palette={palette}
               pinHex={activeView?.anchorHex}
               projected={projected}

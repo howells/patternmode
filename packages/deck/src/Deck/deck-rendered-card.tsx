@@ -1,9 +1,9 @@
 "use client";
 
-import { joinClassNames } from "@patternmode/system";
+import { assignRef, joinClassNames } from "@patternmode/system";
 import { animate, m, useMotionValue, useSpring, useTransform } from "motion/react";
 import type { MotionStyle, MotionValue, PanInfo } from "motion/react";
-import type { Ref, RefCallback } from "react";
+import { useCallback } from "react";
 
 import { resolveCardRotation } from "../logic";
 import type { AdvanceDirection, DeckItem, DeckRootProps } from "../types";
@@ -114,18 +114,6 @@ const getCardEnterInitial = (
   };
 };
 
-const isRefCallback = (ref: Ref<HTMLDivElement> | undefined): ref is RefCallback<HTMLDivElement> =>
-  typeof ref === "function";
-
-/** Hands a node to a callback ref or an object ref, whichever the owner supplied. */
-const assignRef = (ref: Ref<HTMLDivElement> | undefined, node: HTMLDivElement | null) => {
-  if (isRefCallback(ref)) {
-    ref(node);
-  } else if (ref !== null && ref !== undefined) {
-    ref.current = node;
-  }
-};
-
 export const DeckRenderedCard = ({
   depth,
   entering,
@@ -156,16 +144,21 @@ export const DeckRenderedCard = ({
     translateY: response.lift,
   };
 
-  const attachCardRef = (node: HTMLDivElement | null) => {
-    // Track the mounted active card so drag gestures can measure its width.
-    // Never clear on `null`: an exiting clone unmounts after its replacement
-    // has attached and must not clobber the live reference.
-    if (active && node !== null) {
-      assignRef(interactions.activeCardRef, node);
-    }
+  const { activeCardRef } = interactions;
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- an inline ref callback makes React 19 call ref(null) then ref(node) on every render; the library build does not run React Compiler.
+  const attachCardRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      // Track the mounted active card so drag gestures can measure its width.
+      // Never clear on `null`: an exiting clone unmounts after its replacement
+      // has attached and must not clobber the live reference.
+      if (active && node !== null) {
+        assignRef(activeCardRef, node);
+      }
 
-    assignRef(consumerRef, node);
-  };
+      assignRef(consumerRef, node);
+    },
+    [active, activeCardRef, consumerRef],
+  );
 
   const handleDrag = (event: PointerLikeEvent, info: PanInfo) => {
     interactions.handleDrag(event, info);

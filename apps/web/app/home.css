@@ -54,7 +54,7 @@
 }
 
 .hero-lead {
-  @apply type-lead;
+  @apply type-heading;
   max-width: 540px;
   margin: 0;
   color: var(--muted-foreground);
@@ -81,7 +81,7 @@
 }
 
 .hero-browse {
-  @apply type-ui;
+  @apply type-body;
   flex-shrink: 0;
   white-space: nowrap;
   display: inline-flex;
@@ -107,7 +107,7 @@
 }
 
 .hero-sheet-root {
-  @apply type-ui;
+  @apply type-body;
   position: absolute;
   top: 0;
   left: 22px;
@@ -148,7 +148,7 @@
 }
 
 .hero-sheet-title {
-  @apply type-label;
+  @apply type-body;
   display: flex;
   align-items: center;
 }
@@ -188,7 +188,7 @@
 }
 
 .hero-sheet-facts dt {
-  @apply type-ui;
+  @apply type-body;
   color: var(--muted-foreground);
 }
 
@@ -206,7 +206,7 @@
 }
 
 .hero-sheet-legend {
-  @apply type-meta;
+  @apply type-body;
   display: flex;
   gap: 16px;
   color: var(--muted-foreground);
@@ -308,11 +308,11 @@
 }
 
 .face-name {
-  @apply type-label;
+  @apply type-body;
 }
 
 .face-note {
-  @apply type-meta;
+  @apply type-body;
   color: var(--muted-foreground);
 }
 
@@ -355,7 +355,7 @@
 }
 
 .token-name {
-  @apply type-ui;
+  @apply type-body;
   flex: 1 1 0;
   min-width: 0;
 }
@@ -410,10 +410,6 @@
   padding-bottom: 24px;
 }
 
-.type-role[data-role="type-figure"] {
-  padding-bottom: 20px;
-}
-
 .type-role-name {
   @apply type-data;
   flex: 0 0 128px;
@@ -427,13 +423,8 @@
   color: var(--foreground);
 }
 
-.type-role-sample.type-lead,
-.type-role-sample.type-meta {
-  color: var(--muted-foreground);
-}
-
 .type-role-spec {
-  @apply type-meta;
+  @apply type-body;
   flex: 0 0 150px;
   margin: 0;
   color: var(--muted-foreground);
@@ -523,7 +514,7 @@
 }
 
 .catalogue-name {
-  @apply type-label;
+  @apply type-body;
   transition: color 150ms ease;
 }
 
@@ -607,7 +598,6 @@
 .install-step-title {
   @apply type-heading;
   margin: 0;
-  font-weight: 400;
 }
 
 .install-step-description {
@@ -625,7 +615,7 @@
 }
 
 .install-step-note {
-  @apply type-meta;
+  @apply type-body;
   margin: 0;
   color: var(--dark-muted-foreground);
 }

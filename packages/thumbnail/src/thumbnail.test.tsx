@@ -123,6 +123,12 @@ describe(Thumbnail, () => {
     expect(frame?.style.width).toBe("");
   });
 
+  it("writes no inline custom properties for props that were not passed", () => {
+    const { container } = render(<Thumbnail src="/a.jpg" />);
+    const frame = container.querySelector<HTMLElement>('[data-slot="thumbnail"]');
+    expect(frame?.getAttribute("style")).toBeNull();
+  });
+
   it("lifts only when asked", () => {
     const { container, rerender } = render(<Thumbnail src="/a.jpg" />);
     const frame = () => container.querySelector('[data-slot="thumbnail"]');

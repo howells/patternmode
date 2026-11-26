@@ -9,11 +9,22 @@ export const normalizeTag = (value: string): string => value.trim().replaceAll(/
 export const normalizeComparable = (value: string): string =>
   normalizeTag(value).toLocaleLowerCase();
 
-export const splitPastedTags = (value: string): string[] =>
-  value.split(/[,\n\r\t]+/u).flatMap((part) => {
+const escapeRegExp = (value: string): string =>
+  value.replaceAll(/[.*+?^${}()|[\]\\]/gu, String.raw`\$&`);
+
+export const splitPastedTags = (
+  value: string,
+  separators: readonly string[] = DEFAULT_SEPARATORS,
+): string[] => {
+  const tokens = [...separators.filter((separator) => separator !== ""), "\n", "\r", "\t"].map(
+    (separator) => escapeRegExp(separator),
+  );
+  const pattern = new RegExp(`(?:${tokens.join("|")})+`, "u");
+  return value.split(pattern).flatMap((part) => {
     const tag = normalizeTag(part);
     return tag === "" ? [] : [tag];
   });
+};
 
 /** Drops empty drafts and drafts whose normalized comparable label already appeared. */
 export const dedupeDrafts = (drafts: readonly string[]): string[] => {

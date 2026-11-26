@@ -68,8 +68,8 @@ const currentItem = ({
 };
 
 /**
- * One compact header for every route and every scroll position: the name
- * centred over a ruled row of contents. Components stays current on all
+ * One compact header for every route and every scroll position: the name on
+ * the left, the contents on the right. Components stays current on all
  * thirteen component pages; on Home the current item follows the section
  * in view.
  */
@@ -86,11 +86,9 @@ export const SiteHeader = () => {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <div className="site-masthead">
-          <Link className="site-name" href="/" onClick={onHome ? scrollHomeToTop : undefined}>
-            Patternmode
-          </Link>
-        </div>
+        <Link className="site-name" href="/" onClick={onHome ? scrollHomeToTop : undefined}>
+          Patternmode
+        </Link>
         <nav aria-label="Site" className="site-nav">
           <ul className="site-nav-list">
             {siteNav.map((item) => (
@@ -114,11 +112,6 @@ export const SiteHeader = () => {
                         : undefined
                     }
                   >
-                    {item.number === undefined ? null : (
-                      <span aria-hidden="true" className="site-nav-number">
-                        {item.number}
-                      </span>
-                    )}
                     {item.label}
                   </Link>
                 )}

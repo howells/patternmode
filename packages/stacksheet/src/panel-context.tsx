@@ -6,6 +6,8 @@ export interface SheetPanelContextValue {
   back: () => void;
   /** Close the entire sheet stack */
   close: () => void;
+  /** Whether this sheet can be dismissed by drag, handle, backdrop, or Escape */
+  dismissible: boolean;
   /** Whether a Sheet.Description is mounted inside this panel */
   hasDescription: boolean;
   /** Whether a Sheet.Title is mounted inside this panel */

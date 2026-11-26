@@ -107,6 +107,24 @@ describe(findSnapTarget, () => {
     // Currently at top (index 2), swiping up → stay at top
     expect(findSnapTarget(50, panelHeight, snapHeights, -0.5, 2, true)).toBe(2);
   });
+
+  it("sequential mode compares offset against the current snap offset when velocity is zero", () => {
+    // At index 1 (offset 200), dragging downward to offset 250 with 0 velocity moves down to index 0.
+    expect(findSnapTarget(250, panelHeight, snapHeights, 0, 1, true)).toBe(0);
+    // At index 1 (offset 200), dragging upward to offset 150 with 0 velocity moves up to index 2.
+    expect(findSnapTarget(150, panelHeight, snapHeights, 0, 1, true)).toBe(2);
+  });
+
+  it("sequential mode follows the drag, not jitter, on a release slower than a flick", () => {
+    // Dragged down from index 1, a last-moment wobble upward is not a flick.
+    expect(findSnapTarget(260, panelHeight, snapHeights, -0.05, 1, true)).toBe(0);
+    // Dragged up from index 1 with a slight downward wobble.
+    expect(findSnapTarget(140, panelHeight, snapHeights, 0.05, 1, true)).toBe(2);
+  });
+
+  it("sequential mode stays put on a release at the current Snap Point", () => {
+    expect(findSnapTarget(200, panelHeight, snapHeights, 0, 1, true)).toBe(1);
+  });
 });
 
 // ── getSnapOffset ──────────────────────────────

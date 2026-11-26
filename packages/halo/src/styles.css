@@ -72,15 +72,19 @@
   }
 
   .patternmode-halo-picker__pad-hue {
-    background: hsl(var(--patternmode-halo-hue-value, 16) 100% 50%);
+    background: linear-gradient(
+      to right,
+      #808080,
+      hsl(var(--patternmode-halo-hue-value, 16) 100% 50%)
+    );
   }
 
   .patternmode-halo-picker__pad-white {
-    background: linear-gradient(to right, #fff, transparent);
+    background: linear-gradient(to bottom, #fff 0%, transparent 50%);
   }
 
   .patternmode-halo-picker__pad-black {
-    background: linear-gradient(to top, #000, transparent);
+    background: linear-gradient(to top, #000 0%, transparent 50%);
   }
 
   .patternmode-halo-picker__pad-handle {

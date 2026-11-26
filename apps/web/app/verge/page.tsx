@@ -1,8 +1,7 @@
-import { ApiTable, CodeBlock, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import { ApiTable, CodeBlock, DocsBlock } from "@/components/docs-blocks";
+import type { ApiSection } from "@/components/docs-blocks";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { VergeDemo } from "@/components/verge-demo";
 import { VergeVariants } from "@/components/verge-variants";
 import { componentMetadata } from "@/lib/catalogue";
@@ -68,20 +67,15 @@ const hitAreaExample = `/* Verge reserves the slot; it does not own your button.
 
 export default function VergePage() {
   return (
-    <ComponentFrame
+    <PackageDocs
+      api={vergeApi}
       caption="At rest, pointed at, and reached by Tab. The hex values never move."
       demo={<VergeDemo />}
+      example={vergeExample}
+      installLead="Wrap the whole row in Verge.Root, not just the controls. Needs Tailwind CSS v4."
       slug="verge"
+      variants={<VergeVariants />}
     >
-      <VergeVariants />
-      <InstallBlock
-        command="npm i @patternmode/verge"
-        example={vergeExample}
-        lead="Wrap the whole row in Verge.Root, not just the controls. Needs Tailwind CSS v4."
-      />
-      <DocsBlock title="Core API">
-        <ApiTable sections={vergeApi} />
-      </DocsBlock>
       <DocsBlock title="What it already handles">
         <ApiTable
           sections={[
@@ -163,6 +157,6 @@ export default function VergePage() {
           ]}
         />
       </DocsBlock>
-    </ComponentFrame>
+    </PackageDocs>
   );
 }

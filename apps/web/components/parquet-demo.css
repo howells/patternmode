@@ -14,7 +14,7 @@
 }
 
 .parquet-demo-label {
-  @apply type-ui flex min-w-0 flex-col text-white;
+  @apply type-body flex min-w-0 flex-col text-white;
 }
 
 .parquet-demo-label[data-light] {
@@ -22,7 +22,7 @@
 }
 
 .parquet-demo-name {
-  @apply truncate font-medium;
+  @apply truncate;
 }
 
 .parquet-demo-percent {
@@ -50,7 +50,7 @@
 }
 
 .parquet-demo-row {
-  @apply type-ui flex h-9 w-full cursor-pointer items-center gap-2.5 border-0 bg-transparent p-0 text-left text-foreground;
+  @apply type-body flex h-9 w-full cursor-pointer items-center gap-2.5 border-0 bg-transparent p-0 text-left text-foreground;
 }
 
 .parquet-demo-row:focus-visible {
@@ -67,10 +67,6 @@
 
 .parquet-demo-row-percent {
   @apply type-data text-muted-foreground;
-}
-
-.parquet-demo-row[aria-pressed="true"] .parquet-demo-row-name {
-  @apply font-medium;
 }
 
 /* Variant specimens. */

@@ -4,6 +4,7 @@ import { TagSelector } from "@patternmode/tags";
 import type { TagItem } from "@patternmode/tags";
 import { useId, useState } from "react";
 import { createTag, findTagOption, tagOptions } from "./tags-items";
+import "@patternmode/tags/styles.css";
 import "./tags-demo.css";
 
 export const TagsDemo = () => {

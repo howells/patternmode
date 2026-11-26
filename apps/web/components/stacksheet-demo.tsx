@@ -1,9 +1,10 @@
 "use client";
 
 import { createStacksheet, Sheet } from "@patternmode/stacksheet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { SheetStage } from "@/components/sheet-stage";
+import "@patternmode/stacksheet/styles.css";
 import "./stacksheet-demo.css";
 
 const SWATCHES = [
@@ -34,7 +35,6 @@ const { StacksheetProvider, store, useSheet, useStacksheetState } = createStacks
   spring: "subtle",
   stacking: { offsetStep: 28, opacityStep: 0.15, radius: 12, scaleStep: 0.047 },
   width: 420,
-  zIndex: 30,
 });
 
 // Every sheet takes its own id, so the same colour can sit in the stack twice.
@@ -188,9 +188,21 @@ export const StacksheetDemo = () => {
     push("Colour", nextId("colour"), { index: 0 });
   }, []);
 
+  const [stage, setStage] = useState<HTMLDivElement | null>(null);
+
   return (
-    <StacksheetProvider classNames={{ panel: "plate-panel" }} layout="composable" sheets={sheets}>
-      <SheetStage className="plate-stage" inset={[16, 16, 16, 16]} radius={12} zIndex={30}>
+    <StacksheetProvider
+      classNames={{ panel: "plate-panel" }}
+      container={stage}
+      layout="composable"
+      sheets={sheets}
+    >
+      <SheetStage
+        className="plate-stage"
+        containerRef={setStage}
+        inset={[16, 16, 16, 16]}
+        radius={12}
+      >
         <Orders />
       </SheetStage>
     </StacksheetProvider>

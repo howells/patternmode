@@ -1,8 +1,6 @@
-import { ApiTable, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { SwatchDemo, SwatchVariants } from "@/components/swatch-demo";
 import { componentMetadata } from "@/lib/catalogue";
 
@@ -234,20 +232,14 @@ function PalettePreview() {
 
 export default function SwatchPage() {
   return (
-    <ComponentFrame
+    <PackageDocs
+      api={swatchApi}
       caption="Circle, pill with two stops, square, selected, unavailable, block. Below, the distribution bar."
       demo={<SwatchDemo />}
+      example={swatchExample}
+      installLead="Import the styles once. Swatch and DistributionBar come from the same package."
       slug="swatch"
-    >
-      <SwatchVariants />
-      <InstallBlock
-        command="npm i @patternmode/swatch motion"
-        example={swatchExample}
-        lead="Import the styles once. Swatch and DistributionBar come from the same package."
-      />
-      <DocsBlock title="Core API">
-        <ApiTable sections={swatchApi} />
-      </DocsBlock>
-    </ComponentFrame>
+      variants={<SwatchVariants />}
+    />
   );
 }

@@ -6,6 +6,8 @@ import { Swatch } from "@patternmode/swatch";
 import { useState } from "react";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/briolette/styles.css";
+import "@patternmode/swatch/styles.css";
 import "./briolette-demo.css";
 
 const NOTES = [

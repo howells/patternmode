@@ -219,6 +219,16 @@ describe(getPanelStyles, () => {
     });
   });
 
+  it("positions a contained stack's panels within its container", () => {
+    const bottom = getPanelStyles("bottom", mockConfig, 0, false, undefined, true);
+    expect(bottom).toMatchObject({ height: "85%", maxHeight: "85%", position: "absolute" });
+    expect(bottom).not.toHaveProperty("--stacksheet-safe-bottom");
+    const right = getPanelStyles("right", mockConfig, 0, false, undefined, true);
+    expect(right).toMatchObject({ bottom: 0, position: "absolute", right: 0, top: 0 });
+    expect(right).not.toHaveProperty("paddingTop");
+    expect(right).not.toHaveProperty("paddingRight");
+  });
+
   it("sets willChange to transform", () => {
     const styles = getPanelStyles("right", mockConfig, 0);
     expect(styles).toMatchObject({

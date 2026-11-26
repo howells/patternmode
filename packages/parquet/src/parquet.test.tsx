@@ -2,7 +2,7 @@
 
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Parquet } from "./index";
 import type { ParquetTile } from "./parquet-types";
@@ -31,6 +31,28 @@ describe(Parquet, () => {
       container.querySelectorAll('.patternmode-parquet__tile[aria-hidden="true"]'),
     ).toHaveLength(2);
   });
+
+  it("gives collapsed slots explicit zero percentage geometry", () => {
+    const { container } = render(<Parquet colors={palette} disableMotion slotCount={5} />);
+    const empty = container.querySelector<HTMLElement>(
+      '.patternmode-parquet__tile[aria-hidden="true"]',
+    );
+    expect(empty?.style.width).toBe("0%");
+    expect(empty?.style.height).toBe("0%");
+    expect(empty?.style.left).toBe("0%");
+    expect(empty?.style.top).toBe("0%");
+  });
+
+  it.each([0, -1, Number.NaN, Number.POSITIVE_INFINITY])(
+    "throws for an invalid aspectRatio of %s",
+    (aspectRatio) => {
+      const error = vi.spyOn(console, "error").mockImplementation(() => {});
+      expect(() => render(<Parquet aspectRatio={aspectRatio} colors={palette} />)).toThrow(
+        "aspectRatio",
+      );
+      error.mockRestore();
+    },
+  );
 
   it("ignores zero and negative weights", () => {
     const { container } = render(

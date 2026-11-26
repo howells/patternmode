@@ -29,6 +29,12 @@
     @apply pointer-events-none fixed inset-0 overflow-hidden;
   }
 
+  /* A stack rendered into a `container` fills that element instead. */
+  .patternmode-stacksheet__backdrop[data-stacksheet-contained],
+  .patternmode-stacksheet__layer[data-stacksheet-contained] {
+    @apply absolute;
+  }
+
   .patternmode-stacksheet__panel-inner {
     @apply relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[inherit];
   }
@@ -118,6 +124,11 @@
 
   .patternmode-stacksheet__handle {
     @apply flex shrink-0 cursor-grab touch-none items-center justify-center border-none bg-transparent pt-4 pb-1 text-inherit select-none [-webkit-touch-callout:none] active:cursor-grabbing;
+  }
+
+  /* A Sheet that can't be dismissed keeps the pill as decoration only. */
+  .patternmode-stacksheet__handle[data-stacksheet-handle-inert] {
+    @apply cursor-default active:cursor-default;
   }
 
   .patternmode-stacksheet__handle-pill {

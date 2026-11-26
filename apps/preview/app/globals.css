@@ -147,7 +147,8 @@
   body {
     font-size: 0.875rem;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.25rem;
+    letter-spacing: -0.01em;
     font-feature-settings: "cpsp", "cv01", "cv02", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -157,22 +158,22 @@
 
 @utility type-display {
   font-family: var(--font-serif);
-  font-size: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+  font-size: clamp(2.5rem, 1.75rem + 2.5vw, 3.75rem);
   font-weight: 400;
   font-feature-settings: normal;
   font-synthesis-weight: none;
-  line-height: var(--tw-leading, 1.05);
-  letter-spacing: var(--tw-tracking, -0.02em);
+  line-height: var(--tw-leading, 1);
+  letter-spacing: var(--tw-tracking, -0.01em);
   text-wrap: balance;
 }
 
 @utility type-title {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 2.25rem;
   font-weight: 400;
   font-feature-settings: normal;
   font-synthesis-weight: none;
-  line-height: var(--tw-leading, 2rem);
+  line-height: var(--tw-leading, 2.5rem);
   letter-spacing: var(--tw-tracking, -0.01em);
   text-wrap: balance;
 }
@@ -180,53 +181,17 @@
 @utility type-heading {
   font-family: var(--font-sans);
   font-size: 1rem;
-  line-height: var(--tw-leading, 1.5rem);
-  letter-spacing: var(--tw-tracking, normal);
-}
-
-@utility type-lead {
-  font-family: var(--font-sans);
-  font-size: clamp(1rem, 0.875rem + 0.3125vw, 1.125rem);
-  line-height: var(--tw-leading, 1.6);
-  letter-spacing: var(--tw-tracking, normal);
-  text-wrap: pretty;
-}
-
-@utility type-figure {
-  font-family: var(--font-sans);
-  font-size: clamp(2.25rem, 1.5rem + 1.875vw, 3rem);
-  line-height: var(--tw-leading, 1);
-  letter-spacing: var(--tw-tracking, -0.01em);
-}
-
-@utility type-label {
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  font-weight: var(--tw-font-weight, 500);
-  font-synthesis-weight: none;
-  line-height: var(--tw-leading, 1.25rem);
+  font-weight: 400;
+  line-height: var(--tw-leading, 1.375rem);
   letter-spacing: var(--tw-tracking, normal);
 }
 
 @utility type-body {
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  line-height: var(--tw-leading, 1.3125rem);
-  letter-spacing: var(--tw-tracking, normal);
-}
-
-@utility type-ui {
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  line-height: var(--tw-leading, 1.125rem);
-  letter-spacing: var(--tw-tracking, normal);
-}
-
-@utility type-meta {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  line-height: var(--tw-leading, 1rem);
-  letter-spacing: var(--tw-tracking, normal);
+  font-weight: 400;
+  line-height: var(--tw-leading, 1.25rem);
+  letter-spacing: var(--tw-tracking, -0.01em);
 }
 
 @utility type-data {

@@ -172,6 +172,22 @@ push(EditForm, { id }, { dismissible: false, width: 560 });
 
 `dismissible` decides whether Escape, a backdrop click or a drag can dismiss the Sheet. It defaults to the stack's `dismissible`. The top Sheet decides: while a non-dismissible Sheet is on top, Escape and the backdrop do nothing, the backdrop cursor is not a pointer and the Sheet cannot be dragged away. Push a dismissible Sheet over it and the stack can be dismissed again. `close()`, `pop()` and `remove()` always work, so your own buttons can still close the Sheet. `swap` keeps the top Sheet's `width` and `dismissible` unless you pass new ones.
 
+## Rendering inside an element
+
+By default the stack renders into `document.body` and covers the page. Pass `container` to render it inside an element instead, such as a demo card, a pane or a preview frame:
+
+```tsx
+const [stage, setStage] = useState<HTMLDivElement | null>(null);
+
+<StacksheetProvider container={stage}>
+  <div className="relative h-96 overflow-hidden" ref={setStage}>
+    {/* content the Sheets open over */}
+  </div>
+</StacksheetProvider>;
+```
+
+The overlay and Sheets are positioned absolutely within the container, so give it a containing block (`position: relative`, absolute or fixed) and a size. Bottom Sheets take 85% of its height and fractional Snap Points resolve against its height. Safe-area padding and keyboard lifting are left out, since they belong to the screen. Scroll lock and the focus trap still follow `lockScroll` and `modal`, so an embedded stack usually wants `modal: false`. While `container` is `null` (a callback ref before it attaches) nothing renders.
+
 ## Drag and motion
 
 Bottom Sheets are dragged down to dismiss and side Panels outward. Motion runs on Motion values, so a drag never re-renders React.
@@ -210,6 +226,10 @@ open(UserProfile, { userId: "u_abc" }, { ariaLabel: "User profile for Jane" });
 ```
 
 In composable mode, use `Sheet.Title` and `Sheet.Description` so the Panel gets `aria-labelledby` and `aria-describedby` automatically.
+
+A modal Sheet traps focus, and pauses the trap while focus is in a layer opened above it: an open Base UI dialog or popup (an element with `data-open` outside the Panel), an open Radix dialog or popper, and anything inside an element marked `data-stacksheet-layer-exempt`. Mark your own floating layers with that attribute if they render outside the Sheet. The trap resumes as soon as focus moves back, including when the layer closes and focus falls to the page.
+
+A non-dismissible Sheet shows no automatic drag handle, and `Sheet.Handle` renders as a plain, hidden-from-assistive-tech pill that does nothing when tapped.
 
 ## Documentation
 

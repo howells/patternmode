@@ -203,9 +203,9 @@ export interface StacksheetConfig {
   /** Sheet slide-from side. Default: { desktop: "right", mobile: "bottom" } */
   side?: SideConfig;
   /**
-   * Initial snap point index. Resolved once at `createStacksheet()` and
-   * cannot be changed after creation — when set, it pins the active snap
-   * point. Use `onSnapPointChange` to observe user-driven snap changes.
+   * Initial snap point index when a bottom sheet opens. Defaults to the
+   * tallest snap point. Dragging still moves between snap points; use
+   * `onSnapPointChange` to observe changes.
    */
   snapPointIndex?: number;
 
@@ -377,6 +377,20 @@ export type StacksheetProviderProps<TMap extends object> = StacksheetLayoutProps
   children: ReactNode;
   /** CSS class overrides for the backdrop and the panels */
   classNames?: StacksheetClassNames;
+  /**
+   * Render the stack inside this element instead of over the page. The
+   * overlay and Sheets are then positioned absolutely within it: give it a
+   * containing block (`position: relative`, or absolute/fixed) and a size.
+   * Bottom Sheets take 85% of its height, fractional Snap Points resolve
+   * against its height, and safe-area padding and keyboard lifting are off.
+   * Scroll lock and the focus trap still follow `lockScroll` and `modal`, so
+   * pair an embedded stack with `modal: false`.
+   *
+   * Pass `null` while the element isn't mounted yet (a callback ref's first
+   * render): nothing renders until it is set. Leave it out to render into
+   * `document.body`.
+   */
+  container?: HTMLElement | null;
   /** Map of sheet type keys to content components (optional — only needed for type registry pattern) */
   sheets?: ContentMap<TMap>;
 };

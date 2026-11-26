@@ -3,6 +3,7 @@ import type {
   ComponentProps,
   ComponentPropsWithRef,
   ComponentType,
+  HTMLAttributes,
   ReactNode,
   SVGProps,
 } from "react";
@@ -66,8 +67,11 @@ export interface TagItem {
 export interface TagRenderProps<TItem extends TagItem = TagItem> {
   disabled: boolean;
   item: TItem;
-  /** Props for a remove button; spread them onto your custom remove affordance. */
-  removeProps: ButtonHTMLAttributes<HTMLButtonElement>;
+  /**
+   * Props for a non-button remove mark (`<span>`) inside the `<button>` trigger;
+   * spread them onto a non-interactive element so you do not nest buttons.
+   */
+  removeProps: HTMLAttributes<HTMLSpanElement>;
   selected: true;
 }
 

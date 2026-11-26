@@ -1,4 +1,5 @@
 import type { NavigationDirection } from "../expanded-media-stage";
+import { isDegenerateFlight } from "../media-transition-utils";
 import type { ApertoMediaTransition, ApertoRect } from "../media-transition-utils";
 import type { ApertoMediaItem } from "../types";
 
@@ -80,9 +81,13 @@ const reducePhase = (phase: ApertoGroupPhase, action: ApertoPhaseAction): Aperto
       return finishTransition(phase);
     }
     case "measure-opening-target": {
-      return phase.name === "opening" && phase.to === undefined
-        ? { ...phase, to: action.rect }
-        : phase;
+      if (phase.name !== "opening" || phase.to !== undefined) {
+        return phase;
+      }
+      if (isDegenerateFlight(phase.from, action.rect)) {
+        return { name: "open", openerIndex: phase.openerIndex };
+      }
+      return { ...phase, to: action.rect };
     }
     case "open": {
       return phase.name === "closed" ? { name: "open", openerIndex: action.index } : phase;
@@ -131,12 +136,15 @@ export const apertoGroupReducer = (
 export const isPhaseOpen = (phase: ApertoGroupPhase): boolean => phase.name !== "closed";
 
 /** The clone's flight, once both ends are known. */
-export const getFlight = (phase: ApertoGroupPhase): ApertoMediaTransition | null => {
+export const getFlight = (
+  phase: ApertoGroupPhase,
+  activeMedia?: ApertoMediaItem,
+): ApertoMediaTransition | null => {
   if (phase.name === "closing") {
-    return { from: phase.from, item: phase.item, to: phase.to };
+    return { from: phase.from, item: activeMedia ?? phase.item, to: phase.to };
   }
   if (phase.name === "opening" && phase.to !== undefined) {
-    return { from: phase.from, item: phase.item, to: phase.to };
+    return { from: phase.from, item: activeMedia ?? phase.item, to: phase.to };
   }
   return null;
 };

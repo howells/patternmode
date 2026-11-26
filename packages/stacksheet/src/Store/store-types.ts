@@ -31,6 +31,8 @@ export interface SheetStoreBundle<TMap extends object> {
   close: (reason: CloseReason) => void;
   /** Why the stack was last emptied. */
   getCloseReason: () => CloseReason;
+  /** The element that held focus right before the stack opened. */
+  getOpenerElement: () => Element | null;
   /** Pop the top Sheet, closing the stack when it is the last, recording why. */
   pop: (reason: CloseReason) => void;
   store: StoreApi<StoreState<TMap>>;

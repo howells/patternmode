@@ -7,6 +7,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { renderApertoImage } from "@/components/aperto-image";
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
 import { apertoMedia } from "@/lib/aperto-media";
+import "@patternmode/aperto/styles.css";
 import "./aperto-demo.css";
 
 const pick = (id: string): ApertoImageItem => {

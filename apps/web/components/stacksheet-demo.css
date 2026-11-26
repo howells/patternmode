@@ -1,7 +1,7 @@
 @reference "../app/globals.css";
 
 /* ══ Hero: the Orders page with a live sheet stack on the plate ═════════════
-   The stage fills the plate; SheetStage pins Stacksheet's layer to it. */
+   The stage fills the plate; the stack renders into SheetStage's container. */
 .plate-stage {
   @apply absolute inset-0;
 }
@@ -11,11 +11,11 @@
 }
 
 .plate-orders-title {
-  @apply type-title m-0 pb-4;
+  @apply type-heading m-0 pb-4;
 }
 
 .plate-order {
-  @apply type-ui flex h-11 w-full cursor-pointer items-center justify-between border-0 border-b border-[color:var(--border)] bg-transparent p-0 text-left text-[color:var(--foreground)];
+  @apply type-body flex h-11 w-full cursor-pointer items-center justify-between border-0 border-b border-[color:var(--border)] bg-transparent p-0 text-left text-[color:var(--foreground)];
 }
 
 .plate-order:focus-visible {
@@ -49,7 +49,7 @@
 }
 
 .plate-sheet-header [data-stacksheet-title] {
-  @apply type-label;
+  @apply type-body;
 }
 
 .plate-sheet-header [data-stacksheet-close] {
@@ -61,7 +61,7 @@
 }
 
 .plate-swatch {
-  @apply type-ui flex h-11 w-full cursor-pointer items-center gap-3 border-0 border-b border-[color:var(--border)] bg-transparent p-0 text-left text-[color:var(--foreground)];
+  @apply type-body flex h-11 w-full cursor-pointer items-center gap-3 border-0 border-b border-[color:var(--border)] bg-transparent p-0 text-left text-[color:var(--foreground)];
 }
 
 .plate-swatch .plate-value {
@@ -89,7 +89,7 @@
 }
 
 .plate-facts > div {
-  @apply type-ui flex h-10 items-center justify-between border-b border-[color:var(--border)];
+  @apply type-body flex h-10 items-center justify-between border-b border-[color:var(--border)];
 }
 
 .plate-facts dt {
@@ -105,7 +105,7 @@
 }
 
 .plate-actions button {
-  @apply type-ui h-9 cursor-pointer rounded-lg border border-[color:var(--border)] bg-transparent px-3.5 text-[color:var(--foreground)];
+  @apply type-body h-9 cursor-pointer rounded-lg border border-[color:var(--border)] bg-transparent px-3.5 text-[color:var(--foreground)];
 }
 
 .plate-actions button:first-child {
@@ -161,11 +161,11 @@
    sits under them. */
 .sheet-panel-content h2,
 .sheet-panel-content h3 {
-  @apply m-0 type-title font-normal;
+  @apply m-0 type-heading;
 }
 
 .sheet-panel-content p {
-  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] type-body text-[color:var(--muted-foreground)];
 }
 
 .sheet-action-row button:focus-visible {
@@ -177,11 +177,11 @@
 }
 
 .sheet-action-row button {
-  @apply min-h-[34px] cursor-pointer rounded-[7px] border border-[color:var(--ink)] bg-[var(--ink)] px-3 text-[13px] text-white transition-[background,border-color,color] duration-[140ms];
+  @apply min-h-[34px] cursor-pointer rounded-[7px] border border-[color:var(--foreground)] bg-[var(--foreground)] px-3 text-[13px] text-white transition-[background,border-color,color] duration-[140ms];
 }
 
 .sheet-action-row button + button {
-  @apply border-[color:var(--border)] bg-transparent text-[color:var(--ink)];
+  @apply border-[color:var(--border)] bg-transparent text-[color:var(--foreground)];
 }
 
 .stacksheet-backdrop {
@@ -189,7 +189,7 @@
 }
 
 .stacksheet-panel {
-  @apply border border-[color:var(--border-soft)] bg-[var(--surface)] shadow-[0_18px_60px_rgba(29,29,27,0.18)];
+  @apply border border-[color:var(--border)] bg-[var(--card)] shadow-[0_18px_60px_rgba(29,29,27,0.18)];
 }
 
 .sheet-panel-content {
@@ -201,7 +201,7 @@
 }
 
 .sheet-list span {
-  @apply rounded-[7px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-3 py-2.5 text-sm text-[color:var(--muted-foreground)];
+  @apply rounded-[7px] border border-[color:var(--border)] bg-[var(--muted)] px-3 py-2.5 type-body text-[color:var(--muted-foreground)];
 }
 
 .stacksheet-examples {
@@ -209,20 +209,20 @@
 }
 
 .stacksheet-group-label {
-  @apply m-0 mb-0.5 text-sm font-medium text-[color:var(--muted-foreground)];
+  @apply m-0 mb-0.5 type-body text-[color:var(--muted-foreground)];
 }
 
 .stacksheet-group-rows {
-  @apply flex flex-col border-b border-[color:var(--border-soft)];
+  @apply flex flex-col border-b border-[color:var(--border)];
 }
 
 .stacksheet-row {
-  @apply grid w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-0.5 border-0 border-t border-[color:var(--border-soft)] bg-transparent px-2 py-[13px] text-left text-inherit transition-[background] duration-[140ms];
+  @apply grid w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-0.5 border-0 border-t border-[color:var(--border)] bg-transparent px-2 py-[13px] text-left text-inherit transition-[background] duration-[140ms];
 }
 
 @media (hover: hover) and (pointer: fine) {
   .stacksheet-row:hover {
-    @apply bg-[var(--surface-soft)];
+    @apply bg-[var(--muted)];
   }
 }
 
@@ -231,15 +231,15 @@
 }
 
 .stacksheet-row-name {
-  @apply text-sm font-medium text-[color:var(--ink)];
+  @apply type-body text-[color:var(--foreground)];
 }
 
 .stacksheet-row-desc {
-  @apply col-span-2 row-start-2 text-sm text-[color:var(--muted-foreground)];
+  @apply col-span-2 row-start-2 type-body text-[color:var(--muted-foreground)];
 }
 
 .stacksheet-row-open {
-  @apply col-start-2 row-start-1 text-sm text-[color:var(--ring)];
+  @apply col-start-2 row-start-1 type-body text-[color:var(--ring)];
 }
 
 .sheet-link-list {
@@ -251,7 +251,7 @@
 }
 
 .sheet-form label {
-  @apply flex flex-col gap-[5px] text-sm text-[color:var(--muted-foreground)];
+  @apply flex flex-col gap-[5px] type-body text-[color:var(--muted-foreground)];
 }
 
 .sheet-form input,
@@ -259,7 +259,7 @@
   /* Before the @apply so the utility's 16px wins over the shorthand; under
      16px, iOS Safari zooms the page when the field takes focus. */
   font: inherit;
-  @apply w-full rounded-lg border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-[9px] text-base text-[color:var(--ink)];
+  @apply w-full rounded-lg border border-[color:var(--border)] bg-[var(--muted)] px-[11px] py-[9px] text-base text-[color:var(--foreground)];
 }
 
 .sheet-form input:focus-visible,

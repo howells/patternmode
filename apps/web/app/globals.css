@@ -4,19 +4,17 @@
 @import "@fontsource-variable/hedvig-letters-serif/opsz.css";
 @import "@fontsource-variable/geist-mono/wght.css";
 @import "@patternmode/theme/registry/theme/theme.css";
-/* The light colour, radius and shadow tokens, written from the theme's
+/* The light colour, radius and shadow tokens and the dark ground tokens, written from the theme's
    item.json by scripts/write-theme-tokens.mjs before dev and build. */
 @import "./theme-tokens.css";
-@import "@howells/site-ui/styles.css";
 
 /* Build scripts name tokens like shadow-sm; they are not markup. */
 @source not "../scripts";
 
 /*
- * House theme tokens (packages/theme/registry/theme). The package styles read
- * the shadcn names directly; the older names below alias them so the demo
- * styles keep one source of colour. The font stacks differ from the theme's
- * (no named fallback inside each var()), so they stay here.
+ * House theme tokens (packages/theme/registry/theme). The site and the
+ * packages read the shadcn names directly. The font stacks differ from the
+ * theme's (no named fallback inside each var()), so they stay here.
  */
 :root {
   --font-inter: InterVariable;
@@ -25,15 +23,6 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-hedvig-letters-serif), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
-
-  --ink: var(--foreground);
-  --surface: var(--card);
-  --surface-soft: var(--muted);
-  --border-soft: color-mix(in oklab, var(--border) 55%, var(--background));
-  --code-background: var(--muted);
-  --code-border: var(--border);
-  --accent-soft: var(--accent);
-  --mono: var(--font-mono);
 
   color: var(--foreground);
   background: var(--background);
@@ -155,11 +144,7 @@ button,
   transition: opacity 0ms;
 }
 
-:where(.palette-row, .stacksheet-row):active {
+:where(.stacksheet-row):active {
   opacity: 1;
-  background: var(--surface-soft);
-}
-
-.sr-only {
-  @apply sr-only;
+  background: var(--muted);
 }

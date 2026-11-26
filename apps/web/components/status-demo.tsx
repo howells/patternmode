@@ -3,6 +3,7 @@
 import { StatusMark } from "@patternmode/status";
 import { useState } from "react";
 
+import "@patternmode/status/styles.css";
 import "./status-demo.css";
 
 const TRACK = "var(--border)";

@@ -6,6 +6,8 @@ export {
   type HslColor,
   hslToHex,
   hslToRgb,
+  getColorLightness,
+  isLightColor,
   type OklabColor,
   oklabDistance,
   oklabToHex,
@@ -19,12 +21,12 @@ export {
 export {
   type DerivedDistribution,
   deriveDistribution,
-  getColorLightness,
-  isLightColor,
   sanitizeWeight,
 } from "./weighted-distribution";
 
 export { clamp, wrapHue } from "./math";
+
+export { type AssignableRef, assignRef } from "./refs";
 
 export const PATTERNMODE_SIZES = ["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"] as const;
 
@@ -97,12 +99,12 @@ export function toCssSize(value: CssSize | undefined): string | undefined {
   return value;
 }
 
-/** Builds a CSS custom-property style object for a Patternmode size token. */
+/** Builds a CSS custom-property style object for a size token on the base or extended scale. */
 export const getSizeVariableStyle = (
-  size: PatternmodeSize,
+  size: PatternmodeExtendedSize,
   variableName = "--patternmode-size",
 ) => ({
-  [variableName]: getPatternmodeSizeValue(size),
+  [variableName]: PATTERNMODE_EXTENDED_SIZE_VALUES[size],
 });
 
 export type ClassNameValue = false | null | string | undefined;

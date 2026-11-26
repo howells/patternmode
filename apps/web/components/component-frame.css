@@ -41,13 +41,8 @@
 }
 
 .frame-title {
+  @apply type-title;
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: 48px;
-  font-feature-settings: normal;
-  font-weight: 400;
-  line-height: 58px;
-  letter-spacing: -0.02em;
 }
 
 .frame-lead {
@@ -104,7 +99,7 @@
 }
 
 .frame-caption {
-  @apply type-meta;
+  @apply type-body;
   flex-shrink: 0;
   margin: 0;
   color: var(--muted-foreground);
@@ -143,19 +138,6 @@
   border-top: 0;
 }
 
-.reference .docs-block {
-  gap: 16px;
-}
-
-.reference .docs-header {
-  padding-top: 0;
-  border-top: 0;
-}
-
-.reference .docs-header h3 {
-  letter-spacing: -0.01em;
-}
-
 .reference-block {
   display: flex;
   flex-direction: column;
@@ -170,9 +152,8 @@
 }
 
 .reference-title {
-  @apply type-title;
+  @apply type-heading;
   margin: 0;
-  letter-spacing: -0.01em;
 }
 
 .reference-lead {
@@ -231,7 +212,7 @@
 }
 
 .variant-name {
-  @apply type-label;
+  @apply type-body;
   margin: 0;
 }
 
@@ -281,12 +262,12 @@
 }
 
 .package-facts dt {
-  @apply type-ui;
+  @apply type-body;
   color: var(--muted-foreground);
 }
 
 .package-facts dd {
-  @apply type-ui;
+  @apply type-body;
   margin: 0;
   text-align: right;
 }
@@ -317,11 +298,11 @@
 }
 
 .related-name {
-  @apply type-label;
+  @apply type-body;
 }
 
 .related-line {
-  @apply type-ui;
+  @apply type-body;
   color: var(--muted-foreground);
 }
 
@@ -340,31 +321,6 @@
 
 .reference .site-footer-links a {
   padding-inline: 0 16px;
-}
-
-/* The usage sample sits on a dark ground and keeps its lines whole; a long
-   line scrolls sideways inside the block. */
-.reference .code-block {
-  padding: 20px 24px;
-  border-color: var(--dark-border);
-  border-radius: 12px;
-  background: var(--dark-background);
-  color: var(--dark-foreground);
-  line-height: 21px;
-  white-space: pre;
-  scrollbar-color: var(--dark-border) transparent;
-  scrollbar-width: thin;
-}
-
-/* API rows stack their name over the detail in the narrow column. */
-.reference .prop-row {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 6px;
-  padding: 12px 16px;
-}
-
-.reference .api-section-header {
-  padding: 14px 16px;
 }
 
 @media (max-width: 63.99rem) {

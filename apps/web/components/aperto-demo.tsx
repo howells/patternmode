@@ -4,6 +4,7 @@ import { Aperto } from "@patternmode/aperto";
 import type { ApertoMediaItem } from "@patternmode/aperto";
 
 import { renderApertoImage } from "@/components/aperto-image";
+import "@patternmode/aperto/styles.css";
 import "./aperto-demo.css";
 
 export const ApertoDemo = ({ media }: { media: ApertoMediaItem[] }) => (

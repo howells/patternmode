@@ -34,7 +34,7 @@
 }
 
 .deck-card-title {
-  @apply type-label;
+  @apply type-body;
 }
 
 .deck-card-count {
@@ -89,11 +89,11 @@
 }
 
 .deck-chip-empty {
-  @apply flex h-24 w-[84px] shrink-0 items-center justify-center rounded-lg border border-dashed border-[color:var(--muted-foreground)] p-2 text-center type-meta text-[color:var(--muted-foreground)];
+  @apply flex h-24 w-[84px] shrink-0 items-center justify-center rounded-lg border border-dashed border-[color:var(--muted-foreground)] p-2 text-center type-body text-[color:var(--muted-foreground)];
 }
 
 .deck-chip-keep {
-  @apply absolute inset-0 flex items-center justify-center rounded-[inherit] bg-[#315c4b1f] type-meta font-medium text-[color:var(--accent-foreground)];
+  @apply absolute inset-0 flex items-center justify-center rounded-[inherit] bg-[#315c4b1f] type-body text-[color:var(--accent-foreground)];
 }
 
 .deck-chip-hint {

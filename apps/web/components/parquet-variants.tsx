@@ -5,6 +5,7 @@ import type { ParquetProps } from "@patternmode/parquet";
 
 import { PALETTE } from "./parquet-palette";
 import { VariantCell, VariantsBlock } from "./variant-cells";
+import "@patternmode/parquet/styles.css";
 import "./parquet-demo.css";
 
 const FOREST_AND_BLUSH = [PALETTE[1], PALETTE[3]].filter((tile) => tile !== undefined);

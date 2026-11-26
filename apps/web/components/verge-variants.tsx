@@ -4,6 +4,7 @@ import { Verge } from "@patternmode/verge";
 import { useState } from "react";
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
 import { ActionIcon, RowAction } from "./verge-action";
+import "@patternmode/verge/styles.css";
 import "./verge-variants.css";
 
 const MenuOpenRow = () => {

@@ -1,5 +1,7 @@
 "use client";
 
+import { useCallback } from "react";
+
 import { useApertoGroup } from "../aperto-group-context";
 import { ApertoTrigger } from "../aperto-trigger";
 import { ApertoThumbnailMedia } from "../media-rendering";
@@ -9,6 +11,14 @@ import type { ApertoThumbnailProps } from "./aperto-types";
 export const ApertoThumbnail = ({ children, className, index }: ApertoThumbnailProps) => {
   const group = useApertoGroup();
   const media = group.media[index];
+  const { registerThumbnail } = group;
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- an inline ref callback makes React 19 call ref(null) then ref(node) on every render; the library build does not run React Compiler.
+  const setRef = useCallback(
+    (node: HTMLButtonElement | null) => {
+      registerThumbnail(index, node);
+    },
+    [index, registerThumbnail],
+  );
 
   if (!media) {
     return null;
@@ -22,9 +32,7 @@ export const ApertoThumbnail = ({ children, className, index }: ApertoThumbnailP
       onClick={() => {
         group.openAtIndex(index);
       }}
-      ref={(node: HTMLButtonElement | null) => {
-        group.registerThumbnail(index, node);
-      }}
+      ref={setRef}
       sharedLayoutId={false}
     >
       {children ?? (

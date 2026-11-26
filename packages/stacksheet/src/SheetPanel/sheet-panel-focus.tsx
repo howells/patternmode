@@ -6,14 +6,12 @@ import { useSyncExternalStore } from "react";
 // on top of the sheet (a nested dialog/popover) has focus, so the sheet's own
 // focus trap pauses instead of yanking focus back.
 const LAYERED_MODAL_SELECTORS = [
-  // Base UI dialogs (e.g. aperto) mark the open popup with `data-open`.
+  // Base UI dialogs and floating popups (e.g. aperto, tags popover) mark the open popup with `data-open`.
   '[role="dialog"][data-open]',
   '[role="alertdialog"][data-open]',
-  // Base UI wraps every floating layer in focus guards.
   "[data-base-ui-focus-guard]",
-  // Patternmode popovers whose popup intentionally strips `role="dialog"` to
-  // host a combobox/listbox pattern (tags), so they are not caught above.
-  '[data-slot="tag-selector-content"]',
+  // Generic opt-out attribute for custom floating layers stacked above a sheet.
+  "[data-stacksheet-layer-exempt]",
   // Third-party Radix content nested inside a sheet still emits these.
   '[role="dialog"][data-state="open"]',
   '[role="alertdialog"][data-state="open"]',
@@ -21,29 +19,45 @@ const LAYERED_MODAL_SELECTORS = [
   "[data-radix-focus-guard]",
 ].join(", ");
 
+const noopSubscribe = () => () => {
+  // Inactive panels do not subscribe to global focus events.
+};
+
 const subscribeToFocusTarget = (onStoreChange: () => void): (() => void) => {
+  const onFocusOut = () => {
+    // Re-evaluate after the browser updates `document.activeElement` (e.g. when a popup unmounts).
+    queueMicrotask(onStoreChange);
+  };
   document.addEventListener("focusin", onStoreChange, true);
+  document.addEventListener("focusout", onFocusOut, true);
   return () => {
     document.removeEventListener("focusin", onStoreChange, true);
+    document.removeEventListener("focusout", onFocusOut, true);
   };
 };
 const getServerLayeredModalFocused = (): boolean => false;
-const getLayeredModalFocused = (): boolean => {
+const isLayeredModalFocused = (panel: HTMLElement | null): boolean => {
   if (typeof document === "undefined") {
     return false;
   }
   const target = document.activeElement;
-  return (
-    !!target &&
-    target !== document.body &&
-    target instanceof Element &&
-    target.closest(LAYERED_MODAL_SELECTORS) !== null
-  );
+  if (!(target instanceof Element) || target === document.body) {
+    return false;
+  }
+  if (target.closest(LAYERED_MODAL_SELECTORS) !== null) {
+    return true;
+  }
+  // A Base UI or Radix floating layer rendered outside this panel (such as a
+  // Popover whose Popup strips `role="dialog"` to host a combobox/listbox).
+  return panel !== null && !panel.contains(target) && target.closest("[data-open]") !== null;
 };
-const useLayeredModalFocused = (active: boolean): boolean => {
+const useLayeredModalFocused = (
+  active: boolean,
+  panelRef: RefObject<HTMLElement | null>,
+): boolean => {
   const layered = useSyncExternalStore(
-    subscribeToFocusTarget,
-    getLayeredModalFocused,
+    active ? subscribeToFocusTarget : noopSubscribe,
+    () => (active ? isLayeredModalFocused(panelRef.current) : false),
     getServerLayeredModalFocused,
   );
   return active && layered;
@@ -81,7 +95,7 @@ export const ModalFocusTrap = ({
   restoreRef?: RefObject<HTMLElement | null>;
   children: ReactNode;
 }): ReactNode => {
-  const paused = useLayeredModalFocused(enabled && active);
+  const paused = useLayeredModalFocused(enabled && active, fallbackRef);
   if (!enabled) {
     return children;
   }

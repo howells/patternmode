@@ -15,6 +15,7 @@
     "@howells/motion": "workspace:*",
     "@patternmode/aperto": "workspace:*",
     "@patternmode/briolette": "workspace:*",
+    "@patternmode/channel": "workspace:*",
     "@patternmode/deck": "workspace:*",
     "@patternmode/halo": "workspace:*",
     "@patternmode/parquet": "workspace:*",
@@ -24,6 +25,8 @@
     "@patternmode/swatch": "workspace:*",
     "@patternmode/system": "workspace:*",
     "@patternmode/tags": "workspace:*",
+    "@patternmode/thumbnail": "workspace:*",
+    "@patternmode/verge": "workspace:*",
     "shadcn": "catalog:",
     "vitest": "catalog:"
   }

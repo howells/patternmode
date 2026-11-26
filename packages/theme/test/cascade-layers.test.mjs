@@ -3,6 +3,8 @@ import path from "node:path";
 
 import { expect, it } from "vitest";
 
+import { exportsStylesheet, isPackageJson } from "./json-guards";
+
 /**
  * Fails when a published stylesheet contains a style rule outside every cascade
  * layer.
@@ -126,8 +128,22 @@ const publishedStylesheets = () => {
     if (!entry.isDirectory()) {
       continue;
     }
-    const built = path.join(packagesDirectory, entry.name, "dist", "styles.css");
-    if (existsSync(built)) {
+    /** @type {unknown} */
+    const manifest = JSON.parse(
+      readFileSync(path.join(packagesDirectory, entry.name, "package.json"), "utf-8"),
+    );
+    if (!isPackageJson(manifest)) {
+      throw new Error(`packages/${entry.name}/package.json has no name.`);
+    }
+    if (exportsStylesheet(manifest)) {
+      // A package that exports a stylesheet must have built it; skipping a
+      // missing one would pass a package this test never read.
+      const built = path.join(packagesDirectory, entry.name, "dist", "styles.css");
+      if (!existsSync(built)) {
+        throw new Error(
+          `${manifest.name} exports ./styles.css but ${path.relative(root, built)} is missing. Add it to @patternmode/theme's devDependencies so turbo builds it first.`,
+        );
+      }
       stylesheets.push(built);
     }
     /*

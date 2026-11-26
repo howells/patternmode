@@ -53,11 +53,11 @@ export const Thumbnail = ({
   alt = "",
   children,
   className,
-  fit = "cover",
+  fit,
   position,
   radius,
   raised = false,
-  size = "2rem",
+  size,
   src,
   style,
   ...props
@@ -68,13 +68,12 @@ export const Thumbnail = ({
    * without an inline declaration — which beats every rule in every layer —
    * standing in the way.
    *
-   * `fit` is the exception worth noting: it is written unconditionally because
-   * it has a default, and an absent custom property would fall back to the
-   * `var()` default in the sheet anyway. Writing it keeps the two spellings from
-   * drifting apart.
+   * Each is written only when its prop is passed: the resting defaults (2rem,
+   * `cover`) live in the sheet, so an absent prop never writes an inline
+   * declaration that would beat a consumer's stylesheet.
    */
   const frameVariables: Record<string, string> = {};
-  if (size !== null) {
+  if (size !== undefined && size !== null) {
     frameVariables["--patternmode-thumbnail-size"] = toCssSize(size);
   }
   if (radius !== undefined) {
@@ -83,7 +82,9 @@ export const Thumbnail = ({
   if (position !== undefined) {
     frameVariables["--patternmode-thumbnail-position"] = position;
   }
-  frameVariables["--patternmode-thumbnail-fit"] = fit;
+  if (fit !== undefined) {
+    frameVariables["--patternmode-thumbnail-fit"] = fit;
+  }
   const frameStyle: CSSProperties = { ...frameVariables, ...style };
 
   return (

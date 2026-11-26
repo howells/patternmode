@@ -1,10 +1,8 @@
-import { ApiTable, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
-import { ComponentFrame } from "@/components/component-frame";
 import { DeckDemo } from "@/components/deck-demo";
 import { DeckVariants } from "@/components/deck-variants";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { componentMetadata } from "@/lib/catalogue";
 
 export const metadata = componentMetadata("deck");
@@ -80,16 +78,13 @@ import "@patternmode/deck/styles.css";
 
 export default function DeckPage() {
   return (
-    <ComponentFrame demo={<DeckDemo />} slug="deck">
-      <DeckVariants />
-      <InstallBlock
-        command="npm i @patternmode/deck motion"
-        example={deckExample}
-        lead="Cards render their children unchanged, so use the image component your app already has."
-      />
-      <DocsBlock title="Core API">
-        <ApiTable sections={deckApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={deckApi}
+      demo={<DeckDemo />}
+      example={deckExample}
+      installLead="Cards render their children unchanged, so use the image component your app already has."
+      slug="deck"
+      variants={<DeckVariants />}
+    />
   );
 }

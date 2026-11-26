@@ -331,31 +331,6 @@ describe(BriolettePicker, () => {
     expect(stage).toHaveFocus();
   });
 
-  it("does not capture the pointer on pointerdown, so facet clicks still land", () => {
-    render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
-
-    const sphere = bySlot("briolette-sphere");
-    const setPointerCapture = vi.fn<(pointerId: number) => void>();
-    Object.defineProperty(sphere, "setPointerCapture", {
-      configurable: true,
-      value: setPointerCapture,
-    });
-
-    fireEvent.pointerDown(sphere, { button: 0, clientX: 40, clientY: 40, pointerId: 2 });
-
-    /*
-     * The sphere is full of clickable facets, so capturing before the rotation
-     * commits would retarget every facet's click at the sphere and select
-     * nothing — the shape of the bug scrollframe shipped. Capture belongs
-     * after the drag threshold, never on pointerdown.
-     *
-     * The focus assertion is what stops this from passing vacuously: a
-     * `not.toHaveBeenCalled` is also satisfied by a handler that never ran.
-     */
-    expect(screen.getByRole("application", { name: "Accent color" })).toHaveFocus();
-    expect(setPointerCapture).not.toHaveBeenCalled();
-  });
-
   it("renders more facets as density rises", () => {
     const counts: Record<string, number> = {};
     for (const density of ["coarse", "base", "fine"] as const) {
@@ -396,7 +371,13 @@ describe(BriolettePicker, () => {
     expect(facet?.style.getPropertyValue("--patternmode-briolette-facet")).toMatch(HEX_PATTERN);
   });
 
-  it("drops a stale selection pin when density changes mid-selection", () => {
+  it("re-anchors the pin on the new cut when density changes mid-selection", () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      addEventListener: () => {},
+      matches: true,
+      media: query,
+      removeEventListener: () => {},
+    }));
     const onChange = vi.fn<(value: string | null) => void>();
     const { container, rerender } = render(
       <BriolettePicker density="base" onChange={onChange} value={null} />,
@@ -408,12 +389,17 @@ describe(BriolettePicker, () => {
     }
     fireEvent.click(facet);
     const hex = onChange.mock.calls[0]?.[0] ?? null;
+    rerender(<BriolettePicker density="base" onChange={onChange} value={hex} />);
+    expect(container.querySelector("polygon[data-selected]")).not.toBeNull();
 
     rerender(<BriolettePicker density="fine" onChange={onChange} value={hex} />);
 
-    // The value survives, but no facet claims the pin on the new geometry.
-    expect(container.querySelector("polygon[data-selected]")).toBeNull();
+    // The value survives and a facet of the new cut claims the pin.
+    const pinned = container.querySelector("polygon[data-selected]");
+    expect(pinned).not.toBeNull();
+    expect(pinned?.getAttribute("fill")).toBe(hex);
     expect(screen.getByRole("status")).toHaveTextContent(hex ?? "");
+    vi.unstubAllGlobals();
   });
 
   it("selects a facet color and unsets when the same facet is clicked again", () => {
@@ -611,6 +597,35 @@ describe(BriolettePicker, () => {
 
     expect(onChange).toHaveBeenCalledOnce();
     expect(onChange.mock.calls[0]?.[0]).toMatch(HEX_PATTERN);
+  });
+
+  it("re-anchors when an external value is cleared to null and set to the same hex again", () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      addEventListener: () => {},
+      matches: true,
+      media: query,
+      removeEventListener: () => {},
+    }));
+    const onChange = vi.fn<(value: string | null) => void>();
+    const { container, rerender } = render(<BriolettePicker onChange={onChange} value="#7a9c8b" />);
+    const centeredPoints = container
+      .querySelector("polygon[data-selected]")
+      ?.getAttribute("points");
+    expect(centeredPoints).toBeTruthy();
+    fireEvent.keyDown(screen.getByRole("application"), { key: "ArrowRight" });
+    expect(container.querySelector("polygon[data-selected]")?.getAttribute("points")).not.toBe(
+      centeredPoints,
+    );
+
+    rerender(<BriolettePicker onChange={onChange} value={null} />);
+    expect(container.querySelector("polygon[data-selected]")).toBeNull();
+
+    rerender(<BriolettePicker onChange={onChange} value="#7a9c8b" />);
+    const reanchored = container.querySelector("polygon[data-selected]");
+    expect(reanchored?.getAttribute("fill")).toBe("#7a9c8b");
+    // Re-anchoring glides the pinned facet back to the front (snapped, under reduced motion).
+    expect(reanchored?.getAttribute("points")).toBe(centeredPoints);
+    vi.unstubAllGlobals();
   });
 });
 

@@ -13,7 +13,7 @@
 }
 
 .vv-name {
-  @apply type-ui min-w-0 flex-1 truncate;
+  @apply type-body min-w-0 flex-1 truncate;
 }
 
 /* Hit areas are 48px on touch. Drawn here at that size so the layout is visible
@@ -43,7 +43,7 @@
 }
 
 .vv-menu-item {
-  @apply type-ui cursor-pointer rounded-md border-0 bg-transparent px-2 py-1.5 text-left text-foreground outline-none hover:bg-muted focus-visible:bg-muted;
+  @apply type-body cursor-pointer rounded-md border-0 bg-transparent px-2 py-1.5 text-left text-foreground outline-none hover:bg-muted focus-visible:bg-muted;
 }
 
 .vv-menu-danger {

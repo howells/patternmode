@@ -1,12 +1,9 @@
 "use client";
 
-import { easings } from "@howells/motion";
 import { usePrefersReducedMotion } from "@howells/motion/react";
 import { getSizeVariableStyle, joinClassNames } from "@patternmode/system";
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { domMax, LazyMotion, m } from "motion/react";
-import type { Transition } from "motion/react";
 
 import { resolveStatusProgress } from "./status-mark-types";
 import type {
@@ -38,18 +35,6 @@ const STATUS_MARK_FULL_PROGRESS = 100;
 const STATUS_SNAP_DURATION_MS = 160;
 const STATUS_SMOOTH_DURATION_MS = 280;
 
-const getTransition = (motion: StatusMarkMotion, reducedMotion: boolean): Transition => {
-  if (motion === false || motion === "reduced" || reducedMotion) {
-    return { duration: 0.01 };
-  }
-
-  if (motion === "snap") {
-    return { duration: 0.16, ease: easings.snappy };
-  }
-
-  return { duration: 0.28, ease: easings.smooth };
-};
-
 const getFillMotionDuration = (motion: StatusMarkMotion, reducedMotion: boolean) => {
   if (motion === false || motion === "reduced" || reducedMotion) {
     return 0;
@@ -65,8 +50,6 @@ const easeFillProgress = (progress: number) => {
 
   return 1 - (-2 * progress + 2) ** 3 / 2;
 };
-
-const setProgress = (_current: number, next: number) => next;
 
 const getFillPath = (progress: number, radius: number) => {
   if (progress <= 0) {
@@ -99,12 +82,12 @@ const getFillPath = (progress: number, radius: number) => {
 
 const getRootStyle = ({
   color,
-  size = "base",
+  size,
   style,
   trackColor,
 }: Pick<StatusMarkProps, "color" | "size" | "style" | "trackColor">) => {
   const rootStyle: StatusMarkStyle = {
-    ...getSizeVariableStyle(size, "--patternmode-status-size"),
+    ...(size === undefined ? null : getSizeVariableStyle(size, "--patternmode-status-size")),
     ...style,
   };
 
@@ -125,15 +108,22 @@ const StatusFillSweep = ({
   progress,
   radius,
 }: MotionPartProps & { progress: StatusMarkProgressValue; radius: number }) => {
+  const pathRef = useRef<SVGPathElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const renderedProgressRef = useRef<number>(progress);
-  const [renderedProgress, setRenderedProgress] = useReducer(setProgress, progress);
+  const [settledPath, setSettledPath] = useState(() => getFillPath(progress, radius));
 
   useEffect(() => {
     const cancelFillAnimation = () => {
       if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
       }
+    };
+    const writePath = (value: number) => {
+      const nextPath = getFillPath(value, radius);
+      pathRef.current?.setAttribute("d", nextPath);
+      return nextPath;
     };
     const duration = getFillMotionDuration(motion, hasReducedMotion);
     const startProgress = renderedProgressRef.current;
@@ -143,7 +133,7 @@ const StatusFillSweep = ({
 
     if (duration === 0 || progressDelta === 0) {
       renderedProgressRef.current = progress;
-      setRenderedProgress(progress);
+      setSettledPath(writePath(progress));
       return cancelFillAnimation;
     }
 
@@ -154,7 +144,7 @@ const StatusFillSweep = ({
       const nextProgress = startProgress + progressDelta * easeFillProgress(elapsed);
 
       renderedProgressRef.current = nextProgress;
-      setRenderedProgress(nextProgress);
+      const nextPath = writePath(nextProgress);
 
       if (elapsed < 1) {
         animationFrameRef.current = requestAnimationFrame(tick);
@@ -163,36 +153,43 @@ const StatusFillSweep = ({
 
       renderedProgressRef.current = progress;
       animationFrameRef.current = null;
+      setSettledPath(nextPath);
     };
 
     animationFrameRef.current = requestAnimationFrame(tick);
 
     return cancelFillAnimation;
-  }, [hasReducedMotion, motion, progress]);
+  }, [hasReducedMotion, motion, progress, radius]);
 
   return (
     <path
       className="patternmode-status-mark__fill-sweep"
-      d={getFillPath(renderedProgress, radius)}
+      d={settledPath}
       data-slot="status-mark-fill-sweep"
+      ref={pathRef}
     />
   );
 };
 
 const StatusArc = ({
   hasReducedMotion,
-  motion,
   progress,
-}: MotionPartProps & { progress: StatusMarkProgressValue }) => (
-  <m.circle
-    animate={{ opacity: progress > 0 ? 1 : 0, pathLength: progress / 100 }}
+}: {
+  hasReducedMotion: boolean;
+  progress: StatusMarkProgressValue;
+}) => (
+  <circle
     className="patternmode-status-mark__arc"
     cx="12"
     cy="12"
-    initial={false}
-    pathLength="1"
+    pathLength={1}
     r="8"
-    transition={getTransition(motion, hasReducedMotion)}
+    style={{
+      opacity: progress > 0 ? 1 : 0,
+      strokeDasharray: "1",
+      strokeDashoffset: 1 - progress / 100,
+      ...(hasReducedMotion ? { transition: "none" } : null),
+    }}
   />
 );
 
@@ -243,11 +240,7 @@ const StatusMarkSvg = ({
           />
         ) : null}
         {variant === "border" ? (
-          <StatusArc
-            hasReducedMotion={hasReducedMotion}
-            motion={motion}
-            progress={state.progress}
-          />
+          <StatusArc hasReducedMotion={hasReducedMotion} progress={state.progress} />
         ) : null}
         {state.progress === 0 ? (
           <circle
@@ -268,7 +261,7 @@ export const StatusMark = ({
   color,
   label,
   motion = "smooth",
-  size = "base",
+  size,
   status,
   style,
   tone = "neutral",
@@ -297,14 +290,12 @@ export const StatusMark = ({
       role={hasLabel ? "img" : undefined}
       style={rootStyle}
     >
-      <LazyMotion features={domMax}>
-        <StatusMarkSvg
-          hasReducedMotion={hasReducedMotion}
-          motion={motion}
-          state={state}
-          variant={variant}
-        />
-      </LazyMotion>
+      <StatusMarkSvg
+        hasReducedMotion={hasReducedMotion}
+        motion={motion}
+        state={state}
+        variant={variant}
+      />
     </span>
   );
 };

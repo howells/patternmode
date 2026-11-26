@@ -1,12 +1,12 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, renderHook, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createElement, Fragment } from "react";
+import { createElement, Fragment, useEffect } from "react";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createStacksheet } from "./index";
+import { createStacksheet, Sheet } from "./index";
 
 // oxlint-disable-next-line anti-slop/no-module-mocking -- jsdom has no layout, so the real focus trap finds no tabbable element and throws; the stand-in renders its children unchanged.
 vi.mock(import("focus-trap-react"), () => ({
@@ -16,6 +16,18 @@ vi.mock(import("focus-trap-react"), () => ({
 const FirstSheet = () => <p>First sheet content</p>;
 const SecondSheet = () => <p>Second sheet content</p>;
 const ThirdSheet = () => <p>Third sheet content</p>;
+const HandleSheet = () => (
+  <>
+    <Sheet.Handle />
+    <Sheet.Close />
+  </>
+);
+const AutoFocusSheet = () => {
+  useEffect(() => {
+    screen.getByRole("button", { name: "Inside sheet" }).focus();
+  }, []);
+  return <button type="button">Inside sheet</button>;
+};
 
 class MockCloseWatcher {
   static instances: MockCloseWatcher[] = [];
@@ -32,6 +44,11 @@ class MockCloseWatcher {
   }
   destroy() {
     this.destroyed = true;
+  }
+  requestClose() {
+    for (const listener of this.listeners) {
+      listener();
+    }
   }
 }
 
@@ -93,6 +110,75 @@ const renderStack = (config?: Parameters<typeof createStacksheet>[0]) => {
   const depth = () => store.getState().stack.length;
   return { depth, open, push, store };
 };
+
+describe("useSheet", () => {
+  beforeEach(() => {
+    vi.stubGlobal("matchMedia", () => ({
+      addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
+      matches: false,
+      removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
+    }));
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it("returns the same actions object on every render", () => {
+    const { StacksheetProvider, useSheet } = createStacksheet();
+    const { rerender, result } = renderHook(() => useSheet(), {
+      wrapper: ({ children }) => <StacksheetProvider>{children}</StacksheetProvider>,
+    });
+    const first = result.current;
+    rerender();
+    expect(result.current).toBe(first);
+    expect(Object.isFrozen(first)).toBe(true);
+  });
+});
+
+describe("container", () => {
+  beforeEach(() => {
+    vi.stubGlobal("matchMedia", () => ({
+      addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
+      matches: false,
+      removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
+    }));
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  const renderContained = (container: HTMLElement | null) => {
+    const { StacksheetProvider, store } = createStacksheet({ modal: false });
+    const view = render(
+      <StacksheetProvider container={container}>
+        <p>App</p>
+      </StacksheetProvider>,
+    );
+    act(() => {
+      store.getState().open(FirstSheet, {}, { ariaLabel: "Contained" });
+    });
+    return view;
+  };
+
+  it("renders the stack inside the container, positioned within it", () => {
+    const stage = document.createElement("div");
+    document.body.append(stage);
+    renderContained(stage);
+    const panel = screen.getByRole("dialog", { name: "Contained" });
+    expect(stage).toContainElement(panel);
+    expect(panel).toHaveStyle({ position: "absolute" });
+    const layer = stage.querySelector(".patternmode-stacksheet__layer");
+    expect(layer).toHaveAttribute("data-stacksheet-contained");
+    stage.remove();
+  });
+
+  it("renders nothing while the container is null", () => {
+    renderContained(null);
+    expect(screen.queryByRole("dialog", { name: "Contained" })).not.toBeInTheDocument();
+  });
+});
 
 describe("per-Sheet width", () => {
   beforeEach(() => {
@@ -213,5 +299,86 @@ describe("per-Sheet dismissible", () => {
     expect(live()).toBe(0);
     push(SecondSheet, {}, { dismissible: true });
     expect(live()).toBe(1);
+  });
+
+  it("hides the drag handle when a Sheet is not dismissible", () => {
+    const { open } = renderStack({ side: "bottom" });
+    open(FirstSheet, {}, { dismissible: false });
+    expect(screen.queryByRole("button", { name: "Dismiss" })).not.toBeInTheDocument();
+  });
+
+  it("hides the side handle when a side Sheet is not dismissible", () => {
+    const { open } = renderStack({ side: "right" });
+    open(FirstSheet, {}, { dismissible: false });
+    expect(screen.queryByRole("button", { name: "Dismiss" })).not.toBeInTheDocument();
+  });
+
+  it("keeps Sheet.Handle as inert decoration, and Sheet.Close working, when not dismissible", async () => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, store } = createStacksheet({ side: "bottom" });
+    render(
+      <StacksheetProvider layout="composable">
+        <p>App</p>
+      </StacksheetProvider>,
+    );
+    act(() => {
+      store.getState().open(HandleSheet, {}, { dismissible: false });
+    });
+    expect(screen.queryByRole("button", { name: "Dismiss" })).not.toBeInTheDocument();
+    const pill = document.querySelector<HTMLElement>("[data-stacksheet-handle]");
+    expect(pill).toHaveAttribute("aria-hidden", "true");
+    if (pill === null) {
+      throw new Error("No handle is rendered");
+    }
+    await user.click(pill);
+    expect(store.getState().stack).toHaveLength(1);
+    await user.click(screen.getByRole("button", { name: "Close" }));
+    expect(store.getState().stack).toHaveLength(0);
+  });
+
+  it("re-arms a fresh CloseWatcher after popping a nested Sheet", () => {
+    const { depth, open, push } = renderStack();
+    open(FirstSheet, {}, { ariaLabel: "Root sheet" });
+    push(SecondSheet, {}, { ariaLabel: "Nested sheet" });
+    const nestedWatcher = MockCloseWatcher.instances.at(-1);
+    act(() => {
+      nestedWatcher?.requestClose();
+    });
+    expect(depth()).toBe(1);
+    const rootWatcher = MockCloseWatcher.instances.at(-1);
+    expect(rootWatcher).not.toBe(nestedWatcher);
+    expect(nestedWatcher?.destroyed).toBe(true);
+    act(() => {
+      rootWatcher?.requestClose();
+    });
+    expect(depth()).toBe(0);
+  });
+
+  it("restores focus to the opener even when the Sheet takes focus on mount", async () => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, useSheet } = createStacksheet();
+    const Controls = () => {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => {
+            open(AutoFocusSheet, {}, { ariaLabel: "AutoFocus sheet" });
+          }}
+          type="button"
+        >
+          Open sheet
+        </button>
+      );
+    };
+    render(
+      <StacksheetProvider>
+        <Controls />
+      </StacksheetProvider>,
+    );
+    const opener = screen.getByRole("button", { name: "Open sheet" });
+    await user.click(opener);
+    expect(screen.getByRole("button", { name: "Inside sheet" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(opener).toHaveFocus();
   });
 });

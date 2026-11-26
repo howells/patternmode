@@ -202,6 +202,13 @@ const describeCard = (label: string) => {
   };
 };
 
+const controlled = (index: number) => (
+  <Deck aria-label="Wrapping cards" index={index} mode="cycle">
+    <Deck.Card>First</Deck.Card>
+    <Deck.Card>Second</Deck.Card>
+  </Deck>
+);
+
 describe(Deck, () => {
   beforeEach(() => {
     mountedInitials.current.clear();
@@ -296,23 +303,73 @@ describe(Deck, () => {
     expect(onExhausted).toHaveBeenCalledOnce();
   });
 
-  it("respects controlled index updates", async () => {
+  it("respects controlled index updates without remounting on rejected advances", async () => {
     const user = userEvent.setup();
     const onIndexChange = vi.fn<(index: number) => void>();
+    const onAdvanceEnd = vi.fn<(event: DeckAdvanceEvent) => void>();
 
     render(
-      <Deck aria-label="Controlled cards" index={0} mode="cycle" onIndexChange={onIndexChange}>
+      <Deck
+        aria-label="Controlled cards"
+        index={0}
+        mode="cycle"
+        onAdvanceEnd={onAdvanceEnd}
+        onIndexChange={onIndexChange}
+      >
         <Deck.Card>First</Deck.Card>
         <Deck.Card>Second</Deck.Card>
       </Deck>,
     );
 
+    const firstCardBefore = screen.getByText("First");
     const deck = screen.getByRole("slider", { name: "Controlled cards" });
     deck.focus();
-    await user.keyboard("{ArrowRight}");
+    await user.keyboard("{ArrowRight}{ArrowRight}");
 
     expect(onIndexChange).toHaveBeenCalledWith(1);
+    expect(screen.getByText("First")).toBe(firstCardBefore);
+    expect(onAdvanceEnd).not.toHaveBeenCalled();
+  });
+
+  it("remounts cards that wrap past the end when a controlled index changes externally", () => {
+    const view = render(controlled(0));
+    const firstBefore = screen.getByText("First");
+
+    view.rerender(controlled(1));
+    view.rerender(controlled(0));
+
     expect(screen.getByText("First")).toHaveAttribute("data-active", "true");
+    expect(screen.getByText("First")).not.toBe(firstBefore);
+  });
+
+  it("does not re-run a card's ref callback on re-render", () => {
+    const cardRef = vi.fn<(node: HTMLDivElement | null) => void>();
+    const tree = (label: string) => (
+      <Deck aria-label={label}>
+        <Deck.Card ref={cardRef}>First</Deck.Card>
+        <Deck.Card>Second</Deck.Card>
+      </Deck>
+    );
+    const view = render(tree("Ref cards"));
+    view.rerender(tree("Ref cards again"));
+
+    expect(cardRef).toHaveBeenCalledOnce();
+  });
+
+  it("prevents native range input value changes on unhandled slider keys", () => {
+    render(
+      <Deck aria-label="Key guard cards" allowedDirections={["right"]} mode="cycle">
+        <Deck.Card>First</Deck.Card>
+        <Deck.Card>Second</Deck.Card>
+      </Deck>,
+    );
+
+    const slider = screen.getByRole("slider", { name: "Key guard cards" });
+    for (const key of ["ArrowUp", "ArrowDown", "ArrowLeft", "Home", "End", "PageUp", "PageDown"]) {
+      const event = new KeyboardEvent("keydown", { bubbles: true, cancelable: true, key });
+      slider.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(true);
+    }
   });
 
   it("defers onAdvanceEnd until the exit animation completes", async () => {

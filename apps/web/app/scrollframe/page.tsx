@@ -1,4 +1,4 @@
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
 import { PackageDocs } from "@/components/package-docs";

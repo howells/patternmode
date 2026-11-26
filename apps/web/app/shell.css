@@ -1,25 +1,20 @@
 @reference "./globals.css";
 
 /* ══ Site shell ═════════════════════════════════════════════════════════════
-   The window never scrolls. One compact 96px header (8 top, 32 name, 8 gap,
-   46 ruled contents, 2 bottom) sits above a clipped region, and each page
-   brings its own scrolling pane. The header is the same size on every route
-   and at every scroll position. */
+   The window never scrolls. One 64px header row, the name and the contents
+   (two rows on phones), sits above a clipped region, and each page brings
+   its own scrolling pane. The header is the same size on every route and at
+   every scroll position. */
 
 .skip-link {
   @apply sr-only;
 }
 
 .skip-link:focus-visible {
-  @apply not-sr-only fixed top-3 left-3 z-[60] rounded-lg bg-foreground px-4 py-3 type-ui text-background no-underline outline-2 outline-offset-2 outline-ring;
+  @apply not-sr-only fixed top-3 left-3 z-[60] rounded-lg bg-foreground px-4 py-3 type-body text-background no-underline outline-2 outline-offset-2 outline-ring;
 }
 
 :root {
-  --dark-background: oklch(19.9% 0.004 106.8);
-  --dark-card: oklch(23% 0.004 106.7);
-  --dark-foreground: oklch(92.5% 0.007 88.6);
-  --dark-muted-foreground: oklch(70.8% 0.012 95.2);
-  --dark-border: oklch(32.1% 0.007 95.3);
   --inner: min(70rem, calc(100% - 3rem));
   --gutter-left: max(1.5rem, env(safe-area-inset-left));
   --gutter-right: max(1.5rem, env(safe-area-inset-right));
@@ -67,90 +62,69 @@ body.site {
 
 .site-header-inner {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: min(70rem, 100%);
-  margin-inline: auto;
-  padding-top: 8px;
-  padding-bottom: 2px;
-}
-
-.site-masthead {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  height: 32px;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(70rem, 100%);
+  height: 64px;
+  margin-inline: auto;
 }
 
 .site-name {
-  @apply type-title;
-  letter-spacing: -0.02em;
+  @apply type-heading;
+  display: flex;
+  align-items: center;
+  height: 44px;
   color: var(--foreground);
   text-decoration: none;
   border-radius: 4px;
 }
 
 .site-nav-list {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: flex;
+  gap: 28px;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--foreground);
-  border-bottom: 1px solid var(--border);
 }
 
 .site-nav-link {
-  @apply type-ui;
-  position: relative;
+  @apply type-body;
   display: flex;
   align-items: center;
-  gap: 6px;
   height: 44px;
-  line-height: 20px;
-  color: var(--foreground);
+  color: var(--muted-foreground);
   text-decoration: none;
   white-space: nowrap;
+  border-radius: 4px;
+  transition: color 150ms ease;
 }
 
-.site-nav-number {
-  color: var(--muted-foreground);
-  font-variant-numeric: tabular-nums;
-}
-
-.site-nav-link:focus-visible {
-  outline-offset: -2px;
-}
-
-.site-nav-link[aria-current]::after {
-  position: absolute;
-  inset: auto 0 0;
-  height: 2px;
-  background: var(--ring);
-  content: "";
+.site-nav-link[aria-current] {
+  color: var(--foreground);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .site-nav-link:hover {
-    color: var(--ring);
+    color: var(--foreground);
   }
 }
 
-/* Phones: four sections centred in one row, GitHub dropped. */
+/* Phones: the name, then the four sections on their own row, GitHub dropped. */
 @media (max-width: 39.99rem) {
+  .site-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    height: auto;
+    padding-top: 4px;
+  }
+
   .site-nav-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
   }
 
   .site-nav-item[data-item="github"] {
-    display: none;
-  }
-
-  .site-nav-link {
-    justify-content: center;
-  }
-
-  .site-nav-number {
     display: none;
   }
 }
@@ -244,7 +218,7 @@ body.site {
 /* ── Footer ─────────────────────────────────── */
 
 .site-footer {
-  @apply type-meta;
+  @apply type-body;
   display: flex;
   align-items: center;
   justify-content: space-between;

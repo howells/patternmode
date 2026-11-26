@@ -1,4 +1,4 @@
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
 import { BrioletteDemo, BrioletteVariants } from "@/components/briolette-demo";
 import { PackageDocs } from "@/components/package-docs";

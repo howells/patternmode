@@ -4,6 +4,7 @@
  */
 
 export interface PackageJson {
+  readonly exports?: object;
   readonly name: string;
   readonly private?: boolean;
 }
@@ -20,3 +21,7 @@ export const isPackageJson = (value: unknown): value is PackageJson =>
 
 export const hasCssVars = (value: unknown): value is CssVarsItem =>
   isObject(value) && "cssVars" in value && isObject(value.cssVars);
+
+/** Whether a package exports a `./styles.css` entry. */
+export const exportsStylesheet = (manifest: PackageJson): boolean =>
+  manifest.exports !== undefined && "./styles.css" in manifest.exports;

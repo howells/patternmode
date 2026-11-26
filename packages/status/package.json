@@ -64,7 +64,6 @@
     "@types/react-dom": "catalog:",
     "concurrently": "catalog:",
     "jsdom": "catalog:",
-    "motion": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
@@ -73,7 +72,6 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "motion": ">=12.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

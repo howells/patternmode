@@ -1,6 +1,7 @@
 import { ScrollFrame } from "@patternmode/scrollframe";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/scrollframe/styles.css";
 import "./scrollframe-variants.css";
 
 const lineWidths = [90, 70, 96, 60, 84, 76, 92, 64];

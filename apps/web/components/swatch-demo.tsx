@@ -5,6 +5,7 @@ import type { DistributionSegment, SwatchDefaultProps } from "@patternmode/swatc
 import { useState } from "react";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/swatch/styles.css";
 import "./swatch-demo.css";
 
 const evergreen = "#315c4b";

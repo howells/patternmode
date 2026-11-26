@@ -3,7 +3,23 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { resolveConfig } from "./config";
-import { useBodyScale, useKeyboardInset } from "./renderer-effects";
+import { useBodyScale, useKeyboardInset, useStageHeight } from "./renderer-effects";
+
+/** jsdom has no ResizeObserver; this one lets the test report a resize. */
+const stubResizeObserver = () => {
+  const observer = { resize: () => {} };
+  // A function expression (not an arrow) so `new ResizeObserver()` can construct it.
+  const ResizeObserverStub = function ResizeObserverStub(onResize: () => void) {
+    observer.resize = onResize;
+    return {
+      disconnect: vi.fn<() => void>(),
+      observe: vi.fn<() => void>(),
+      unobserve: vi.fn<() => void>(),
+    };
+  };
+  vi.stubGlobal("ResizeObserver", ResizeObserverStub);
+  return observer;
+};
 
 const mountWrapper = (): HTMLDivElement => {
   const wrapper = document.createElement("div");
@@ -68,11 +84,77 @@ describe(useBodyScale, () => {
     expect(wrapper.style.overflow).toBe("");
   });
 
+  it("keeps the page scaled when another stack opens while one is still un-scaling", () => {
+    const wrapper = mountWrapper();
+    const first = renderBodyScale();
+    first.rerender({ isOpen: false });
+    const second = renderBodyScale();
+    act(() => {
+      vi.advanceTimersByTime(700);
+    });
+    expect(wrapper.style).toMatchObject({ overflow: "hidden", transform: "scale(0.97)" });
+    second.rerender({ isOpen: false });
+    act(() => {
+      vi.advanceTimersByTime(700);
+    });
+    expect(wrapper.style).toMatchObject({ overflow: "", transform: "", transition: "" });
+  });
+
+  it("keeps the page scaled when a stack reopens after two stacks closed together", () => {
+    const wrapper = mountWrapper();
+    const first = renderBodyScale();
+    const second = renderBodyScale();
+    first.rerender({ isOpen: false });
+    second.rerender({ isOpen: false });
+    first.rerender({ isOpen: true });
+    act(() => {
+      vi.advanceTimersByTime(700);
+    });
+    expect(wrapper.style).toMatchObject({ overflow: "hidden", transform: "scale(0.97)" });
+  });
+
   it("does nothing when reduced motion is preferred", () => {
     const wrapper = mountWrapper();
     renderBodyScale(true);
     expect(wrapper.style.transform).toBe("");
     expect(wrapper.style.transition).toBe("");
+  });
+});
+
+describe(useStageHeight, () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it("listens for viewport resizes only while active", () => {
+    const addEventListener = vi.spyOn(window, "addEventListener");
+    const removeEventListener = vi.spyOn(window, "removeEventListener");
+    const { rerender, result } = renderHook(
+      ({ active }: { active: boolean }) => useStageHeight(active),
+      { initialProps: { active: false } },
+    );
+    expect(addEventListener).not.toHaveBeenCalledWith("resize", expect.anything());
+    expect(result.current).toBe(0);
+    rerender({ active: true });
+    expect(addEventListener).toHaveBeenCalledWith("resize", expect.anything());
+    expect(result.current).toBe(window.innerHeight);
+    rerender({ active: false });
+    expect(removeEventListener).toHaveBeenCalledWith("resize", expect.anything());
+  });
+
+  it("measures a contained stack's container instead of the viewport", () => {
+    const observer = stubResizeObserver();
+    const container = document.createElement("div");
+    let height = 160;
+    Object.defineProperty(container, "clientHeight", { get: () => height });
+    const { result } = renderHook(() => useStageHeight(true, container));
+    expect(result.current).toBe(160);
+    height = 240;
+    act(() => {
+      observer.resize();
+    });
+    expect(result.current).toBe(240);
   });
 });
 

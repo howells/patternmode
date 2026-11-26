@@ -321,6 +321,11 @@ export const Swatch = ({
   );
 
   if (render !== undefined) {
+    if (onRemove !== undefined) {
+      throw new Error(
+        "Swatch `onRemove` cannot be combined with `render`: the remove affordance cannot be composed into a rendered element. Wrap a default Swatch instead.",
+      );
+    }
     warnOnRenderChildren(render);
     // In `render` mode the swatch fill layers and the consumer's content are
     // composed side by side inside the rendered element (matching the old

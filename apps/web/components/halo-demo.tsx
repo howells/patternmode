@@ -8,6 +8,8 @@ import { Swatch } from "@patternmode/swatch";
 import { useState } from "react";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/halo/styles.css";
+import "@patternmode/swatch/styles.css";
 import "./halo-demo.css";
 
 const startingColor: HslColor = { h: 16, l: 69, s: 48 };

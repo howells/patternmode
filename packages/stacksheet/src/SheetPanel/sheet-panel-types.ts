@@ -11,6 +11,8 @@ export interface SheetPanelProps {
   /** Close the whole Sheet Stack */
   close: () => void;
   config: ResolvedConfig;
+  /** Rendered into a container: positioned within it rather than the viewport */
+  contained: boolean;
   depth: number;
   index: number;
   /** Composable layout: the Sheet's content draws its own chrome */

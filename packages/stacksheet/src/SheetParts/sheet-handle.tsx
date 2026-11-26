@@ -9,7 +9,7 @@ export const SheetHandle = ({
   style,
   children,
 }: SheetOptionalContentPartProps) => {
-  const { back, side } = useSheetPanel();
+  const { back, dismissible, side } = useSheetPanel();
   // The grab pill is a top-of-sheet, drag-down affordance — it only belongs on
   // a bottom sheet. Side sheets drag horizontally, so a horizontal pill at the
   // top reads as wrong; render nothing rather than misplaced chrome.
@@ -17,14 +17,33 @@ export const SheetHandle = ({
     return null;
   }
   const defaults = render ? undefined : "patternmode-stacksheet__handle";
+  const pill = children ?? (
+    <div aria-hidden="true" className="patternmode-stacksheet__handle-pill" />
+  );
+  // A Sheet that can't be dismissed keeps the pill as decoration, so the
+  // layout around it holds, but it is no control: tapping it does nothing.
+  if (!dismissible) {
+    return (
+      <SheetPartElement
+        defaultTagName="div"
+        props={{
+          "aria-hidden": "true",
+          children: pill,
+          className: joinClassNames(defaults, className),
+          "data-stacksheet-handle": "",
+          "data-stacksheet-handle-inert": "",
+          style,
+        }}
+        render={render}
+      />
+    );
+  }
   return (
     <SheetPartElement
       defaultTagName="button"
       props={{
         "aria-label": "Dismiss",
-        children: children ?? (
-          <div aria-hidden="true" className="patternmode-stacksheet__handle-pill" />
-        ),
+        children: pill,
         className: joinClassNames(defaults, className),
         "data-stacksheet-handle": "",
         // `back` pops the top Sheet, which closes the stack when it is the last.

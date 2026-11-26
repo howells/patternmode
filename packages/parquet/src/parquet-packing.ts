@@ -64,6 +64,15 @@ const layoutStrip = (entries: Entry[], rect: Rect, gap: number, out: PackedRect[
 
   const half = gap / 2;
 
+  // A strip that has collapsed (float drift on the last entries) has no side to
+  // lay a row along; every remaining weight still gets a zero-sized rect.
+  if (!(rect.w > 0 && rect.h > 0)) {
+    for (const entry of entries) {
+      out.push({ h: 0, index: entry.index, w: 0, x: rect.x + half, y: rect.y + half });
+    }
+    return;
+  }
+
   if (entries.length === 1) {
     const [only] = entries;
     if (only !== undefined) {
@@ -149,7 +158,7 @@ export const packSquarified = (weights: number[], options: PackOptions): PackedR
   }
   entries.sort((a, b) => b.area - a.area);
 
-  if (entries.length === 0 || width <= 0 || height <= 0) {
+  if (entries.length === 0 || !(width > 0 && height > 0)) {
     return [];
   }
 

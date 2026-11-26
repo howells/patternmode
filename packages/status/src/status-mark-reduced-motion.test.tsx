@@ -3,41 +3,8 @@
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { Ref, SVGAttributes } from "react";
 
-type MotionElementProps<TElement> = SVGAttributes<TElement> & {
-  animate?: unknown;
-  initial?: unknown;
-  ref?: Ref<TElement>;
-  transition?: unknown;
-};
-
-const stripMotionProps = vi.hoisted(
-  () =>
-    <TElement,>({
-      animate: _animate,
-      initial: _initial,
-      transition: _transition,
-      ...props
-    }: MotionElementProps<TElement>) =>
-      props,
-);
-// oxlint-disable-next-line anti-slop/no-module-mocking -- StatusMark imports motion/react directly; the mock strips animation props so jsdom reads the final SVG attributes. The reduced-motion preference is left real.
-vi.mock(import("motion/react"), async (importOriginal) => {
-  const actual = await importOriginal();
-  const MotionPath = ({ ref, ...props }: MotionElementProps<SVGPathElement>) => (
-    <path ref={ref} {...stripMotionProps(props)} />
-  );
-  const MotionCircle = ({ ref, ...props }: MotionElementProps<SVGCircleElement>) => (
-    <circle ref={ref} {...stripMotionProps(props)} />
-  );
-  const MotionG = ({ ref, ...props }: MotionElementProps<SVGGElement>) => (
-    <g ref={ref} {...stripMotionProps(props)} />
-  );
-  return { ...actual, m: { circle: MotionCircle, g: MotionG, path: MotionPath } };
-});
-
-const { StatusMark } = await import("./index");
+import { StatusMark } from "./index";
 
 type ChangeListener = (event: { matches: boolean }) => void;
 
@@ -100,6 +67,30 @@ describe("StatusMark reduced motion", () => {
     rerender(<StatusMark value={75} />);
 
     expect(sweepPath(container)).not.toBe(target);
+  });
+
+  it("tweens the fill sweep path in place and settles on the target", () => {
+    vi.useFakeTimers({ toFake: ["requestAnimationFrame", "cancelAnimationFrame", "performance"] });
+    installReducedMotion(false);
+    const start = finalSweepPath(25);
+    const target = finalSweepPath(75);
+
+    const { container, rerender } = render(<StatusMark value={25} />);
+    rerender(<StatusMark value={75} />);
+    const path = container.querySelector('[data-slot="status-mark-fill-sweep"]');
+
+    act(() => {
+      vi.advanceTimersByTime(140);
+    });
+    const mid = sweepPath(container);
+    expect(mid).not.toBe(start);
+    expect(mid).not.toBe(target);
+    expect(container.querySelector('[data-slot="status-mark-fill-sweep"]')).toBe(path);
+
+    act(() => {
+      vi.advanceTimersByTime(400);
+    });
+    expect(sweepPath(container)).toBe(target);
   });
 
   it("follows reduced motion turned on while mounted", () => {

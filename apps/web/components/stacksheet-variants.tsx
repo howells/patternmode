@@ -2,11 +2,12 @@
 
 import { createStacksheet, Sheet } from "@patternmode/stacksheet";
 import type { StacksheetConfig } from "@patternmode/stacksheet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import { SheetStage } from "@/components/sheet-stage";
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/stacksheet/styles.css";
 import "./stacksheet-demo.css";
 
 /*
@@ -41,7 +42,6 @@ const Empty = () => null;
 type Content = () => ReactNode;
 
 const cell = (
-  zIndex: number,
   config: StacksheetConfig,
   Content: Content,
   inset: [number, number, number, number],
@@ -53,18 +53,18 @@ const cell = (
     maxWidth: "100%",
     modal: false,
     spring: "subtle",
-    zIndex,
     ...config,
   });
 
   const Cell = ({ children }: { children?: ReactNode }) => {
+    const [stage, setStage] = useState<HTMLDivElement | null>(null);
     useEffect(() => {
       store.getState().open(Content, {});
     }, []);
 
     return (
-      <StacksheetProvider classNames={{ panel: panelClass }} layout="composable">
-        <SheetStage className="cell-stage" inset={inset} radius={12} zIndex={zIndex}>
+      <StacksheetProvider classNames={{ panel: panelClass }} container={stage} layout="composable">
+        <SheetStage className="cell-stage" containerRef={setStage} inset={inset} radius={12}>
           {children}
         </SheetStage>
       </StacksheetProvider>
@@ -76,30 +76,27 @@ const cell = (
 const SIDE_INSET: [number, number, number, number] = [10, 10, 10, 10];
 const BOTTOM_INSET: [number, number, number, number] = [10, 10, 0, 10];
 
-const RightSide = cell(40, { side: "right", width: 92 }, Empty, SIDE_INSET, "cell-panel");
-const LeftSide = cell(42, { side: "left", width: 92 }, Empty, SIDE_INSET, "cell-panel");
+const RightSide = cell({ side: "right", width: 92 }, Empty, SIDE_INSET, "cell-panel");
+const LeftSide = cell({ side: "left", width: 92 }, Empty, SIDE_INSET, "cell-panel");
 const BottomSheet = cell(
-  44,
   { side: "bottom", snapPoints: [96] },
   Handle,
   BOTTOM_INSET,
   "cell-panel cell-panel-bottom",
 );
 const SnapPoints = cell(
-  46,
   { side: "bottom", snapPoints: [44, 78, 120] },
   Guides,
   BOTTOM_INSET,
   "cell-panel cell-panel-bottom",
 );
 const Fitted = cell(
-  48,
   { height: "fit", side: "bottom" },
   Bars,
   BOTTOM_INSET,
   "cell-panel cell-panel-bottom",
 );
-const NonModal = cell(50, { side: "right", width: 92 }, Empty, SIDE_INSET, "cell-panel");
+const NonModal = cell({ side: "right", width: 92 }, Empty, SIDE_INSET, "cell-panel");
 
 export const StacksheetVariants = () => (
   <VariantsBlock

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import type { RefObject } from "react";
 import type { ResolvedConfig } from "./types";
 
@@ -28,27 +28,49 @@ export const usePanelHeight = (
 const getViewportHeight = () =>
   typeof window === "undefined" ? 0 : (window.visualViewport?.height ?? window.innerHeight);
 
-export const useViewportHeight = (active: boolean): number => {
-  const [height, setHeight] = useState<number | undefined>(() =>
-    typeof window === "undefined" ? undefined : getViewportHeight(),
-  );
-  useEffect(() => {
-    const update = () => {
-      setHeight(getViewportHeight());
-    };
-    const canListen = typeof window !== "undefined";
-    if (canListen) {
-      window.addEventListener("resize", update);
-      window.visualViewport?.addEventListener("resize", update);
-    }
-    return () => {
-      if (canListen) {
-        window.removeEventListener("resize", update);
-        window.visualViewport?.removeEventListener("resize", update);
+const subscribeToNothing = () => () => {
+  // An inactive stack resolves no Snap Points, so there is nothing to watch.
+};
+
+const subscribeToViewport = (onChange: () => void) => {
+  window.addEventListener("resize", onChange);
+  window.visualViewport?.addEventListener("resize", onChange);
+  return () => {
+    window.removeEventListener("resize", onChange);
+    window.visualViewport?.removeEventListener("resize", onChange);
+  };
+};
+
+/**
+ * The height fractional Snap Points resolve against while `active`: the
+ * container's, for a contained stack, otherwise the visual viewport's.
+ * Nothing is observed while inactive.
+ */
+export const useStageHeight = (active: boolean, container?: HTMLElement): number => {
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable subscribe keeps the observer from re-attaching on every render.
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      if (!active) {
+        return subscribeToNothing();
       }
-    };
-  }, []);
-  return active ? (height ?? 0) : 0;
+      if (container === undefined) {
+        return subscribeToViewport(onChange);
+      }
+      const observer = new ResizeObserver(onChange);
+      observer.observe(container);
+      return () => {
+        observer.disconnect();
+      };
+    },
+    [active, container],
+  );
+  const getHeight = () => {
+    if (!active) {
+      return 0;
+    }
+    return container === undefined ? getViewportHeight() : container.clientHeight;
+  };
+  return useSyncExternalStore(subscribe, getHeight, () => 0);
 };
 
 /** Input types that don't summon the on-screen keyboard. */
@@ -152,8 +174,12 @@ const BODY_SCALE_TRANSITION =
 /** Fallback delay (transition duration + margin) if `transitionend` never fires. */
 const BODY_SCALE_RESET_FALLBACK_MS = 600;
 
-/** Cancels a pending un-scale reset when the sheet reopens mid-animation. */
-let cancelPendingBodyScaleReset: (() => void) | undefined;
+/**
+ * The un-scale reset still pending on each wrapper. Keyed by the element, not
+ * the stack: every stack that scales the page shares its one wrapper, so a
+ * stack opening must cancel whichever stack's reset is still finishing there.
+ */
+const pendingBodyScaleResets = new WeakMap<HTMLElement, () => void>();
 
 export const useBodyScale = (
   config: ResolvedConfig,
@@ -166,7 +192,7 @@ export const useBodyScale = (
       config.shouldScaleBackground && !prefersReducedMotion && wrapper instanceof HTMLElement;
     const scalable = canScale && isOpen ? wrapper : null;
     if (scalable !== null) {
-      cancelPendingBodyScaleReset?.();
+      pendingBodyScaleResets.get(scalable)?.();
       scalable.style.transition = BODY_SCALE_TRANSITION;
       scalable.style.transform = `scale(${config.scaleBackgroundAmount})`;
       scalable.style.borderRadius = "8px";
@@ -180,6 +206,8 @@ export const useBodyScale = (
       // Closing (or unmounting): re-assert the transition so the un-scale
       // animates, clear the transform, and only remove the remaining inline
       // styles once the transition actually ends (with a timeout fallback).
+      // This reset supersedes any other stack's reset still pending here.
+      pendingBodyScaleResets.get(scalable)?.();
       scalable.style.transition = BODY_SCALE_TRANSITION;
       scalable.style.transform = "";
       scalable.style.borderRadius = "";
@@ -187,7 +215,7 @@ export const useBodyScale = (
       const { signal } = controller;
       const finish = () => {
         controller.abort();
-        cancelPendingBodyScaleReset = undefined;
+        pendingBodyScaleResets.delete(scalable);
         scalable.style.transition = "";
         scalable.style.overflow = "";
         scalable.style.transformOrigin = "";
@@ -209,10 +237,10 @@ export const useBodyScale = (
       signal.addEventListener("abort", () => {
         clearTimeout(timeoutId);
       });
-      cancelPendingBodyScaleReset = () => {
+      pendingBodyScaleResets.set(scalable, () => {
         controller.abort();
-        cancelPendingBodyScaleReset = undefined;
-      };
+        pendingBodyScaleResets.delete(scalable);
+      });
     };
   }, [isOpen, config.shouldScaleBackground, config.scaleBackgroundAmount, prefersReducedMotion]);
 };

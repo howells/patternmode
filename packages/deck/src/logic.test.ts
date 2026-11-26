@@ -35,11 +35,22 @@ describe(getVisibleDeckItems, () => {
   it("returns no cards for exhausted finite decks", () => {
     expect(getVisibleDeckItems(items, 4, 3, "finite")).toStrictEqual([]);
   });
+
+  it("clamps negative indices in finite mode instead of slicing from the end", () => {
+    expect(getVisibleDeckItems(items, -2, 2, "finite").map((item) => item.id)).toStrictEqual([
+      "a",
+      "b",
+    ]);
+  });
 });
 
 describe(getNextDeckIndex, () => {
   it("wraps cyclic decks back to the first item", () => {
     expect(getNextDeckIndex(3, items.length, "cycle")).toBe(0);
+  });
+
+  it("normalizes negative indices in cycle mode into bounds", () => {
+    expect(getNextDeckIndex(-3, items.length, "cycle")).toBe(2);
   });
 
   it("allows finite decks to advance into an exhausted state", () => {

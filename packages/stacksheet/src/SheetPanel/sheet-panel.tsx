@@ -55,6 +55,7 @@ const getHeaderProps = ({
 
 const getPanelContext = ({
   close,
+  dismissible,
   hasDescription,
   hasTitle,
   isNested,
@@ -65,6 +66,7 @@ const getPanelContext = ({
   registerTitle,
   side,
 }: Pick<SheetPanelProps, "close" | "isNested" | "isTop" | "pop" | "side"> & {
+  dismissible: boolean;
   hasDescription: boolean;
   hasTitle: boolean;
   panelId: string;
@@ -73,6 +75,7 @@ const getPanelContext = ({
 }) => ({
   back: pop,
   close,
+  dismissible,
   hasDescription,
   hasTitle,
   isNested,
@@ -139,6 +142,7 @@ const useLastFocused = (panelRef: RefObject<HTMLDivElement | null>) => {
 const useSheetPanelContext = (
   { close, isNested, isTop, pop, side }: SheetPanelProps,
   panelId: string,
+  dismissible: boolean,
 ) => {
   const [hasDescription, setHasDescription] = useState(false);
   const [hasTitle, setHasTitle] = useState(false);
@@ -164,6 +168,7 @@ const useSheetPanelContext = (
     () =>
       getPanelContext({
         close,
+        dismissible,
         hasDescription,
         hasTitle,
         isNested,
@@ -176,6 +181,7 @@ const useSheetPanelContext = (
       }),
     [
       close,
+      dismissible,
       hasDescription,
       hasTitle,
       isNested,
@@ -306,12 +312,21 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   });
   const lastFocused = useLastFocused(panelRef);
 
-  const panelStyles = getPanelStyles(side, config, index, isFittedSheet(props), item.width);
+  const dismissible = item.dismissible ?? config.dismissible;
+  const panelStyles = getPanelStyles(
+    side,
+    config,
+    index,
+    isFittedSheet(props),
+    item.width,
+    props.contained,
+  );
   const ariaLabel = item.ariaLabel ?? config.ariaLabel;
   const panelId = `stacksheet-${item.id}`;
   const { hasDescription, hasTitle, panelContext } = useSheetPanelContext(
     { ...props, isTop: isActive },
     panelId,
+    dismissible,
   );
 
   const hasPanelClass = classNames.panel !== "";
@@ -349,10 +364,10 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     boxShadow: getShadow(depth > 0),
   };
 
-  const showSideHandle = isActive && side !== "bottom";
+  const showSideHandle = isActive && dismissible && side !== "bottom";
   // Composable layouts own their chrome — Sheet.Handle renders the pill, so
   // the auto handle would duplicate it.
-  const showBottomHandle = isActive && side === "bottom" && !isComposable;
+  const showBottomHandle = isActive && dismissible && side === "bottom" && !isComposable;
   const sideHandle = getOptionalSideHandle({
     isHovered,
     onDismiss: pop,

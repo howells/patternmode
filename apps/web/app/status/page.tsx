@@ -1,8 +1,6 @@
-import { ApiTable, DocsBlock } from "@howells/site-ui";
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
-import { ComponentFrame } from "@/components/component-frame";
-import { InstallBlock } from "@/components/install-block";
+import { PackageDocs } from "@/components/package-docs";
 import { StatusDemo } from "@/components/status-demo";
 import { StatusVariants } from "@/components/status-variants";
 import { componentMetadata } from "@/lib/catalogue";
@@ -79,16 +77,13 @@ import "@patternmode/status/styles.css";
 
 export default function StatusPage() {
   return (
-    <ComponentFrame demo={<StatusDemo />} slug="status">
-      <StatusVariants />
-      <InstallBlock
-        command="npm i @patternmode/status motion"
-        example={statusExample}
-        lead="Pass a value or a named status. Add a label whenever the mark carries meaning on its own."
-      />
-      <DocsBlock title="Core API">
-        <ApiTable sections={statusApi} />
-      </DocsBlock>
-    </ComponentFrame>
+    <PackageDocs
+      api={statusApi}
+      demo={<StatusDemo />}
+      example={statusExample}
+      installLead="Pass a value or a named status. Add a label whenever the mark carries meaning on its own."
+      slug="status"
+      variants={<StatusVariants />}
+    />
   );
 }

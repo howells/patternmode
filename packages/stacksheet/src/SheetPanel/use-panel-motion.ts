@@ -157,6 +157,9 @@ export interface PanelMotion {
 interface MotionRuntime {
   dragging: boolean;
   entered: boolean;
+  exiting: boolean;
+  /** Target of the fade animation (0 or 1), so an interrupted fade-out reverses cleanly */
+  fadeTarget: number | null;
   /** A fitted Sheet's height change in flight */
   heightChange: Animation | null;
   latest: PanelMotionOptions;
@@ -201,7 +204,9 @@ const springTravel = async (state: MotionState, to: number, velocity?: number) =
 /** Bring a present panel to rest: back from a drag, an interrupted exit, or a new Snap Point. */
 const settle = (state: MotionState, to: number, velocity?: number) => {
   const { fade, runtime, travel } = state;
-  if (fade.get() < 1 && !fade.isAnimating()) {
+  runtime.current.exiting = false;
+  if (fade.get() < 1 && runtime.current.fadeTarget !== 1) {
+    runtime.current.fadeTarget = 1;
     animate(fade, 1, REDUCED_FADE_IN);
   }
   if (runtime.current.latest.reduced && velocity === undefined && !travel.isAnimating()) {
@@ -216,6 +221,8 @@ const settle = (state: MotionState, to: number, velocity?: number) => {
 const enter = async (state: MotionState) => {
   const { fade, runtime, travel } = state;
   const { reduced, rest } = runtime.current.latest;
+  runtime.current.exiting = false;
+  runtime.current.fadeTarget = 1;
   if (reduced) {
     travel.jump(rest);
     await animate(fade, 1, REDUCED_FADE_IN).finished;
@@ -234,6 +241,12 @@ const enter = async (state: MotionState) => {
  */
 const exit = async (state: MotionState) => {
   const { fade, runtime, travel } = state;
+  if (runtime.current.exiting) {
+    return;
+  }
+  runtime.current.exiting = true;
+  runtime.current.heightChange?.cancel();
+  runtime.current.heightChange = null;
   const velocity = runtime.current.releaseVelocity;
   runtime.current.releaseVelocity = 0;
   runtime.current.dragging = false;
@@ -247,6 +260,7 @@ const exit = async (state: MotionState) => {
     runtime.current.latest.safeToRemove?.();
   };
   if (runtime.current.latest.reduced) {
+    runtime.current.fadeTarget = 0;
     await animate(fade, 0, REDUCED_FADE_OUT).finished;
     remove();
     return;
@@ -347,6 +361,8 @@ export const usePanelMotion = (options: PanelMotionOptions): PanelMotion => {
   const runtime = useRef<MotionRuntime>({
     dragging: false,
     entered: false,
+    exiting: false,
+    fadeTarget: null,
     heightChange: null,
     latest: options,
     opened: false,
@@ -363,18 +379,19 @@ export const usePanelMotion = (options: PanelMotionOptions): PanelMotion => {
   // fitted Sheet's height changes.
   useLayoutEffect(() => {
     const panel = panelRef.current;
+    const currentRuntime = runtime.current;
     const measure = () => {
       const measured = getPanelDimension(panel, axis);
       if (panel === null || measured <= 0) {
         return;
       }
-      const delta = measured - runtime.current.size;
-      const { dragging, entered, latest } = runtime.current;
+      const delta = measured - currentRuntime.size;
+      const { dragging, entered, latest } = currentRuntime;
       const settled = entered && latest.isPresent && !dragging;
       if (latest.fitted && settled && !latest.reduced && delta !== 0) {
         animateHeightChange(panel, delta, runtime);
       }
-      runtime.current.size = measured;
+      currentRuntime.size = measured;
     };
     measure();
     const canObserve = panel !== null && "ResizeObserver" in globalThis;
@@ -384,6 +401,8 @@ export const usePanelMotion = (options: PanelMotionOptions): PanelMotion => {
     }
     return () => {
       observer?.disconnect();
+      currentRuntime.heightChange?.cancel();
+      currentRuntime.heightChange = null;
     };
   }, [panelRef, axis]);
   useStackPresence({ fade, runtime, travel }, stack, depth);

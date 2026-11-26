@@ -1,5 +1,3 @@
-import type { Ref, RefCallback } from "react";
-
 import type {
   ScrollFrameAxes,
   ScrollFrameAxis,
@@ -15,19 +13,6 @@ import type {
 const DEFAULT_DRAG_SCROLL_IGNORE_SELECTOR =
   "input, textarea, select, option, [contenteditable], [data-scrollframe-no-drag]";
 const DEFAULT_DRAG_SCROLL_ACTIVATION_DISTANCE = 8;
-
-const isRefCallback = <T>(ref: Ref<T>): ref is RefCallback<T> => typeof ref === "function";
-
-export const setRef = <T>(ref: Ref<T> | undefined, value: T | null): void => {
-  if (ref === undefined || ref === null) {
-    return;
-  }
-  if (isRefCallback(ref)) {
-    ref(value);
-    return;
-  }
-  ref.current = value;
-};
 
 export const supportsAxis = (axes: ScrollFrameAxes, axis: ScrollFrameAxis): boolean =>
   axes === "both" || axes === axis;
@@ -172,7 +157,11 @@ export const getAxisState = (node: HTMLDivElement, axis: ScrollFrameAxis): Scrol
     axis === "vertical"
       ? node.scrollHeight - node.clientHeight
       : node.scrollWidth - node.clientWidth;
-  const position = axis === "vertical" ? node.scrollTop : node.scrollLeft;
+  const rawPosition = axis === "vertical" ? node.scrollTop : node.scrollLeft;
+  const isRtl =
+    axis === "horizontal" &&
+    node.ownerDocument.defaultView?.getComputedStyle(node).direction === "rtl";
+  const position = isRtl ? Math.abs(rawPosition) : rawPosition;
   const scrollable = max > 1;
   return {
     atEnd: !scrollable || position >= max - 1,

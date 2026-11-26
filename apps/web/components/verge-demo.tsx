@@ -2,6 +2,7 @@
 
 import { Verge } from "@patternmode/verge";
 import { RowAction } from "./verge-action";
+import "@patternmode/verge/styles.css";
 import "./verge-demo.css";
 
 /**

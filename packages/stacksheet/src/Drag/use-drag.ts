@@ -249,15 +249,21 @@ const attachDragListeners = (el: HTMLElement, runtime: () => DragRuntime, signal
   );
   el.addEventListener(
     "pointerup",
-    () => {
-      finish(runtime(), false);
+    (event) => {
+      const current = runtime();
+      if (current.gesture.current?.pointerId === event.pointerId) {
+        finish(current, false);
+      }
     },
     { signal },
   );
   el.addEventListener(
     "pointercancel",
-    () => {
-      finish(runtime(), true);
+    (event) => {
+      const current = runtime();
+      if (current.gesture.current?.pointerId === event.pointerId) {
+        finish(current, true);
+      }
     },
     { signal },
   );

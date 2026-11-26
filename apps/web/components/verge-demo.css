@@ -16,7 +16,7 @@
 }
 
 .verge-demo-name {
-  @apply type-ui min-w-0 flex-1 truncate;
+  @apply type-body min-w-0 flex-1 truncate;
 }
 
 .verge-demo-hex {

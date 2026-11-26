@@ -3,6 +3,7 @@
 import { ApertoClose } from "../aperto-close";
 import { ApertoContent } from "../aperto-content";
 import { ApertoDescription } from "../aperto-description";
+import { ApertoMediaFrame } from "../aperto-media-frame";
 import { ApertoOverlay } from "../aperto-overlay";
 import { ApertoPortal } from "../aperto-portal";
 import { ApertoRoot } from "../aperto-root";
@@ -30,7 +31,9 @@ export const ApertoSingle = ({
       <ApertoPortal>
         <ApertoOverlay className={classNames?.overlay} />
         <ApertoContent className={classNames?.content} {...getDescriptionProps(media)}>
-          <ApertoExpandedMedia item={media} renderImage={renderImage} renderVideo={renderVideo} />
+          <ApertoMediaFrame item={media}>
+            <ApertoExpandedMedia item={media} renderImage={renderImage} renderVideo={renderVideo} />
+          </ApertoMediaFrame>
           <div data-slot="aperto-caption">
             <ApertoTitle>{title}</ApertoTitle>
             {media.description === undefined || media.description === "" ? null : (

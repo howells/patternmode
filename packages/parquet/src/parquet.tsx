@@ -15,7 +15,6 @@ interface Slot {
   area: number;
   color: string;
   height: number;
-  id: string;
   isLight: boolean;
   left: number;
   percent: number;
@@ -42,6 +41,12 @@ export const Parquet = ({
   showLabels = false,
   slotCount,
 }: ParquetProps) => {
+  if (!(Number.isFinite(aspectRatio) && aspectRatio > 0)) {
+    throw new RangeError(
+      `Parquet aspectRatio must be a finite number above 0, received ${aspectRatio}.`,
+    );
+  }
+
   // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the squarified packing reruns on every render.
   const slots = useMemo<Slot[]>(() => {
     const layoutHeight = LAYOUT_WIDTH / aspectRatio;
@@ -59,7 +64,6 @@ export const Parquet = ({
           area: rect.w * rect.h,
           color: tile.color,
           height: (rect.h / layoutHeight) * 100,
-          id: tile.id ?? `index-${rect.index}`,
           // An unparseable color (`var()`, `color-mix()`, most named colors)
           // is an unknown tone and renders as not light unless the tile says.
           isLight: tile.isLight ?? isLightColor(tile.color) ?? false,
@@ -92,7 +96,7 @@ export const Parquet = ({
               aria-hidden="true"
               className="patternmode-parquet__tile"
               key={key}
-              style={{ opacity: 0 }}
+              style={{ height: "0%", left: "0%", opacity: 0, top: "0%", width: "0%" }}
             />
           );
         }

@@ -2,6 +2,7 @@
 
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -42,8 +43,32 @@ describe("HaloPicker utilities", () => {
     const padRect = new DOMRect(10, 20, 104, 104);
     expect(pointerToHaloPad(62, 72, padRect)).toStrictEqual({ l: 50, s: 50 });
 
-    const svgRect = new DOMRect(0, 0, 128, 128);
-    expect(pointerToHaloHue(128, 78, svgRect)).toBeGreaterThan(0);
+    const scaledPadRect = new DOMRect(10, 20, 208, 208);
+    expect(pointerToHaloPad(114, 124, scaledPadRect)).toStrictEqual({ l: 50, s: 50 });
+
+    const geometry = getHaloGeometry("bottom");
+    const svgRect = new DOMRect(0, 0, geometry.width, geometry.height);
+    const scaledSvgRect = new DOMRect(0, 0, geometry.width * 2, geometry.height * 2);
+    const unscaledHue = pointerToHaloHue(geometry.width, 78, svgRect);
+    expect(unscaledHue).toBeGreaterThan(0);
+    expect(pointerToHaloHue(geometry.width * 2, 156, scaledSvgRect)).toBeCloseTo(unscaledHue, 6);
+  });
+
+  it("paints the pad as the HSL surface the pointer maths reads", () => {
+    /* x is saturation and y is lightness, linearly: grey to the pure hue along
+       the middle row, then white fading in over the top half and black over the
+       bottom half. An HSV surface (white left-to-right, black bottom-to-top)
+       would make a click on vivid red emit a pastel. */
+    const css = readFileSync("src/styles.css", "utf-8");
+    expect(css).toMatch(
+      /pad-hue\s*\{\s*background:\s*linear-gradient\(\s*to right,\s*#808080,\s*hsl\(/u,
+    );
+    expect(css).toMatch(
+      /pad-white\s*\{\s*background:\s*linear-gradient\(to bottom,\s*#fff 0%,\s*transparent 50%\)/u,
+    );
+    expect(css).toMatch(
+      /pad-black\s*\{\s*background:\s*linear-gradient\(to top,\s*#000 0%,\s*transparent 50%\)/u,
+    );
   });
 
   it("rotates the arc geometry per placement", () => {

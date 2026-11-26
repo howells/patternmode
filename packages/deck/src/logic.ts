@@ -59,7 +59,8 @@ export const getVisibleDeckItems = (
   }
 
   if (mode === "finite") {
-    return items.slice(index, index + visibleCount);
+    const start = Math.max(0, index);
+    return items.slice(start, start + visibleCount);
   }
 
   const start = normalizeIndex(index, items.length);
@@ -82,7 +83,7 @@ export const getNextDeckIndex = (index: number, length: number, mode: DeckMode):
   }
 
   const next = index + 1;
-  return mode === "cycle" ? next % length : Math.min(next, length);
+  return mode === "cycle" ? normalizeIndex(next, length) : Math.min(Math.max(next, 0), length);
 };
 
 /** Builds a stable React key that changes each cycle pass for repeated items. */

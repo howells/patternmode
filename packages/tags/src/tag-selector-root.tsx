@@ -9,9 +9,10 @@ import { TagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
 import {
   DEFAULT_SEPARATORS,
-  NO_ACTIVE_OPTION,
   dedupeDrafts,
   defaultFilterOption,
+  getNextIndex,
+  getPreviousIndex,
   normalizeComparable,
   normalizeTag,
   toItemOption,
@@ -176,27 +177,66 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
   const listboxId = `${rootId}-listbox`;
   const [open, setOpen] = useState(false);
   const [internalQuery, setInternalQuery] = useState("");
-  const [activeIndex, setActiveIndex] = useState(NO_ACTIVE_OPTION);
+  const [activeOptionId, setActiveOptionId] = useState<string | null>(null);
   const query = searchValue ?? internalQuery;
-  const selectedIds = new Set(value.map((item) => item.id));
   const filteredOptions = options.filter((item) => filterOption(item, query));
   const exactMatches = getExactMatches(options, query);
   const canCreate =
     onCreateItem !== undefined && normalizeTag(query) !== "" && exactMatches.length === 0;
   const commandOptions = getCommandOptions({ canCreate, filteredOptions, listboxId, query });
-  const activeOption = commandOptions[activeIndex];
   const latestValueRef = useLatestRef(value);
+
+  /** The options the list actually rendered, so custom `TagSelector.List` children navigate correctly. */
+  const getRenderedOptions = (): HTMLElement[] => {
+    const list = document.querySelector(`#${listboxId}`);
+    return list === null ? [] : [...list.querySelectorAll<HTMLElement>('[role="option"]')];
+  };
+
+  const commitValue = (nextValue: TagItem[]) => {
+    latestValueRef.current = nextValue;
+    onChange(nextValue);
+  };
 
   const updateQuery = (nextQuery: string) => {
     if (searchValue === undefined) {
       setInternalQuery(nextQuery);
     }
     onSearchChange?.(nextQuery);
-    setActiveIndex(NO_ACTIVE_OPTION);
+    setActiveOptionId(null);
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (disabled && nextOpen) {
+      return;
+    }
+    setOpen(nextOpen);
+    if (!nextOpen) {
+      setActiveOptionId(null);
+    }
+  };
+
+  const moveActiveOption = (direction: "next" | "previous") => {
+    const renderedIds = getRenderedOptions().map((element) => element.id);
+    const currentIndex = activeOptionId === null ? -1 : renderedIds.indexOf(activeOptionId);
+    const nextIndex =
+      direction === "next"
+        ? getNextIndex(currentIndex, renderedIds.length)
+        : getPreviousIndex(currentIndex, renderedIds.length);
+    setActiveOptionId(renderedIds[nextIndex] ?? null);
+  };
+
+  /** Activates the highlighted option through its own click handler; false when none is rendered. */
+  const selectActiveOption = (): boolean => {
+    const active = getRenderedOptions().find((element) => element.id === activeOptionId);
+    if (active === undefined) {
+      return false;
+    }
+    active.click();
+    return true;
   };
 
   const removeItem = (item: TagItem) => {
-    onChange(value.filter((selectedItem) => selectedItem.id !== item.id));
+    commitValue(latestValueRef.current.filter((selectedItem) => selectedItem.id !== item.id));
   };
 
   const resolveDrafts = async (drafts: readonly string[]): Promise<void> => {
@@ -219,7 +259,9 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
     }
 
     if (changed) {
-      onChange(nextValue);
+      commitValue(nextValue);
+    }
+    if (failures.length === 0 && (changed || items.length > 0)) {
       updateQuery("");
     }
 
@@ -239,24 +281,25 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
       return;
     }
 
-    const isSelected = selectedIds.has(option.item.id);
+    const { current } = latestValueRef;
+    const isSelected = current.some((item) => item.id === option.item.id);
     if (option.item.disabled === true && !isSelected) {
       return;
     }
-    onChange(
-      isSelected ? value.filter((item) => item.id !== option.item.id) : [...value, option.item],
+    commitValue(
+      isSelected ? current.filter((item) => item.id !== option.item.id) : [...current, option.item],
     );
   };
 
   const contextValue: TagSelectorContextValue = {
-    activeIndex,
-    activeOption,
+    activeOptionId,
     ariaLabel,
     commandOptions,
     disabled,
     emptyMessage,
     inputId,
     listboxId,
+    moveActiveOption,
     name,
     onSearchInput: updateQuery,
     open,
@@ -267,15 +310,16 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
     renderTag,
     resolveDraft,
     resolveDrafts,
+    selectActiveOption,
     selectCommandOption,
     separators,
     serializeItem,
-    setActiveIndex,
-    setOpen,
+    setActiveOptionId,
+    setOpen: handleOpenChange,
     value,
   };
 
-  return { contextValue, rootId, setActiveIndex, setOpen };
+  return { contextValue, handleOpenChange, rootId };
 };
 
 const TagSelectorHiddenInputs = ({ context }: { context: TagSelectorContextValue }) => {
@@ -313,14 +357,7 @@ export const TagSelectorRoot = (props: TagSelectorRootProps) => {
     value: _value,
     ...rootProps
   } = props;
-  const { contextValue, rootId, setActiveIndex, setOpen } = useTagSelectorRootState(props);
-
-  const handleOpenChange = (nextOpen: boolean) => {
-    setOpen(nextOpen);
-    if (!nextOpen) {
-      setActiveIndex(NO_ACTIVE_OPTION);
-    }
-  };
+  const { contextValue, handleOpenChange, rootId } = useTagSelectorRootState(props);
 
   return (
     <TagSelectorContext.Provider value={contextValue}>

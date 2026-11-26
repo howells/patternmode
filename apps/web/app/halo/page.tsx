@@ -1,4 +1,4 @@
-import type { ApiSection } from "@howells/site-ui";
+import type { ApiSection } from "@/components/docs-blocks";
 
 import { HaloDemo, HaloVariants } from "@/components/halo-demo";
 import { PackageDocs } from "@/components/package-docs";

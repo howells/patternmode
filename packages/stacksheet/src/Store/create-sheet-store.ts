@@ -47,12 +47,16 @@ const createWriteStack =
   <TMap extends object>(
     setState: StoreApi<StoreState<TMap>>["setState"],
     recordCloseReason: (reason: CloseReason) => void,
+    recordOpenerElement: (element: Element | null) => void,
   ): WriteStack =>
   (toNextStack, reason = "programmatic") => {
     setState((state) => {
       const stack = toNextStack(state.stack);
       if (stack === state.stack) {
         return state;
+      }
+      if (state.stack.length === 0 && stack.length > 0 && typeof document !== "undefined") {
+        recordOpenerElement(document.activeElement);
       }
       if (stack.length === 0) {
         recordCloseReason(reason);
@@ -199,23 +203,28 @@ export const createSheetStore = <TMap extends object>(
   // Component names already warned about (avoid log spam), per instance.
   const warnedNames = new Set<string>();
   let closeReason: CloseReason = "programmatic";
+  let openerElement: Element | null = null;
   const recordCloseReason = (reason: CloseReason) => {
     closeReason = reason;
+  };
+  const recordOpenerElement = (element: Element | null) => {
+    openerElement = element;
   };
   const store = createStore<StoreState<TMap>>()((set, get) =>
     createActions<TMap>({
       config,
       getStack: () => get().stack,
       warnedNames,
-      write: createWriteStack<TMap>(set, recordCloseReason),
+      write: createWriteStack<TMap>(set, recordCloseReason, recordOpenerElement),
     }),
   );
-  const write = createWriteStack<TMap>(store.setState, recordCloseReason);
+  const write = createWriteStack<TMap>(store.setState, recordCloseReason, recordOpenerElement);
   return {
     close: (reason) => {
       write(cleared, reason);
     },
     getCloseReason: () => closeReason,
+    getOpenerElement: () => openerElement,
     pop: (reason) => {
       write(popped, reason);
     },

@@ -1,3 +1,6 @@
+import { readdirSync } from "node:fs";
+import path from "node:path";
+
 import { ChevronDown } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -48,6 +51,9 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+/** Entries the registry sync vendored into a directory of this app. */
+const countVendored = (dir: string) => readdirSync(path.join(process.cwd(), dir)).length;
 
 const buttonVariants = ["default", "secondary", "outline", "ghost", "destructive", "link"] as const;
 
@@ -191,11 +197,10 @@ export default function Home() {
                   Resynced from the local registry on every build.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="grid grid-cols-3 gap-4">
+              <CardContent className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Items", value: "14" },
-                  { label: "Components", value: "10" },
-                  { label: "Libs", value: "2" },
+                  { label: "Components", value: countVendored("components/patternmode") },
+                  { label: "Libs", value: countVendored("lib/patternmode") },
                 ].map((stat) => (
                   <div className="flex flex-col gap-1" key={stat.label}>
                     <span className="text-xl font-normal leading-7">{stat.value}</span>

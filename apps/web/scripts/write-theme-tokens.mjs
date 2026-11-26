@@ -29,19 +29,38 @@ const NAMES = [
   "shadow-xl",
 ];
 
-const light = new Map(Object.entries(theme.cssVars.light));
+/*
+ * The dark tokens the site draws on dark grounds inside the light page (code
+ * samples, the dark catalogue figures), written as --dark-<name>.
+ */
+const DARK_NAMES = ["background", "card", "foreground", "muted-foreground", "border"];
 
-const lines = NAMES.map((name) => {
-  const value = light.get(name);
-  if (value === undefined) {
-    throw new Error(`packages/theme/registry/theme/item.json has no light token "${name}".`);
-  }
-  return `  --${name}: ${value};`;
-});
+/**
+ * @param {"dark" | "light"} mode Which theme mode the tokens come from.
+ * @param {Record<string, string>} tokens That mode's tokens from item.json.
+ * @param {string[]} names The tokens to write.
+ * @param {string} prefix Prepended to each written name.
+ * @returns {string[]} One custom property declaration per name.
+ */
+const tokenLines = (mode, tokens, names, prefix) => {
+  const values = new Map(Object.entries(tokens));
+  return names.map((name) => {
+    const value = values.get(name);
+    if (value === undefined) {
+      throw new Error(`packages/theme/registry/theme/item.json has no ${mode} token "${name}".`);
+    }
+    return `  --${prefix}${name}: ${value};`;
+  });
+};
+
+const lines = [
+  ...tokenLines("light", theme.cssVars.light, NAMES, ""),
+  ...tokenLines("dark", theme.cssVars.dark, DARK_NAMES, "dark-"),
+];
 
 writeFileSync(
   dest,
   `/* Written by scripts/write-theme-tokens.mjs from packages/theme. Do not edit. */\n:root {\n${lines.join("\n")}\n}\n`,
 );
 
-console.log(`Wrote ${NAMES.length} theme tokens to ${path.relative(root, dest)}.`);
+console.log(`Wrote ${lines.length} theme tokens to ${path.relative(root, dest)}.`);

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ElementType, ReactNode, Ref } from "react";
+import type { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 
 /**
  * Props common to both Verge parts.
@@ -15,16 +15,15 @@ interface VergeSharedProps<TElement extends ElementType> {
   as?: TElement;
   children?: ReactNode;
   className?: string;
-  ref?: Ref<HTMLElement>;
 }
 
 /** Props for {@link VergeRoot}. */
 export type VergeRootProps<TElement extends ElementType = "div"> = VergeSharedProps<TElement> &
-  Omit<ComponentPropsWithoutRef<TElement>, keyof VergeSharedProps<TElement>>;
+  Omit<ComponentPropsWithRef<TElement>, keyof VergeSharedProps<TElement>>;
 
 /** Props for {@link VergeSlot}. */
 export type VergeSlotProps<TElement extends ElementType = "div"> = VergeSharedProps<TElement> &
-  Omit<ComponentPropsWithoutRef<TElement>, keyof VergeSharedProps<TElement>> & {
+  Omit<ComponentPropsWithRef<TElement>, keyof VergeSharedProps<TElement>> & {
     /**
      * How many controls' worth of width to hold open.
      *

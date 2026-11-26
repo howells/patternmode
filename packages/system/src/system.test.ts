@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  assignRef,
   clamp,
   getObjectSizingStyle,
   getPatternmodeSizeValue,
@@ -23,6 +24,28 @@ describe("Patternmode system utilities", () => {
     expect(getSizeVariableStyle("lg", "--patternmode-swatch-size")).toStrictEqual({
       "--patternmode-swatch-size": "2.5rem",
     });
+  });
+
+  it("builds a size variable for extended tokens", () => {
+    expect(getSizeVariableStyle("5xl", "--patternmode-swatch-size")).toStrictEqual({
+      "--patternmode-swatch-size": "5rem",
+    });
+  });
+
+  it("assigns callback and object refs, and ignores a missing ref", () => {
+    const seen: (string | null)[] = [];
+    const object = { current: "stale" };
+    assignRef((value: string | null) => {
+      seen.push(value);
+    }, "node");
+    assignRef(object, "node");
+    expect(object.current).toBe("node");
+    assignRef(undefined, "node");
+    assignRef(null, "node");
+    assignRef(object, null);
+
+    expect(seen).toStrictEqual(["node"]);
+    expect(object.current).toBeNull();
   });
 
   it("extends the size scale past 3xl for larger color controls", () => {

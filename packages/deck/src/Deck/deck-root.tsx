@@ -2,7 +2,7 @@
 
 import { joinClassNames } from "@patternmode/system";
 import { useReducedMotion } from "motion/react";
-import { useId, useReducer } from "react";
+import { useId, useReducer, useState } from "react";
 import type { CSSProperties } from "react";
 
 import { getVisibleDeckItems } from "../logic";
@@ -25,6 +25,37 @@ import { DeckEmpty } from "./deck-empty";
 import { DeckStack } from "./deck-stack";
 import { useDeckChildren } from "./use-deck-children";
 import { createDeckState, deckReducer, useDeckInteractions } from "./use-deck-interactions";
+
+/**
+ * The pass-numbered base of a cycle deck's render keys. An uncontrolled deck
+ * counts its own advances; a controlled deck derives the base from the
+ * `index` transitions it observes, so a parent that wraps or jumps the index
+ * still gets new keys for the cards that move, and one that ignores an
+ * advance gets none.
+ */
+const useVisualBaseIndex = (
+  isControlled: boolean,
+  activeIndex: number,
+  cardsLength: number,
+  uncontrolledVisualBase: number,
+): number => {
+  const [controlledBase, setControlledBase] = useState({
+    base: activeIndex,
+    prevIndex: activeIndex,
+  });
+
+  if (isControlled && activeIndex !== controlledBase.prevIndex) {
+    const delta =
+      cardsLength > 0
+        ? (((activeIndex - controlledBase.prevIndex) % cardsLength) + cardsLength) % cardsLength
+        : 0;
+    const nextBase = controlledBase.base + delta;
+    setControlledBase({ base: nextBase, prevIndex: activeIndex });
+    return nextBase;
+  }
+
+  return isControlled ? controlledBase.base : uncontrolledVisualBase;
+};
 
 export const DeckRoot = ({
   "aria-label": ariaLabel,
@@ -57,8 +88,15 @@ export const DeckRoot = ({
   const generatedId = useId();
   const [state, dispatch] = useReducer(deckReducer, defaultIndex, createDeckState);
   const reduceMotion = useReducedMotion() === true;
-  const activeIndex = index ?? state.internalIndex;
+  const isControlled = index !== undefined;
+  const activeIndex = isControlled ? index : state.internalIndex;
   const { cards, empty } = useDeckChildren(children, generatedId);
+  const visualBaseIndex = useVisualBaseIndex(
+    isControlled,
+    activeIndex,
+    cards.length,
+    state.visualBaseIndex,
+  );
   const visibleCards = getVisibleDeckItems(cards, activeIndex, visibleCount, mode);
   const [activeCard] = visibleCards;
   const exhausted = mode === "finite" && visibleCards.length === 0;
@@ -70,6 +108,7 @@ export const DeckRoot = ({
     disabled,
     dispatch,
     distanceThreshold,
+    isControlled,
     mode,
     onAdvance,
     onAdvanceEnd,
@@ -114,7 +153,7 @@ export const DeckRoot = ({
           visibleCount,
         }}
         visibleCards={visibleCards}
-        visualBaseIndex={state.visualBaseIndex}
+        visualBaseIndex={visualBaseIndex}
       />
       {exhausted && empty !== null ? empty : null}
     </div>

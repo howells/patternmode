@@ -31,6 +31,7 @@ const buildTarget = (startTravel = 0): DragTarget & TargetMocks => ({
 });
 
 interface PointerOptions {
+  pointerId?: number;
   pointerType?: string;
   target?: Element;
 }
@@ -66,8 +67,8 @@ const setupDragPanel = (config: DragConfig, target = buildTarget(), children = "
       clientX: x,
       clientY: y,
     });
-    Object.defineProperty(event, "pointerId", { value: 7 });
-    Object.defineProperty(event, "isPrimary", { value: true });
+    Object.defineProperty(event, "pointerId", { value: options.pointerId ?? 7 });
+    Object.defineProperty(event, "isPrimary", { value: (options.pointerId ?? 7) === 7 });
     Object.defineProperty(event, "pointerType", { value: options.pointerType ?? "mouse" });
     (options.target ?? panel).dispatchEvent(event);
   };
@@ -189,6 +190,17 @@ describe(useDrag, () => {
       pointer("pointermove", 200, 100);
       pointer("pointercancel", 200, 100);
       expect(target.end).toHaveBeenCalledWith({ kind: "rest" }, 0);
+    });
+
+    it("ignores pointerup and pointercancel from a secondary pointer", () => {
+      const { pointer, target } = setupDragPanel(buildConfig());
+      pointer("pointerdown", 100, 100, { pointerId: 7 });
+      pointer("pointermove", 160, 100, { pointerId: 7 });
+      pointer("pointerup", 160, 100, { pointerId: 99 });
+      pointer("pointercancel", 160, 100, { pointerId: 99 });
+      expect(target.end).not.toHaveBeenCalled();
+      pointer("pointerup", 250, 100, { pointerId: 7 });
+      expect(target.end).toHaveBeenCalledOnce();
     });
 
     it("catches a Sheet mid-animation from the travel on screen", () => {

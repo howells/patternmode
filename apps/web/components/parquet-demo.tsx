@@ -4,6 +4,7 @@ import { Parquet } from "@patternmode/parquet";
 import { useState } from "react";
 
 import { PALETTE } from "./parquet-palette";
+import "@patternmode/parquet/styles.css";
 import "./parquet-demo.css";
 
 const WEIGHTS = PALETTE.map((tile) => tile.value).toSorted((a, b) => b - a);

@@ -36,39 +36,23 @@ const FACES = [
 ];
 
 const TYPE_ROLES = [
-  { role: "type-display", sample: "Patternmode", spec: "Hedvig 36–72 / 1.05" },
-  { role: "type-title", sample: "Sheets that stack and step back", spec: "Hedvig 24 / 32" },
-  { role: "type-heading", sample: "Install the theme", spec: "Inter 16 / 24" },
-  {
-    role: "type-label",
-    sample: "Evergreen, 48% of the palette",
-    spec: "Inter 14 / 20, weight 500",
-  },
-  {
-    role: "type-lead",
-    sample: "The paragraph under a title that sets the scene.",
-    spec: "Inter 16–18 / 1.6",
-  },
-  { role: "type-figure", sample: "12,783.25", spec: "Inter 36–48 / 1" },
+  { role: "type-display", sample: "Patternmode", spec: "Hedvig 40–60 / 1" },
+  { role: "type-title", sample: "Sheets that stack and step back", spec: "Hedvig 36 / 40" },
+  { role: "type-heading", sample: "Install the theme", spec: "Inter 16 / 22" },
   {
     role: "type-body",
     sample:
-      "Reading text and descriptions at the body base. Keep measures around 45 to 65 characters.",
-    spec: "Inter 14 / 21",
+      "Reading text, item names, controls and captions. Muted colour, not a smaller size, marks what comes second.",
+    spec: "Inter 14 / 20",
   },
-  {
-    role: "type-ui",
-    sample: "Controls, navigation, list rows and field labels",
-    spec: "Inter 13 / 18",
-  },
-  { role: "type-meta", sample: "Updated 4 minutes ago · 12 items", spec: "Inter 12 / 16" },
   { role: "type-data", sample: "#315C4B · 1,204.50 · 0.0086", spec: "Geist Mono 13 / 18" },
 ];
 
 const INSTALL_STEPS = [
   {
     command: THEME_COMMAND,
-    description: "Colour tokens, the ten type roles and the three fonts, written into globals.css.",
+    description:
+      "Colour tokens, the five type roles and the three fonts, written into globals.css.",
     title: "Theme",
   },
   {
@@ -171,11 +155,12 @@ const TypeSection = () => (
   <section aria-labelledby="type-title" className="home-section" id="type">
     <div className="section-intro">
       <h2 className="section-title" id="type-title">
-        Ten type roles
+        Five type roles
       </h2>
       <p className="section-lead">
-        The same names in every Howells app. Reach for a role, not a size: <code>type-title</code>{" "}
-        rather than <code>text-2xl</code>.
+        Two serif, kept for a page&rsquo;s headline and titles, two sans for everything else, and
+        mono for values. Reach for a role, not a size: <code>type-title</code> rather than{" "}
+        <code>text-4xl</code>.
       </p>
     </div>
     <dl className="type-roles">

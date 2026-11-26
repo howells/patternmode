@@ -17,7 +17,7 @@
 }
 
 .thumbnail-demo-row {
-  @apply type-ui flex h-14 items-center gap-3.5 border-b border-border last:border-b-0;
+  @apply type-body flex h-14 items-center gap-3.5 border-b border-border last:border-b-0;
 }
 
 .thumbnail-demo-card[data-dark] .thumbnail-demo-row {

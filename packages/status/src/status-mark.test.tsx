@@ -2,49 +2,9 @@
 
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
-import type { Ref, SVGAttributes } from "react";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { resolveStatusProgress, StatusMark } from "./index";
-
-type MotionElementProps<TElement> = SVGAttributes<TElement> & {
-  animate?: unknown;
-  initial?: unknown;
-  ref?: Ref<TElement>;
-  transition?: unknown;
-};
-
-const stripMotionProps = vi.hoisted(
-  () =>
-    <TElement,>({
-      animate: _animate,
-      initial: _initial,
-      transition: _transition,
-      ...props
-    }: MotionElementProps<TElement>) =>
-      props,
-);
-// oxlint-disable-next-line anti-slop/no-module-mocking -- StatusMark imports motion/react directly; the mock strips animation props so jsdom reads the final SVG attributes.
-vi.mock(import("motion/react"), async (importOriginal) => {
-  const actual = await importOriginal();
-  const MotionPath = ({ ref, ...props }: MotionElementProps<SVGPathElement>) => (
-    <path ref={ref} {...stripMotionProps(props)} />
-  );
-  const MotionCircle = ({ ref, ...props }: MotionElementProps<SVGCircleElement>) => (
-    <circle ref={ref} {...stripMotionProps(props)} />
-  );
-  const MotionG = ({ ref, ...props }: MotionElementProps<SVGGElement>) => (
-    <g ref={ref} {...stripMotionProps(props)} />
-  );
-  return {
-    ...actual,
-    m: {
-      circle: MotionCircle,
-      g: MotionG,
-      path: MotionPath,
-    },
-  };
-});
 
 /* The shipped components expose `data-slot`, not `data-testid` — test hooks do
    not belong in a consumer's production DOM. Fixtures local to this file still
@@ -58,6 +18,11 @@ const bySlot = (slot: string): Element => {
   }
   return element;
 };
+
+const arcStyle = () =>
+  document.querySelector(".patternmode-status-mark__arc")?.getAttribute("style");
+
+const sizedRoot = () => screen.getByRole("img", { name: "Sized" });
 
 describe(resolveStatusProgress, () => {
   it("snaps numeric values to discrete progress steps", () => {
@@ -175,6 +140,23 @@ describe(StatusMark, () => {
       "d",
       "M3.0999999999999996 12 a8.9 8.9 0 1 0 17.8 0 a8.9 8.9 0 1 0 -17.8 0",
     );
+  });
+
+  it("drives the border arc with CSS-transitionable style properties", () => {
+    const { rerender } = render(<StatusMark label="Arc" value={25} variant="border" />);
+    expect(arcStyle()).toContain("stroke-dashoffset: 0.75");
+    expect(arcStyle()).toContain("opacity: 1");
+
+    rerender(<StatusMark label="Arc" value={75} variant="border" />);
+    expect(arcStyle()).toContain("stroke-dashoffset: 0.25");
+  });
+
+  it("writes the size variable only when size is passed", () => {
+    const { rerender } = render(<StatusMark label="Sized" value={25} />);
+    expect(sizedRoot().style.getPropertyValue("--patternmode-status-size")).toBe("");
+
+    rerender(<StatusMark label="Sized" size="lg" value={25} />);
+    expect(sizedRoot().style.getPropertyValue("--patternmode-status-size")).toBe("2.5rem");
   });
 
   it("draws the fill variant with a filled disc and no border layer", () => {

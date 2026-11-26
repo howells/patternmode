@@ -6,6 +6,8 @@ import { PATTERNMODE_EXTENDED_SIZES } from "@patternmode/system";
 import { useState } from "react";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/channel/styles.css";
+import "@patternmode/swatch/styles.css";
 import "./channel-demo.css";
 
 const WHITE_TO_BLACK = "linear-gradient(to right in srgb, #fff, #000)";

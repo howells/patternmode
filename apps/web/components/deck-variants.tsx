@@ -4,6 +4,7 @@ import { Deck } from "@patternmode/deck";
 import type { ComponentProps, ReactNode } from "react";
 
 import { VariantCell, VariantsBlock } from "@/components/variant-cells";
+import "@patternmode/deck/styles.css";
 import "./deck-demo.css";
 
 const TONES = ["front", "mid", "far"] as const;

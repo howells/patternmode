@@ -24,6 +24,11 @@ describe(packSquarified, () => {
     expect(packSquarified([1, 2], { gap: 4, height: 100, width: 0 })).toStrictEqual([]);
   });
 
+  it("returns no rectangles for NaN dimensions", () => {
+    expect(packSquarified([1, 2], { gap: 0, height: Number.NaN, width: 100 })).toStrictEqual([]);
+    expect(packSquarified([1, 2], { gap: 0, height: 100, width: Number.NaN })).toStrictEqual([]);
+  });
+
   it("fills the whole rectangle with a single weight", () => {
     const [rect] = packSquarified([1], { gap: 0, height: 80, width: 100 });
     expect(rect.index).toBe(0);

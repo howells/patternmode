@@ -34,11 +34,11 @@
 }
 
 .briolette-demo-notes dd {
-  @apply m-0 type-meta text-muted-foreground;
+  @apply m-0 type-body text-muted-foreground;
 }
 
 .briolette-demo-notes p {
-  @apply m-0 type-meta text-muted-foreground;
+  @apply m-0 type-body text-muted-foreground;
 }
 
 /* A variant specimen on a dark ground rather than the quiet inset. It fills
