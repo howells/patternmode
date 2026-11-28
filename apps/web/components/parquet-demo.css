@@ -26,7 +26,7 @@
 }
 
 .parquet-demo-percent {
-  @apply type-data;
+  @apply type-row type-mono;
 }
 
 .parquet-demo-legend {
@@ -66,7 +66,7 @@
 }
 
 .parquet-demo-row-percent {
-  @apply type-data text-muted-foreground;
+  @apply type-row type-mono text-muted-foreground;
 }
 
 /* Variant specimens. */
@@ -79,7 +79,7 @@
 }
 
 .parquet-specimen-hex {
-  @apply type-data p-1.5 text-[11px] leading-[14px] text-white;
+  @apply type-row type-mono p-1.5 text-[11px] leading-[14px] text-white;
 }
 
 .parquet-specimen-hex[data-light] {

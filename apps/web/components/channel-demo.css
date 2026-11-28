@@ -18,7 +18,7 @@
 }
 
 .channel-demo-value {
-  @apply flex items-center gap-2 type-data text-muted-foreground;
+  @apply flex items-center gap-2 type-row type-mono text-muted-foreground;
 }
 
 /* The size scale: swatch and channel side by side at their true heights. The
@@ -28,5 +28,5 @@
 }
 
 .channel-demo-size-row code {
-  @apply type-data;
+  @apply type-row type-mono;
 }

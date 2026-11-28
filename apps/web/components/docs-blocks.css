@@ -5,11 +5,12 @@
 }
 
 .docs-header h3 {
-  @apply m-0 type-heading tracking-[-0.01em];
+  @apply m-0 type-section;
 }
 
+/* Code keeps its lines whole and scrolls sideways rather than wrapping. */
 .code-block {
-  @apply m-0 overflow-x-auto rounded-[12px] border border-[var(--dark-border)] bg-[var(--dark-background)] px-6 py-5 type-data leading-[21px] whitespace-pre text-[var(--dark-foreground)];
+  @apply m-0 overflow-x-auto rounded-[12px] bg-[var(--dark-background)] px-5 py-4 type-row type-mono leading-[21px] whitespace-pre text-[var(--dark-foreground)];
   scrollbar-color: var(--dark-border) transparent;
   scrollbar-width: thin;
 }
@@ -18,56 +19,60 @@
   font: inherit;
 }
 
+/* The API reads like the keyboard rows below it: hairline-ruled rows, the
+   name in mono, its type and default quieter, what it does underneath. */
 .api-list {
-  @apply flex flex-col gap-5;
-}
-
-.api-section {
-  @apply overflow-hidden rounded-[var(--radius)] border border-border bg-card;
+  @apply flex flex-col gap-8;
 }
 
 .api-section-header {
-  @apply px-4 py-[14px];
+  @apply flex flex-col gap-1 pb-3;
 }
 
 .api-section-header h4 {
-  @apply m-0 type-body;
+  @apply m-0 type-strong type-mono;
 }
 
 .api-section-header p {
-  @apply mx-0 mt-1 mb-0 max-w-[62ch] type-body text-muted-foreground;
+  @apply m-0 type-body text-muted-foreground;
 }
 
 .prop-list {
-  @apply m-0 border-t border-border;
+  @apply m-0;
 }
 
 .prop-row {
-  @apply grid grid-cols-1 gap-1.5 px-4 py-3;
-}
-
-.prop-row + .prop-row {
-  @apply border-t border-border;
+  @apply flex flex-col gap-1 py-3;
+  border-top: 1px solid var(--border);
 }
 
 .prop-row dt {
-  @apply type-body text-foreground;
+  @apply flex items-baseline gap-2 type-row type-mono text-foreground;
+}
+
+.prop-required {
+  @apply type-label text-muted-foreground;
 }
 
 .prop-row dd {
-  @apply m-0 flex flex-wrap gap-2;
+  @apply m-0;
 }
 
-.prop-row code,
-.api-section-header code {
-  @apply rounded-[5px] border border-border bg-muted px-[5px] py-0.5 type-data;
+.prop-signature {
+  @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1;
 }
 
 .prop-type,
 .prop-default {
-  @apply rounded-[5px] bg-muted px-[7px] py-[3px] type-data text-muted-foreground;
+  @apply type-row type-mono text-muted-foreground;
+  overflow-wrap: anywhere;
+}
+
+.prop-default-label {
+  @apply type-label;
 }
 
 .prop-description {
-  @apply w-full type-body text-muted-foreground;
+  @apply pt-1 type-body text-muted-foreground;
+  text-wrap: pretty;
 }

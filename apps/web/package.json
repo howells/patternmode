@@ -16,7 +16,9 @@
     "@patternmode/aperto": "workspace:*",
     "@patternmode/briolette": "workspace:*",
     "@patternmode/channel": "workspace:*",
+    "@patternmode/datagrid": "workspace:*",
     "@patternmode/deck": "workspace:*",
+    "@patternmode/filters": "workspace:*",
     "@patternmode/halo": "workspace:*",
     "@patternmode/parquet": "workspace:*",
     "@patternmode/scrollframe": "workspace:*",
@@ -28,6 +30,7 @@
     "@patternmode/thumbnail": "workspace:*",
     "@patternmode/verge": "workspace:*",
     "inter-ui": "catalog:",
+    "lucide-react": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

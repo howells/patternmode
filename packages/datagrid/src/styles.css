@@ -1,0 +1,864 @@
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+@layer components {
+  .patternmode-datagrid-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  @media (max-width: 767px) {
+    .patternmode-datagrid-hide-mobile-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  }
+
+  .patternmode-datagrid {
+    @apply flex min-h-0 flex-1 flex-col;
+    --patternmode-datagrid-row-height: 2.5rem;
+    --patternmode-datagrid-cell-x: 0.75rem;
+    --patternmode-datagrid-rule: var(--border, #e3e1dc);
+    --patternmode-datagrid-band: color-mix(
+      in oklab,
+      var(--muted, #f6f5f1) 55%,
+      var(--card, #ffffff)
+    );
+    --patternmode-datagrid-hover: color-mix(
+      in oklab,
+      var(--foreground, #1d1d1b) 2.5%,
+      var(--card, #ffffff)
+    );
+    --patternmode-datagrid-selected: color-mix(
+      in oklab,
+      var(--ring, #315c4b) 6%,
+      var(--card, #ffffff)
+    );
+    --patternmode-datagrid-selected-hover: color-mix(
+      in oklab,
+      var(--ring, #315c4b) 9%,
+      var(--card, #ffffff)
+    );
+  }
+
+  .patternmode-datagrid[data-layout="inline"] {
+    @apply max-h-full overflow-hidden rounded-[10px];
+    background: var(--card, #ffffff);
+    box-shadow: var(
+      --shadow-sm,
+      0 0 0 1px var(--border, #e3e1dc),
+      0 1px 2px oklch(0.23 0.004 107 / 0.06)
+    );
+  }
+
+  .patternmode-datagrid-toolbar--inline {
+    @apply min-h-12 px-2.5 py-2;
+  }
+
+  .patternmode-datagrid-toolbar__divider {
+    @apply mx-1 h-4 w-px shrink-0;
+    background: var(--border, #e3e1dc);
+  }
+
+  /* Bulk selection bar */
+  .patternmode-datagrid-selection-bar {
+    @apply flex min-h-10 shrink-0 items-center gap-3 py-1.5 text-[0.8125rem] leading-5;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--patternmode-datagrid-rule);
+    background: var(--patternmode-datagrid-selected);
+    color: var(--foreground, #1d1d1b);
+    padding-inline: var(--patternmode-datagrid-inset, 1rem);
+  }
+
+  .patternmode-datagrid[data-layout="inline"] .patternmode-datagrid-selection-bar {
+    @apply px-3;
+  }
+
+  .patternmode-datagrid-selection-bar__count {
+    @apply shrink-0 font-medium tabular-nums;
+  }
+
+  .patternmode-datagrid-selection-bar__actions {
+    @apply flex min-w-0 flex-1 flex-wrap items-center gap-1.5;
+  }
+
+  .patternmode-datagrid-selection-bar__clear {
+    @apply shrink-0;
+  }
+
+  .patternmode-datagrid__body {
+    @apply flex min-h-0 flex-1 flex-col py-4;
+    padding-inline: var(--patternmode-datagrid-inset, 1rem);
+  }
+
+  .patternmode-datagrid[data-layout="inline"] > .patternmode-datagrid__body {
+    @apply min-h-0 flex-1 p-0;
+  }
+
+  .patternmode-datagrid__frame {
+    @apply relative min-h-0 overflow-auto rounded-[10px];
+    background: var(--card, #ffffff);
+    box-shadow: var(
+      --shadow-sm,
+      0 0 0 1px var(--border, #e3e1dc),
+      0 1px 2px oklch(0.23 0.004 107 / 0.06)
+    );
+  }
+
+  .patternmode-datagrid__inline-scroll {
+    @apply relative min-h-0 flex-1 overflow-auto overscroll-x-contain;
+    scrollbar-color: var(--border, #e3e1dc) transparent;
+    scrollbar-width: thin;
+  }
+
+  /* Non-destructive background refetch indicator */
+  .patternmode-datagrid__progress {
+    @apply sticky top-0 left-0 z-50 h-0.5 w-full;
+    background: var(--ring, #315c4b);
+    opacity: 0.7;
+  }
+
+  .patternmode-datagrid__table[data-fetching] .patternmode-datagrid__tbody {
+    @apply opacity-65 transition-opacity duration-150;
+  }
+
+  /* Table structure */
+  .patternmode-datagrid__table {
+    @apply w-full border-separate border-spacing-0 text-left text-[0.8125rem] leading-5 font-[450];
+    color: var(--foreground, #1d1d1b);
+    font-feature-settings: "cv01", "cv11";
+  }
+
+  .patternmode-datagrid__table[data-fixed] {
+    @apply min-w-full table-fixed;
+  }
+
+  .patternmode-datagrid__thead {
+    @apply sticky top-0 z-30;
+  }
+
+  .patternmode-datagrid__th {
+    @apply relative h-9 px-(--patternmode-datagrid-cell-x) py-0 text-left align-middle text-[0.75rem] leading-4 font-[450] whitespace-nowrap select-none;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--patternmode-datagrid-rule);
+    background: var(--card, #ffffff);
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid__th-label {
+    @apply inline-flex items-center;
+  }
+
+  .patternmode-datagrid__th:has([data-column-menu]) {
+    @apply p-0;
+  }
+
+  .patternmode-datagrid__th[data-align="right"] {
+    @apply text-right;
+  }
+
+  .patternmode-datagrid__th[data-fill] {
+    @apply p-0;
+  }
+
+  .patternmode-datagrid__th[data-group] {
+    @apply text-center;
+  }
+
+  .patternmode-datagrid__th[data-highlight] {
+    background: var(--patternmode-datagrid-band);
+  }
+
+  .patternmode-datagrid__th[data-pinned="start"],
+  .patternmode-datagrid__th[data-pinned="end"] {
+    @apply sticky z-40;
+  }
+
+  .patternmode-datagrid__th[data-pinned-last] {
+    box-shadow: inset calc(-1 * var(--hairline, 1px)) 0 0 var(--patternmode-datagrid-rule);
+  }
+
+  .patternmode-datagrid__th[data-pinned-first] {
+    box-shadow: inset var(--hairline, 1px) 0 0 var(--patternmode-datagrid-rule);
+  }
+
+  /* Column resize handle */
+  .patternmode-datagrid__resize-handle {
+    @apply absolute top-0 right-0 z-10 h-full w-2 cursor-col-resize touch-none border-0 bg-transparent p-0 outline-none;
+  }
+
+  .patternmode-datagrid__resize-handle::after {
+    @apply absolute top-2 right-0 bottom-2 w-px opacity-0 transition-opacity duration-150 content-[""];
+    background: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid__resize-handle:hover::after,
+  .patternmode-datagrid__resize-handle:focus-visible::after,
+  .patternmode-datagrid__resize-handle[data-resizing]::after {
+    @apply opacity-100;
+  }
+
+  /* Column trigger button inside th */
+  .patternmode-datagrid-column-trigger {
+    @apply flex h-9 w-full min-w-0 cursor-pointer items-center gap-1 border-0 bg-transparent px-(--patternmode-datagrid-cell-x) text-left text-[0.75rem] leading-4 font-[450] transition-colors duration-150 outline-none;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid__th[data-align="right"] .patternmode-datagrid-column-trigger {
+    @apply justify-end;
+  }
+
+  .patternmode-datagrid-column-trigger:hover,
+  .patternmode-datagrid-column-trigger[data-popup-open],
+  .patternmode-datagrid-column-trigger[data-active] {
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-column-trigger:hover,
+  .patternmode-datagrid-column-trigger[data-popup-open] {
+    background: var(--patternmode-datagrid-hover);
+  }
+
+  .patternmode-datagrid-column-trigger:focus-visible {
+    @apply outline-2 -outline-offset-2 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid-column-trigger__name {
+    @apply truncate;
+  }
+
+  .patternmode-datagrid-column-trigger__filtered {
+    @apply size-3 shrink-0;
+    stroke-width: 1.5;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-column-trigger__chevron {
+    @apply size-3 shrink-0 opacity-0 transition duration-150;
+    stroke-width: 1.5;
+  }
+
+  .patternmode-datagrid-column-trigger:hover .patternmode-datagrid-column-trigger__chevron,
+  .patternmode-datagrid-column-trigger:focus-visible .patternmode-datagrid-column-trigger__chevron,
+  .patternmode-datagrid-column-trigger[data-popup-open]
+    .patternmode-datagrid-column-trigger__chevron {
+    @apply opacity-100;
+  }
+
+  .patternmode-datagrid-column-trigger[data-popup-open]
+    .patternmode-datagrid-column-trigger__chevron {
+    @apply rotate-180;
+  }
+
+  .patternmode-datagrid-column-trigger__sort {
+    @apply inline-flex shrink-0 items-center gap-0.5;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-column-trigger__sort-index {
+    @apply text-[0.75rem] leading-none tabular-nums;
+  }
+
+  /* Selection checkbox column */
+  .patternmode-datagrid-select-cell {
+    @apply relative z-10 flex h-full items-center justify-center;
+  }
+
+  .patternmode-datagrid-checkbox {
+    @apply relative flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[4px] p-0 transition-[background-color,box-shadow] duration-150 outline-none disabled:cursor-not-allowed disabled:opacity-40;
+    border: 0;
+    background: var(--card, #ffffff);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground, #1d1d1b) 24%, transparent);
+    color: var(--primary-foreground, #fbfbf9);
+  }
+
+  .patternmode-datagrid-checkbox[data-checked],
+  .patternmode-datagrid-checkbox[data-indeterminate] {
+    background: var(--primary, #1d1d1b);
+    box-shadow: inset 0 0 0 1px var(--primary, #1d1d1b);
+  }
+
+  .patternmode-datagrid-checkbox:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid-checkbox__indicator {
+    @apply flex items-center justify-center;
+  }
+
+  /* Body rows & cells */
+  .patternmode-datagrid__row {
+    @apply relative transition-colors duration-100;
+  }
+
+  .patternmode-datagrid__row[data-clickable] {
+    @apply cursor-pointer;
+  }
+
+  .patternmode-datagrid__row[data-clickable]:hover {
+    background: var(--patternmode-datagrid-hover);
+  }
+
+  .patternmode-datagrid__row[data-selected] {
+    background: var(--patternmode-datagrid-selected);
+  }
+
+  .patternmode-datagrid__row[data-selected]:hover {
+    background: var(--patternmode-datagrid-selected-hover);
+  }
+
+  .patternmode-datagrid__td {
+    @apply h-(--patternmode-datagrid-row-height) overflow-hidden px-(--patternmode-datagrid-cell-x) py-0 align-middle text-ellipsis whitespace-nowrap;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--patternmode-datagrid-rule);
+  }
+
+  /* Density presets */
+  .patternmode-datagrid[data-density="compact"] .patternmode-datagrid__td {
+    --patternmode-datagrid-row-height: 2rem;
+  }
+
+  .patternmode-datagrid[data-density="spacious"] .patternmode-datagrid__td {
+    --patternmode-datagrid-row-height: 3rem;
+    @apply px-4;
+  }
+
+  .patternmode-datagrid__td[data-align="right"] {
+    @apply text-right tabular-nums;
+  }
+
+  .patternmode-datagrid__td[data-fill] {
+    @apply p-0;
+  }
+
+  .patternmode-datagrid__td[data-highlight] {
+    background: var(--patternmode-datagrid-band);
+  }
+
+  .patternmode-datagrid__td[data-pinned="start"],
+  .patternmode-datagrid__td[data-pinned="end"] {
+    @apply sticky z-10;
+    background: var(--card, #ffffff);
+  }
+
+  .patternmode-datagrid__row[data-clickable]:hover .patternmode-datagrid__td[data-pinned="start"],
+  .patternmode-datagrid__row[data-clickable]:hover .patternmode-datagrid__td[data-pinned="end"] {
+    background: var(--patternmode-datagrid-hover);
+  }
+
+  .patternmode-datagrid__row[data-selected] .patternmode-datagrid__td[data-pinned="start"],
+  .patternmode-datagrid__row[data-selected] .patternmode-datagrid__td[data-pinned="end"] {
+    background: var(--patternmode-datagrid-selected);
+  }
+
+  .patternmode-datagrid__td[data-pinned-last] {
+    box-shadow: inset calc(-1 * var(--hairline, 1px)) 0 0 var(--patternmode-datagrid-rule);
+  }
+
+  .patternmode-datagrid__td[data-pinned-first] {
+    box-shadow: inset var(--hairline, 1px) 0 0 var(--patternmode-datagrid-rule);
+  }
+
+  .patternmode-datagrid__td[data-pinned][data-highlight] {
+    background: var(--patternmode-datagrid-band);
+  }
+
+  .patternmode-datagrid__row[data-selected]:hover .patternmode-datagrid__td[data-pinned] {
+    background: var(--patternmode-datagrid-selected-hover);
+  }
+
+  /* Accessible full-row link stretched via ::after */
+  .patternmode-datagrid__row-link {
+    @apply text-inherit no-underline outline-none;
+  }
+
+  .patternmode-datagrid__row-link::after {
+    @apply absolute inset-0 z-0 content-[""];
+  }
+
+  .patternmode-datagrid__row-link:focus-visible::after {
+    @apply outline-2 -outline-offset-2 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid__row[data-clickable] button,
+  .patternmode-datagrid__row[data-clickable] input,
+  .patternmode-datagrid__row[data-clickable] select,
+  .patternmode-datagrid__row[data-clickable] a:not(.patternmode-datagrid__row-link) {
+    @apply relative z-10;
+  }
+
+  /* Inline empty / error status row inside tbody */
+  .patternmode-datagrid__status-row {
+    @apply border-0;
+  }
+
+  .patternmode-datagrid__status-cell {
+    @apply p-0;
+    border: 0;
+  }
+
+  .patternmode-datagrid__status-inner {
+    @apply sticky left-0 flex min-h-40 w-full flex-col items-center justify-center gap-2.5 px-6 py-10 text-center text-[0.8125rem] leading-5 font-[450];
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid__error-text {
+    color: var(--destructive, #b4483b);
+  }
+
+  /* Loading skeleton bars */
+  .patternmode-datagrid__skeleton {
+    @apply block h-2.5 w-3/4 rounded-full;
+    background: var(--muted, #f6f5f1);
+  }
+
+  .patternmode-datagrid__skeleton[data-variant="1"] {
+    @apply w-1/2;
+  }
+
+  .patternmode-datagrid__skeleton[data-variant="2"] {
+    @apply w-5/6;
+  }
+
+  /* Virtualizer spacer row */
+  .patternmode-datagrid__spacer {
+    @apply border-0;
+  }
+
+  /* Section / tree heading rows */
+
+  .patternmode-datagrid__section-cell {
+    @apply p-0;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--patternmode-datagrid-rule);
+    background: var(--patternmode-datagrid-band);
+  }
+
+  .patternmode-datagrid__section-inner {
+    @apply sticky left-0 flex h-9 w-fit max-w-dvw items-center gap-1.5 px-(--patternmode-datagrid-cell-x) text-[0.8125rem] leading-5 font-medium;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid__section-heading {
+    @apply inline-flex items-center gap-1.5;
+  }
+
+  .patternmode-datagrid__fold-btn {
+    @apply -ml-1 flex size-6 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 transition-colors duration-150 outline-none;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid__fold-btn:hover {
+    background: var(--patternmode-datagrid-hover);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid__fold-btn:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid__fold-icon {
+    @apply size-3.5 transition-transform duration-150;
+    stroke-width: 1.5;
+  }
+
+  .patternmode-datagrid__fold-icon[data-expanded] {
+    @apply rotate-90;
+  }
+
+  /* Footer */
+  .patternmode-datagrid__tfoot {
+    @apply sticky bottom-0 z-30;
+  }
+
+  .patternmode-datagrid__tf {
+    @apply h-10 px-(--patternmode-datagrid-cell-x) py-0 align-middle text-[0.8125rem] leading-5 font-medium whitespace-nowrap;
+    border-top-width: var(--hairline, 1px);
+    border-top-style: solid;
+    border-color: var(--patternmode-datagrid-rule);
+    background: var(--card, #ffffff);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid__tf[data-align="right"] {
+    @apply text-right tabular-nums;
+  }
+
+  .patternmode-datagrid__tf[data-fill] {
+    @apply p-0;
+  }
+
+  .patternmode-datagrid__tf[data-highlight] {
+    background: var(--patternmode-datagrid-band);
+  }
+
+  .patternmode-datagrid__tf[data-pinned="start"],
+  .patternmode-datagrid__tf[data-pinned="end"] {
+    @apply sticky z-40;
+  }
+
+  .patternmode-datagrid__tf[data-pinned-last] {
+    box-shadow: inset calc(-1 * var(--hairline, 1px)) 0 0 var(--patternmode-datagrid-rule);
+  }
+
+  .patternmode-datagrid__tf[data-pinned-first] {
+    box-shadow: inset var(--hairline, 1px) 0 0 var(--patternmode-datagrid-rule);
+  }
+
+  /* Shared icons, popovers, menus */
+  .patternmode-datagrid-icon {
+    @apply size-3.5 shrink-0;
+    stroke-width: 1.5;
+  }
+
+  .patternmode-datagrid-icon-xs {
+    @apply size-3 shrink-0;
+    stroke-width: 1.75;
+  }
+
+  .patternmode-datagrid-positioner {
+    z-index: 300;
+  }
+
+  .patternmode-datagrid-popover {
+    @apply overflow-hidden rounded-[10px] outline-none;
+    background: var(--popover, #ffffff);
+    color: var(--popover-foreground, #1d1d1b);
+    box-shadow: var(
+      --shadow-md,
+      0 0 0 1px var(--border, #e3e1dc),
+      0 2px 4px -1px oklch(0.23 0.004 107 / 0.06),
+      0 12px 32px -8px oklch(0.23 0.004 107 / 0.16)
+    );
+  }
+
+  .patternmode-datagrid-menu {
+    @apply min-w-44 overflow-hidden rounded-[10px] p-1 outline-none;
+    background: var(--popover, #ffffff);
+    color: var(--popover-foreground, #1d1d1b);
+    box-shadow: var(
+      --shadow-md,
+      0 0 0 1px var(--border, #e3e1dc),
+      0 2px 4px -1px oklch(0.23 0.004 107 / 0.06),
+      0 12px 32px -8px oklch(0.23 0.004 107 / 0.16)
+    );
+  }
+
+  .patternmode-datagrid-menu__label {
+    @apply px-2 py-1 text-[0.75rem] leading-4 font-medium;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-menu__item {
+    @apply flex h-8 cursor-default items-center gap-2 rounded-md px-2 text-[0.8125rem] leading-5 font-[450] outline-none select-none;
+    color: var(--popover-foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-menu__item[data-highlighted] {
+    background: var(--accent, #f2f1ed);
+    color: var(--accent-foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-menu__indicator {
+    @apply flex size-3.5 shrink-0 items-center justify-center;
+  }
+
+  .patternmode-datagrid-menu__separator {
+    @apply -mx-1 my-1;
+    height: var(--hairline, 1px);
+    background: var(--border, #e3e1dc);
+  }
+
+  .patternmode-datagrid-popover-footer {
+    @apply flex h-9 items-center justify-between px-3 text-[0.75rem] leading-4;
+    border-top-width: var(--hairline, 1px);
+    border-top-style: solid;
+    border-color: var(--border, #e3e1dc);
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-popover-footer__action {
+    @apply cursor-pointer border-0 bg-transparent p-0 text-[0.75rem] leading-4 font-medium transition-colors duration-150;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  /* Keyboard reorder step buttons */
+  .patternmode-datagrid-reorder-steps {
+    @apply inline-flex shrink-0 items-center gap-0.5;
+  }
+
+  .patternmode-datagrid-reorder-btn {
+    @apply flex size-5 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 transition-colors duration-100 outline-none disabled:pointer-events-none disabled:opacity-30;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-reorder-btn:hover,
+  .patternmode-datagrid-reorder-btn:focus-visible {
+    background: var(--accent, #f2f1ed);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  /* Columns picker */
+  .patternmode-datagrid-columns__popup {
+    @apply w-72;
+  }
+
+  .patternmode-datagrid-columns__list {
+    @apply m-0 max-h-90 list-none overflow-y-auto p-1;
+  }
+
+  .patternmode-datagrid-columns__row {
+    @apply flex h-8 items-center gap-2 rounded-md px-2 transition-colors duration-100 data-[dragging]:opacity-50;
+  }
+
+  .patternmode-datagrid-columns__row:hover {
+    background: var(--accent, #f2f1ed);
+  }
+
+  .patternmode-datagrid-columns__grip {
+    @apply size-3.5 shrink-0 cursor-grab;
+    stroke-width: 1.5;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-columns__lock {
+    @apply size-3.5 shrink-0;
+    stroke-width: 1.5;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-columns__label {
+    @apply min-w-0 flex-1 truncate text-[0.8125rem] leading-5 font-[450];
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-columns__always {
+    @apply shrink-0 text-[0.75rem] leading-4;
+    color: var(--muted-foreground, #727068);
+  }
+
+  /* Base UI Switch inside column picker */
+  .patternmode-datagrid-switch {
+    @apply relative inline-flex h-4 w-7 shrink-0 cursor-pointer items-center rounded-full border-0 p-0.5 transition-colors duration-150 outline-none;
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 14%, var(--card, #ffffff));
+  }
+
+  .patternmode-datagrid-switch[data-checked] {
+    background: var(--primary, #1d1d1b);
+  }
+
+  .patternmode-datagrid-switch:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid-switch__thumb {
+    @apply block size-3 rounded-full transition-transform duration-150;
+    background: var(--card, #ffffff);
+  }
+
+  .patternmode-datagrid-switch[data-checked] .patternmode-datagrid-switch__thumb {
+    @apply translate-x-3;
+    background: var(--primary-foreground, #fbfbf9);
+  }
+
+  /* Sort picker */
+  .patternmode-datagrid-sort__popup {
+    @apply w-[370px];
+  }
+
+  .patternmode-datagrid-sort__badge {
+    @apply inline-flex min-w-3 items-center justify-center text-[0.75rem] leading-4 font-[450] tabular-nums;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-sort__empty {
+    @apply m-0 px-3 py-3 text-[0.8125rem] leading-5;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-sort__list {
+    @apply m-0 flex list-none flex-col gap-1.5 p-2.5;
+  }
+
+  .patternmode-datagrid-sort__row {
+    @apply flex items-center gap-1.5 data-[dragging]:opacity-50;
+  }
+
+  .patternmode-datagrid-sort__column {
+    @apply flex h-7 min-w-0 flex-1 cursor-pointer items-center justify-between gap-1 rounded-md bg-transparent pr-1.5 pl-2.5 text-[0.8125rem] leading-5 font-[450] outline-none;
+    border-width: var(--hairline, 1px);
+    border-style: solid;
+    border-color: var(--border, #e3e1dc);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-sort__column:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid-sort__column-label {
+    @apply truncate;
+  }
+
+  .patternmode-datagrid-sort__dir {
+    @apply flex h-7 shrink-0 items-center rounded-md p-0.5;
+    background: var(--muted, #f6f5f1);
+  }
+
+  .patternmode-datagrid-sort__dir-btn {
+    @apply h-6 cursor-pointer rounded-[5px] border-0 bg-transparent px-2 text-[0.75rem] leading-4 font-[450] transition-colors duration-100;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-sort__dir-btn[aria-pressed="true"] {
+    @apply font-medium;
+    background: var(--card, #ffffff);
+    color: var(--foreground, #1d1d1b);
+    box-shadow: var(--shadow-xs, 0 1px 2px oklch(0 0 0 / 0.06));
+  }
+
+  .patternmode-datagrid-sort__remove {
+    @apply flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-0 transition-colors duration-100;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-datagrid-sort__remove:hover {
+    background: var(--accent, #f2f1ed);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-datagrid-sort__footer {
+    @apply px-1.5;
+  }
+
+  .patternmode-datagrid-sort__add {
+    @apply h-7;
+  }
+
+  /* DataGridCellText */
+  .patternmode-datagrid-clamp-2 {
+    @apply line-clamp-2;
+  }
+
+  .patternmode-datagrid-clamp-3 {
+    @apply line-clamp-3;
+  }
+
+  .patternmode-datagrid-cell-text {
+    @apply break-words;
+  }
+
+  .patternmode-datagrid-cell-text__trigger {
+    @apply -mx-1 cursor-pointer rounded-sm border-0 bg-transparent px-1 text-left transition-colors duration-100 outline-none;
+    color: inherit;
+  }
+
+  .patternmode-datagrid-cell-text__trigger:hover,
+  .patternmode-datagrid-cell-text__trigger[data-popup-open] {
+    background: var(--accent, #f2f1ed);
+  }
+
+  .patternmode-datagrid-cell-text__trigger:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-datagrid-cell-text__popup {
+    @apply w-80 p-3 text-[0.8125rem] leading-5;
+  }
+
+  .patternmode-datagrid-cell-text__full {
+    @apply m-0 break-words whitespace-pre-line;
+  }
+
+  /* Comfortable coarse-pointer touch targets */
+  @media (pointer: coarse) {
+    .patternmode-datagrid-menu__item,
+    .patternmode-datagrid-columns__row {
+      @apply min-h-10;
+    }
+
+    .patternmode-datagrid__fold-btn,
+    .patternmode-datagrid-sort__remove,
+    .patternmode-datagrid-reorder-btn {
+      @apply size-9;
+    }
+
+    .patternmode-datagrid-checkbox {
+      @apply size-5;
+    }
+  }
+
+  .patternmode-datagrid-clamp-1 {
+    @apply line-clamp-1;
+  }
+
+  /* The checkbox column carries no padding: the box sits centred and its hit
+     area covers the cell. */
+  .patternmode-datagrid__td:has(> .patternmode-datagrid-select-cell),
+  .patternmode-datagrid__th:has(> .patternmode-datagrid-select-cell),
+  .patternmode-datagrid__tf:has(> .patternmode-datagrid-select-cell) {
+    @apply p-0;
+  }
+
+  .patternmode-datagrid-checkbox::after {
+    @apply absolute -inset-3 content-[""];
+  }
+
+  /* The last row's rule would double the frame's edge or the footer's. */
+  .patternmode-datagrid__tbody > .patternmode-datagrid__row:last-child > .patternmode-datagrid__td {
+    border-bottom-width: 0;
+  }
+
+  /* The full layout sets its toolbar and table in from the page by
+     --patternmode-datagrid-inset, while the toolbar's rule runs edge to edge. */
+  .patternmode-datagrid:not([data-layout="inline"]) > .patternmode-filter-toolbar {
+    padding-inline: var(--patternmode-datagrid-inset, 1rem);
+  }
+
+  @media (pointer: coarse) {
+    .patternmode-datagrid {
+      --patternmode-datagrid-row-height: 2.75rem;
+    }
+
+    .patternmode-datagrid-checkbox::after {
+      @apply -inset-3.5;
+    }
+  }
+
+  /* A phone has no width to hold columns still: pinned columns scroll with
+     the rest, in their pinned order. */
+  @media (max-width: 767px) {
+    .patternmode-datagrid__th[data-pinned],
+    .patternmode-datagrid__td[data-pinned],
+    .patternmode-datagrid__tf[data-pinned] {
+      position: static;
+      box-shadow: none;
+    }
+  }
+}

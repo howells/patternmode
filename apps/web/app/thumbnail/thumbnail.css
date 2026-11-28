@@ -29,7 +29,7 @@
 }
 
 .thumbnail-demo-size {
-  @apply type-data shrink-0 text-muted-foreground;
+  @apply type-row type-mono shrink-0 text-muted-foreground;
 }
 
 .thumbnail-demo-card[data-dark] .thumbnail-demo-size {

@@ -71,7 +71,7 @@ body.site {
 }
 
 .site-name {
-  @apply type-heading;
+  @apply type-section;
   display: flex;
   align-items: center;
   height: 44px;
@@ -147,10 +147,12 @@ body.site {
 }
 
 .copy-command-text {
-  @apply type-data;
+  @apply type-row type-mono;
   min-width: 0;
   padding-block: 12px;
+  overflow-x: auto;
   white-space: nowrap;
+  scrollbar-width: none;
 }
 
 .copy-command-tool {

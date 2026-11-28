@@ -41,7 +41,7 @@ export const ScrollFrameDemo = () => (
       {studies.map(([name], index) => (
         <div className="scrollframe-demo-row" key={name}>
           <span className="type-body">{name}</span>
-          <span className="type-data text-muted-foreground">
+          <span className="type-row type-mono text-muted-foreground">
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>

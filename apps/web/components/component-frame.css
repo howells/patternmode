@@ -41,7 +41,7 @@
 }
 
 .frame-title {
-  @apply type-title;
+  @apply type-display;
   margin: 0;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .frame-package {
-  @apply type-data;
+  @apply type-row type-mono;
   flex-shrink: 0;
   margin: 0;
   line-height: 20px;
@@ -152,7 +152,7 @@
 }
 
 .reference-title {
-  @apply type-heading;
+  @apply type-section;
   margin: 0;
 }
 
@@ -217,26 +217,34 @@
 }
 
 .variant-code {
-  @apply type-data;
+  @apply type-row type-mono;
   color: var(--muted-foreground);
   overflow-wrap: anywhere;
 }
 
-/* Keyboard and accessibility: the key in mono beside what it does. */
+/* Keyboard and accessibility, and features: the name, then what it does,
+   the same shape as the API rows. */
 .reference-rows {
   margin: 0;
 }
 
 .reference-row {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 2px;
   padding-block: 12px;
-  border-bottom: 1px solid var(--border);
+}
+
+.reference-row:first-child {
+  padding-top: 0;
+}
+
+.reference-row + .reference-row {
+  border-top: 1px solid var(--border);
 }
 
 .reference-key {
-  @apply type-data;
-  flex: 0 0 104px;
+  @apply type-row;
   line-height: 21px;
 }
 
@@ -246,10 +254,20 @@
   margin: 0;
   line-height: 21px;
   color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+/* A prop or part named inside a row: mono, at the sentence's size and colour. */
+.reference-value code {
+  @apply type-mono;
 }
 
 .package-facts {
   margin: 0;
+}
+
+.package-facts div:last-child {
+  border-bottom: 0;
 }
 
 .package-facts div {
@@ -273,42 +291,51 @@
 }
 
 .package-facts .package-fact-code {
-  @apply type-data;
+  @apply type-row type-mono;
 }
 
+/* Related: rows like the rest of the reference, each a link to its page. */
 .related-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.related-list li + li {
+  border-top: 1px solid var(--border);
+}
+
 .related-card {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--card);
+  gap: 2px;
+  padding-block: 12px;
   color: var(--foreground);
   text-decoration: none;
 }
 
+.related-list li:first-child .related-card {
+  padding-top: 0;
+}
+
 .related-name {
-  @apply type-body;
+  @apply type-row;
+  line-height: 21px;
 }
 
 .related-line {
   @apply type-body;
+  line-height: 21px;
   color: var(--muted-foreground);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .related-card:hover {
-    border-color: color-mix(in oklab, var(--foreground) 24%, var(--border));
+  .related-card:hover .related-name {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--foreground) 32%, transparent);
+    text-underline-offset: 3px;
   }
 }
 

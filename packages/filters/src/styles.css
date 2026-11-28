@@ -1,0 +1,430 @@
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+@layer components {
+  .patternmode-filters-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .patternmode-filter-toolbar {
+    @apply flex min-h-12 shrink-0 flex-wrap items-start gap-2 px-4 py-2;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--border, #e3e1dc);
+  }
+
+  .patternmode-filter-toolbar__start {
+    @apply flex min-w-0 flex-1 flex-wrap items-center gap-1 max-md:contents;
+  }
+
+  .patternmode-filter-toolbar__end {
+    @apply ml-auto flex min-h-8 shrink-0 items-center gap-0.5 text-[0.8125rem] leading-5 tabular-nums;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-toolbar-control {
+    @apply relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent px-2.5 text-[0.8125rem] leading-5 font-[450] whitespace-nowrap transition-colors duration-150 outline-none select-none disabled:pointer-events-none disabled:opacity-40 aria-disabled:pointer-events-none aria-disabled:opacity-40;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-toolbar-control:hover,
+  .patternmode-toolbar-control[data-popup-open] {
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 4.5%, transparent);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-toolbar-control:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-toolbar-pages__step {
+    @apply w-8 justify-center px-0;
+  }
+
+  .patternmode-filters-icon {
+    @apply size-3.5 shrink-0;
+    stroke-width: 1.5;
+  }
+
+  .patternmode-filters-icon-xs {
+    @apply size-3 shrink-0;
+    stroke-width: 1.75;
+  }
+
+  .patternmode-filters-icon-spacer {
+    @apply size-3.5 shrink-0;
+  }
+
+  .patternmode-filters-kbd {
+    @apply inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-[4px] px-1 text-[0.75rem] leading-none font-[450];
+    background: var(--card, #ffffff);
+    box-shadow: inset 0 0 0 var(--hairline, 1px) var(--border, #e3e1dc);
+    color: var(--muted-foreground, #727068);
+  }
+
+  /* SearchField */
+  .patternmode-search-field {
+    @apply flex h-8 w-60 max-w-full shrink-0 items-center gap-2 rounded-md pr-1.5 pl-2.5 transition-[background-color,box-shadow] duration-150 max-md:w-full;
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 4%, var(--card, #ffffff));
+  }
+
+  .patternmode-search-field:focus-within {
+    background: var(--card, #ffffff);
+    box-shadow:
+      inset 0 0 0 1px var(--ring, #315c4b),
+      0 0 0 3px color-mix(in oklab, var(--ring, #315c4b) 14%, transparent);
+  }
+
+  .patternmode-search-field__icon {
+    @apply size-3.5 shrink-0;
+    stroke-width: 1.5;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-search-field__input {
+    @apply min-w-0 flex-1 border-0 bg-transparent text-[0.8125rem] leading-5 font-[450] outline-none [&::-webkit-search-cancel-button]:hidden;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-search-field__input::placeholder {
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-search-field:focus-within .patternmode-search-field__kbd {
+    @apply hidden;
+  }
+
+  /* Floating popovers and menus */
+  .patternmode-filters-positioner {
+    z-index: 300;
+  }
+
+  .patternmode-filters-popover {
+    @apply overflow-hidden rounded-[10px] outline-none;
+    background: var(--popover, #ffffff);
+    color: var(--popover-foreground, #1d1d1b);
+    box-shadow: var(
+      --shadow-md,
+      0 0 0 1px var(--border, #e3e1dc),
+      0 2px 4px -1px oklch(0.23 0.004 107 / 0.06),
+      0 12px 32px -8px oklch(0.23 0.004 107 / 0.16)
+    );
+  }
+
+  .patternmode-add-filter__popup {
+    @apply w-[272px];
+  }
+
+  .patternmode-filter-chip__popup {
+    @apply w-[288px];
+  }
+
+  .patternmode-filters-menu {
+    @apply min-w-44 overflow-hidden rounded-[10px] p-1 outline-none;
+    background: var(--popover, #ffffff);
+    color: var(--popover-foreground, #1d1d1b);
+    box-shadow: var(
+      --shadow-md,
+      0 0 0 1px var(--border, #e3e1dc),
+      0 2px 4px -1px oklch(0.23 0.004 107 / 0.06),
+      0 12px 32px -8px oklch(0.23 0.004 107 / 0.16)
+    );
+  }
+
+  .patternmode-filters-menu__item {
+    @apply flex h-8 cursor-default items-center gap-2 rounded-md px-2 text-[0.8125rem] leading-5 font-[450] outline-none select-none;
+    color: var(--popover-foreground, #1d1d1b);
+  }
+
+  .patternmode-filters-menu__item[data-highlighted] {
+    background: var(--accent, #f2f1ed);
+    color: var(--accent-foreground, #1d1d1b);
+  }
+
+  .patternmode-filters-menu__indicator {
+    @apply flex size-3.5 shrink-0 items-center justify-center;
+  }
+
+  /* Inline command list */
+  .patternmode-filter-command {
+    @apply flex w-full flex-col overflow-hidden;
+  }
+
+  .patternmode-filter-command__input-wrap {
+    @apply flex h-10 items-center gap-2 px-3;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--border, #e3e1dc);
+  }
+
+  .patternmode-filter-command__search-icon {
+    @apply size-3.5 shrink-0;
+    stroke-width: 1.5;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-command__input {
+    @apply h-full min-w-0 flex-1 border-0 bg-transparent text-[0.8125rem] leading-5 font-[450] outline-none;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-filter-command__input::placeholder {
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-command__list {
+    @apply max-h-80 overflow-x-hidden overflow-y-auto p-1;
+  }
+
+  .patternmode-filter-command__empty {
+    @apply py-6 text-center text-[0.8125rem] leading-5 empty:p-0;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-command__item {
+    @apply flex h-8 cursor-default items-center gap-2 rounded-md px-2 text-[0.8125rem] leading-5 font-[450] outline-none select-none;
+    color: var(--popover-foreground, #1d1d1b);
+  }
+
+  .patternmode-filter-command__item[data-highlighted] {
+    background: var(--accent, #f2f1ed);
+    color: var(--accent-foreground, #1d1d1b);
+  }
+
+  .patternmode-filter-command__label {
+    @apply min-w-0 flex-1 truncate;
+  }
+
+  .patternmode-filter-command__hint {
+    @apply shrink-0 text-[0.75rem] leading-4;
+    color: var(--muted-foreground, #727068);
+  }
+
+  /* AddFilter footer */
+  .patternmode-add-filter__footer {
+    @apply flex items-center gap-3 px-3 py-2 text-[0.75rem] leading-4;
+    border-top-width: var(--hairline, 1px);
+    border-top-style: solid;
+    border-color: var(--border, #e3e1dc);
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-add-filter__legend {
+    @apply inline-flex items-center gap-1;
+  }
+
+  /* FilterChip */
+  .patternmode-filter-chip {
+    @apply m-0 flex h-8 min-w-0 shrink-0 items-stretch overflow-hidden rounded-md p-0 text-[0.8125rem] leading-5;
+    border: 0;
+    background: var(--card, #ffffff);
+    box-shadow: inset 0 0 0 var(--hairline, 1px)
+      color-mix(in oklab, var(--foreground, #1d1d1b) 16%, transparent);
+  }
+
+  .patternmode-filter-chip__static {
+    @apply flex items-stretch;
+  }
+
+  .patternmode-filter-chip__trigger {
+    @apply flex cursor-pointer items-stretch border-0 bg-transparent p-0 text-left outline-none transition-colors duration-150;
+  }
+
+  .patternmode-filter-chip__trigger:hover,
+  .patternmode-filter-chip__trigger:focus-visible,
+  .patternmode-filter-chip__trigger[data-popup-open] {
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 4%, transparent);
+  }
+
+  .patternmode-filter-chip__segment {
+    @apply flex items-center px-2;
+    border-color: color-mix(in oklab, var(--foreground, #1d1d1b) 12%, transparent);
+  }
+
+  .patternmode-filter-chip__field {
+    @apply gap-1.5 pl-2.5 font-[450];
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-filter-chip__operator {
+    border-left-width: var(--hairline, 1px);
+    border-left-style: solid;
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-chip__value {
+    @apply max-w-[220px] font-medium;
+    border-left-width: var(--hairline, 1px);
+    border-left-style: solid;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-filter-chip__value-text {
+    @apply truncate;
+  }
+
+  .patternmode-filter-chip__remove {
+    @apply flex w-8 cursor-pointer items-center justify-center border-0 bg-transparent p-0 transition-colors duration-150 outline-none;
+    border-left-width: var(--hairline, 1px);
+    border-left-style: solid;
+    border-color: color-mix(in oklab, var(--foreground, #1d1d1b) 12%, transparent);
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-chip__remove:hover,
+  .patternmode-filter-chip__remove:focus-visible {
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 4%, transparent);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  /* FilterOptions */
+  .patternmode-filter-options__check {
+    @apply flex size-3.5 shrink-0 items-center justify-center;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-filter-options__check[data-multiple] {
+    @apply rounded-[4px];
+    border-width: var(--hairline, 1px);
+    border-style: solid;
+    border-color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-options__check[data-multiple][data-checked] {
+    border-color: var(--primary, #1d1d1b);
+    background: var(--primary, #1d1d1b);
+    color: var(--primary-foreground, #fbfbf9);
+  }
+
+  .patternmode-filter-options__dot {
+    @apply size-1.5 shrink-0 rounded-full;
+    background: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-filter-options__dot[data-tone="positive"] {
+    background: var(--ring, #315c4b);
+  }
+
+  .patternmode-filter-options__dot[data-tone="warning"] {
+    background: var(--chart-4, #c69a2b);
+  }
+
+  .patternmode-filter-options__dot[data-tone="danger"] {
+    background: var(--destructive, #b4483b);
+  }
+
+  .patternmode-filter-options__dot[data-tone="info"] {
+    background: var(--chart-5, #4f6f8f);
+  }
+
+  .patternmode-filter-options__count {
+    @apply shrink-0 text-[0.75rem] leading-4 tabular-nums;
+    color: var(--muted-foreground, #727068);
+  }
+
+  /* RuleEditor */
+  .patternmode-rule-editor__header {
+    @apply flex h-10 items-center gap-1.5 px-3;
+    border-bottom-width: var(--hairline, 1px);
+    border-bottom-style: solid;
+    border-color: var(--border, #e3e1dc);
+  }
+
+  .patternmode-rule-editor__title {
+    @apply text-[0.8125rem] leading-5 font-medium;
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-rule-editor__operator {
+    @apply inline-flex h-6 cursor-pointer items-center gap-1 rounded-md border-0 px-2 text-[0.75rem] leading-4 font-[450] transition-colors duration-150 outline-none;
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 4.5%, transparent);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-rule-editor__operator:hover {
+    background: color-mix(in oklab, var(--foreground, #1d1d1b) 7%, transparent);
+  }
+
+  .patternmode-rule-editor__operator:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  .patternmode-rule-editor__field {
+    @apply p-2;
+  }
+
+  .patternmode-rule-editor__range {
+    @apply flex items-center gap-2 p-2;
+  }
+
+  .patternmode-rule-editor__dash {
+    @apply shrink-0 text-[0.8125rem];
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-rule-editor__number-root,
+  .patternmode-rule-editor__number-group {
+    @apply min-w-0 flex-1;
+  }
+
+  .patternmode-rule-editor__input {
+    @apply h-8 w-full rounded-md px-2.5 text-left text-[0.8125rem] leading-5 font-[450] outline-none;
+    border-width: var(--hairline, 1px);
+    border-style: solid;
+    border-color: var(--input, #e3e1dc);
+    background: var(--card, #ffffff);
+    color: var(--foreground, #1d1d1b);
+  }
+
+  .patternmode-rule-editor__input::placeholder {
+    color: var(--muted-foreground, #727068);
+  }
+
+  .patternmode-rule-editor__input:focus-visible {
+    @apply outline-2 outline-offset-1 outline-solid;
+    outline-color: var(--ring, #315c4b);
+  }
+
+  /* Fields set at the row size (13px) on a desktop. iOS Safari zooms into any
+     field under 16px when it takes focus, and the zoom follows the font size,
+     so any device with a touchscreen gets 16px. */
+  @media (any-pointer: coarse) {
+    .patternmode-search-field__input,
+    .patternmode-filter-command__input,
+    .patternmode-rule-editor__input {
+      font-size: 1rem;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .patternmode-toolbar-control,
+    .patternmode-search-field,
+    .patternmode-filter-chip {
+      @apply min-h-10;
+    }
+
+    .patternmode-toolbar-pages__step {
+      @apply w-10;
+    }
+
+    .patternmode-filter-chip__remove {
+      @apply w-9;
+    }
+
+    .patternmode-filters-menu__item,
+    .patternmode-filter-command__item {
+      @apply min-h-10;
+    }
+  }
+}

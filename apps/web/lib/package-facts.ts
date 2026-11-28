@@ -1,7 +1,9 @@
 import aperto from "../../../packages/aperto/package.json";
 import briolette from "../../../packages/briolette/package.json";
 import channel from "../../../packages/channel/package.json";
+import datagrid from "../../../packages/datagrid/package.json";
 import deck from "../../../packages/deck/package.json";
+import filters from "../../../packages/filters/package.json";
 import halo from "../../../packages/halo/package.json";
 import parquet from "../../../packages/parquet/package.json";
 import scrollframe from "../../../packages/scrollframe/package.json";
@@ -26,7 +28,9 @@ const MANIFESTS = {
   "@patternmode/aperto": aperto,
   "@patternmode/briolette": briolette,
   "@patternmode/channel": channel,
+  "@patternmode/datagrid": datagrid,
   "@patternmode/deck": deck,
+  "@patternmode/filters": filters,
   "@patternmode/halo": halo,
   "@patternmode/parquet": parquet,
   "@patternmode/scrollframe": scrollframe,

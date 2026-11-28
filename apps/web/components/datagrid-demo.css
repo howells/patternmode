@@ -1,0 +1,21 @@
+@reference "../app/globals.css";
+
+/* A grid wants the plate's whole width and height: a narrower inset than the
+   other demos. The grid is as tall as its rows, up to the plate, and then
+   scrolls inside itself with its header and totals held. */
+.frame-plate:has(> .datagrid-demo) {
+  padding: 20px;
+}
+
+.datagrid-demo {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-height: 0;
+}
+
+.datagrid-demo > .patternmode-datagrid {
+  flex: 0 1 auto;
+}

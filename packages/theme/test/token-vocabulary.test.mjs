@@ -64,6 +64,19 @@ const themeDefinedNames = () => {
     }
   }
 
+  // The theme's stylesheet declares a few more on :root, such as --hairline,
+  // which the registry ships in the item's `css` block rather than `cssVars`.
+  const stylesheet = readFileSync(
+    path.join(root, "packages/theme/registry/theme/theme.css"),
+    "utf-8",
+  );
+  for (const match of stylesheet.matchAll(/(?:^|[\s;{])--(?<name>[\w-]+)\s*:/gu)) {
+    const name = match.groups?.name;
+    if (name !== undefined && name !== "") {
+      names.add(name);
+    }
+  }
+
   if (names.size === 0) {
     throw new Error(
       `${path.relative(root, itemPath)} defines zero custom properties. Refusing to run a check that would pass everything.`,

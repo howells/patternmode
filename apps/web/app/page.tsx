@@ -24,35 +24,57 @@ const FACES = [
     className: "face-serif",
     glyph: "Aa",
     name: "Hedvig Letters Serif",
-    note: "Display and titles. One weight.",
+    note: "Marketing hero and display only. Never in UI.",
   },
   {
     className: "face-sans",
     glyph: "Aa",
     name: "Inter",
-    note: "Interface text. Full font, with cv01, cv02, cv11.",
+    note: "Everything you work in: titles, figures, rows and labels.",
   },
-  { className: "face-mono", glyph: "01", name: "Geist Mono", note: "Figures and code. Tabular." },
+  {
+    className: "face-mono",
+    glyph: "01",
+    name: "Geist Mono",
+    note: "Modifiers for identifiers and code, x-height matched.",
+  },
 ];
 
 const TYPE_ROLES = [
-  { role: "type-display", sample: "Patternmode", spec: "Hedvig 40–60 / 1" },
-  { role: "type-title", sample: "Sheets that stack and step back", spec: "Hedvig 36 / 40" },
-  { role: "type-heading", sample: "Install the theme", spec: "Inter 16 / 22" },
+  { role: "type-hero", sample: "Patternmode", spec: "Hedvig 44–64" },
+  { role: "type-display", sample: "Sheets that stack and step back", spec: "Hedvig 32–40" },
+  { role: "type-heading", sample: "Harewood Lane", spec: "Inter 22 / 28 · 550" },
+  { role: "type-figure", sample: "£148,920", spec: "Inter 26 / 32 · 500" },
+  { role: "type-section", sample: "Install the theme", spec: "Inter 15 / 22 · 500" },
   {
     role: "type-body",
     sample:
-      "Reading text, item names, controls and captions. Muted colour, not a smaller size, marks what comes second.",
-    spec: "Inter 14 / 20",
+      "Paragraphs, descriptions and comments. Muted colour carries hierarchy after the role is chosen.",
+    spec: "Inter 14 / 22 · 450",
   },
-  { role: "type-data", sample: "#315C4B · 1,204.50 · 0.0086", spec: "Geist Mono 13 / 18" },
+  {
+    role: "type-strong",
+    sample: "View titles, group headers and actions",
+    spec: "Inter 13 / 20 · 500",
+  },
+  {
+    role: "type-row",
+    sample: "Rows, navigation and fields: the working size",
+    spec: "Inter 13 / 20 · 450",
+  },
+  { role: "type-label", sample: "Updated 14 minutes ago · 12 items", spec: "Inter 12 / 16 · 450" },
+  {
+    role: "type-row type-mono",
+    sample: "#315C4B · 1,204.50 · 0.0086",
+    spec: "Geist Mono modifier",
+  },
 ];
 
 const INSTALL_STEPS = [
   {
     command: THEME_COMMAND,
     description:
-      "Colour tokens, the five type roles and the three fonts, written into globals.css.",
+      "Warm paper light and cool graphite dark tokens, hairlines, nine type roles and three fonts, written into globals.css.",
     title: "Theme",
   },
   {
@@ -118,7 +140,7 @@ const ThemeSection = () => (
         Theme
       </h2>
       <p className="section-lead">
-        Three faces and warm neutrals. Hierarchy comes from size, face and colour, never bold.
+        Warm paper in light, cool graphite in dark, hairline borders and one emerald accent.
       </p>
     </div>
     <div className="theme-content">
@@ -155,12 +177,12 @@ const TypeSection = () => (
   <section aria-labelledby="type-title" className="home-section" id="type">
     <div className="section-intro">
       <h2 className="section-title" id="type-title">
-        Five type roles
+        Nine type roles
       </h2>
       <p className="section-lead">
-        Two serif, kept for a page&rsquo;s headline and titles, two sans for everything else, and
-        mono for values. Reach for a role, not a size: <code>type-title</code> rather than{" "}
-        <code>text-4xl</code>.
+        Hedvig only at hero and display size on marketing pages; Inter carries everything you work
+        in, and <code>type-mono</code> composes onto any role. Reach for a role, not a size:{" "}
+        <code>type-row</code> rather than <code>text-sm</code>.
       </p>
     </div>
     <dl className="type-roles">

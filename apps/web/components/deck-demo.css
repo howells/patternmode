@@ -38,7 +38,7 @@
 }
 
 .deck-card-count {
-  @apply type-data text-[color:var(--muted-foreground)];
+  @apply type-row type-mono text-[color:var(--muted-foreground)];
 }
 
 .deck-side {
@@ -50,7 +50,7 @@
 }
 
 .deck-arrow {
-  @apply type-data inline-flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-md border border-[color:var(--border)] bg-[var(--card)] px-2 text-[color:var(--foreground)];
+  @apply type-row type-mono inline-flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-md border border-[color:var(--border)] bg-[var(--card)] px-2 text-[color:var(--foreground)];
 }
 
 .deck-arrow:focus-visible {
@@ -63,7 +63,7 @@
 }
 
 .deck-code {
-  @apply type-data text-[color:var(--foreground)];
+  @apply type-row type-mono text-[color:var(--foreground)];
 }
 
 /* States and variants: small live decks, 84 by 96. They are specimens, so

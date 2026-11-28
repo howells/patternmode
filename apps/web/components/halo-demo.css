@@ -15,7 +15,7 @@
 }
 
 .halo-demo-hex output {
-  @apply type-data text-foreground;
+  @apply type-row type-mono text-foreground;
 }
 
 .halo-demo-readout {
@@ -35,7 +35,7 @@
 }
 
 .halo-demo-readout dd {
-  @apply m-0 type-data text-foreground tabular-nums;
+  @apply m-0 type-row type-mono text-foreground tabular-nums;
 }
 
 .halo-demo-readout p {

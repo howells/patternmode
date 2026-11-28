@@ -11,7 +11,7 @@
 }
 
 .plate-orders-title {
-  @apply type-heading m-0 pb-4;
+  @apply type-section m-0 pb-4;
 }
 
 .plate-order {
@@ -23,7 +23,7 @@
 }
 
 .plate-value {
-  @apply type-data text-[color:var(--muted-foreground)];
+  @apply type-row type-mono text-[color:var(--muted-foreground)];
 }
 
 .plate-scrim {
@@ -97,7 +97,7 @@
 }
 
 .plate-facts dd {
-  @apply type-data m-0;
+  @apply type-row type-mono m-0;
 }
 
 .plate-actions {
@@ -161,7 +161,7 @@
    sits under them. */
 .sheet-panel-content h2,
 .sheet-panel-content h3 {
-  @apply m-0 type-heading;
+  @apply m-0 type-section;
 }
 
 .sheet-panel-content p {

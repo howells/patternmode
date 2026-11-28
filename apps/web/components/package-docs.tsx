@@ -43,7 +43,7 @@ export const PackageDocs = ({
   /** A closing line pointing at the package README. */
   readMore?: string;
   slug: string;
-  /** The "States and variants" block, first in the reference. */
+  /** The first block in the reference: states and variants, or what the component does. */
   variants?: ReactNode;
 }) => {
   const { packageName } = findEntry(slug);

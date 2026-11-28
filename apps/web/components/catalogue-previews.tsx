@@ -335,7 +335,7 @@ const HaloPreview = () => (
       />
       <circle cx="17" cy="9.2" fill="hsl(16 80% 55%)" r="6" stroke="#fff" strokeWidth="2.5" />
     </svg>
-    <span className="type-data text-muted-foreground">16 · 48 · 69</span>
+    <span className="type-row type-mono text-muted-foreground">16 · 48 · 69</span>
   </div>
 );
 
@@ -345,7 +345,7 @@ const ChannelPreview = () => (
   <div className="preview-stage flex flex-col justify-center gap-5.5 px-10">
     <span className="flex flex-col gap-2">
       <span className="flex justify-between type-body">
-        Lightness<span className="type-data text-muted-foreground">62</span>
+        Lightness<span className="type-row type-mono text-muted-foreground">62</span>
       </span>
       <span
         className={`relative h-8 rounded-full ${ring}`}
@@ -358,7 +358,7 @@ const ChannelPreview = () => (
     </span>
     <span className="flex flex-col gap-2">
       <span className="flex justify-between type-body">
-        Chroma range<span className="type-data text-muted-foreground">20–70</span>
+        Chroma range<span className="type-row type-mono text-muted-foreground">20–70</span>
       </span>
       <span
         className={`relative h-8 rounded-full ${ring}`}
@@ -462,7 +462,7 @@ const BriolettePreview = () => (
     </svg>
     <span className="flex items-center gap-2">
       <span className="size-3.5 rounded-full bg-fixture-bronze" />
-      <span className="type-data text-muted-foreground">#A97C4F</span>
+      <span className="type-row type-mono text-muted-foreground">#A97C4F</span>
     </span>
   </div>
 );
@@ -494,11 +494,69 @@ const TagsPreview = () => (
   </div>
 );
 
+const FiltersPreview = () => (
+  <div className="preview-stage flex flex-col justify-center gap-2.5 px-6">
+    <span className="flex items-center gap-1.5">
+      <span className="flex h-7.5 flex-1 items-center justify-between rounded-md border border-border bg-card px-2.5 type-row text-muted-foreground">
+        <span>Search…</span>
+        <span className="rounded border border-border bg-muted px-1 type-label">/</span>
+      </span>
+      <span className="flex h-7.5 items-center rounded-md border border-border bg-card px-2 type-row text-muted-foreground">
+        + Filter
+      </span>
+    </span>
+    <span className="flex flex-wrap gap-1.5">
+      <span className="inline-flex h-7 items-center overflow-hidden rounded-md border border-border bg-card type-label">
+        <span className="px-2 text-foreground">Status</span>
+        <span className="border-l border-border px-2 text-muted-foreground">is any of</span>
+        <span className="border-l border-border px-2 font-medium text-foreground">Spec ready</span>
+      </span>
+      <span className="inline-flex h-7 items-center overflow-hidden rounded-md border border-border bg-card type-label">
+        <span className="px-2 text-foreground">Price</span>
+        <span className="border-l border-border px-2 text-muted-foreground">is between</span>
+        <span className="border-l border-border px-2 font-medium text-foreground">400–2,000</span>
+      </span>
+    </span>
+  </div>
+);
+
+const DataGridPreview = () => (
+  <div className="preview-stage flex items-center justify-center p-5">
+    <span className="flex w-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-fixture-control">
+      <span className="flex h-8 items-center justify-between border-b border-border px-2.5 type-label text-muted-foreground">
+        <span>Search · Status is ready</span>
+        <span>Sort 1 · Columns</span>
+      </span>
+      <span className="grid grid-cols-[1.5fr_1fr_0.8fr] border-b border-border bg-muted px-2.5 py-1.5 type-label font-medium text-muted-foreground">
+        <span>Item</span>
+        <span>Status</span>
+        <span className="text-right">Price</span>
+      </span>
+      {[
+        ["Oak console", "Ready", "£1,800"],
+        ["Walnut chair", "Draft", "£620"],
+        ["Linen pendant", "Ready", "£410"],
+      ].map(([name, status, price]) => (
+        <span
+          className="grid grid-cols-[1.5fr_1fr_0.8fr] border-b border-border px-2.5 py-1.5 type-label last:border-b-0"
+          key={name}
+        >
+          <span className="truncate text-foreground">{name}</span>
+          <span className="text-muted-foreground">{status}</span>
+          <span className="text-right tabular-nums text-foreground">{price}</span>
+        </span>
+      ))}
+    </span>
+  </div>
+);
+
 const DRAWINGS = {
   aperto: ApertoPreview,
   briolette: BriolettePreview,
   channel: ChannelPreview,
+  datagrid: DataGridPreview,
   deck: DeckPreview,
+  filters: FiltersPreview,
   halo: HaloPreview,
   parquet: ParquetPreview,
   scrollframe: ScrollFramePreview,

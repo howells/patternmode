@@ -48,13 +48,13 @@
 }
 
 .hero-title {
-  @apply type-display;
+  @apply type-hero;
   margin: 0;
   text-wrap: pretty;
 }
 
 .hero-lead {
-  @apply type-heading;
+  @apply type-section;
   max-width: 540px;
   margin: 0;
   color: var(--muted-foreground);
@@ -193,7 +193,7 @@
 }
 
 .hero-sheet-facts dd {
-  @apply type-data;
+  @apply type-row type-mono;
   margin: 0;
 }
 
@@ -234,7 +234,7 @@
 }
 
 .section-title {
-  @apply type-title;
+  @apply type-display;
   margin: 0;
 }
 
@@ -245,7 +245,7 @@
 }
 
 .section-lead code {
-  @apply type-data;
+  @apply type-row type-mono;
   color: var(--foreground);
 }
 
@@ -361,7 +361,7 @@
 }
 
 .token-value {
-  @apply type-data;
+  @apply type-row type-mono;
   color: var(--muted-foreground);
 }
 
@@ -405,13 +405,13 @@
   border-bottom: 1px solid var(--border);
 }
 
-.type-role[data-role="type-display"] {
+.type-role[data-role="type-hero"] {
   padding-top: 20px;
   padding-bottom: 24px;
 }
 
 .type-role-name {
-  @apply type-data;
+  @apply type-row type-mono;
   flex: 0 0 128px;
   color: var(--muted-foreground);
 }
@@ -519,7 +519,7 @@
 }
 
 .catalogue-package {
-  @apply type-data;
+  @apply type-row type-mono;
   color: var(--muted-foreground);
 }
 
@@ -596,7 +596,7 @@
 }
 
 .install-step-title {
-  @apply type-heading;
+  @apply type-section;
   margin: 0;
 }
 

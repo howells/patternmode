@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
+/** A named row beside what it does, in a component's reference. */
 export interface ReferenceRow {
-  description: string;
+  description: ReactNode;
   name: string;
 }
 
@@ -435,6 +437,66 @@ export const catalogue: CatalogueEntry[] = [
     slug: "tags",
     summary:
       "Tag chips and a tag picker with search, create and paste. Commas or new lines add several at once, without duplicates.",
+  },
+  {
+    access: {
+      intro: "Keyboard-first filtering without leaving the bar.",
+      rows: [
+        { description: "Jumps straight to SearchField from anywhere on the page.", name: "/" },
+        { description: "Opens AddFilter to pick a field and start a rule.", name: "F" },
+        {
+          description: "Move through fields or options inside any filter popover.",
+          name: "ArrowUp, ArrowDown",
+        },
+        {
+          description: "Commits the highlighted option or closes search focus.",
+          name: "Enter, Escape",
+        },
+      ],
+      title: "Keyboard and accessibility",
+    },
+    description:
+      "Composable filter toolbar, debounced search field, sentence filter chips, option pickers, and typed rule editors.",
+    lead: "The filtering bar behind DataGrid, built as its own parts: SearchField, AddFilter, FilterChip, FilterOptions, RuleEditor and ToolbarPages.",
+    name: "Filters",
+    packageName: "@patternmode/filters",
+    related: ["datagrid", "tags", "scrollframe"],
+    relatedLine: "Sentence filter chips, rule editors and list toolbars.",
+    slug: "filters",
+    summary:
+      "Search, sentence filter chips, typed rule editors and toolbar paging for any filtered list or grid.",
+  },
+  {
+    access: {
+      intro: "A real HTML table with keyboard-accessible menus, popovers and shortcuts.",
+      rows: [
+        { description: "Jumps to search or opens the Filter picker.", name: "/, F" },
+        {
+          description: "The primary sorted column header exposes aria-sort automatically.",
+          name: "aria-sort",
+        },
+        {
+          description: "Column menus, sort priority, column toggles and cell popovers are Base UI.",
+          name: "Menus & popovers",
+        },
+        {
+          description:
+            "Section rows fold with aria-expanded; rows-per-page and paging stay keyboard reachable.",
+          name: "Tree & paging",
+        },
+      ],
+      title: "Keyboard and accessibility",
+    },
+    description:
+      "Kitchen-sink React data grid on TanStack Table and Patternmode Filters: search, typed filter rules, multi-sort, column pinning, reorder, foldable sections, paging, and URL state.",
+    lead: "The kitchen-sink table for data held in the page: search, typed filter rules, multi-sort, pinned and reorderable columns, foldable sections, footers, paging and URL sync.",
+    name: "DataGrid",
+    packageName: "@patternmode/datagrid",
+    related: ["filters", "scrollframe", "stacksheet"],
+    relatedLine: "Kitchen-sink table with filters, multi-sort and pinning.",
+    slug: "datagrid",
+    summary:
+      "A kitchen-sink data grid on TanStack Table and Filters: typed rules, multi-sort, column menus, pinning, footers, sections and URL state.",
   },
 ];
 

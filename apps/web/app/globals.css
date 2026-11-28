@@ -1,3 +1,7 @@
+/* Declare the cascade order first: package stylesheets put their rules in
+   `components`, which must sit under the site's utilities. */
+@layer theme, base, components, utilities;
+
 @import "tailwindcss/theme" layer(theme);
 @import "tailwindcss/utilities" layer(utilities);
 @import "inter-ui/inter-variable.css";
@@ -107,11 +111,15 @@ button {
 
 /* iOS Safari zooms into any field under 16px when it takes focus. The zoom
    follows the font size, not the pointer, so an iPad with a trackpad needs
-   it too. */
-input,
-select,
-textarea {
-  @apply text-base;
+   it too. This is the default for the site's own fields, in `base` so a
+   package that sets its fields at row size (and carries its own touch bump)
+   is not overridden on a desktop. */
+@layer base {
+  input,
+  select,
+  textarea {
+    @apply text-base;
+  }
 }
 
 /* Controls answer the finger the moment it lands: no grey tap flash, no

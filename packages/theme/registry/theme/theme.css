@@ -1,93 +1,150 @@
 @layer theme, base, components, utilities;
 
 @layer base {
+  :root {
+    --hairline: 1px;
+
+    @media (min-resolution: 2dppx) {
+      --hairline: 0.5px;
+    }
+  }
+
   body {
     font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.25rem;
-    letter-spacing: -0.01em;
+    font-weight: 450;
+    line-height: 1.375rem;
+    letter-spacing: -0.003em;
     font-feature-settings: "cpsp", "cv01", "cv02", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
+
+  kbd,
+  samp,
+  code,
+  pre {
+    font-family: inherit;
+  }
 }
 
 /*
- * Type roles: two serif, used sparingly, two sans, and mono for values. Each
- * role owns face, size, leading and tracking; colour stays with the semantic
- * tokens (`type-body text-muted-foreground`). Hierarchy comes from size, serif
- * against sans, and colour. Every role is weight 400.
+ * Nine type roles and one mono modifier. Each role owns face, size, weight,
+ * leading and tracking; colour stays with the semantic tokens
+ * (`type-row text-muted-foreground`).
  *
- * Leading and tracking read `--tw-leading` / `--tw-tracking` first, the way
- * Tailwind's own `text-*` utilities do, so `leading-*` and `tracking-*` adjust a
- * role whatever order the classes land in. Don't pair a role with a `text-<size>`
- * or `font-<family>` utility; pick another role instead.
+ * Hedvig Letters Serif is for marketing only, and only at hero and display
+ * size. Never set it small or in product UI; Inter carries everything you work
+ * in, page titles and headline figures included.
+ *
+ *   type-hero     Hedvig 44/48 → 64/68  the one headline on a marketing page
+ *   type-display  Hedvig 32/36 → 40/44  marketing section headings and quotes
+ *   type-heading  Inter 22/28 550       a page's or object's own title
+ *   type-figure   Inter 26/32 500       a headline number, tabular
+ *   type-section  Inter 15/22 500       a titled block on a page or in a panel
+ *   type-body     Inter 14/22 450       paragraphs, descriptions, comments
+ *   type-strong   Inter 13/20 500       view titles, group headers, buttons
+ *   type-row      Inter 13/20 450       rows, navigation, fields: the working size
+ *   type-label    Inter 12/16 450       counts, dates, keys and notes about a row
+ *   type-mono     Geist Mono modifier   composes onto any role, tabular, x-height matched
  *
  * The `type-` prefix is deliberate: stock tailwind-merge reads any unknown
  * `text-*` class as a colour and would drop a role next to `text-muted-foreground`.
- *
- * Serif roles reset the Inter character variants the body applies, and pin
- * weight 400 because Hedvig Letters Serif ships one weight. Hedvig has no
- * tabular figures, so numbers that line up in columns use `type-data`.
  */
 
-/* The one headline on a page: serif, fluid 40 to 60px. */
+/* Tailwind orders composed utilities by name, so `type-row type-mono` emits
+   type-row's face last. The sans roles read their face through --type-face,
+   which type-mono sets on the same element; it does not inherit, so a role
+   nested inside mono text is back in Inter. */
+@property --type-face {
+  syntax: "*";
+  inherits: false;
+}
+
+@utility type-hero {
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 1.5rem + 4vw, 4rem);
+  font-weight: 400;
+  font-feature-settings: normal;
+  font-synthesis-weight: none;
+  line-height: var(--tw-leading, 1.0625);
+  letter-spacing: var(--tw-tracking, -0.025em);
+  text-wrap: balance;
+}
+
 @utility type-display {
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 1.75rem + 2.5vw, 3.75rem);
+  font-size: clamp(2rem, 1.5rem + 1.5vw, 2.5rem);
   font-weight: 400;
   font-feature-settings: normal;
   font-synthesis-weight: none;
-  line-height: var(--tw-leading, 1);
-  letter-spacing: var(--tw-tracking, -0.01em);
+  line-height: var(--tw-leading, 1.1);
+  letter-spacing: var(--tw-tracking, -0.018em);
   text-wrap: balance;
 }
 
-/* Page and section titles: serif 36/40. */
-@utility type-title {
-  font-family: var(--font-serif);
-  font-size: 2.25rem;
-  font-weight: 400;
-  font-feature-settings: normal;
-  font-synthesis-weight: none;
-  line-height: var(--tw-leading, 2.5rem);
-  letter-spacing: var(--tw-tracking, -0.01em);
-  text-wrap: balance;
-}
-
-/* Card, panel and group headings, and the line under a display: sans 16/22. */
 @utility type-heading {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 400;
+  font-family: var(--type-face, var(--font-sans));
+  font-size: 1.375rem;
+  font-weight: 550;
+  line-height: var(--tw-leading, 1.75rem);
+  letter-spacing: var(--tw-tracking, -0.016em);
+}
+
+@utility type-figure {
+  font-family: var(--type-face, var(--font-sans));
+  font-size: 1.625rem;
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: var(--tw-leading, 2rem);
+  letter-spacing: var(--tw-tracking, -0.022em);
+}
+
+@utility type-section {
+  font-family: var(--type-face, var(--font-sans));
+  font-size: 0.9375rem;
+  font-weight: 500;
   line-height: var(--tw-leading, 1.375rem);
-  letter-spacing: var(--tw-tracking, normal);
+  letter-spacing: var(--tw-tracking, -0.008em);
 }
 
-/*
- * Everything else: reading text, item names, controls, navigation and
- * captions, sans 14/20. Secondary text takes `text-muted-foreground`, not a
- * smaller size.
- */
 @utility type-body {
-  font-family: var(--font-sans);
+  font-family: var(--type-face, var(--font-sans));
   font-size: 0.875rem;
-  font-weight: 400;
-  line-height: var(--tw-leading, 1.25rem);
-  letter-spacing: var(--tw-tracking, -0.01em);
+  font-weight: 450;
+  line-height: var(--tw-leading, 1.375rem);
+  letter-spacing: var(--tw-tracking, -0.003em);
 }
 
-/*
- * Figures, amounts, IDs and code values whose characters need inspecting:
- * mono 13/18, tabular. The tightened tracking brings mono digits closer to
- * Inter's width.
- */
-@utility type-data {
-  font-family: var(--font-mono);
+@utility type-strong {
+  font-family: var(--type-face, var(--font-sans));
   font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: var(--tw-leading, 1.25rem);
+  letter-spacing: var(--tw-tracking, -0.003em);
+}
+
+@utility type-row {
+  font-family: var(--type-face, var(--font-sans));
+  font-size: 0.8125rem;
+  font-weight: 450;
+  line-height: var(--tw-leading, 1.25rem);
+  letter-spacing: var(--tw-tracking, -0.003em);
+}
+
+@utility type-label {
+  font-family: var(--type-face, var(--font-sans));
+  font-size: 0.75rem;
+  font-weight: 450;
+  line-height: var(--tw-leading, 1rem);
+  letter-spacing: var(--tw-tracking, 0);
+}
+
+@utility type-mono {
+  --type-face: var(--font-mono);
+  font-family: var(--font-mono);
   font-feature-settings: normal;
+  font-size-adjust: 0.546;
   font-variant-numeric: tabular-nums;
-  line-height: var(--tw-leading, 1.125rem);
-  letter-spacing: var(--tw-tracking, -0.02em);
+  letter-spacing: var(--tw-tracking, 0);
 }

@@ -20,5 +20,5 @@
 }
 
 .verge-demo-hex {
-  @apply type-data text-muted-foreground;
+  @apply type-row type-mono text-muted-foreground;
 }

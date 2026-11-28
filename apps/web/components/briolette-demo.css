@@ -14,7 +14,7 @@
 }
 
 .briolette-demo-hex output {
-  @apply type-data text-foreground;
+  @apply type-row type-mono text-foreground;
 }
 
 .briolette-demo-notes {
@@ -30,7 +30,7 @@
 }
 
 .briolette-demo-notes dt {
-  @apply w-16 shrink-0 type-data text-foreground;
+  @apply w-16 shrink-0 type-row type-mono text-foreground;
 }
 
 .briolette-demo-notes dd {

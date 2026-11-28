@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { ReferenceRows } from "@/components/docs-blocks";
 import { ScrollPane } from "@/components/scroll-pane";
 import { SiteFooter } from "@/components/site-footer";
 import { findEntry } from "@/lib/catalogue";
@@ -63,22 +64,12 @@ export const ComponentFrame = ({
             <h2 className="sr-only">Reference</h2>
             {children}
 
-            <section aria-labelledby="access-title" className="reference-block">
-              <div className="reference-heading">
-                <h3 className="reference-title" id="access-title">
-                  {entry.access.title}
-                </h3>
-                <p className="reference-lead">{entry.access.intro}</p>
-              </div>
-              <dl className="reference-rows">
-                {entry.access.rows.map((row) => (
-                  <div className="reference-row" key={row.name}>
-                    <dt className="reference-key">{row.name}</dt>
-                    <dd className="reference-value">{row.description}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
+            <ReferenceRows
+              id="access-title"
+              lead={entry.access.intro}
+              rows={entry.access.rows}
+              title={entry.access.title}
+            />
 
             <section aria-labelledby="package-title" className="reference-block">
               <div className="reference-heading">
